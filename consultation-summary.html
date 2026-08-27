@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Consultation Summary - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e6e6e6;
+    --green:#15945a;
+    --gold:#e4a629;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:#f7f7f7;
+    color:var(--dark);
+}
+
+button,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.container{
+    width:min(1050px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:41px;
+    height:41px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.home-link{
+    color:#666;
+    font-size:12px;
+    font-weight:600;
+}
+
+.home-link:hover{
+    color:var(--red);
+}
+
+
+/* ================= MAIN ================= */
+
+.page{
+    padding:40px 0 65px;
+}
+
+.success-top{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.success-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#eafaf2;
+    color:var(--green);
+    display:grid;
+    place-items:center;
+    margin:0 auto 15px;
+    font-size:32px;
+    font-weight:700;
+}
+
+.success-top h1{
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+}
+
+.success-top p{
+    color:#888;
+    font-size:12px;
+    margin-top:6px;
+}
+
+
+/* ================= GRID ================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:1fr 350px;
+    gap:20px;
+}
+
+
+/* ================= SUMMARY CARD ================= */
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:25px;
+}
+
+.card-title{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+    margin-bottom:18px;
+}
+
+
+/* ASTROLOGER */
+
+.astrologer{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding-bottom:20px;
+    border-bottom:1px solid #eee;
+}
+
+.avatar{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffd7c6,#d99870);
+    display:grid;
+    place-items:center;
+    font-size:31px;
+}
+
+.astrologer-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.verified{
+    color:var(--red);
+}
+
+.speciality{
+    color:#777;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.consult-type{
+    display:inline-block;
+    background:var(--light-red);
+    color:var(--red);
+    padding:5px 8px;
+    border-radius:15px;
+    font-size:9px;
+    font-weight:700;
+    margin-top:6px;
+}
+
+
+/* DETAILS */
+
+.details{
+    margin-top:20px;
+}
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    font-size:11px;
+}
+
+.detail-row:last-child{
+    border-bottom:0;
+}
+
+.detail-row span{
+    color:#888;
+}
+
+.detail-row strong{
+    font-size:12px;
+}
+
+.amount{
+    color:var(--red);
+    font-size:16px !important;
+}
+
+
+/* TRANSACTION */
+
+.transaction-box{
+    background:#fafafa;
+    border-radius:10px;
+    padding:13px;
+    margin-top:20px;
+}
+
+.transaction-box div{
+    display:flex;
+    justify-content:space-between;
+    font-size:9px;
+    padding:4px 0;
+}
+
+.transaction-box span{
+    color:#999;
+}
+
+.transaction-id{
+    font-family:monospace;
+    color:#555;
+}
+
+
+/* ================= REVIEW ================= */
+
+.review-card{
+    text-align:center;
+}
+
+.review-card h2{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.review-card p{
+    color:#888;
+    font-size:11px;
+    margin-top:5px;
+}
+
+
+/* STARS */
+
+.stars{
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    margin:22px 0 18px;
+}
+
+.star{
+    border:0;
+    background:none;
+    font-size:31px;
+    color:#ddd;
+    transition:.15s;
+}
+
+.star:hover,
+.star.active{
+    color:var(--gold);
+    transform:scale(1.08);
+}
+
+.rating-text{
+    height:15px;
+    color:var(--gold);
+    font-size:10px;
+    font-weight:700;
+}
+
+
+/* REVIEW INPUT */
+
+.review-input{
+    width:100%;
+    min-height:105px;
+    resize:none;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+    font-size:11px;
+    margin-top:12px;
+}
+
+.review-input:focus{
+    border-color:var(--red);
+}
+
+.submit-review{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:9px;
+    background:var(--red);
+    color:#fff;
+    margin-top:10px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.submit-review:hover{
+    background:var(--dark-red);
+}
+
+
+/* ================= ACTIONS ================= */
+
+.actions{
+    display:grid;
+    gap:9px;
+    margin-top:20px;
+}
+
+.primary{
+    height:45px;
+    background:var(--red);
+    color:#fff;
+    border:0;
+    border-radius:9px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.secondary{
+    height:45px;
+    background:#fff;
+    color:var(--red);
+    border:1px solid var(--red);
+    border-radius:9px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.outline{
+    height:42px;
+    background:#fff;
+    color:#555;
+    border:1px solid #ddd;
+    border-radius:9px;
+    font-size:10px;
+    font-weight:600;
+}
+
+
+/* ================= RECOMMEND ================= */
+
+.recommend{
+    margin-top:20px;
+    background:
+        linear-gradient(110deg,#fff1f1,#fff8e8);
+    border:1px solid #f0dddd;
+    border-radius:14px;
+    padding:17px;
+}
+
+.recommend strong{
+    display:block;
+    font-size:12px;
+}
+
+.recommend p{
+    color:#777;
+    font-size:9px;
+    line-height:1.6;
+    margin-top:4px;
+}
+
+
+/* ================= REVIEW SUCCESS ================= */
+
+.review-success{
+    display:none;
+    padding:25px 0 10px;
+}
+
+.review-success-icon{
+    width:48px;
+    height:48px;
+    background:#eafaf2;
+    color:var(--green);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    margin:0 auto 10px;
+    font-size:23px;
+}
+
+.review-success strong{
+    display:block;
+    font-size:13px;
+}
+
+.review-success p{
+    color:#888;
+    font-size:10px;
+    margin-top:3px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:10px;
+    line-height:1.7;
+    margin-top:10px;
+    max-width:260px;
+}
+
+.footer-col h4{
+    font-size:11px;
+    margin-bottom:10px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:9px;
+    margin:7px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:28px;
+    padding-top:14px;
+    color:#777;
+    font-size:9px;
+}
+
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    bottom:22px;
+    left:50%;
+    transform:translate(-50%,70px);
+    background:#171717;
+    color:#fff;
+    padding:11px 17px;
+    border-radius:8px;
+    font-size:10px;
+    opacity:0;
+    transition:.25s;
+    z-index:100;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .logo-icon{
+        width:36px;
+        height:36px;
+    }
+
+    .logo-text{
+        font-size:17px;
+    }
+
+    .page{
+        padding:28px 0 45px;
+    }
+
+    .success-top h1{
+        font-size:28px;
+    }
+
+    .card{
+        padding:20px 16px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+    <a href="dashboard.html" class="home-link">
+        ← Go to Dashboard
+    </a>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <!-- SUCCESS -->
+
+    <div class="success-top">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>
+            Consultation Completed
+        </h1>
+
+        <p>
+            Thank you for consulting with Astro With Talk.
+        </p>
+
+    </div>
+
+
+    <div class="summary-grid">
+
+
+        <!-- LEFT SUMMARY -->
+
+        <section class="card">
+
+            <div class="card-title">
+                Consultation Summary
+            </div>
+
+
+            <!-- ASTROLOGER -->
+
+            <div class="astrologer">
+
+                <div class="avatar">
+                    👨🏻
+                </div>
+
+                <div>
+
+                    <div class="astrologer-name">
+
+                        Astro Rahul
+
+                        <span class="verified">
+                            ✓
+                        </span>
+
+                    </div>
+
+                    <div class="speciality">
+                        Vedic Astrology • Love • Career
+                    </div>
+
+                    <span class="consult-type"
+                          id="consultType">
+                        💬 Chat Consultation
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="details">
+
+                <div class="detail-row">
+
+                    <span>
+                        Consultation Date
+                    </span>
+
+                    <strong id="consultDate">
+                        27 Aug 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Duration
+                    </span>
+
+                    <strong id="duration">
+                        05:00
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Rate
+                    </span>
+
+                    <strong>
+                        ₹20 / min
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Total Charged
+                    </span>
+
+                    <strong class="amount">
+                        ₹<span id="totalAmount">
+                            100
+                        </span>
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Payment Status
+                    </span>
+
+                    <strong style="color:#15945a;">
+                        ✓ Paid
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- TRANSACTION -->
+
+            <div class="transaction-box">
+
+                <div>
+
+                    <span>
+                        Transaction ID
+                    </span>
+
+                    <strong class="transaction-id">
+                        AWT-20260827-839274
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Payment Method
+                    </span>
+
+                    <strong>
+                        Wallet
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECOMMEND -->
+
+            <div class="recommend">
+
+                <strong>
+                    🔮 Want another consultation?
+                </strong>
+
+                <p>
+                    Continue your astrology journey with
+                    Astro Rahul or explore other verified
+                    astrologers available on Astro With Talk.
+                </p>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <button
+                    class="primary"
+                    onclick="reconsult()">
+
+                    🔮 Consult Astro Rahul Again
+
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="location.href='astrologers.html'">
+
+                    Explore More Astrologers
+
+                </button>
+
+                <button
+                    class="outline"
+                    onclick="downloadSummary()">
+
+                    ↓ Download Consultation Summary
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT REVIEW -->
+
+        <aside class="card review-card">
+
+            <h2>
+                Rate Your Experience
+            </h2>
+
+            <p>
+                Your feedback helps us improve our service.
+            </p>
+
+
+            <!-- STARS -->
+
+            <div class="stars">
+
+                <button
+                    class="star"
+                    data-rating="1"
+                    onclick="selectRating(1)">
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="2"
+                    onclick="selectRating(2)">
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="3"
+                    onclick="selectRating(3)">
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="4"
+                    onclick="selectRating(4)">
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="5"
+                    onclick="selectRating(5)">
+                    ★
+                </button>
+
+            </div>
+
+
+            <div
+                class="rating-text"
+                id="ratingText">
+                Select a rating
+            </div>
+
+
+            <!-- REVIEW -->
+
+            <textarea
+                class="review-input"
+                id="review"
+                placeholder="Write your experience (optional)...">
+            </textarea>
+
+
+            <button
+                class="submit-review"
+                onclick="submitReview()">
+
+                Submit Review
+
+            </button>
+
+
+            <!-- SUCCESS -->
+
+            <div
+                class="review-success"
+                id="reviewSuccess">
+
+                <div class="review-success-icon">
+                    ✓
+                </div>
+
+                <strong>
+                    Thank you for your feedback!
+                </strong>
+
+                <p>
+                    Your review has been submitted successfully.
+                </p>
+
+            </div>
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:white;">
+                Astro <span>With Talk</span>
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from
+            trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="chat.html">
+            Chat
+        </a>
+
+        <a href="call.html">
+            Audio Call
+        </a>
+
+        <a href="FREE-SERVICES/ai-astrologer.html">
+            AI Astrologer
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Account</h4>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="wallet.html">
+            Wallet
+        </a>
+
+        <a href="consultation-history.html">
+            History
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* ================= LOAD CONSULTATION DATA ================= */
+
+const storedDuration =
+    Number(
+        localStorage.getItem(
+            "awt_last_consultation_duration"
+        )
+    );
+
+const storedAmount =
+    Number(
+        localStorage.getItem(
+            "awt_last_consultation_amount"
+        )
+    );
+
+const storedType =
+    localStorage.getItem(
+        "awt_last_consultation_type"
+    );
+
+const storedAstrologer =
+    localStorage.getItem(
+        "awt_last_astrologer"
+    );
+
+
+/* DURATION */
+
+if(storedDuration){
+
+    document.getElementById("duration")
+        .innerText =
+        formatTime(storedDuration);
+
+}
+
+
+/* AMOUNT */
+
+if(storedAmount){
+
+    document.getElementById("totalAmount")
+        .innerText =
+        storedAmount;
+
+}
+
+
+/* ASTROLOGER */
+
+if(storedAstrologer){
+
+    document.querySelector(".astrologer-name")
+        .childNodes[0]
+        .textContent =
+        storedAstrologer + " ";
+
+}
+
+
+/* TYPE */
+
+if(storedType){
+
+    const typeElement =
+        document.getElementById("consultType");
+
+    if(storedType === "Audio Call"){
+
+        typeElement.innerText =
+            "📞 Audio Call Consultation";
+
+    }
+
+    if(storedType === "Video Consultation"){
+
+        typeElement.innerText =
+            "🎥 Video Consultation";
+
+    }
+
+}
+
+
+/* DATE */
+
+const now =
+    new Date();
+
+document.getElementById("consultDate")
+    .innerText =
+    now.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+
+/* ================= FORMAT TIME ================= */
+
+function formatTime(seconds){
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secs =
+        seconds % 60;
+
+    return String(minutes).padStart(2,"0")
+        + ":" +
+        String(secs).padStart(2,"0");
+
+}
+
+
+/* ================= RATING ================= */
+
+let selectedRating = 0;
+
+
+const ratingLabels = {
+
+    1:"Poor",
+    2:"Needs Improvement",
+    3:"Good",
+    4:"Very Good",
+    5:"Excellent"
+
+};
+
+
+function selectRating(rating){
+
+    selectedRating = rating;
+
+
+    document
+        .querySelectorAll(".star")
+        .forEach(star => {
+
+            const value =
+                Number(
+                    star.dataset.rating
+                );
+
+            if(value <= rating){
+
+                star.classList.add("active");
+
+            }else{
+
+                star.classList.remove("active");
+
+            }
+
+        });
+
+
+    document.getElementById("ratingText")
+        .innerText =
+        ratingLabels[rating];
+
+}
+
+
+/* ================= SUBMIT REVIEW ================= */
+
+function submitReview(){
+
+    const review =
+        document.getElementById("review")
+        .value
+        .trim();
+
+
+    if(selectedRating === 0){
+
+        showToast(
+            "Please select a rating first."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        PRODUCTION BACKEND:
+
+        POST /api/reviews/create
+
+        {
+            consultation_id,
+            astrologer_id,
+            rating,
+            review
+        }
+
+        Backend validates the consultation
+        and prevents duplicate reviews.
+    */
+
+
+    localStorage.setItem(
+        "awt_last_rating",
+        selectedRating
+    );
+
+    localStorage.setItem(
+        "awt_last_review",
+        review
+    );
+
+
+    document.querySelector(".stars")
+        .style.display = "none";
+
+    document.getElementById("ratingText")
+        .style.display = "none";
+
+    document.getElementById("review")
+        .style.display = "none";
+
+    document.querySelector(".submit-review")
+        .style.display = "none";
+
+    document.getElementById("reviewSuccess")
+        .style.display = "block";
+
+
+    showToast(
+        "Review submitted successfully."
+    );
+
+}
+
+
+/* ================= RECONSULT ================= */
+
+function reconsult(){
+
+    window.location.href =
+        "astrologer-profile.html";
+
+}
+
+
+/* ================= DOWNLOAD ================= */
+
+function downloadSummary(){
+
+    const duration =
+        document.getElementById("duration")
+        .innerText;
+
+    const amount =
+        document.getElementById("totalAmount")
+        .innerText;
+
+    const date =
+        document.getElementById("consultDate")
+        .innerText;
+
+
+    const text =
+`ASTRO WITH TALK
+CONSULTATION SUMMARY
+============================
+
+Astrologer:
+Astro Rahul
+
+Consultation:
+${document.getElementById("consultType").innerText}
+
+Date:
+${date}
+
+Duration:
+${duration}
+
+Rate:
+₹20/min
+
+Total Charged:
+₹${amount}
+
+Payment Status:
+Paid
+
+============================
+Thank you for using Astro With Talk.
+`;
+
+
+    const blob =
+        new Blob(
+            [text],
+            {type:"text/plain"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "AWT-Consultation-Summary.txt";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText =
+        message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2800);
+
+}
+
+</script>
+
+</body>
+</html>

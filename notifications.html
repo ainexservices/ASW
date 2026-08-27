@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notifications - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --green:#15945a;
+    --gold:#e4a629;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1050px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.back{
+    color:#777;
+    font-size:10px;
+    font-weight:700;
+}
+
+.back:hover{
+    color:var(--red);
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+    padding:35px 0 60px;
+}
+
+.heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:20px;
+}
+
+.heading h1{
+    font-family:"Playfair Display",serif;
+    font-size:32px;
+}
+
+.heading p{
+    color:#888;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.mark-all{
+    height:36px;
+    padding:0 12px;
+    border:1px solid var(--red);
+    background:#fff;
+    color:var(--red);
+    border-radius:7px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.mark-all:hover{
+    background:var(--red);
+    color:#fff;
+}
+
+
+/* ================= SUMMARY ================= */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.summary-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+}
+
+.summary-card small{
+    color:#999;
+    font-size:8px;
+}
+
+.summary-value{
+    font-size:20px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.summary-label{
+    color:#888;
+    font-size:8px;
+    margin-top:2px;
+}
+
+
+/* ================= NOTIFICATIONS CARD ================= */
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.filter-bar{
+    padding:15px 18px;
+    border-bottom:1px solid #eee;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.filter{
+    border:1px solid #ddd;
+    background:#fff;
+    color:#777;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.filter.active{
+    border-color:var(--red);
+    background:var(--light-red);
+    color:var(--red);
+}
+
+.clear{
+    border:0;
+    background:none;
+    color:#999;
+    font-size:8px;
+}
+
+.clear:hover{
+    color:var(--red);
+}
+
+
+/* ================= NOTIFICATION ITEM ================= */
+
+.notification-item{
+    display:flex;
+    gap:13px;
+    padding:17px 18px;
+    border-bottom:1px solid #eee;
+    position:relative;
+    cursor:pointer;
+    transition:.18s;
+}
+
+.notification-item:last-child{
+    border-bottom:0;
+}
+
+.notification-item:hover{
+    background:#fffafa;
+}
+
+.notification-item.unread{
+    background:#fff8f8;
+}
+
+.notification-item.unread:before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:3px;
+    background:var(--red);
+}
+
+.n-icon{
+    width:43px;
+    height:43px;
+    border-radius:11px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:19px;
+    flex:none;
+}
+
+.n-icon.wallet-icon{
+    background:#fff7e5;
+}
+
+.n-icon.star-icon{
+    background:#fff9e7;
+}
+
+.n-icon.system-icon{
+    background:#eef7ff;
+}
+
+.n-content{
+    flex:1;
+    min-width:0;
+}
+
+.n-top{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.n-title{
+    font-size:11px;
+    font-weight:700;
+}
+
+.unread-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--red);
+}
+
+.n-message{
+    color:#777;
+    font-size:9px;
+    line-height:1.55;
+    margin-top:4px;
+}
+
+.n-time{
+    color:#aaa;
+    font-size:8px;
+    margin-top:5px;
+}
+
+.n-action{
+    align-self:center;
+    border:1px solid #ddd;
+    background:#fff;
+    color:#777;
+    border-radius:6px;
+    padding:6px 9px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.n-action:hover{
+    color:var(--red);
+    border-color:var(--red);
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty{
+    display:none;
+    text-align:center;
+    padding:65px 20px;
+}
+
+.empty-icon{
+    width:60px;
+    height:60px;
+    background:#f2f2f2;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    margin:0 auto 12px;
+    font-size:26px;
+}
+
+.empty h2{
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.empty p{
+    color:#999;
+    font-size:9px;
+    margin-top:5px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translate(-50%,70px);
+    background:#171717;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    font-size:9px;
+    opacity:0;
+    transition:.25s;
+    z-index:100;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .heading{
+        display:block;
+    }
+
+    .mark-all{
+        margin-top:13px;
+    }
+
+    .summary{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .notification-item{
+        padding:14px 12px;
+    }
+
+    .n-action{
+        display:none;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="walletBalance">500</span>
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="back">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <!-- HEADING -->
+
+    <div class="heading">
+
+        <div>
+
+            <h1>
+                Notifications
+            </h1>
+
+            <p>
+                Stay updated with your consultations, wallet and Astro With Talk.
+            </p>
+
+        </div>
+
+        <button
+            class="mark-all"
+            onclick="markAllRead()">
+
+            ✓ Mark All as Read
+
+        </button>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <div class="summary-card">
+
+            <small>
+                TOTAL
+            </small>
+
+            <div
+                class="summary-value"
+                id="totalCount">
+                7
+            </div>
+
+            <div class="summary-label">
+                Notifications
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                UNREAD
+            </small>
+
+            <div
+                class="summary-value"
+                id="unreadCount">
+                4
+            </div>
+
+            <div class="summary-label">
+                Need your attention
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                THIS WEEK
+            </small>
+
+            <div class="summary-value">
+                5
+            </div>
+
+            <div class="summary-label">
+                New updates
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTIFICATION CARD -->
+
+    <section class="card">
+
+
+        <!-- FILTER -->
+
+        <div class="filter-bar">
+
+            <div class="filters">
+
+                <button
+                    class="filter active"
+                    data-filter="all"
+                    onclick="filterNotifications('all',this)">
+
+                    All
+
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="consultation"
+                    onclick="filterNotifications('consultation',this)">
+
+                    Consultations
+
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="wallet"
+                    onclick="filterNotifications('wallet',this)">
+
+                    Wallet
+
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="offer"
+                    onclick="filterNotifications('offer',this)">
+
+                    Offers
+
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="system"
+                    onclick="filterNotifications('system',this)">
+
+                    Updates
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="clear"
+                onclick="clearRead()">
+
+                Clear read
+
+            </button>
+
+        </div>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <div id="notificationList">
+
+
+            <!-- 1 -->
+
+            <div
+                class="notification-item unread"
+                data-category="consultation"
+                onclick="openNotification(this,'consultation-history.html')">
+
+                <div class="n-icon">
+                    💬
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            Consultation Completed
+                        </div>
+
+                        <span class="unread-dot"></span>
+
+                    </div>
+
+                    <div class="n-message">
+                        Your chat consultation with Astro Rahul has been completed successfully.
+                    </div>
+
+                    <div class="n-time">
+                        Today • 11:48 AM
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'consultation-history.html')">
+
+                    View
+
+                </button>
+
+            </div>
+
+
+            <!-- 2 -->
+
+            <div
+                class="notification-item unread"
+                data-category="consultation"
+                onclick="openNotification(this,'consultation-summary.html')">
+
+                <div class="n-icon star-icon">
+                    ⭐
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            Rate Your Consultation
+                        </div>
+
+                        <span class="unread-dot"></span>
+
+                    </div>
+
+                    <div class="n-message">
+                        Share your experience with Astro Rahul and help other users.
+                    </div>
+
+                    <div class="n-time">
+                        Today • 11:50 AM
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'consultation-summary.html')">
+
+                    Rate
+
+                </button>
+
+            </div>
+
+
+            <!-- 3 -->
+
+            <div
+                class="notification-item unread"
+                data-category="wallet"
+                onclick="openNotification(this,'wallet.html')">
+
+                <div class="n-icon wallet-icon">
+                    💰
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            Wallet Balance Update
+                        </div>
+
+                        <span class="unread-dot"></span>
+
+                    </div>
+
+                    <div class="n-message">
+                        Your current wallet balance is ₹500. Recharge anytime to continue consultations.
+                    </div>
+
+                    <div class="n-time">
+                        Today • 11:55 AM
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'wallet.html')">
+
+                    Wallet
+
+                </button>
+
+            </div>
+
+
+            <!-- 4 -->
+
+            <div
+                class="notification-item unread"
+                data-category="offer"
+                onclick="openNotification(this,'recharge.html')">
+
+                <div class="n-icon wallet-icon">
+                    🎁
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            Special Recharge Offer
+                        </div>
+
+                        <span class="unread-dot"></span>
+
+                    </div>
+
+                    <div class="n-message">
+                        Recharge your wallet and continue exploring personalized astrology guidance.
+                    </div>
+
+                    <div class="n-time">
+                        Yesterday
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'recharge.html')">
+
+                    Recharge
+
+                </button>
+
+            </div>
+
+
+            <!-- 5 -->
+
+            <div
+                class="notification-item"
+                data-category="consultation"
+                onclick="openNotification(this,'astrologer-profile.html')">
+
+                <div class="n-icon">
+                    🔮
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            Astro Rahul Is Available
+                        </div>
+
+                    </div>
+
+                    <div class="n-message">
+                        Your saved astrologer is currently available for chat consultation.
+                    </div>
+
+                    <div class="n-time">
+                        Yesterday
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'astrologer-profile.html')">
+
+                    Consult
+
+                </button>
+
+            </div>
+
+
+            <!-- 6 -->
+
+            <div
+                class="notification-item"
+                data-category="system"
+                onclick="openNotification(this,'profile.html')">
+
+                <div class="n-icon system-icon">
+                    🔐
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            Account Security
+                        </div>
+
+                    </div>
+
+                    <div class="n-message">
+                        Your mobile number is verified and OTP login is active.
+                    </div>
+
+                    <div class="n-time">
+                        2 days ago
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'profile.html')">
+
+                    View
+
+                </button>
+
+            </div>
+
+
+            <!-- 7 -->
+
+            <div
+                class="notification-item"
+                data-category="system"
+                onclick="openNotification(this,'astrologers.html')">
+
+                <div class="n-icon system-icon">
+                    ✨
+                </div>
+
+                <div class="n-content">
+
+                    <div class="n-top">
+
+                        <div class="n-title">
+                            New Astrologers Available
+                        </div>
+
+                    </div>
+
+                    <div class="n-message">
+                        Discover new verified astrologers available for chat and call consultations.
+                    </div>
+
+                    <div class="n-time">
+                        3 days ago
+                    </div>
+
+                </div>
+
+                <button
+                    class="n-action"
+                    onclick="event.stopPropagation(); openNotification(this.parentElement,'astrologers.html')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- EMPTY -->
+
+        <div
+            class="empty"
+            id="empty">
+
+            <div class="empty-icon">
+                🔔
+            </div>
+
+            <h2>
+                No notifications
+            </h2>
+
+            <p>
+                You're all caught up.
+            </p>
+
+        </div>
+
+
+    </section>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Account</h4>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <a href="wallet.html">
+            Wallet
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Consult</h4>
+
+        <a href="astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="chat.html">
+            Chat
+        </a>
+
+        <a href="call.html">
+            Audio Call
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Explore</h4>
+
+        <a href="HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let walletBalance =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!walletBalance && walletBalance !== 0){
+    walletBalance = 500;
+}
+
+document.getElementById("walletBalance")
+    .innerText =
+    walletBalance.toLocaleString("en-IN");
+
+
+/* ================= COUNTS ================= */
+
+function updateCounts(){
+
+    const items =
+        [...document.querySelectorAll(".notification-item")];
+
+    const visible =
+        items.filter(
+            item => item.style.display !== "none"
+        );
+
+    const unread =
+        items.filter(
+            item =>
+                item.classList.contains("unread")
+        );
+
+
+    document.getElementById("totalCount")
+        .innerText =
+        visible.length;
+
+    document.getElementById("unreadCount")
+        .innerText =
+        unread.length;
+
+}
+
+
+updateCounts();
+
+
+/* ================= FILTER ================= */
+
+function filterNotifications(
+    category,
+    button
+){
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+
+    const items =
+        document.querySelectorAll(
+            ".notification-item"
+        );
+
+
+    let visibleCount = 0;
+
+
+    items.forEach(item => {
+
+        const itemCategory =
+            item.dataset.category;
+
+
+        if(
+            category === "all" ||
+            itemCategory === category
+        ){
+
+            item.style.display =
+                "flex";
+
+            visibleCount++;
+
+        }else{
+
+            item.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    document.getElementById("empty")
+        .style.display =
+        visibleCount === 0
+            ? "block"
+            : "none";
+
+
+    updateCounts();
+
+}
+
+
+/* ================= OPEN ================= */
+
+function openNotification(
+    element,
+    url
+){
+
+    if(
+        element.classList.contains("unread")
+    ){
+
+        element.classList.remove("unread");
+
+
+        const dot =
+            element.querySelector(
+                ".unread-dot"
+            );
+
+        if(dot){
+            dot.remove();
+        }
+
+
+        updateCounts();
+
+    }
+
+
+    setTimeout(()=>{
+
+        window.location.href = url;
+
+    },150);
+
+}
+
+
+/* ================= MARK ALL ================= */
+
+function markAllRead(){
+
+    const items =
+        document.querySelectorAll(
+            ".notification-item"
+        );
+
+
+    let changed = 0;
+
+
+    items.forEach(item => {
+
+        if(
+            item.classList.contains("unread")
+        ){
+
+            item.classList.remove("unread");
+
+            const dot =
+                item.querySelector(
+                    ".unread-dot"
+                );
+
+            if(dot){
+                dot.remove();
+            }
+
+            changed++;
+
+        }
+
+    });
+
+
+    updateCounts();
+
+
+    showToast(
+        changed
+            ? changed + " notifications marked as read."
+            : "All notifications are already read."
+    );
+
+}
+
+
+/* ================= CLEAR READ ================= */
+
+function clearRead(){
+
+    const list =
+        document.getElementById(
+            "notificationList"
+        );
+
+    const items =
+        [...list.querySelectorAll(
+            ".notification-item"
+        )];
+
+
+    let removed = 0;
+
+
+    items.forEach(item => {
+
+        if(
+            !item.classList.contains("unread")
+        ){
+
+            item.remove();
+
+            removed++;
+
+        }
+
+    });
+
+
+    updateCounts();
+
+
+    if(
+        list.querySelectorAll(
+            ".notification-item"
+        ).length === 0
+    ){
+
+        document.getElementById("empty")
+            .style.display =
+            "block";
+
+    }
+
+
+    showToast(
+        removed
+            ? removed + " read notifications cleared."
+            : "No read notifications to clear."
+    );
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText =
+        message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+</script>
+
+</body>
+</html>

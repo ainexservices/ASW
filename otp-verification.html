@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Verify OTP - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --gold:#e4a629;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --green:#15945a;
+}
+
+body{
+    min-height:100vh;
+    font-family:"DM Sans",sans-serif;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(215,25,32,.08),transparent 25%),
+        radial-gradient(circle at 90% 80%,rgba(228,166,41,.10),transparent 25%),
+        #fff;
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    height:72px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    width:min(1200px,calc(100% - 40px));
+    height:72px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:21px;
+}
+
+.logo-text{
+    font-size:20px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.back{
+    color:#666;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ================= MAIN ================= */
+
+.verify-area{
+    min-height:calc(100vh - 72px);
+    display:grid;
+    place-items:center;
+    padding:40px 15px;
+}
+
+.verify-card{
+    width:min(430px,100%);
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 20px 60px rgba(0,0,0,.08);
+    text-align:center;
+}
+
+/* ICON */
+
+.verify-icon{
+    width:70px;
+    height:70px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:30px;
+}
+
+.verify-card h1{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.subtitle{
+    color:#888;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.phone-display{
+    margin-top:9px;
+    color:#333;
+    font-size:13px;
+    font-weight:700;
+}
+
+.change-number{
+    border:0;
+    background:none;
+    color:var(--red);
+    font-size:11px;
+    font-weight:700;
+    margin-left:5px;
+    cursor:pointer;
+}
+
+/* OTP */
+
+.otp-container{
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    margin:28px 0 16px;
+}
+
+.otp-input{
+    width:48px;
+    height:55px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    text-align:center;
+    font-size:22px;
+    font-weight:700;
+    outline:none;
+    transition:.2s;
+}
+
+.otp-input:focus{
+    border-color:var(--red);
+    box-shadow:0 0 0 3px rgba(215,25,32,.08);
+}
+
+/* TIMER */
+
+.timer{
+    font-size:11px;
+    color:#888;
+    margin-bottom:20px;
+}
+
+.timer span{
+    color:var(--red);
+    font-weight:700;
+}
+
+.resend{
+    border:0;
+    background:none;
+    color:#aaa;
+    font-size:12px;
+    font-weight:700;
+    cursor:not-allowed;
+}
+
+.resend.active{
+    color:var(--red);
+    cursor:pointer;
+}
+
+/* VERIFY BUTTON */
+
+.verify-btn{
+    width:100%;
+    height:49px;
+    border:0;
+    border-radius:9px;
+    background:var(--red);
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.verify-btn:hover{
+    background:var(--dark-red);
+}
+
+.verify-btn:disabled{
+    background:#ccc;
+    cursor:not-allowed;
+}
+
+/* HELP */
+
+.help{
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px solid #eee;
+    color:#888;
+    font-size:10px;
+}
+
+.help a{
+    color:var(--red);
+    font-weight:700;
+}
+
+/* SUCCESS */
+
+.success-screen{
+    display:none;
+}
+
+.success-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#eafaf2;
+    color:var(--green);
+    display:grid;
+    place-items:center;
+    margin:0 auto 20px;
+    font-size:35px;
+}
+
+.success-screen h2{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.success-screen p{
+    color:#777;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.continue-btn{
+    width:100%;
+    margin-top:25px;
+    height:48px;
+    border:0;
+    border-radius:9px;
+    background:var(--red);
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%) translateY(70px);
+    background:#171717;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:8px;
+    font-size:11px;
+    opacity:0;
+    transition:.3s;
+    z-index:1000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .nav{
+        width:calc(100% - 24px);
+    }
+
+    .logo-icon{
+        width:36px;
+        height:36px;
+    }
+
+    .logo-text{
+        font-size:17px;
+    }
+
+    .back{
+        font-size:11px;
+    }
+
+    .verify-area{
+        padding:25px 12px;
+    }
+
+    .verify-card{
+        padding:28px 18px;
+    }
+
+    .otp-container{
+        gap:6px;
+    }
+
+    .otp-input{
+        width:43px;
+        height:52px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="nav">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+    <a href="login.html" class="back">
+        ← Change Login
+    </a>
+
+</div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="verify-area">
+
+<div class="verify-card" id="verifyCard">
+
+
+    <!-- OTP SCREEN -->
+
+    <div id="otpScreen">
+
+        <div class="verify-icon">
+            🔐
+        </div>
+
+        <h1>
+            Verify Your Number
+        </h1>
+
+        <p class="subtitle">
+            We've sent a 6-digit verification code to
+        </p>
+
+        <div class="phone-display">
+
+            <span id="phoneNumber">
+                +91 XXXXX XXXXX
+            </span>
+
+            <button
+                class="change-number"
+                onclick="changeNumber()">
+                Change
+            </button>
+
+        </div>
+
+
+        <!-- OTP INPUTS -->
+
+        <div class="otp-container">
+
+            <input
+                class="otp-input"
+                type="tel"
+                maxlength="1"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                autofocus
+            >
+
+            <input
+                class="otp-input"
+                type="tel"
+                maxlength="1"
+                inputmode="numeric"
+            >
+
+            <input
+                class="otp-input"
+                type="tel"
+                maxlength="1"
+                inputmode="numeric"
+            >
+
+            <input
+                class="otp-input"
+                type="tel"
+                maxlength="1"
+                inputmode="numeric"
+            >
+
+            <input
+                class="otp-input"
+                type="tel"
+                maxlength="1"
+                inputmode="numeric"
+            >
+
+            <input
+                class="otp-input"
+                type="tel"
+                maxlength="1"
+                inputmode="numeric"
+            >
+
+        </div>
+
+
+        <!-- TIMER -->
+
+        <div class="timer">
+
+            Resend code in
+            <span id="timer">
+                00:30
+            </span>
+
+        </div>
+
+
+        <button
+            id="resendBtn"
+            class="resend"
+            onclick="resendOTP()"
+            disabled>
+
+            Didn't receive the code?
+            Resend OTP
+
+        </button>
+
+
+        <!-- VERIFY -->
+
+        <button
+            id="verifyBtn"
+            class="verify-btn"
+            onclick="verifyOTP()"
+            disabled>
+
+            Verify & Continue →
+
+        </button>
+
+
+        <div class="help">
+
+            Having trouble?
+            <a href="SUPPORT/help.html">
+                Get Help
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS SCREEN -->
+
+    <div class="success-screen" id="successScreen">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Login Successful
+        </h2>
+
+        <p>
+            Your mobile number has been verified successfully.
+            Welcome to Astro With Talk.
+        </p>
+
+        <button
+            class="continue-btn"
+            onclick="goDashboard()">
+
+            Continue to Astro With Talk →
+
+        </button>
+
+    </div>
+
+
+</div>
+
+</main>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* ================= PHONE ================= */
+
+let phone =
+    localStorage.getItem("awt_login_phone");
+
+if(!phone){
+
+    phone = "9876543210";
+
+}
+
+function maskPhone(number){
+
+    return "+91 " +
+        number.substring(0,3) +
+        "•••••" +
+        number.substring(8);
+
+}
+
+document.getElementById("phoneNumber")
+    .innerText = maskPhone(phone);
+
+
+/* ================= OTP INPUT ================= */
+
+const inputs =
+    document.querySelectorAll(".otp-input");
+
+const verifyBtn =
+    document.getElementById("verifyBtn");
+
+
+inputs.forEach((input,index)=>{
+
+    input.addEventListener("input",function(){
+
+        this.value =
+            this.value.replace(/\D/g,"");
+
+        if(this.value && index < inputs.length - 1){
+
+            inputs[index + 1].focus();
+
+        }
+
+        checkOTP();
+
+    });
+
+
+    input.addEventListener("keydown",function(e){
+
+        if(
+            e.key === "Backspace" &&
+            !this.value &&
+            index > 0
+        ){
+
+            inputs[index - 1].focus();
+
+        }
+
+    });
+
+
+    input.addEventListener("paste",function(e){
+
+        e.preventDefault();
+
+        const pasted =
+            (e.clipboardData || window.clipboardData)
+            .getData("text")
+            .replace(/\D/g,"")
+            .slice(0,6);
+
+        pasted.split("").forEach((digit,i)=>{
+
+            if(inputs[i]){
+                inputs[i].value = digit;
+            }
+
+        });
+
+        checkOTP();
+
+    });
+
+});
+
+
+function checkOTP(){
+
+    let otp = "";
+
+    inputs.forEach(input=>{
+        otp += input.value;
+    });
+
+    verifyBtn.disabled =
+        otp.length !== 6;
+
+}
+
+
+/* ================= VERIFY ================= */
+
+function verifyOTP(){
+
+    let otp = "";
+
+    inputs.forEach(input=>{
+        otp += input.value;
+    });
+
+    if(otp.length !== 6){
+
+        showToast(
+            "Please enter the complete 6-digit OTP."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        FRONTEND DEMO
+
+        Backend version will validate OTP
+        from PHP/API/SMS provider.
+    */
+
+    localStorage.setItem(
+        "awt_logged_in",
+        "true"
+    );
+
+    localStorage.setItem(
+        "awt_user_phone",
+        phone
+    );
+
+
+    document.getElementById("otpScreen")
+        .style.display = "none";
+
+    document.getElementById("successScreen")
+        .style.display = "block";
+
+}
+
+
+/* ================= CHANGE NUMBER ================= */
+
+function changeNumber(){
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ================= TIMER ================= */
+
+let remaining = 30;
+
+const timerElement =
+    document.getElementById("timer");
+
+const resendBtn =
+    document.getElementById("resendBtn");
+
+
+const countdown =
+    setInterval(()=>{
+
+        remaining--;
+
+        timerElement.innerText =
+            "00:" +
+            String(remaining).padStart(2,"0");
+
+
+        if(remaining <= 0){
+
+            clearInterval(countdown);
+
+            timerElement.innerText =
+                "00:00";
+
+            resendBtn.disabled = false;
+
+            resendBtn.classList.add("active");
+
+        }
+
+    },1000);
+
+
+/* ================= RESEND ================= */
+
+function resendOTP(){
+
+    if(resendBtn.disabled){
+
+        return;
+
+    }
+
+    showToast(
+        "A new OTP has been sent."
+    );
+
+    remaining = 30;
+
+    resendBtn.disabled = true;
+
+    resendBtn.classList.remove("active");
+
+    timerElement.innerText =
+        "00:30";
+
+
+    const newCountdown =
+        setInterval(()=>{
+
+            remaining--;
+
+            timerElement.innerText =
+                "00:" +
+                String(remaining).padStart(2,"0");
+
+
+            if(remaining <= 0){
+
+                clearInterval(newCountdown);
+
+                timerElement.innerText =
+                    "00:00";
+
+                resendBtn.disabled = false;
+
+                resendBtn.classList.add("active");
+
+            }
+
+        },1000);
+
+}
+
+
+/* ================= DASHBOARD ================= */
+
+function goDashboard(){
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText = message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+</script>
+
+</body>
+</html>

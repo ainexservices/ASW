@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Astrologer Profile - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --gold:#e4a629;
+    --dark:#171717;
+    --gray:#707070;
+    --border:#e7e7e7;
+    --green:#15945a;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:#fafafa;
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1200px,calc(100% - 40px));
+    margin:auto;
+}
+
+/* HEADER */
+
+header{
+    height:72px;
+    background:white;
+    border-bottom:1px solid #eee;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav{
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    min-width:205px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:21px;
+}
+
+.logo-text{
+    font-size:20px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:23px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:var(--red);
+}
+
+.nav-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.wallet{
+    border:1px solid #ddd;
+    background:white;
+    padding:10px 14px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.login{
+    border:0;
+    background:var(--red);
+    color:white;
+    padding:11px 18px;
+    border-radius:9px;
+    font-weight:600;
+}
+
+.menu{
+    display:none;
+    border:0;
+    background:none;
+    font-size:25px;
+}
+
+/* BREADCRUMB */
+
+.breadcrumb{
+    padding:20px 0 10px;
+    font-size:12px;
+    color:#888;
+}
+
+.breadcrumb a{
+    color:var(--red);
+}
+
+/* PROFILE */
+
+.profile-area{
+    padding:15px 0 55px;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:1fr 330px;
+    gap:22px;
+}
+
+/* MAIN PROFILE */
+
+.profile-main{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.profile-cover{
+    height:145px;
+    background:
+        radial-gradient(circle at 75% 30%,rgba(228,166,41,.3),transparent 25%),
+        linear-gradient(115deg,#ffe9e9,#fff5df);
+}
+
+.profile-info{
+    padding:0 28px 28px;
+}
+
+.profile-top{
+    display:flex;
+    gap:20px;
+    align-items:flex-end;
+    margin-top:-55px;
+}
+
+.big-avatar{
+    width:115px;
+    height:115px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffd6c5,#db9870);
+    border:5px solid white;
+    box-shadow:0 2px 12px rgba(0,0,0,.1);
+    display:grid;
+    place-items:center;
+    font-size:55px;
+    flex-shrink:0;
+}
+
+.profile-title{
+    padding-bottom:8px;
+}
+
+.profile-title h1{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+}
+
+.verified{
+    color:var(--red);
+    font-family:"DM Sans",sans-serif;
+    font-size:14px;
+}
+
+.online{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    background:#eafaf2;
+    color:var(--green);
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:10px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+.online-dot{
+    width:7px;
+    height:7px;
+    background:var(--green);
+    border-radius:50%;
+}
+
+.profile-meta{
+    color:#777;
+    font-size:12px;
+    margin-top:7px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    margin-top:25px;
+    border:1px solid #eee;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.stat{
+    text-align:center;
+    padding:15px 8px;
+    border-right:1px solid #eee;
+}
+
+.stat:last-child{
+    border-right:0;
+}
+
+.stat strong{
+    display:block;
+    font-size:16px;
+}
+
+.stat small{
+    color:#888;
+    font-size:10px;
+}
+
+/* TABS */
+
+.tabs{
+    display:flex;
+    gap:28px;
+    border-bottom:1px solid #eee;
+    margin-top:28px;
+}
+
+.tab{
+    padding:13px 0;
+    font-size:13px;
+    font-weight:700;
+    color:#777;
+    border:0;
+    background:none;
+    position:relative;
+}
+
+.tab.active{
+    color:var(--red);
+}
+
+.tab.active:after{
+    content:"";
+    position:absolute;
+    bottom:-1px;
+    left:0;
+    right:0;
+    height:2px;
+    background:var(--red);
+}
+
+/* CONTENT */
+
+.about{
+    padding-top:25px;
+}
+
+.about h2{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.about p{
+    color:#666;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:17px;
+}
+
+.tag{
+    background:var(--light-red);
+    color:#a9181d;
+    border-radius:20px;
+    padding:7px 11px;
+    font-size:11px;
+    font-weight:600;
+}
+
+/* REVIEWS */
+
+.review-section{
+    margin-top:28px;
+    border-top:1px solid #eee;
+    padding-top:25px;
+}
+
+.review-section h2{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+    margin-bottom:17px;
+}
+
+.review-item{
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.review-user{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:6px;
+}
+
+.review-user strong{
+    font-size:12px;
+}
+
+.review-stars{
+    color:var(--gold);
+    font-size:11px;
+}
+
+.review-item p{
+    color:#666;
+    font-size:12px;
+}
+
+/* SIDEBAR */
+
+.booking-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    position:sticky;
+    top:92px;
+}
+
+.booking-card h2{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.booking-sub{
+    color:#888;
+    font-size:11px;
+    margin-bottom:20px;
+}
+
+.price-box{
+    background:#fff7e7;
+    border:1px solid #f1dfb7;
+    border-radius:12px;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.price-box strong{
+    font-size:24px;
+}
+
+.price-box small{
+    color:#777;
+    font-size:11px;
+}
+
+.action-btn{
+    width:100%;
+    border:0;
+    border-radius:9px;
+    padding:13px;
+    margin-top:10px;
+    font-weight:700;
+    font-size:13px;
+}
+
+.chat-btn{
+    background:var(--red);
+    color:white;
+}
+
+.call-btn{
+    background:white;
+    border:1px solid var(--red);
+    color:var(--red);
+}
+
+.video-btn{
+    background:#171717;
+    color:white;
+}
+
+.booking-note{
+    text-align:center;
+    color:#888;
+    font-size:10px;
+    margin-top:15px;
+}
+
+.security{
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid #eee;
+}
+
+.security div{
+    display:flex;
+    gap:8px;
+    margin:10px 0;
+    color:#666;
+    font-size:11px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:white;
+    padding:50px 0 20px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:30px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:12px;
+    margin-top:13px;
+    max-width:280px;
+}
+
+.footer-col h4{
+    font-size:13px;
+    margin-bottom:14px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:11px;
+    margin:8px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:35px;
+    padding-top:18px;
+    color:#888;
+    font-size:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .booking-card{
+        position:static;
+    }
+
+    .footer-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .logo-text{
+        font-size:17px;
+    }
+
+    .logo-icon{
+        width:36px;
+        height:36px;
+    }
+
+    .profile-cover{
+        height:105px;
+    }
+
+    .profile-info{
+        padding:0 16px 20px;
+    }
+
+    .profile-top{
+        gap:13px;
+    }
+
+    .big-avatar{
+        width:90px;
+        height:90px;
+        font-size:43px;
+    }
+
+    .profile-title h1{
+        font-size:22px;
+    }
+
+    .profile-meta{
+        font-size:10px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stat:nth-child(2){
+        border-right:0;
+    }
+
+    .stat{
+        border-bottom:1px solid #eee;
+    }
+
+    .tabs{
+        gap:20px;
+        overflow-x:auto;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+<div class="container nav">
+
+<a href="index.html" class="logo">
+    <div class="logo-icon">ॐ</div>
+    <div class="logo-text">
+        Astro <span>With Talk</span>
+    </div>
+</a>
+
+<nav class="nav-links">
+    <a href="astrologers.html">Astrologers</a>
+    <a href="HOROSCOPE/horoscope.html">Horoscope</a>
+    <a href="KUNDLI/kundli.html">Kundli</a>
+    <a href="PANCHANG/panchang.html">Panchang</a>
+    <a href="FREE-SERVICES/free-services.html">Services</a>
+    <a href="SHOP/shop.html">Shop</a>
+</nav>
+
+<div class="nav-actions">
+
+    <button class="wallet"
+            onclick="location.href='wallet.html'">
+        💰 Wallet
+    </button>
+
+    <button class="login"
+            onclick="location.href='login.html'">
+        Login
+    </button>
+
+    <button class="menu"
+            onclick="toggleMenu()">
+        ☰
+    </button>
+
+</div>
+
+</div>
+</header>
+
+
+<!-- BREADCRUMB -->
+
+<div class="container breadcrumb">
+
+    <a href="astrologers.html">Astrologers</a>
+    &nbsp; / &nbsp;
+    Astrologer Profile
+
+</div>
+
+
+<!-- PROFILE -->
+
+<main class="profile-area">
+
+<div class="container profile-grid">
+
+
+<!-- LEFT -->
+
+<div class="profile-main">
+
+    <div class="profile-cover"></div>
+
+    <div class="profile-info">
+
+        <div class="profile-top">
+
+            <div class="big-avatar">
+                👨🏻
+            </div>
+
+            <div class="profile-title">
+
+                <h1>
+                    Astro Rahul
+                    <span class="verified">✓</span>
+                </h1>
+
+                <div class="online">
+                    <span class="online-dot"></span>
+                    ONLINE NOW
+                </div>
+
+                <div class="profile-meta">
+                    Vedic Astrology • Love • Marriage • Career
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong>12+</strong>
+                <small>Years Experience</small>
+            </div>
+
+            <div class="stat">
+                <strong>4.9 ⭐</strong>
+                <small>Rating</small>
+            </div>
+
+            <div class="stat">
+                <strong>12K+</strong>
+                <small>Consultations</small>
+            </div>
+
+            <div class="stat">
+                <strong>98%</strong>
+                <small>Positive Reviews</small>
+            </div>
+
+        </div>
+
+
+        <!-- TABS -->
+
+        <div class="tabs">
+
+            <button class="tab active">
+                About
+            </button>
+
+            <button class="tab">
+                Reviews
+            </button>
+
+            <button class="tab">
+                Expertise
+            </button>
+
+            <button class="tab">
+                Experience
+            </button>
+
+        </div>
+
+
+        <!-- ABOUT -->
+
+        <div class="about">
+
+            <h2>About Astro Rahul</h2>
+
+            <p>
+                I am a professional Vedic astrologer with over 12 years
+                of experience in astrology consultation. I help people
+                understand their birth chart and provide practical
+                guidance related to love, marriage, career, finance
+                and important life decisions.
+            </p>
+
+            <div class="tags">
+
+                <span class="tag">Vedic Astrology</span>
+                <span class="tag">Kundli</span>
+                <span class="tag">Marriage</span>
+                <span class="tag">Love</span>
+                <span class="tag">Career</span>
+                <span class="tag">Finance</span>
+                <span class="tag">Numerology</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- REVIEWS -->
+
+        <div class="review-section">
+
+            <h2>Recent Reviews</h2>
+
+            <div class="review-item">
+
+                <div class="review-user">
+                    <strong>Rahul Sharma</strong>
+                    <span class="review-stars">
+                        ★★★★★
+                    </span>
+                </div>
+
+                <p>
+                    Very detailed consultation. The astrologer
+                    explained everything clearly.
+                </p>
+
+            </div>
+
+
+            <div class="review-item">
+
+                <div class="review-user">
+                    <strong>Priya Verma</strong>
+                    <span class="review-stars">
+                        ★★★★★
+                    </span>
+                </div>
+
+                <p>
+                    Very patient and professional. I got useful
+                    guidance regarding my career.
+                </p>
+
+            </div>
+
+
+            <div class="review-item">
+
+                <div class="review-user">
+                    <strong>Amit Singh</strong>
+                    <span class="review-stars">
+                        ★★★★★
+                    </span>
+                </div>
+
+                <p>
+                    Excellent experience. The consultation was
+                    private and very informative.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- RIGHT SIDEBAR -->
+
+<aside class="booking-card">
+
+    <h2>Consult with Rahul</h2>
+
+    <p class="booking-sub">
+        Choose your preferred consultation method.
+    </p>
+
+
+    <div class="price-box">
+
+        <div>
+            <small>Starting from</small>
+            <strong>₹20</strong>
+            <small>/min</small>
+        </div>
+
+        <span>⭐ 4.9</span>
+
+    </div>
+
+
+    <button
+        class="action-btn chat-btn"
+        onclick="startChat()">
+        💬 Chat with Rahul
+    </button>
+
+
+    <button
+        class="action-btn call-btn"
+        onclick="startCall()">
+        📞 Audio Call
+    </button>
+
+
+    <button
+        class="action-btn video-btn"
+        onclick="startVideo()">
+        🎥 Video Consultation
+    </button>
+
+
+    <div class="booking-note">
+        Charges are calculated per minute.
+    </div>
+
+
+    <div class="security">
+
+        <div>
+            🔒
+            <span>Secure & private consultation</span>
+        </div>
+
+        <div>
+            💳
+            <span>Pay securely using wallet</span>
+        </div>
+
+        <div>
+            ⚡
+            <span>Instant connection when online</span>
+        </div>
+
+    </div>
+
+</aside>
+
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+    <div class="footer-brand">
+
+        <div class="logo">
+            <div class="logo-icon">ॐ</div>
+
+            <div class="logo-text" style="color:white;">
+                Astro <span>With Talk</span>
+            </div>
+        </div>
+
+        <p>
+            Personalized astrology guidance from
+            trusted experts.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+        <h4>Astrology</h4>
+        <a href="astrologers.html">Astrologers</a>
+        <a href="HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="KUNDLI/kundli.html">Kundli</a>
+        <a href="PANCHANG/panchang.html">Panchang</a>
+    </div>
+
+
+    <div class="footer-col">
+        <h4>Consultation</h4>
+        <a href="chat.html">Chat</a>
+        <a href="call.html">Audio Call</a>
+        <a href="LIVE-FEATURES/video-consultation.html">
+            Video Call
+        </a>
+    </div>
+
+
+    <div class="footer-col">
+        <h4>Services</h4>
+        <a href="FREE-SERVICES/ai-astrologer.html">
+            AI Astrologer
+        </a>
+        <a href="CALCULATORS/calculators.html">
+            Calculators
+        </a>
+        <a href="SHOP/shop.html">Shop</a>
+    </div>
+
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <a href="SUPPORT/help.html">Help</a>
+        <a href="SUPPORT/faq.html">FAQ</a>
+        <a href="SUPPORT/contact.html">Contact</a>
+    </div>
+
+</div>
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+const astrologer = "Astro Rahul";
+
+
+function startChat(){
+
+    location.href =
+        "chat.html?astrologer=" +
+        encodeURIComponent(astrologer);
+
+}
+
+
+function startCall(){
+
+    location.href =
+        "call.html?astrologer=" +
+        encodeURIComponent(astrologer);
+
+}
+
+
+function startVideo(){
+
+    location.href =
+        "LIVE-FEATURES/video-consultation.html?astrologer=" +
+        encodeURIComponent(astrologer);
+
+}
+
+
+function toggleMenu(){
+
+    const nav =
+        document.querySelector(".nav-links");
+
+    if(nav.style.display === "flex"){
+
+        nav.style.display = "";
+
+    }else{
+
+        nav.style.display = "flex";
+        nav.style.position = "absolute";
+        nav.style.top = "64px";
+        nav.style.left = "0";
+        nav.style.right = "0";
+        nav.style.background = "#fff";
+        nav.style.padding = "20px";
+        nav.style.flexDirection = "column";
+        nav.style.borderBottom = "1px solid #eee";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

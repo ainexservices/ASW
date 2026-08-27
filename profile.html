@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Profile - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --green:#15945a;
+    --gold:#e4a629;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1100px,calc(100% - 30px));
+    margin:auto;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:41px;
+    height:41px;
+    border-radius:50%;
+    background:var(--red);
+    color:white;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.dashboard-link{
+    font-size:11px;
+    color:#666;
+    font-weight:700;
+}
+
+.dashboard-link:hover{
+    color:var(--red);
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+/* ================= MAIN ================= */
+
+.page{
+    padding:35px 0 65px;
+}
+
+.page-heading{
+    margin-bottom:22px;
+}
+
+.page-heading h1{
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+}
+
+.page-heading p{
+    color:#888;
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* ================= PROFILE HERO ================= */
+
+.profile-hero{
+    background:
+        radial-gradient(circle at 90% 15%,rgba(228,166,41,.25),transparent 25%),
+        linear-gradient(120deg,#c91219,#8f0e13);
+    border-radius:18px;
+    padding:25px;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    overflow:hidden;
+    position:relative;
+}
+
+.profile-hero:after{
+    content:"✦";
+    position:absolute;
+    right:80px;
+    bottom:-65px;
+    font-size:190px;
+    opacity:.07;
+}
+
+.hero-left{
+    display:flex;
+    align-items:center;
+    gap:17px;
+    position:relative;
+    z-index:2;
+}
+
+.profile-avatar{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffd7c6,#d99870);
+    border:3px solid white;
+    display:grid;
+    place-items:center;
+    font-size:38px;
+}
+
+.hero-name{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.hero-phone{
+    color:#ffdada;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.member{
+    display:inline-block;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:20px;
+    padding:5px 9px;
+    margin-top:8px;
+    font-size:8px;
+}
+
+.edit-btn{
+    position:relative;
+    z-index:2;
+    border:0;
+    background:#fff;
+    color:var(--red);
+    border-radius:8px;
+    height:40px;
+    padding:0 15px;
+    font-size:10px;
+    font-weight:700;
+}
+
+/* ================= GRID ================= */
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:21px;
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:16px;
+}
+
+.card-title h2{
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.card-title a{
+    color:var(--red);
+    font-size:9px;
+    font-weight:700;
+}
+
+/* ================= DETAIL ================= */
+
+.detail{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    font-size:10px;
+}
+
+.detail:last-child{
+    border-bottom:0;
+}
+
+.detail span{
+    color:#999;
+}
+
+.detail strong{
+    font-size:11px;
+}
+
+/* ================= VERIFIED ================= */
+
+.verified{
+    color:var(--green);
+    font-size:9px;
+    margin-left:4px;
+}
+
+/* ================= BIRTH ================= */
+
+.birth-box{
+    background:#fff9ed;
+    border:1px solid #ecdfc3;
+    border-radius:12px;
+    padding:15px;
+}
+
+.birth-title{
+    font-weight:700;
+    font-size:11px;
+    margin-bottom:10px;
+}
+
+.birth-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.birth-item{
+    background:white;
+    border-radius:8px;
+    padding:10px;
+}
+
+.birth-item small{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-bottom:3px;
+}
+
+.birth-item strong{
+    font-size:10px;
+}
+
+/* ================= SECURITY ================= */
+
+.security-list{
+    display:grid;
+    gap:9px;
+}
+
+.security-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px;
+    border:1px solid #eee;
+    border-radius:10px;
+}
+
+.security-icon{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+}
+
+.security-info{
+    flex:1;
+}
+
+.security-info strong{
+    display:block;
+    font-size:10px;
+}
+
+.security-info span{
+    color:#999;
+    font-size:8px;
+}
+
+.security-status{
+    color:var(--green);
+    font-size:8px;
+    font-weight:700;
+}
+
+/* ================= ACCOUNT ================= */
+
+.account-list{
+    display:grid;
+    gap:8px;
+}
+
+.account-btn{
+    width:100%;
+    height:43px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    text-align:left;
+    padding:0 12px;
+    font-size:10px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.account-btn:hover{
+    border-color:var(--red);
+    color:var(--red);
+}
+
+.account-btn.danger{
+    color:var(--red);
+}
+
+/* ================= LOGOUT ================= */
+
+.logout-card{
+    margin-top:18px;
+    background:#fff;
+    border:1px solid #f0d6d6;
+    border-radius:14px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logout-card strong{
+    display:block;
+    font-size:11px;
+}
+
+.logout-card p{
+    color:#999;
+    font-size:8px;
+    margin-top:3px;
+}
+
+.logout{
+    border:1px solid var(--red);
+    color:var(--red);
+    background:white;
+    border-radius:7px;
+    padding:8px 12px;
+    font-size:9px;
+    font-weight:700;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:10px;
+    line-height:1.7;
+    margin-top:10px;
+}
+
+.footer-col h4{
+    font-size:11px;
+    margin-bottom:10px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:9px;
+    margin:7px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:28px;
+    padding-top:14px;
+    color:#777;
+    font-size:9px;
+}
+
+/* ================= MODAL ================= */
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:2000;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:min(380px,100%);
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    text-align:center;
+}
+
+.modal-icon{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#fff0f0;
+    color:var(--red);
+    display:grid;
+    place-items:center;
+    margin:0 auto 13px;
+    font-size:24px;
+}
+
+.modal h2{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.modal p{
+    color:#888;
+    font-size:10px;
+    line-height:1.6;
+    margin-top:5px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px;
+    margin-top:20px;
+}
+
+.modal-cancel,
+.modal-confirm{
+    flex:1;
+    height:43px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.modal-cancel{
+    background:#fff;
+    border:1px solid #ddd;
+}
+
+.modal-confirm{
+    background:var(--red);
+    color:white;
+    border:0;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:750px){
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .logo-icon{
+        width:36px;
+        height:36px;
+    }
+
+    .logo-text{
+        font-size:17px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .page{
+        padding:28px 0 50px;
+    }
+
+    .profile-hero{
+        padding:20px;
+    }
+
+    .hero-left{
+        gap:11px;
+    }
+
+    .profile-avatar{
+        width:65px;
+        height:65px;
+        font-size:30px;
+    }
+
+    .hero-name{
+        font-size:20px;
+    }
+
+    .edit-btn{
+        padding:0 10px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="walletBalance">500</span>
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="dashboard-link">
+            ← Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="page-heading">
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            Manage your personal information and astrology details.
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE HERO -->
+
+    <section class="profile-hero">
+
+        <div class="hero-left">
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+            <div>
+
+                <div class="hero-name">
+                    Aaditya Pandey
+                </div>
+
+                <div class="hero-phone">
+                    +91 ••••••••••
+                </div>
+
+                <span class="member">
+                    ✦ AWT Member
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="edit-btn"
+            onclick="location.href='edit-profile.html'">
+
+            ✎ Edit Profile
+
+        </button>
+
+    </section>
+
+
+    <!-- PROFILE GRID -->
+
+    <div class="profile-grid">
+
+
+        <!-- PERSONAL DETAILS -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <h2>
+                    Personal Details
+                </h2>
+
+                <a href="edit-profile.html">
+                    Edit
+                </a>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Full Name
+                </span>
+
+                <strong>
+                    Aaditya Pandey
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Mobile Number
+                </span>
+
+                <strong>
+
+                    +91 ••••••••••
+
+                    <span class="verified">
+                        ✓ Verified
+                    </span>
+
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Email
+                </span>
+
+                <strong>
+                    Not Added
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Gender
+                </span>
+
+                <strong>
+                    Not Added
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Date of Birth
+                </span>
+
+                <strong>
+                    Not Added
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- BIRTH DETAILS -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <h2>
+                    Birth Details
+                </h2>
+
+                <a href="edit-profile.html">
+                    Add / Edit
+                </a>
+
+            </div>
+
+
+            <div class="birth-box">
+
+                <div class="birth-title">
+                    🪐 Saved Astrology Information
+                </div>
+
+
+                <div class="birth-grid">
+
+                    <div class="birth-item">
+
+                        <small>
+                            DATE OF BIRTH
+                        </small>
+
+                        <strong>
+                            Not Added
+                        </strong>
+
+                    </div>
+
+
+                    <div class="birth-item">
+
+                        <small>
+                            BIRTH TIME
+                        </small>
+
+                        <strong>
+                            Not Added
+                        </strong>
+
+                    </div>
+
+
+                    <div class="birth-item">
+
+                        <small>
+                            BIRTH PLACE
+                        </small>
+
+                        <strong>
+                            Not Added
+                        </strong>
+
+                    </div>
+
+
+                    <div class="birth-item">
+
+                        <small>
+                            TIME ZONE
+                        </small>
+
+                        <strong>
+                            Asia/Kolkata
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                color:#888;
+                font-size:9px;
+                line-height:1.6;
+                margin-top:13px;
+                ">
+
+                Add your birth details once and use them
+                across Kundli, horoscope and astrology services.
+
+            </div>
+
+        </section>
+
+
+        <!-- SECURITY -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <h2>
+                    Account Security
+                </h2>
+
+            </div>
+
+
+            <div class="security-list">
+
+
+                <div class="security-item">
+
+                    <div class="security-icon">
+                        📱
+                    </div>
+
+                    <div class="security-info">
+
+                        <strong>
+                            Mobile Verification
+                        </strong>
+
+                        <span>
+                            Your mobile number is verified.
+                        </span>
+
+                    </div>
+
+                    <div class="security-status">
+                        Verified
+                    </div>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <div class="security-icon">
+                        🔐
+                    </div>
+
+                    <div class="security-info">
+
+                        <strong>
+                            OTP Login
+                        </strong>
+
+                        <span>
+                            Passwordless secure login enabled.
+                        </span>
+
+                    </div>
+
+                    <div class="security-status">
+                        Active
+                    </div>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <div class="security-icon">
+                        💳
+                    </div>
+
+                    <div class="security-info">
+
+                        <strong>
+                            Payment Security
+                        </strong>
+
+                        <span>
+                            Payments processed securely.
+                        </span>
+
+                    </div>
+
+                    <div class="security-status">
+                        Secure
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACCOUNT -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <h2>
+                    Account
+                </h2>
+
+            </div>
+
+
+            <div class="account-list">
+
+
+                <button
+                    class="account-btn"
+                    onclick="location.href='wallet.html'">
+
+                    <span>
+                        💰 Wallet & Transactions
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="account-btn"
+                    onclick="location.href='consultation-history.html'">
+
+                    <span>
+                        📋 Consultation History
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="account-btn"
+                    onclick="location.href='saved-astrologers.html'">
+
+                    <span>
+                        ⭐ Saved Astrologers
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="account-btn"
+                    onclick="location.href='notifications.html'">
+
+                    <span>
+                        🔔 Notifications
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="account-btn"
+                    onclick="location.href='SUPPORT/help.html'">
+
+                    <span>
+                        ❓ Help & Support
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="logout-card">
+
+        <div>
+
+            <strong>
+                Logout from Astro With Talk
+            </strong>
+
+            <p>
+                You can login again anytime using your mobile number.
+            </p>
+
+        </div>
+
+        <button
+            class="logout"
+            onclick="openLogout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted
+            astrologers for life's important questions.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Consult</h4>
+
+        <a href="chat.html">
+            Chat
+        </a>
+
+        <a href="call.html">
+            Audio Call
+        </a>
+
+        <a href="LIVE-FEATURES/video-consultation.html">
+            Video Call
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Account</h4>
+
+        <a href="wallet.html">
+            Wallet
+        </a>
+
+        <a href="consultation-history.html">
+            History
+        </a>
+
+        <a href="saved-astrologers.html">
+            Saved
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ================= LOGOUT MODAL ================= -->
+
+<div
+    class="overlay"
+    id="logoutOverlay">
+
+    <div class="modal">
+
+        <div class="modal-icon">
+            🚪
+        </div>
+
+        <h2>
+            Logout?
+        </h2>
+
+        <p>
+            Are you sure you want to logout from
+            Astro With Talk?
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="modal-cancel"
+                onclick="closeLogout()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="modal-confirm"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let balance =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(!balance && balance !== 0){
+    balance = 500;
+}
+
+document.getElementById("walletBalance")
+    .innerText =
+    balance.toLocaleString("en-IN");
+
+
+/* ================= LOGOUT ================= */
+
+function openLogout(){
+
+    document
+        .getElementById("logoutOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeLogout(){
+
+    document
+        .getElementById("logoutOverlay")
+        .classList.remove("show");
+
+}
+
+
+function logout(){
+
+    localStorage.removeItem(
+        "awt_logged_in"
+    );
+
+    localStorage.removeItem(
+        "awt_user_phone"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* ================= OUTSIDE MODAL ================= */
+
+document
+.getElementById("logoutOverlay")
+.addEventListener("click",function(e){
+
+    if(e.target === this){
+        closeLogout();
+    }
+
+});
+
+</script>
+
+</body>
+</html>

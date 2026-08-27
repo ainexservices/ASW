@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Chat - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e7e7e7;
+    --green:#15945a;
+    --yellow:#f0a51b;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:#f5f5f5;
+    color:var(--dark);
+    height:100vh;
+    overflow:hidden;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= HEADER ================= */
+
+.chat-header{
+    height:68px;
+    background:white;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    position:relative;
+    z-index:10;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.back{
+    border:0;
+    background:#f5f5f5;
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    font-size:18px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffd6c5,#db9870);
+    display:grid;
+    place-items:center;
+    font-size:22px;
+    position:relative;
+}
+
+.online-dot{
+    width:10px;
+    height:10px;
+    background:var(--green);
+    border:2px solid white;
+    border-radius:50%;
+    position:absolute;
+    right:0;
+    bottom:1px;
+}
+
+.astrologer-name{
+    font-weight:700;
+    font-size:14px;
+}
+
+.astrologer-meta{
+    color:#777;
+    font-size:10px;
+    margin-top:2px;
+}
+
+.verified{
+    color:var(--red);
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.rate{
+    font-size:11px;
+    color:#777;
+}
+
+.rate strong{
+    color:var(--red);
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ecd9ad;
+    padding:8px 12px;
+    border-radius:8px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.end-top{
+    background:#fff;
+    border:1px solid #ddd;
+    color:var(--red);
+    padding:8px 13px;
+    border-radius:8px;
+    font-size:11px;
+    font-weight:700;
+}
+
+/* ================= CONSULTATION BAR ================= */
+
+.consultation-bar{
+    height:46px;
+    background:#171717;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    font-size:11px;
+}
+
+.timer{
+    font-weight:700;
+    color:#fff;
+}
+
+.timer span{
+    color:#ffb5b5;
+}
+
+.spent{
+    color:#bbb;
+}
+
+.spent strong{
+    color:#fff;
+}
+
+/* ================= CHAT LAYOUT ================= */
+
+.chat-layout{
+    height:calc(100vh - 114px);
+    display:grid;
+    grid-template-columns:1fr 300px;
+}
+
+/* ================= CHAT ================= */
+
+.chat-main{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    background:#f8f8f8;
+}
+
+.messages{
+    flex:1;
+    overflow-y:auto;
+    padding:25px;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(215,25,32,.025),transparent 30%),
+        #fafafa;
+}
+
+.date-divider{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.date-divider span{
+    background:#eee;
+    color:#888;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:9px;
+}
+
+/* MESSAGE */
+
+.message-row{
+    display:flex;
+    margin-bottom:14px;
+}
+
+.message-row.user{
+    justify-content:flex-end;
+}
+
+.message{
+    max-width:min(500px,75%);
+}
+
+.bubble{
+    padding:11px 14px;
+    border-radius:14px;
+    font-size:12px;
+    line-height:1.55;
+}
+
+.astrologer .bubble{
+    background:white;
+    border:1px solid #e5e5e5;
+    border-top-left-radius:4px;
+}
+
+.user .bubble{
+    background:var(--red);
+    color:white;
+    border-top-right-radius:4px;
+}
+
+.message-time{
+    color:#aaa;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.user .message-time{
+    text-align:right;
+}
+
+.read{
+    color:var(--red);
+    margin-left:4px;
+}
+
+/* TYPING */
+
+.typing{
+    display:none;
+    margin-bottom:15px;
+}
+
+.typing.show{
+    display:flex;
+}
+
+.typing-bubble{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:14px;
+    border-top-left-radius:4px;
+    padding:10px 13px;
+}
+
+.typing span{
+    display:inline-block;
+    width:5px;
+    height:5px;
+    background:#aaa;
+    border-radius:50%;
+    margin:0 2px;
+    animation:bounce 1.2s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes bounce{
+    0%,60%,100%{
+        transform:translateY(0);
+    }
+    30%{
+        transform:translateY(-4px);
+    }
+}
+
+/* ================= INPUT ================= */
+
+.input-area{
+    background:#fff;
+    border-top:1px solid #ddd;
+    padding:12px 15px;
+}
+
+.input-tools{
+    display:flex;
+    align-items:flex-end;
+    gap:9px;
+}
+
+.tool{
+    width:38px;
+    height:42px;
+    border:0;
+    background:#f5f5f5;
+    border-radius:9px;
+    font-size:16px;
+}
+
+.message-input{
+    flex:1;
+    min-height:42px;
+    max-height:100px;
+    resize:none;
+    border:1px solid #ddd;
+    border-radius:10px;
+    outline:none;
+    padding:11px 12px;
+    font-size:12px;
+}
+
+.message-input:focus{
+    border-color:var(--red);
+}
+
+.send{
+    width:42px;
+    height:42px;
+    border:0;
+    background:var(--red);
+    color:#fff;
+    border-radius:9px;
+    font-size:16px;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    background:white;
+    border-left:1px solid #ddd;
+    padding:18px;
+    overflow-y:auto;
+}
+
+.side-title{
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:14px;
+}
+
+.balance-card{
+    background:var(--light-red);
+    border:1px solid #f0d3d3;
+    border-radius:12px;
+    padding:15px;
+}
+
+.balance-card small{
+    color:#888;
+    font-size:9px;
+}
+
+.balance-card strong{
+    display:block;
+    color:var(--red);
+    font-size:23px;
+    margin-top:3px;
+}
+
+.balance-card p{
+    color:#888;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.recharge{
+    width:100%;
+    margin-top:10px;
+    height:38px;
+    background:var(--red);
+    color:white;
+    border:0;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.section{
+    margin-top:22px;
+    border-top:1px solid #eee;
+    padding-top:18px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    font-size:10px;
+}
+
+.info-row span{
+    color:#888;
+}
+
+.info-row strong{
+    font-size:10px;
+}
+
+.warning{
+    margin-top:20px;
+    padding:12px;
+    background:#fff8e7;
+    border:1px solid #f0dfb5;
+    border-radius:10px;
+    font-size:9px;
+    color:#777;
+    line-height:1.6;
+}
+
+/* ================= END MODAL ================= */
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.end-modal{
+    width:min(400px,100%);
+    background:white;
+    border-radius:18px;
+    padding:25px;
+}
+
+.end-modal h2{
+    font-size:21px;
+    margin-bottom:5px;
+}
+
+.end-modal p{
+    color:#888;
+    font-size:11px;
+}
+
+.final-summary{
+    background:#fafafa;
+    border-radius:11px;
+    padding:15px;
+    margin:18px 0;
+}
+
+.final-row{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    font-size:11px;
+}
+
+.final-row.total{
+    border-top:1px solid #ddd;
+    margin-top:5px;
+    padding-top:12px;
+    font-weight:700;
+}
+
+.modal-actions{
+    display:flex;
+    gap:9px;
+}
+
+.cancel{
+    flex:1;
+    height:44px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:8px;
+    font-weight:700;
+    font-size:11px;
+}
+
+.confirm-end{
+    flex:1;
+    height:44px;
+    border:0;
+    background:var(--red);
+    color:white;
+    border-radius:8px;
+    font-weight:700;
+    font-size:11px;
+}
+
+/* LOW BALANCE */
+
+.low-balance{
+    display:none;
+    position:fixed;
+    bottom:75px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#171717;
+    color:white;
+    border-radius:10px;
+    padding:12px 16px;
+    font-size:10px;
+    z-index:50;
+    box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+.low-balance.show{
+    display:block;
+}
+
+.low-balance button{
+    margin-left:10px;
+    border:0;
+    background:var(--red);
+    color:white;
+    border-radius:5px;
+    padding:5px 8px;
+    font-size:9px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .chat-layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .rate{
+        display:none;
+    }
+
+    .header-right{
+        gap:7px;
+    }
+
+    .wallet{
+        padding:7px 8px;
+    }
+
+    .end-top{
+        padding:7px 8px;
+    }
+
+    .messages{
+        padding:18px 12px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .chat-header{
+        height:62px;
+        padding:0 10px;
+    }
+
+    .consultation-bar{
+        height:40px;
+        gap:12px;
+    }
+
+    .astrologer-name{
+        font-size:12px;
+    }
+
+    .astrologer-meta{
+        font-size:8px;
+    }
+
+    .avatar{
+        width:36px;
+        height:36px;
+    }
+
+    .message{
+        max-width:85%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="chat-header">
+
+    <div class="header-left">
+
+        <button
+            class="back"
+            onclick="goBack()">
+            ←
+        </button>
+
+        <div class="avatar">
+            👨🏻
+            <span class="online-dot"></span>
+        </div>
+
+        <div>
+
+            <div class="astrologer-name">
+                Astro Rahul
+                <span class="verified">✓</span>
+            </div>
+
+            <div class="astrologer-meta">
+                Online • Vedic Astrology
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <div class="rate">
+            ₹20 <strong>/min</strong>
+        </div>
+
+        <div class="wallet">
+            💰 ₹<span id="headerBalance">500</span>
+        </div>
+
+        <button
+            class="end-top"
+            onclick="openEndModal()">
+            End
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= CONSULTATION BAR ================= -->
+
+<div class="consultation-bar">
+
+    <div class="timer">
+        ⏱ <span id="timer">00:00</span>
+    </div>
+
+    <div class="spent">
+        Spent:
+        <strong>₹<span id="spent">0</span></strong>
+    </div>
+
+    <div class="spent">
+        Rate:
+        <strong>₹20/min</strong>
+    </div>
+
+</div>
+
+
+<!-- ================= LAYOUT ================= -->
+
+<div class="chat-layout">
+
+
+    <!-- CHAT -->
+
+    <section class="chat-main">
+
+
+        <div class="messages" id="messages">
+
+            <div class="date-divider">
+                <span>Today</span>
+            </div>
+
+
+            <!-- ASTROLOGER -->
+
+            <div class="message-row astrologer">
+
+                <div class="message">
+
+                    <div class="bubble">
+                        Namaste 🙏 Welcome to Astro With Talk.
+                        How can I help you today?
+                    </div>
+
+                    <div class="message-time">
+                        11:42 AM
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- USER -->
+
+            <div class="message-row user">
+
+                <div class="message">
+
+                    <div class="bubble">
+                        Namaste. I wanted to ask about my career
+                        and upcoming opportunities.
+                    </div>
+
+                    <div class="message-time">
+                        11:43 AM
+                        <span class="read">✓✓</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASTROLOGER -->
+
+            <div class="message-row astrologer">
+
+                <div class="message">
+
+                    <div class="bubble">
+                        Certainly. Please share your date of birth,
+                        exact birth time and place of birth so I can
+                        look at your chart.
+                    </div>
+
+                    <div class="message-time">
+                        11:43 AM
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TYPING -->
+
+            <div
+                class="typing"
+                id="typing">
+
+                <div class="typing-bubble">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INPUT -->
+
+        <div class="input-area">
+
+            <div class="input-tools">
+
+                <button
+                    class="tool"
+                    onclick="attachFile()">
+                    📎
+                </button>
+
+                <textarea
+                    class="message-input"
+                    id="messageInput"
+                    rows="1"
+                    placeholder="Type your message..."
+                    onkeydown="handleKey(event)"
+                ></textarea>
+
+                <button
+                    class="send"
+                    onclick="sendMessage()">
+                    ➤
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-title">
+            Consultation
+        </div>
+
+
+        <div class="balance-card">
+
+            <small>
+                AVAILABLE WALLET BALANCE
+            </small>
+
+            <strong>
+                ₹<span id="sideBalance">500</span>
+            </strong>
+
+            <p>
+                At ₹20/min you have approximately
+                <b id="minutesLeft">25</b> minutes.
+            </p>
+
+            <button
+                class="recharge"
+                onclick="rechargeWallet()">
+                + Recharge Wallet
+            </button>
+
+        </div>
+
+
+        <div class="section">
+
+            <div class="side-title">
+                Astrologer Details
+            </div>
+
+            <div class="info-row">
+                <span>Expertise</span>
+                <strong>Vedic Astrology</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Experience</span>
+                <strong>12 Years</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Rating</span>
+                <strong>⭐ 4.9</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Rate</span>
+                <strong>₹20/min</strong>
+            </div>
+
+        </div>
+
+
+        <div class="warning">
+
+            ⚠️ Your consultation charges are calculated
+            according to the active consultation rate.
+            Make sure your wallet has sufficient balance
+            before starting a long consultation.
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- ================= LOW BALANCE ================= -->
+
+<div
+    class="low-balance"
+    id="lowBalance">
+
+    ⚠️ Low wallet balance.
+    
+    <button onclick="rechargeWallet()">
+        Recharge
+    </button>
+
+</div>
+
+
+<!-- ================= END MODAL ================= -->
+
+<div
+    class="overlay"
+    id="endOverlay">
+
+    <div class="end-modal">
+
+        <h2>
+            End Consultation?
+        </h2>
+
+        <p>
+            Your consultation summary will be generated.
+        </p>
+
+
+        <div class="final-summary">
+
+            <div class="final-row">
+
+                <span>Astrologer</span>
+
+                <strong>
+                    Astro Rahul
+                </strong>
+
+            </div>
+
+
+            <div class="final-row">
+
+                <span>Duration</span>
+
+                <strong id="finalDuration">
+                    00:00
+                </strong>
+
+            </div>
+
+
+            <div class="final-row">
+
+                <span>Rate</span>
+
+                <strong>
+                    ₹20/min
+                </strong>
+
+            </div>
+
+
+            <div class="final-row total">
+
+                <span>Total Charged</span>
+
+                <strong>
+                    ₹<span id="finalSpent">0</span>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel"
+                onclick="closeEndModal()">
+                Continue Chat
+            </button>
+
+            <button
+                class="confirm-end"
+                onclick="endConsultation()">
+                End Consultation
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= SETTINGS ================= */
+
+const RATE_PER_MINUTE = 20;
+
+let walletBalance = 500;
+
+let seconds = 0;
+
+let consultationActive = true;
+
+
+/* ================= TIMER ================= */
+
+const timerElement =
+    document.getElementById("timer");
+
+const spentElement =
+    document.getElementById("spent");
+
+const minutesLeft =
+    document.getElementById("minutesLeft");
+
+
+function formatTime(totalSeconds){
+
+    const minutes =
+        Math.floor(totalSeconds / 60);
+
+    const seconds =
+        totalSeconds % 60;
+
+    return String(minutes).padStart(2,"0")
+        + ":" +
+        String(seconds).padStart(2,"0");
+
+}
+
+
+const timerInterval =
+    setInterval(()=>{
+
+        if(!consultationActive){
+            return;
+        }
+
+        seconds++;
+
+        timerElement.innerText =
+            formatTime(seconds);
+
+
+        /*
+            DEMO CALCULATION ONLY.
+
+            Production system must deduct
+            money server-side based on
+            actual consultation duration.
+        */
+
+        const spent =
+            Math.ceil(seconds / 60) * RATE_PER_MINUTE;
+
+        spentElement.innerText =
+            Math.min(spent,walletBalance);
+
+
+        const remaining =
+            Math.max(
+                0,
+                walletBalance - spent
+            );
+
+        document.getElementById("headerBalance")
+            .innerText =
+            remaining.toFixed(0);
+
+        document.getElementById("sideBalance")
+            .innerText =
+            remaining.toFixed(0);
+
+
+        minutesLeft.innerText =
+            Math.floor(
+                remaining / RATE_PER_MINUTE
+            );
+
+
+        if(
+            remaining <= 100 &&
+            remaining > 0
+        ){
+
+            document
+                .getElementById("lowBalance")
+                .classList.add("show");
+
+        }
+
+
+        if(remaining <= 0){
+
+            consultationActive = false;
+
+            clearInterval(timerInterval);
+
+            alert(
+                "Your wallet balance is insufficient. Please recharge to continue."
+            );
+
+            rechargeWallet();
+
+        }
+
+    },1000);
+
+
+/* ================= SEND MESSAGE ================= */
+
+function sendMessage(){
+
+    const input =
+        document.getElementById("messageInput");
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+        return;
+    }
+
+
+    if(!consultationActive){
+
+        alert(
+            "Please recharge your wallet to continue."
+        );
+
+        return;
+
+    }
+
+
+    const messages =
+        document.getElementById("messages");
+
+
+    const row =
+        document.createElement("div");
+
+    row.className =
+        "message-row user";
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.innerText =
+        text;
+
+
+    const time =
+        document.createElement("div");
+
+    time.className =
+        "message-time";
+
+    time.innerHTML =
+        getCurrentTime() +
+        ' <span class="read">✓✓</span>';
+
+
+    message.appendChild(bubble);
+
+    message.appendChild(time);
+
+    row.appendChild(message);
+
+    messages.appendChild(row);
+
+
+    input.value = "";
+
+    input.style.height = "42px";
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+
+    simulateReply();
+
+}
+
+
+/* ================= AUTO REPLY ================= */
+
+function simulateReply(){
+
+    const typing =
+        document.getElementById("typing");
+
+    typing.classList.add("show");
+
+
+    const messages =
+        document.getElementById("messages");
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+
+    setTimeout(()=>{
+
+        typing.classList.remove("show");
+
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "message-row astrologer";
+
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "message";
+
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className =
+            "bubble";
+
+        bubble.innerText =
+            "Thank you for sharing that. Let me carefully look into your chart and guide you.";
+
+        const time =
+            document.createElement("div");
+
+        time.className =
+            "message-time";
+
+        time.innerText =
+            getCurrentTime();
+
+
+        message.appendChild(bubble);
+
+        message.appendChild(time);
+
+        row.appendChild(message);
+
+        messages.appendChild(row);
+
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    },1500);
+
+}
+
+
+/* ================= ENTER ================= */
+
+function handleKey(event){
+
+    if(
+        event.key === "Enter" &&
+        !event.shiftKey
+    ){
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+}
+
+
+/* ================= TIME ================= */
+
+function getCurrentTime(){
+
+    return new Date()
+        .toLocaleTimeString(
+            "en-IN",
+            {
+                hour:"numeric",
+                minute:"2-digit"
+            }
+        );
+
+}
+
+
+/* ================= FILE ================= */
+
+function attachFile(){
+
+    alert(
+        "Image/document attachment will be connected to the backend."
+    );
+
+}
+
+
+/* ================= RECHARGE ================= */
+
+function rechargeWallet(){
+
+    window.location.href =
+        "recharge.html";
+
+}
+
+
+/* ================= END ================= */
+
+function openEndModal(){
+
+    document.getElementById("finalDuration")
+        .innerText =
+        formatTime(seconds);
+
+    document.getElementById("finalSpent")
+        .innerText =
+        Math.min(
+            Math.ceil(seconds / 60) *
+            RATE_PER_MINUTE,
+            walletBalance
+        );
+
+    document
+        .getElementById("endOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeEndModal(){
+
+    document
+        .getElementById("endOverlay")
+        .classList.remove("show");
+
+}
+
+
+function endConsultation(){
+
+    consultationActive = false;
+
+    clearInterval(timerInterval);
+
+
+    const spent =
+        Math.min(
+            Math.ceil(seconds / 60) *
+            RATE_PER_MINUTE,
+            walletBalance
+        );
+
+
+    /*
+        PRODUCTION BACKEND:
+
+        POST /api/consultation/end
+
+        Send:
+
+        consultation_id
+        astrologer_id
+        duration
+        rate
+        total_amount
+
+        Backend calculates final amount,
+        creates transaction and deducts wallet.
+    */
+
+
+    localStorage.setItem(
+        "awt_last_consultation_duration",
+        seconds
+    );
+
+    localStorage.setItem(
+        "awt_last_consultation_amount",
+        spent
+    );
+
+    localStorage.setItem(
+        "awt_last_astrologer",
+        "Astro Rahul"
+    );
+
+
+    window.location.href =
+        "consultation-summary.html";
+
+}
+
+
+/* ================= BACK ================= */
+
+function goBack(){
+
+    if(
+        confirm(
+            "Are you sure you want to leave the consultation?"
+        )
+    ){
+
+        openEndModal();
+
+    }
+
+}
+
+
+/* ================= OUTSIDE MODAL ================= */
+
+document
+.getElementById("endOverlay")
+.addEventListener("click",function(e){
+
+    if(e.target === this){
+
+        closeEndModal();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

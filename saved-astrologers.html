@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Saved Astrologers - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --green:#15945a;
+    --gold:#e4a629;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1100px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.back{
+    color:#777;
+    font-size:10px;
+    font-weight:700;
+}
+
+.back:hover{
+    color:var(--red);
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+    padding:35px 0 65px;
+}
+
+.heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:21px;
+}
+
+.heading h1{
+    font-family:"Playfair Display",serif;
+    font-size:33px;
+}
+
+.heading p{
+    color:#888;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.explore{
+    height:37px;
+    padding:0 13px;
+    border:0;
+    border-radius:8px;
+    background:var(--red);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.explore:hover{
+    background:var(--dark-red);
+}
+
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.stat{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:15px;
+}
+
+.stat-icon{
+    width:35px;
+    height:35px;
+    border-radius:9px;
+    background:#fff8df;
+    display:grid;
+    place-items:center;
+    font-size:16px;
+}
+
+.stat-value{
+    font-size:20px;
+    font-weight:700;
+    margin-top:8px;
+}
+
+.stat-label{
+    color:#999;
+    font-size:8px;
+    margin-top:2px;
+}
+
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:13px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.search{
+    height:36px;
+    width:240px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+}
+
+.search:focus{
+    border-color:var(--red);
+}
+
+.sort{
+    height:36px;
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:7px;
+    padding:0 10px;
+    font-size:9px;
+    color:#555;
+}
+
+
+/* ================= ASTROLOGER GRID ================= */
+
+.astrologer-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.astrologer-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:17px;
+    position:relative;
+    transition:.2s;
+}
+
+.astrologer-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.favorite{
+    position:absolute;
+    right:13px;
+    top:13px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid #eee;
+    background:#fff;
+    color:var(--red);
+    font-size:16px;
+}
+
+.favorite:hover{
+    background:var(--light-red);
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding-right:35px;
+}
+
+.avatar{
+    width:57px;
+    height:57px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffd8c6,#d99a71);
+    display:grid;
+    place-items:center;
+    font-size:27px;
+    flex:none;
+}
+
+.name{
+    font-size:12px;
+    font-weight:700;
+}
+
+.verified{
+    color:var(--red);
+    font-size:10px;
+}
+
+.speciality{
+    color:#999;
+    font-size:8px;
+    margin-top:3px;
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    color:var(--green);
+    font-size:8px;
+    margin-top:4px;
+}
+
+.online-dot{
+    width:6px;
+    height:6px;
+    background:var(--green);
+    border-radius:50%;
+}
+
+.rating-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:15px;
+    padding-top:12px;
+    border-top:1px solid #eee;
+}
+
+.stars{
+    color:var(--gold);
+    font-size:10px;
+}
+
+.rating{
+    font-size:9px;
+    font-weight:700;
+}
+
+.reviews{
+    color:#aaa;
+    font-size:8px;
+}
+
+.languages{
+    color:#888;
+    font-size:8px;
+    margin-top:7px;
+}
+
+.price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-top:14px;
+}
+
+.price-label{
+    color:#999;
+    font-size:7px;
+}
+
+.price{
+    color:var(--red);
+    font-size:13px;
+    font-weight:700;
+    margin-top:2px;
+}
+
+.price small{
+    color:#999;
+    font-size:7px;
+    font-weight:400;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:13px;
+}
+
+.btn{
+    height:35px;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.chat{
+    border:0;
+    background:var(--red);
+    color:#fff;
+}
+
+.call{
+    border:1px solid #ddd;
+    background:#fff;
+    color:#555;
+}
+
+.call:hover{
+    border-color:var(--red);
+    color:var(--red);
+}
+
+.profile-btn{
+    width:100%;
+    height:31px;
+    margin-top:7px;
+    border:0;
+    background:#f5f5f5;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.profile-btn:hover{
+    background:var(--light-red);
+    color:var(--red);
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty{
+    display:none;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    text-align:center;
+    padding:75px 20px;
+}
+
+.empty-icon{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:#fff8df;
+    display:grid;
+    place-items:center;
+    margin:0 auto 13px;
+    font-size:27px;
+}
+
+.empty h2{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.empty p{
+    color:#999;
+    font-size:9px;
+    margin-top:5px;
+}
+
+.empty button{
+    margin-top:15px;
+    height:36px;
+    padding:0 14px;
+    border:0;
+    background:var(--red);
+    color:#fff;
+    border-radius:7px;
+    font-size:9px;
+    font-weight:700;
+}
+
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translate(-50%,70px);
+    background:#171717;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    font-size:9px;
+    opacity:0;
+    transition:.25s;
+    z-index:2000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .astrologer-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .heading{
+        display:block;
+    }
+
+    .heading h1{
+        font-size:28px;
+    }
+
+    .explore{
+        margin-top:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .toolbar{
+        display:block;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .sort{
+        width:100%;
+        margin-top:8px;
+    }
+
+    .astrologer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="walletBalance">500</span>
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="back">
+            ← Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <!-- HEADING -->
+
+    <div class="heading">
+
+        <div>
+
+            <h1>
+                Saved Astrologers
+            </h1>
+
+            <p>
+                Your favourite astrologers, ready whenever you need guidance.
+            </p>
+
+        </div>
+
+
+        <a
+            href="astrologers.html"
+            class="explore">
+
+            + Explore Astrologers
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⭐
+            </div>
+
+            <div
+                class="stat-value"
+                id="savedCount">
+                5
+            </div>
+
+            <div class="stat-label">
+                Saved Astrologers
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🟢
+            </div>
+
+            <div
+                class="stat-value"
+                id="onlineCount">
+                3
+            </div>
+
+            <div class="stat-label">
+                Online Now
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🔮
+            </div>
+
+            <div class="stat-value">
+                12
+            </div>
+
+            <div class="stat-label">
+                Total Consultations
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <div class="toolbar">
+
+        <input
+            type="search"
+            id="search"
+            class="search"
+            placeholder="Search saved astrologers..."
+            oninput="applySearch()">
+
+
+        <select
+            id="sort"
+            class="sort"
+            onchange="sortCards()">
+
+            <option value="default">
+                Sort: Recently Saved
+            </option>
+
+            <option value="rating">
+                Highest Rated
+            </option>
+
+            <option value="price-low">
+                Price: Low to High
+            </option>
+
+            <option value="price-high">
+                Price: High to Low
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- ================= ASTROLOGERS ================= -->
+
+    <div
+        class="astrologer-grid"
+        id="astrologerGrid">
+
+
+        <!-- ASTRO RAHUL -->
+
+        <article
+            class="astrologer-card"
+            data-name="astro rahul"
+            data-rating="4.9"
+            data-price="20"
+            data-online="yes">
+
+            <button
+                class="favorite"
+                onclick="removeAstrologer(this)"
+                title="Remove from saved">
+
+                ♥
+            </button>
+
+
+            <div class="profile">
+
+                <div class="avatar">
+                    👨🏻
+                </div>
+
+                <div>
+
+                    <div class="name">
+                        Astro Rahul
+                        <span class="verified">✓</span>
+                    </div>
+
+                    <div class="speciality">
+                        Vedic Astrology • Love • Career
+                    </div>
+
+                    <div class="online">
+
+                        <span class="online-dot"></span>
+
+                        Online • Available
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="rating-row">
+
+                <span class="stars">
+                    ★★★★★
+                </span>
+
+                <span class="rating">
+                    4.9
+                </span>
+
+                <span class="reviews">
+                    (2.4K)
+                </span>
+
+            </div>
+
+
+            <div class="languages">
+                Hindi • English
+            </div>
+
+
+            <div class="price-row">
+
+                <div>
+
+                    <div class="price-label">
+                        CONSULTATION
+                    </div>
+
+                    <div class="price">
+                        ₹20
+                        <small>/ min</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn chat"
+                    onclick="startConsult('Astro Rahul','chat.html')">
+
+                    💬 Chat
+
+                </button>
+
+                <button
+                    class="btn call"
+                    onclick="startConsult('Astro Rahul','call.html')">
+
+                    📞 Call
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="profile-btn"
+                onclick="openProfile('Astro Rahul')">
+
+                View Profile →
+
+            </button>
+
+        </article>
+
+
+        <!-- ASTRO PRIYA -->
+
+        <article
+            class="astrologer-card"
+            data-name="astro priya"
+            data-rating="4.8"
+            data-price="25"
+            data-online="yes">
+
+            <button
+                class="favorite"
+                onclick="removeAstrologer(this)">
+
+                ♥
+            </button>
+
+
+            <div class="profile">
+
+                <div class="avatar">
+                    👩🏻
+                </div>
+
+                <div>
+
+                    <div class="name">
+                        Astro Priya
+                        <span class="verified">✓</span>
+                    </div>
+
+                    <div class="speciality">
+                        Marriage • Relationship • Tarot
+                    </div>
+
+                    <div class="online">
+
+                        <span class="online-dot"></span>
+
+                        Online • Available
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="rating-row">
+
+                <span class="stars">
+                    ★★★★★
+                </span>
+
+                <span class="rating">
+                    4.8
+                </span>
+
+                <span class="reviews">
+                    (1.8K)
+                </span>
+
+            </div>
+
+
+            <div class="languages">
+                Hindi • English • Punjabi
+            </div>
+
+
+            <div class="price-row">
+
+                <div>
+
+                    <div class="price-label">
+                        CONSULTATION
+                    </div>
+
+                    <div class="price">
+                        ₹25
+                        <small>/ min</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn chat"
+                    onclick="startConsult('Astro Priya','chat.html')">
+
+                    💬 Chat
+
+                </button>
+
+                <button
+                    class="btn call"
+                    onclick="startConsult('Astro Priya','call.html')">
+
+                    📞 Call
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="profile-btn"
+                onclick="openProfile('Astro Priya')">
+
+                View Profile →
+
+            </button>
+
+        </article>
+
+
+        <!-- ASTRO AMIT -->
+
+        <article
+            class="astrologer-card"
+            data-name="astro amit"
+            data-rating="5.0"
+            data-price="30"
+            data-online="yes">
+
+            <button
+                class="favorite"
+                onclick="removeAstrologer(this)">
+
+                ♥
+            </button>
+
+
+            <div class="profile">
+
+                <div class="avatar">
+                    👨🏻
+                </div>
+
+                <div>
+
+                    <div class="name">
+                        Astro Amit
+                        <span class="verified">✓</span>
+                    </div>
+
+                    <div class="speciality">
+                        Career • Finance • Vedic Astrology
+                    </div>
+
+                    <div class="online">
+
+                        <span class="online-dot"></span>
+
+                        Online • Available
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="rating-row">
+
+                <span class="stars">
+                    ★★★★★
+                </span>
+
+                <span class="rating">
+                    5.0
+                </span>
+
+                <span class="reviews">
+                    (1.2K)
+                </span>
+
+            </div>
+
+
+            <div class="languages">
+                Hindi • English
+            </div>
+
+
+            <div class="price-row">
+
+                <div>
+
+                    <div class="price-label">
+                        CONSULTATION
+                    </div>
+
+                    <div class="price">
+                        ₹30
+                        <small>/ min</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn chat"
+                    onclick="startConsult('Astro Amit','chat.html')">
+
+                    💬 Chat
+
+                </button>
+
+                <button
+                    class="btn call"
+                    onclick="startConsult('Astro Amit','call.html')">
+
+                    📞 Call
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="profile-btn"
+                onclick="openProfile('Astro Amit')">
+
+                View Profile →
+
+            </button>
+
+        </article>
+
+
+        <!-- ASTRO NEHA -->
+
+        <article
+            class="astrologer-card"
+            data-name="astro neha"
+            data-rating="4.7"
+            data-price="18"
+            data-online="no">
+
+            <button
+                class="favorite"
+                onclick="removeAstrologer(this)">
+
+                ♥
+            </button>
+
+
+            <div class="profile">
+
+                <div class="avatar">
+                    👩🏻
+                </div>
+
+                <div>
+
+                    <div class="name">
+                        Astro Neha
+                        <span class="verified">✓</span>
+                    </div>
+
+                    <div class="speciality">
+                        Tarot • Love • Relationship
+                    </div>
+
+                    <div
+                        class="online"
+                        style="color:#999;">
+
+                        <span
+                            class="online-dot"
+                            style="background:#aaa;">
+                        </span>
+
+                        Offline • Notify Me
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="rating-row">
+
+                <span class="stars">
+                    ★★★★★
+                </span>
+
+                <span class="rating">
+                    4.7
+                </span>
+
+                <span class="reviews">
+                    (950)
+                </span>
+
+            </div>
+
+
+            <div class="languages">
+                Hindi • English
+            </div>
+
+
+            <div class="price-row">
+
+                <div>
+
+                    <div class="price-label">
+                        CONSULTATION
+                    </div>
+
+                    <div class="price">
+                        ₹18
+                        <small>/ min</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn chat"
+                    onclick="notifyMe('Astro Neha')">
+
+                    🔔 Notify Me
+
+                </button>
+
+                <button
+                    class="btn call"
+                    onclick="openProfile('Astro Neha')">
+
+                    Profile
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="profile-btn"
+                onclick="openProfile('Astro Neha')">
+
+                View Profile →
+
+            </button>
+
+        </article>
+
+
+        <!-- ASTRO VIKRAM -->
+
+        <article
+            class="astrologer-card"
+            data-name="astro vikram"
+            data-rating="4.9"
+            data-price="22"
+            data-online="no">
+
+            <button
+                class="favorite"
+                onclick="removeAstrologer(this)">
+
+                ♥
+            </button>
+
+
+            <div class="profile">
+
+                <div class="avatar">
+                    👨🏻
+                </div>
+
+                <div>
+
+                    <div class="name">
+                        Astro Vikram
+                        <span class="verified">✓</span>
+                    </div>
+
+                    <div class="speciality">
+                        Numerology • Business • Career
+                    </div>
+
+                    <div
+                        class="online"
+                        style="color:#999;">
+
+                        <span
+                            class="online-dot"
+                            style="background:#aaa;">
+                        </span>
+
+                        Offline • Notify Me
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="rating-row">
+
+                <span class="stars">
+                    ★★★★★
+                </span>
+
+                <span class="rating">
+                    4.9
+                </span>
+
+                <span class="reviews">
+                    (1.1K)
+                </span>
+
+            </div>
+
+
+            <div class="languages">
+                Hindi • English
+            </div>
+
+
+            <div class="price-row">
+
+                <div>
+
+                    <div class="price-label">
+                        CONSULTATION
+                    </div>
+
+                    <div class="price">
+                        ₹22
+                        <small>/ min</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn chat"
+                    onclick="notifyMe('Astro Vikram')">
+
+                    🔔 Notify Me
+
+                </button>
+
+                <button
+                    class="btn call"
+                    onclick="openProfile('Astro Vikram')">
+
+                    Profile
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="profile-btn"
+                onclick="openProfile('Astro Vikram')">
+
+                View Profile →
+
+            </button>
+
+        </article>
+
+
+    </div>
+
+
+    <!-- ================= EMPTY ================= -->
+
+    <div
+        class="empty"
+        id="empty">
+
+        <div class="empty-icon">
+            ⭐
+        </div>
+
+        <h2>
+            No Saved Astrologers
+        </h2>
+
+        <p>
+            Save your favourite astrologers to quickly consult them later.
+        </p>
+
+        <button
+            onclick="location.href='astrologers.html'">
+
+            Explore Astrologers
+
+        </button>
+
+    </div>
+
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Account</h4>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <a href="wallet.html">
+            Wallet
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Consult</h4>
+
+        <a href="astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="chat.html">
+            Chat
+        </a>
+
+        <a href="call.html">
+            Audio Call
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Explore</h4>
+
+        <a href="HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("walletBalance")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* ================= REMOVE ================= */
+
+function removeAstrologer(button){
+
+    const card =
+        button.closest(
+            ".astrologer-card"
+        );
+
+    const name =
+        card.querySelector(
+            ".name"
+        ).innerText
+        .replace("✓","")
+        .trim();
+
+
+    card.style.transition =
+        ".25s";
+
+    card.style.opacity =
+        "0";
+
+    card.style.transform =
+        "scale(.95)";
+
+
+    setTimeout(()=>{
+
+        card.remove();
+
+        updateSavedCount();
+
+        showToast(
+            name +
+            " removed from saved astrologers."
+        );
+
+    },250);
+
+}
+
+
+/* ================= COUNT ================= */
+
+function updateSavedCount(){
+
+    const cards =
+        document.querySelectorAll(
+            ".astrologer-card"
+        );
+
+    document.getElementById("savedCount")
+        .innerText =
+        cards.length;
+
+
+    let online = 0;
+
+    cards.forEach(card => {
+
+        if(
+            card.dataset.online === "yes"
+        ){
+            online++;
+        }
+
+    });
+
+
+    document.getElementById("onlineCount")
+        .innerText =
+        online;
+
+
+    if(cards.length === 0){
+
+        document.getElementById("empty")
+            .style.display =
+            "block";
+
+        document.getElementById("astrologerGrid")
+            .style.display =
+            "none";
+
+    }
+
+}
+
+
+/* ================= SEARCH ================= */
+
+function applySearch(){
+
+    const query =
+        document.getElementById("search")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const cards =
+        document.querySelectorAll(
+            ".astrologer-card"
+        );
+
+
+    let visible = 0;
+
+
+    cards.forEach(card => {
+
+        const name =
+            card.dataset.name;
+
+        if(
+            name.includes(query)
+        ){
+
+            card.style.display =
+                "";
+
+            visible++;
+
+        }else{
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    if(visible === 0){
+
+        document.getElementById("empty")
+            .style.display =
+            "block";
+
+    }else{
+
+        document.getElementById("empty")
+            .style.display =
+            "none";
+
+    }
+
+}
+
+
+/* ================= SORT ================= */
+
+function sortCards(){
+
+    const value =
+        document.getElementById("sort")
+        .value;
+
+
+    const grid =
+        document.getElementById(
+            "astrologerGrid"
+        );
+
+    const cards =
+        [...grid.querySelectorAll(
+            ".astrologer-card"
+        )];
+
+
+    cards.sort((a,b)=>{
+
+        if(value === "rating"){
+
+            return Number(b.dataset.rating) -
+                   Number(a.dataset.rating);
+
+        }
+
+        if(value === "price-low"){
+
+            return Number(a.dataset.price) -
+                   Number(b.dataset.price);
+
+        }
+
+        if(value === "price-high"){
+
+            return Number(b.dataset.price) -
+                   Number(a.dataset.price);
+
+        }
+
+        return 0;
+
+    });
+
+
+    cards.forEach(card =>
+        grid.appendChild(card)
+    );
+
+}
+
+
+/* ================= CONSULT ================= */
+
+function startConsult(
+    name,
+    page
+){
+
+    localStorage.setItem(
+        "awt_selected_astrologer",
+        name
+    );
+
+
+    window.location.href =
+        page;
+
+}
+
+
+/* ================= PROFILE ================= */
+
+function openProfile(name){
+
+    localStorage.setItem(
+        "awt_selected_astrologer",
+        name
+    );
+
+
+    window.location.href =
+        "astrologer-profile.html";
+
+}
+
+
+/* ================= NOTIFY ================= */
+
+function notifyMe(name){
+
+    showToast(
+        "You will be notified when " +
+        name +
+        " becomes available."
+    );
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.innerText =
+        message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+</script>
+
+</body>
+</html>
