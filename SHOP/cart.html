@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Cart | Astro With Talk</title>
+
+<meta name="description"
+      content="Review your Astro With Talk shopping cart and proceed securely to checkout.">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --light:#f6f6f6;
+    --border:#e4e4e4;
+    --green:#25a34a;
+    --purple:#4d2764;
+    --gold:#b98417;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+    border-radius:8px;
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.cart-icon{
+    position:relative;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+    display:grid;
+    place-items:center;
+}
+
+.cart-count{
+    position:absolute;
+    right:-3px;
+    top:-4px;
+    min-width:15px;
+    height:15px;
+    padding:0 3px;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    font-size:7px;
+    display:grid;
+    place-items:center;
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:14px;
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:34px 38px;
+    border-radius:20px;
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,.17),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #25112f,
+            #4d2561,
+            #754a8d
+        );
+}
+
+.hero::after{
+    content:"CART";
+    position:absolute;
+    right:25px;
+    bottom:-55px;
+    font-size:135px;
+    font-weight:700;
+    opacity:.05;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    padding:7px 11px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:40px;
+}
+
+.hero p{
+    margin-top:8px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.7;
+}
+
+
+/* LAYOUT */
+
+.cart-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 330px;
+    gap:18px;
+    margin-top:18px;
+}
+
+
+/* CARD */
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+}
+
+
+/* CART HEADER */
+
+.cart-header{
+    padding:17px 19px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+}
+
+.cart-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.item-count{
+    color:#999;
+    font-size:7px;
+}
+
+
+/* PRODUCT */
+
+.product{
+    padding:17px 19px;
+    display:grid;
+    grid-template-columns:85px minmax(0,1fr) auto;
+    gap:14px;
+    align-items:center;
+    border-bottom:1px solid #eee;
+}
+
+.product:last-child{
+    border-bottom:0;
+}
+
+.product-image{
+    width:85px;
+    height:85px;
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5e6d4,
+            #dfc09e
+        );
+
+    display:grid;
+    place-items:center;
+    font-size:36px;
+}
+
+.product-info h3{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+}
+
+.product-info p{
+    margin-top:4px;
+    color:#999;
+    font-size:7px;
+    line-height:1.5;
+}
+
+.product-price{
+    margin-top:8px;
+    color:var(--red);
+    font-size:11px;
+    font-weight:700;
+}
+
+.old-price{
+    margin-left:5px;
+    color:#aaa;
+    text-decoration:line-through;
+    font-size:7px;
+    font-weight:400;
+}
+
+.product-right{
+    text-align:right;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.qty-btn{
+    width:25px;
+    height:25px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    color:#555;
+    font-weight:700;
+}
+
+.qty-value{
+    min-width:22px;
+    text-align:center;
+    font-size:8px;
+}
+
+.subtotal{
+    margin-top:9px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.remove{
+    margin-top:7px;
+    border:0;
+    background:none;
+    color:#999;
+    font-size:7px;
+}
+
+.remove:hover{
+    color:var(--red);
+}
+
+
+/* EMPTY */
+
+.empty{
+    display:none;
+    padding:70px 20px;
+    text-align:center;
+}
+
+.empty-icon{
+    width:70px;
+    height:70px;
+    margin:auto;
+    border-radius:50%;
+    background:#f7f2fb;
+    display:grid;
+    place-items:center;
+    font-size:30px;
+}
+
+.empty h2{
+    margin-top:13px;
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.empty p{
+    margin-top:5px;
+    color:#999;
+    font-size:8px;
+}
+
+.shop-btn{
+    margin-top:15px;
+    padding:11px 17px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* CONTINUE SHOPPING */
+
+.continue{
+    padding:15px 19px;
+    border-top:1px solid #eee;
+}
+
+.continue a{
+    color:var(--purple);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* SUMMARY */
+
+.summary{
+    padding:19px;
+}
+
+.summary h2{
+    margin-bottom:14px;
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    color:#777;
+    font-size:8px;
+}
+
+.summary-row strong{
+    color:#333;
+}
+
+.summary-divider{
+    margin:6px 0;
+    border-top:1px dashed #ddd;
+}
+
+.total{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:10px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.total strong{
+    color:var(--red);
+    font-size:17px;
+}
+
+
+/* COUPON */
+
+.coupon{
+    margin-top:16px;
+    padding:13px;
+    border-radius:10px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.coupon-label{
+    margin-bottom:7px;
+    color:#777;
+    font-size:7px;
+    font-weight:700;
+}
+
+.coupon-row{
+    display:flex;
+    gap:5px;
+}
+
+.coupon-row input{
+    flex:1;
+    height:32px;
+    padding:0 8px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    outline:none;
+    font-size:7px;
+}
+
+.apply{
+    padding:0 10px;
+    border:1px solid var(--purple);
+    border-radius:6px;
+    background:#fff;
+    color:var(--purple);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* DISCOUNT */
+
+.discount{
+    display:none;
+    margin-top:7px;
+    color:var(--green);
+    font-size:7px;
+    font-weight:600;
+}
+
+
+/* CHECKOUT */
+
+.checkout{
+    width:100%;
+    height:42px;
+    margin-top:15px;
+    border:0;
+    border-radius:8px;
+    background:var(--red);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.checkout:hover{
+    opacity:.92;
+}
+
+
+/* SECURE */
+
+.secure{
+    margin-top:12px;
+    text-align:center;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* BENEFITS */
+
+.benefits{
+    margin-top:13px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.benefit{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.benefit-icon{
+    width:27px;
+    height:27px;
+    border-radius:7px;
+    background:#f7f2fb;
+    display:grid;
+    place-items:center;
+    font-size:11px;
+}
+
+.benefit span{
+    color:#777;
+    font-size:7px;
+}
+
+
+/* RECOMMENDED */
+
+.recommended{
+    margin-top:18px;
+}
+
+.recommended h2{
+    margin-bottom:12px;
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.recommend-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.recommend{
+    padding:13px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+}
+
+.recommend-image{
+    height:105px;
+    border-radius:9px;
+    background:linear-gradient(145deg,#eee0ce,#d5b88f);
+    display:grid;
+    place-items:center;
+    font-size:35px;
+}
+
+.recommend h3{
+    margin-top:9px;
+    font-family:"Playfair Display",serif;
+    font-size:13px;
+}
+
+.recommend p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.recommend-bottom{
+    margin-top:8px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.recommend-price{
+    color:var(--red);
+    font-size:9px;
+    font-weight:700;
+}
+
+.add{
+    padding:7px 8px;
+    border:0;
+    border-radius:6px;
+    background:var(--purple);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:40px 0 18px;
+    background:#171717;
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+    color:#aaa;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+    margin:6px 0;
+    color:#aaa;
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+    padding-top:13px;
+    border-top:1px solid #333;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .cart-layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .product{
+        grid-template-columns:70px minmax(0,1fr);
+    }
+
+    .product-image{
+        width:70px;
+        height:70px;
+    }
+
+    .product-right{
+        grid-column:2;
+        text-align:left;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+    }
+
+    .recommend-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="container nav">
+
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="shop.html" class="active">
+            Shop
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+
+        <div class="wallet">
+
+            💰 ₹<span id="wallet">
+                500
+            </span>
+
+        </div>
+
+
+        <button
+            class="cart-icon"
+            onclick="location.href='cart.html'">
+
+            🛒
+
+            <span
+                id="cartCount"
+                class="cart-count">
+
+                2
+
+            </span>
+
+        </button>
+
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- PAGE -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+
+        Home / Shop /
+        <span>Cart</span>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🛒 YOUR SHOPPING CART
+            </div>
+
+
+            <h1>
+                Review Your Cart
+            </h1>
+
+
+            <p>
+                Review your selected astrology products,
+                update quantities and continue securely to checkout.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CART -->
+
+    <div class="cart-layout">
+
+
+        <!-- PRODUCTS -->
+
+        <section class="card">
+
+
+            <div class="cart-header">
+
+                <h2>
+                    Your Items
+                </h2>
+
+                <div
+                    id="itemCount"
+                    class="item-count">
+
+                    2 Items
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 1 -->
+
+            <div
+                class="product"
+                data-price="799"
+                data-id="rudraksha">
+
+                <div class="product-image">
+                    📿
+                </div>
+
+
+                <div class="product-info">
+
+                    <h3>
+                        5 Mukhi Rudraksha
+                    </h3>
+
+                    <p>
+                        Energized Rudraksha suitable for daily
+                        spiritual practice.
+                    </p>
+
+                    <div class="product-price">
+
+                        ₹799
+
+                        <span class="old-price">
+                            ₹999
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-right">
+
+                    <div class="quantity">
+
+                        <button
+                            class="qty-btn"
+                            onclick="changeQty(this,-1)">
+
+                            −
+
+                        </button>
+
+                        <span class="qty-value">
+                            1
+                        </span>
+
+                        <button
+                            class="qty-btn"
+                            onclick="changeQty(this,1)">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="subtotal">
+                        ₹799
+                    </div>
+
+
+                    <button
+                        class="remove"
+                        onclick="removeProduct(this)">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 2 -->
+
+            <div
+                class="product"
+                data-price="499"
+                data-id="yantra">
+
+                <div class="product-image">
+                    🔱
+                </div>
+
+
+                <div class="product-info">
+
+                    <h3>
+                        Shri Yantra
+                    </h3>
+
+                    <p>
+                        Traditional devotional yantra for your
+                        spiritual space.
+                    </p>
+
+                    <div class="product-price">
+
+                        ₹499
+
+                        <span class="old-price">
+                            ₹699
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-right">
+
+                    <div class="quantity">
+
+                        <button
+                            class="qty-btn"
+                            onclick="changeQty(this,-1)">
+
+                            −
+
+                        </button>
+
+                        <span class="qty-value">
+                            1
+                        </span>
+
+                        <button
+                            class="qty-btn"
+                            onclick="changeQty(this,1)">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="subtotal">
+                        ₹499
+                    </div>
+
+
+                    <button
+                        class="remove"
+                        onclick="removeProduct(this)">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY -->
+
+            <div
+                id="emptyCart"
+                class="empty">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    Your Cart is Empty
+                </h2>
+
+                <p>
+                    Add some products from the Astro With Talk Shop.
+                </p>
+
+                <button
+                    class="shop-btn"
+                    onclick="location.href='products.html'">
+
+                    Explore Products
+
+                </button>
+
+            </div>
+
+
+            <div class="continue">
+
+                <a href="products.html">
+
+                    ← Continue Shopping
+
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <aside>
+
+
+            <div class="card summary">
+
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong
+                        id="subtotal">
+
+                        ₹1,298
+
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong
+                        id="delivery">
+
+                        ₹49
+
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="discountRow"
+                    class="summary-row"
+                    style="display:none;">
+
+                    <span>
+                        Discount
+                    </span>
+
+                    <strong
+                        id="discount"
+                        style="color:var(--green);">
+
+                        −₹0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong
+                        id="total">
+
+                        ₹1,347
+
+                    </strong>
+
+                </div>
+
+
+                <!-- COUPON -->
+
+                <div class="coupon">
+
+                    <div class="coupon-label">
+                        HAVE A COUPON?
+                    </div>
+
+
+                    <div class="coupon-row">
+
+                        <input
+                            id="couponInput"
+                            type="text"
+                            placeholder="Enter coupon code">
+
+
+                        <button
+                            class="apply"
+                            onclick="applyCoupon()">
+
+                            Apply
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="discountMessage"
+                        class="discount">
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="checkout"
+                    onclick="goCheckout()">
+
+                    Proceed to Checkout →
+
+                </button>
+
+
+                <div class="secure">
+
+                    🔒 Secure checkout • Multiple payment options
+
+                </div>
+
+
+                <div class="benefits">
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🚚
+                        </div>
+
+                        <span>
+                            Reliable delivery
+                        </span>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🔒
+                        </div>
+
+                        <span>
+                            Secure payment
+                        </span>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            ↩️
+                        </div>
+
+                        <span>
+                            Order support available
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+
+    <!-- RECOMMENDED -->
+
+    <section
+        id="recommended"
+        class="recommended">
+
+        <h2>
+            You May Also Like
+        </h2>
+
+
+        <div class="recommend-grid">
+
+
+            <div class="recommend">
+
+                <div class="recommend-image">
+                    💎
+                </div>
+
+                <h3>
+                    Crystal Healing Set
+                </h3>
+
+                <p>
+                    A curated crystal set for meditation and
+                    spiritual practice.
+                </p>
+
+                <div class="recommend-bottom">
+
+                    <div class="recommend-price">
+                        ₹899
+                    </div>
+
+                    <button
+                        class="add"
+                        onclick="addProduct('Crystal Healing Set',899,'💎')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommend">
+
+                <div class="recommend-image">
+                    🕉️
+                </div>
+
+                <h3>
+                    Meditation Mala
+                </h3>
+
+                <p>
+                    Traditional mala designed for mantra and
+                    meditation practice.
+                </p>
+
+                <div class="recommend-bottom">
+
+                    <div class="recommend-price">
+                        ₹599
+                    </div>
+
+                    <button
+                        class="add"
+                        onclick="addProduct('Meditation Mala',599,'🕉️')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommend">
+
+                <div class="recommend-image">
+                    🪔
+                </div>
+
+                <h3>
+                    Puja Essentials Kit
+                </h3>
+
+                <p>
+                    Everyday essentials for your home spiritual
+                    practice.
+                </p>
+
+                <div class="recommend-bottom">
+
+                    <div class="recommend-price">
+                        ₹749
+                    </div>
+
+                    <button
+                        class="add"
+                        onclick="addProduct('Puja Essentials Kit',749,'🪔')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+
+        <p>
+
+            Astrology, Kundli, Panchang, numerology and
+            personalized guidance in one connected platform.
+
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Shop
+        </h4>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   CART STATE
+========================================== */
+
+let couponDiscount = 0;
+
+
+/* ==========================================
+   WALLET
+========================================== */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+document
+    .getElementById("wallet")
+    .innerText =
+        wallet.toLocaleString("en-IN");
+
+
+/* ==========================================
+   QUANTITY
+========================================== */
+
+function changeQty(
+    button,
+    amount
+){
+
+    const product =
+        button.closest(".product");
+
+
+    const quantity =
+        product.querySelector(
+            ".qty-value"
+        );
+
+
+    let value =
+        Number(
+            quantity.innerText
+        );
+
+
+    value += amount;
+
+
+    if(
+        value < 1
+    ){
+
+        value = 1;
+
+    }
+
+
+    if(
+        value > 10
+    ){
+
+        value = 10;
+
+    }
+
+
+    quantity.innerText =
+        value;
+
+
+    updateCart();
+
+}
+
+
+/* ==========================================
+   REMOVE
+========================================== */
+
+function removeProduct(
+    button
+){
+
+    const product =
+        button.closest(".product");
+
+
+    product.remove();
+
+
+    updateCart();
+
+}
+
+
+/* ==========================================
+   UPDATE CART
+========================================== */
+
+function updateCart(){
+
+    const products =
+        document.querySelectorAll(
+            ".product"
+        );
+
+
+    let subtotal = 0;
+
+    let itemCount = 0;
+
+
+    products.forEach(
+        product => {
+
+            const price =
+                Number(
+                    product.dataset.price
+                );
+
+
+            const qty =
+                Number(
+                    product
+                    .querySelector(
+                        ".qty-value"
+                    )
+                    .innerText
+                );
+
+
+            const itemSubtotal =
+                price * qty;
+
+
+            subtotal +=
+                itemSubtotal;
+
+
+            itemCount +=
+                qty;
+
+
+            product
+                .querySelector(
+                    ".subtotal"
+                )
+                .innerText =
+                    "₹" +
+                    itemSubtotal.toLocaleString(
+                        "en-IN"
+                    );
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "itemCount"
+        )
+        .innerText =
+            itemCount +
+            (
+                itemCount === 1
+                ? " Item"
+                : " Items"
+            );
+
+
+    const delivery =
+        subtotal === 0
+        ? 0
+        : subtotal >= 999
+        ? 0
+        : 49;
+
+
+    const discount =
+        Math.min(
+            couponDiscount,
+            subtotal
+        );
+
+
+    const total =
+        subtotal +
+        delivery -
+        discount;
+
+
+    document
+        .getElementById(
+            "subtotal"
+        )
+        .innerText =
+            "₹" +
+            subtotal.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById(
+            "delivery"
+        )
+        .innerText =
+            delivery === 0
+            ? "FREE"
+            : "₹" +
+              delivery;
+
+
+    document
+        .getElementById(
+            "discount"
+        )
+        .innerText =
+            "−₹" +
+            discount.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById(
+            "total"
+        )
+        .innerText =
+            "₹" +
+            total.toLocaleString(
+                "en-IN"
+            );
+
+
+    const discountRow =
+        document.getElementById(
+            "discountRow"
+        );
+
+
+    discountRow.style.display =
+        discount > 0
+        ? "flex"
+        : "none";
+
+
+    const empty =
+        document.getElementById(
+            "emptyCart"
+        );
+
+
+    if(
+        products.length === 0
+    ){
+
+        empty.style.display =
+            "block";
+
+    }else{
+
+        empty.style.display =
+            "none";
+
+    }
+
+
+    document
+        .getElementById(
+            "cartCount"
+        )
+        .innerText =
+            itemCount;
+
+
+    /*
+        Keep a lightweight cart state
+        for other Shop pages.
+    */
+
+    localStorage.setItem(
+        "awt_cart_count",
+        itemCount
+    );
+
+
+    localStorage.setItem(
+        "awt_cart_subtotal",
+        subtotal
+    );
+
+}
+
+
+/* ==========================================
+   COUPON
+========================================== */
+
+function applyCoupon(){
+
+    const input =
+        document.getElementById(
+            "couponInput"
+        );
+
+
+    const code =
+        input.value
+        .trim()
+        .toUpperCase();
+
+
+    const message =
+        document.getElementById(
+            "discountMessage"
+        );
+
+
+    if(
+        code === "ASTRO10"
+    ){
+
+        couponDiscount = 100;
+
+
+        message.innerText =
+            "✓ Coupon applied — ₹100 discount";
+
+
+        message.style.display =
+            "block";
+
+
+        updateCart();
+
+
+        return;
+
+    }
+
+
+    if(
+        code === "WELCOME"
+    ){
+
+        couponDiscount = 75;
+
+
+        message.innerText =
+            "✓ Welcome offer applied — ₹75 discount";
+
+
+        message.style.display =
+            "block";
+
+
+        updateCart();
+
+
+        return;
+
+    }
+
+
+    couponDiscount = 0;
+
+
+    message.innerText =
+        "Invalid or expired coupon code.";
+
+
+    message.style.display =
+        "block";
+
+
+    message.style.color =
+        "var(--red)";
+
+
+    updateCart();
+
+}
+
+
+/* ==========================================
+   ADD RECOMMENDED PRODUCT
+========================================== */
+
+function addProduct(
+    name,
+    price,
+    icon
+){
+
+    const products =
+        document.querySelector(
+            ".card"
+        );
+
+
+    const product =
+        document.createElement(
+            "div"
+        );
+
+
+    product.className =
+        "product";
+
+
+    product.dataset.price =
+        price;
+
+
+    product.dataset.id =
+        name
+        .toLowerCase()
+        .replace(
+            /\s+/g,
+            "-"
+        );
+
+
+    product.innerHTML =
+
+        `
+        <div class="product-image">
+            ${icon}
+        </div>
+
+        <div class="product-info">
+
+            <h3>
+                ${escapeHtml(name)}
+            </h3>
+
+            <p>
+                Selected Astro With Talk Shop product.
+            </p>
+
+            <div class="product-price">
+                ₹${price.toLocaleString("en-IN")}
+            </div>
+
+        </div>
+
+        <div class="product-right">
+
+            <div class="quantity">
+
+                <button
+                    class="qty-btn"
+                    onclick="changeQty(this,-1)">
+                    −
+                </button>
+
+                <span class="qty-value">
+                    1
+                </span>
+
+                <button
+                    class="qty-btn"
+                    onclick="changeQty(this,1)">
+                    +
+                </button>
+
+            </div>
+
+            <div class="subtotal">
+                ₹${price.toLocaleString("en-IN")}
+            </div>
+
+            <button
+                class="remove"
+                onclick="removeProduct(this)">
+                Remove
+            </button>
+
+        </div>
+        `;
+
+
+    /*
+        Insert before empty state.
+    */
+
+    document
+        .getElementById(
+            "emptyCart"
+        )
+        .before(
+            product
+        );
+
+
+    updateCart();
+
+}
+
+
+/* ==========================================
+   CHECKOUT
+========================================== */
+
+function goCheckout(){
+
+    const products =
+        document.querySelectorAll(
+            ".product"
+        );
+
+
+    if(
+        products.length === 0
+    ){
+
+        alert(
+            "Your cart is empty. Please add a product first."
+        );
+
+        return;
+
+    }
+
+
+    const subtotal =
+        Number(
+            localStorage.getItem(
+                "awt_cart_subtotal"
+            ) || 0
+        );
+
+
+    if(
+        subtotal <= 0
+    ){
+
+        alert(
+            "Please add a product before checkout."
+        );
+
+        return;
+
+    }
+
+
+    location.href =
+        "checkout.html";
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.innerText =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   INIT
+========================================== */
+
+updateCart();
+
+</script>
+
+</body>
+</html>
