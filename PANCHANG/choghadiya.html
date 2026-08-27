@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Choghadiya - Astro With Talk</title>
+
+<meta name="description"
+content="Today's Day and Night Choghadiya with auspicious and inauspicious periods. Check Choghadiya timings by date and location on Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#23794a;
+    --green-bg:#effaf4;
+    --orange:#a95224;
+    --orange-bg:#fff4ec;
+    --blue:#2867a8;
+    --blue-bg:#f1f7ff;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 85% 15%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#821117,#d71920);
+    color:#fff;
+    border-radius:18px;
+    padding:30px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"⏱";
+    position:absolute;
+    right:34px;
+    top:-18px;
+    font-size:145px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:36px;
+}
+
+.hero p{
+    max-width:680px;
+    color:rgba(255,255,255,.82);
+    font-size:9px;
+    line-height:1.7;
+    margin-top:6px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:14px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* DATE BAR */
+
+.date-bar{
+    margin-top:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:13px 15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.date-main{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.date-icon{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:17px;
+}
+
+.date-main strong{
+    display:block;
+    font-size:10px;
+}
+
+.date-main span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.date-actions{
+    display:flex;
+    gap:6px;
+}
+
+.date-actions button{
+    height:32px;
+    padding:0 10px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:7px;
+    font-size:7px;
+}
+
+.date-actions button:hover{
+    color:var(--red);
+    border-color:#e0aaaa;
+}
+
+
+/* LOCATION */
+
+.location-bar{
+    margin-top:12px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:7px;
+}
+
+.location-bar label{
+    color:#888;
+    font-size:7px;
+}
+
+.location-bar select{
+    height:32px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    background:#fff;
+    padding:0 9px;
+    font-size:8px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* STATUS */
+
+.status{
+    margin-top:15px;
+    border:1px solid #d0e5d8;
+    background:var(--green-bg);
+    border-radius:11px;
+    padding:13px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.status-icon{
+    width:34px;
+    height:34px;
+    background:#fff;
+    border-radius:9px;
+    display:grid;
+    place-items:center;
+}
+
+.status strong{
+    display:block;
+    color:var(--green);
+    font-size:9px;
+}
+
+.status span{
+    display:block;
+    color:#777;
+    font-size:7px;
+    margin-top:3px;
+}
+
+
+/* CHOGHADIYA TABLE */
+
+.choghadiya-table{
+    margin-top:15px;
+    border:1px solid #eee;
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.ch-row{
+    display:grid;
+    grid-template-columns:50px 130px 1fr 105px;
+    align-items:center;
+    gap:10px;
+    padding:11px 12px;
+    border-bottom:1px solid #eee;
+}
+
+.ch-row:last-child{
+    border-bottom:0;
+}
+
+.ch-row.header{
+    background:#fafafa;
+    color:#777;
+    font-size:7px;
+    font-weight:700;
+}
+
+.ch-number{
+    font-size:8px;
+    font-weight:700;
+    color:#999;
+}
+
+.ch-time{
+    font-size:8px;
+    font-weight:700;
+}
+
+.ch-name{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.ch-icon{
+    width:29px;
+    height:29px;
+    border-radius:8px;
+    display:grid;
+    place-items:center;
+    background:var(--green-bg);
+    font-size:13px;
+}
+
+.ch-name strong{
+    display:block;
+    font-size:9px;
+}
+
+.ch-name span{
+    display:block;
+    color:#999;
+    font-size:6px;
+    margin-top:2px;
+}
+
+.ch-result{
+    text-align:right;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 7px;
+    border-radius:20px;
+    font-size:6px;
+    font-weight:700;
+}
+
+.badge.good{
+    color:var(--green);
+    background:var(--green-bg);
+}
+
+.badge.neutral{
+    color:#92711b;
+    background:var(--gold-bg);
+}
+
+.badge.bad{
+    color:var(--orange);
+    background:var(--orange-bg);
+}
+
+
+/* NIGHT */
+
+.night .ch-icon{
+    background:#f2f0ff;
+}
+
+.night .badge.good{
+    background:#f2f0ff;
+    color:#5c52a0;
+}
+
+
+/* LEGEND */
+
+.legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:13px;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    color:#777;
+    font-size:7px;
+}
+
+.legend-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+}
+
+.legend-dot.good{
+    background:#75b58f;
+}
+
+.legend-dot.neutral{
+    background:#d4b15b;
+}
+
+.legend-dot.bad{
+    background:#d99168;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--blue-bg);
+    border:1px solid #d7e5f3;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:22px 18px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .date-bar{
+        display:block;
+    }
+
+    .date-actions{
+        margin-top:10px;
+    }
+
+    .date-actions button{
+        flex:1;
+    }
+
+    .location-bar{
+        justify-content:space-between;
+    }
+
+    .ch-row{
+        grid-template-columns:35px 95px 1fr;
+    }
+
+    .ch-result{
+        display:none;
+    }
+
+    .ch-row.header{
+        grid-template-columns:35px 95px 1fr;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="panchang.html" class="active">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Panchang / <span>Choghadiya</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Choghadiya
+            </h1>
+
+            <p>
+                Check today's Day and Night Choghadiya and find traditionally
+                auspicious, neutral and inauspicious time periods for
+                everyday activities.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ⏱️ Day Choghadiya
+                </div>
+
+                <div class="hero-pill">
+                    🌙 Night Choghadiya
+                </div>
+
+                <div class="hero-pill">
+                    📍 Location Based
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DATE -->
+
+    <div class="date-bar">
+
+        <div class="date-main">
+
+            <div class="date-icon">
+                ⏱️
+            </div>
+
+            <div>
+
+                <strong id="currentDate">
+                    Thursday, 27 August 2026
+                </strong>
+
+                <span>
+                    Choghadiya • Lucknow, Uttar Pradesh
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="date-actions">
+
+            <button onclick="changeDate(-1)">
+                ← Previous
+            </button>
+
+            <button onclick="resetDate()">
+                Today
+            </button>
+
+            <button onclick="changeDate(1)">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="location-bar">
+
+        <label>
+            Location
+        </label>
+
+        <select id="city">
+
+            <option>Lucknow</option>
+            <option>Delhi</option>
+            <option>Mumbai</option>
+            <option>Varanasi</option>
+            <option>Jaipur</option>
+            <option>Kolkata</option>
+            <option>Bengaluru</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- STATUS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Today's Choghadiya
+                </h2>
+
+                <p class="section-sub">
+                    Traditional time periods calculated from local day
+                    and night duration.
+                </p>
+
+
+                <div class="status">
+
+                    <div class="status-icon">
+                        ✨
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Choghadiya timings available
+                        </strong>
+
+                        <span>
+                            Select another date or location to explore
+                            the corresponding schedule.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAY -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    ☀️ Day Choghadiya
+                </h2>
+
+                <p class="section-sub">
+                    Daytime Choghadiya from sunrise to sunset.
+                </p>
+
+
+                <div class="choghadiya-table">
+
+
+                    <div class="ch-row header">
+
+                        <div>
+                            #
+                        </div>
+
+                        <div>
+                            TIME
+                        </div>
+
+                        <div>
+                            CHOGHADIYA
+                        </div>
+
+                        <div>
+                            NATURE
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            1
+                        </div>
+
+                        <div class="ch-time">
+                            05:43 – 07:18
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                💰
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Labh
+                                </strong>
+
+                                <span>
+                                    Gain
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Auspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            2
+                        </div>
+
+                        <div class="ch-time">
+                            07:18 – 08:53
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                🌟
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Amrit
+                                </strong>
+
+                                <span>
+                                    Nectar
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Excellent
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            3
+                        </div>
+
+                        <div class="ch-time">
+                            08:53 – 10:28
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                🛡️
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Kaal
+                                </strong>
+
+                                <span>
+                                    Time
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge bad">
+                                Inauspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            4
+                        </div>
+
+                        <div class="ch-time">
+                            10:28 – 12:03
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                ✨
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Shubh
+                                </strong>
+
+                                <span>
+                                    Auspicious
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Auspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            5
+                        </div>
+
+                        <div class="ch-time">
+                            12:03 – 01:38
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                ⚕️
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Rog
+                                </strong>
+
+                                <span>
+                                    Disease
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge bad">
+                                Inauspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            6
+                        </div>
+
+                        <div class="ch-time">
+                            01:38 – 03:13
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                ⚡
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Udveg
+                                </strong>
+
+                                <span>
+                                    Anxiety
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge bad">
+                                Inauspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            7
+                        </div>
+
+                        <div class="ch-time">
+                            03:13 – 04:48
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                🚶
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Char
+                                </strong>
+
+                                <span>
+                                    Movable
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge neutral">
+                                Good
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            8
+                        </div>
+
+                        <div class="ch-time">
+                            04:48 – 06:38
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                💰
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Labh
+                                </strong>
+
+                                <span>
+                                    Gain
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Auspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="legend">
+
+                    <div class="legend-item">
+                        <span class="legend-dot good"></span>
+                        Auspicious
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot neutral"></span>
+                        Good / Neutral
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot bad"></span>
+                        Inauspicious
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NIGHT -->
+
+            <div class="section night">
+
+                <h2 class="section-title">
+                    🌙 Night Choghadiya
+                </h2>
+
+                <p class="section-sub">
+                    Nighttime Choghadiya from sunset to the following sunrise.
+                </p>
+
+
+                <div class="choghadiya-table">
+
+
+                    <div class="ch-row header">
+
+                        <div>
+                            #
+                        </div>
+
+                        <div>
+                            TIME
+                        </div>
+
+                        <div>
+                            CHOGHADIYA
+                        </div>
+
+                        <div>
+                            NATURE
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            1
+                        </div>
+
+                        <div class="ch-time">
+                            06:38 – 08:13
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                ✨
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Shubh
+                                </strong>
+
+                                <span>
+                                    Auspicious
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Good
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            2
+                        </div>
+
+                        <div class="ch-time">
+                            08:13 – 09:48
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                💰
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Labh
+                                </strong>
+
+                                <span>
+                                    Gain
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Auspicious
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            3
+                        </div>
+
+                        <div class="ch-time">
+                            09:48 – 11:23
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                🛡️
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Kaal
+                                </strong>
+
+                                <span>
+                                    Time
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge bad">
+                                Avoid
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            4
+                        </div>
+
+                        <div class="ch-time">
+                            11:23 – 12:58
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                🌟
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Amrit
+                                </strong>
+
+                                <span>
+                                    Nectar
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge good">
+                                Excellent
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            5
+                        </div>
+
+                        <div class="ch-time">
+                            12:58 – 02:33
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                ⚕️
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Rog
+                                </strong>
+
+                                <span>
+                                    Disease
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge bad">
+                                Avoid
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            6
+                        </div>
+
+                        <div class="ch-time">
+                            02:33 – 04:08
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                🚶
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Char
+                                </strong>
+
+                                <span>
+                                    Movable
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge neutral">
+                                Good
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ch-row">
+
+                        <div class="ch-number">
+                            7
+                        </div>
+
+                        <div class="ch-time">
+                            04:08 – 05:43
+                        </div>
+
+                        <div class="ch-name">
+
+                            <div class="ch-icon">
+                                ⚡
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Udveg
+                                </strong>
+
+                                <span>
+                                    Anxiety
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ch-result">
+                            <span class="badge bad">
+                                Avoid
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- GUIDANCE -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Choghadiya Guidance
+                    </strong>
+
+                    <p>
+                        Choghadiya is a traditional Hindu time-selection
+                        system. Exact periods vary with location, sunrise,
+                        sunset and the calculation tradition being used.
+                        The timings on this prototype are demonstration
+                        values and should be replaced with live Panchang
+                        calculations before production launch.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Panchang
+                </h3>
+
+
+                <a href="panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Panchang
+                        </strong>
+
+                        <span>
+                            Main Panchang
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="today-panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Today's Panchang
+                        </strong>
+
+                        <span>
+                            Complete details
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="festival-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Festival Calendar
+                        </strong>
+
+                        <span>
+                            Hindu festivals
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="muhurat.html" class="side-link">
+
+                    <div class="side-icon">
+                        ✨
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Muhurat
+                        </strong>
+
+                        <span>
+                            Auspicious timings
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="rahu-kaal.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Rahu Kaal
+                        </strong>
+
+                        <span>
+                            Daily timing
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="choghadiya.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⏱️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Choghadiya
+                        </strong>
+
+                        <span>
+                            Day & night
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="hindu-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🗓️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Hindu Calendar
+                        </strong>
+
+                        <span>
+                            Monthly calendar
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Personalized Timing?
+                    </strong>
+
+                    <p>
+                        Consult an astrologer for event-specific
+                        Muhurat and personalized timing guidance.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Consult Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Panchang</h4>
+
+        <a href="panchang.html">Panchang</a>
+        <a href="today-panchang.html">Today</a>
+        <a href="muhurat.html">Muhurat</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../astrologers.html">Astrologers</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">Chat</a>
+        <a href="../call.html">Call</a>
+        <a href="../live-astrology.html">Live Astrology</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* DATE */
+
+let selectedDate =
+    new Date(2026,7,27);
+
+function updateDate(){
+
+    const formatted =
+        selectedDate.toLocaleDateString(
+            "en-IN",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+    document.getElementById(
+        "currentDate"
+    ).innerText = formatted;
+
+}
+
+function changeDate(days){
+
+    selectedDate.setDate(
+        selectedDate.getDate() + days
+    );
+
+    updateDate();
+
+}
+
+function resetDate(){
+
+    selectedDate =
+        new Date(2026,7,27);
+
+    updateDate();
+
+}
+
+updateDate();
+
+
+/* LOCATION */
+
+document
+    .getElementById("city")
+    .addEventListener(
+        "change",
+        function(){
+
+            console.log(
+                "Choghadiya location:",
+                this.value
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
