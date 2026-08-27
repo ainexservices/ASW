@@ -1,0 +1,2768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Astrologer Dashboard | Astro With Talk</title>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --red-dark:#b80f16;
+    --dark:#171717;
+    --purple:#4d2764;
+    --purple-dark:#321640;
+    --purple-light:#f7f2fb;
+    --green:#249847;
+    --green-light:#eff9f2;
+    --gold:#c99527;
+    --gold-light:#fff8e8;
+    --blue:#2563eb;
+    --blue-light:#eff6ff;
+    --border:#e5e5e5;
+    --muted:#888;
+    --bg:#f5f5f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.app{
+    min-height:100vh;
+    display:flex;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:235px;
+    background:#fff;
+    border-right:1px solid var(--border);
+    z-index:50;
+    overflow-y:auto;
+}
+
+.sidebar-brand{
+    height:72px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border-bottom:1px solid #eee;
+}
+
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--red);
+    color:#fff;
+    font-size:19px;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.brand-name span{
+    color:var(--red);
+}
+
+.panel-label{
+    padding:18px 20px 8px;
+    color:#aaa;
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:.8px;
+}
+
+.sidebar-nav{
+    padding:0 10px;
+}
+
+.nav-item{
+    width:100%;
+    min-height:40px;
+    padding:0 11px;
+    margin-bottom:3px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border-radius:7px;
+    color:#666;
+    font-size:8px;
+    font-weight:600;
+}
+
+.nav-item:hover{
+    background:#f7f7f7;
+    color:var(--purple);
+}
+
+.nav-item.active{
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+.nav-icon{
+    width:23px;
+    text-align:center;
+    font-size:13px;
+}
+
+.nav-badge{
+    margin-left:auto;
+    min-width:17px;
+    height:17px;
+    padding:0 5px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    font-size:6px;
+}
+
+.sidebar-bottom{
+    margin:18px 10px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+}
+
+.logout{
+    color:#b51b21;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    width:calc(100% - 235px);
+    margin-left:235px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:72px;
+    padding:0 27px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:30;
+}
+
+.mobile-menu{
+    display:none;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    background:#fff;
+}
+
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.notification{
+    position:relative;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+.notification-dot{
+    position:absolute;
+    right:6px;
+    top:5px;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--red);
+}
+
+.top-profile{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding-left:10px;
+    border-left:1px solid #eee;
+}
+
+.top-avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    display:grid;
+    place-items:center;
+    font-size:10px;
+    font-weight:700;
+}
+
+.top-profile-text strong{
+    display:block;
+    font-size:7px;
+}
+
+.top-profile-text span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:25px 27px 50px;
+}
+
+.welcome{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.welcome h1{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.welcome p{
+    margin-top:5px;
+    color:#888;
+    font-size:7px;
+}
+
+.online-control{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 11px;
+    border-radius:9px;
+    background:#fff;
+    border:1px solid var(--border);
+}
+
+.online-text strong{
+    display:block;
+    font-size:7px;
+}
+
+.online-text span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+.status-toggle{
+    width:46px;
+    height:25px;
+    border:0;
+    border-radius:20px;
+    background:#ccc;
+    padding:3px;
+    transition:.2s;
+}
+
+.status-toggle span{
+    display:block;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+}
+
+.status-toggle.online{
+    background:var(--green);
+}
+
+.status-toggle.online span{
+    transform:translateX(21px);
+}
+
+
+/* =========================
+   ALERT
+========================= */
+
+.verification-alert{
+    margin-top:17px;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid #ead9ad;
+    border-radius:9px;
+    background:var(--gold-light);
+    color:#705b26;
+}
+
+.verification-alert-icon{
+    font-size:15px;
+}
+
+.verification-alert strong{
+    display:block;
+    font-size:8px;
+}
+
+.verification-alert span{
+    display:block;
+    margin-top:2px;
+    font-size:6px;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+}
+
+.stat-card{
+    position:relative;
+    overflow:hidden;
+    padding:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    width:70px;
+    height:70px;
+    right:-28px;
+    bottom:-30px;
+    border-radius:50%;
+    background:var(--purple-light);
+}
+
+.stat-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.stat-icon{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    background:var(--purple-light);
+    font-size:15px;
+}
+
+.stat-change{
+    color:var(--green);
+    font-size:6px;
+    font-weight:700;
+}
+
+.stat-value{
+    margin-top:13px;
+    font-size:20px;
+    font-weight:700;
+}
+
+.stat-label{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.dashboard-grid{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:1.45fr .8fr;
+    gap:15px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.card-header{
+    min-height:53px;
+    padding:0 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+}
+
+.card-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+}
+
+.card-header a{
+    color:var(--red);
+    font-size:6px;
+    font-weight:700;
+}
+
+.card-body{
+    padding:15px;
+}
+
+
+/* =========================
+   REQUESTS
+========================= */
+
+.request{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.request:last-child{
+    border-bottom:0;
+}
+
+.request-avatar{
+    width:38px;
+    height:38px;
+    flex:none;
+    border-radius:50%;
+    background:#f1edf4;
+    display:grid;
+    place-items:center;
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+}
+
+.request-info{
+    flex:1;
+}
+
+.request-info strong{
+    display:block;
+    font-size:8px;
+}
+
+.request-info span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.request-service{
+    display:inline-block;
+    margin-top:4px;
+    padding:3px 5px;
+    border-radius:4px;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:5px;
+    font-weight:700;
+}
+
+.request-actions{
+    display:flex;
+    gap:5px;
+}
+
+.accept,
+.reject{
+    height:29px;
+    padding:0 9px;
+    border-radius:5px;
+    font-size:6px;
+    font-weight:700;
+}
+
+.accept{
+    border:0;
+    background:var(--green);
+    color:#fff;
+}
+
+.reject{
+    border:1px solid #ddd;
+    background:#fff;
+    color:#777;
+}
+
+
+/* =========================
+   EARNINGS
+========================= */
+
+.earnings-main{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.earnings-label{
+    color:#999;
+    font-size:6px;
+}
+
+.earnings-value{
+    margin-top:5px;
+    color:var(--purple);
+    font-size:25px;
+    font-weight:700;
+}
+
+.withdraw-btn{
+    height:32px;
+    padding:0 10px;
+    border:1px solid var(--purple);
+    border-radius:6px;
+    background:#fff;
+    color:var(--purple);
+    font-size:6px;
+    font-weight:700;
+}
+
+.earnings-chart{
+    height:120px;
+    margin-top:17px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:7px;
+    padding:8px 2px 0;
+    border-bottom:1px solid #eee;
+}
+
+.bar-wrap{
+    height:100%;
+    flex:1;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.bar{
+    width:65%;
+    min-height:7px;
+    border-radius:5px 5px 0 0;
+    background:var(--purple);
+}
+
+.bar:nth-child(1){
+    height:32%;
+}
+
+.bar-labels{
+    display:flex;
+    justify-content:space-between;
+    padding-top:6px;
+    color:#aaa;
+    font-size:5px;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.quick-action{
+    min-height:73px;
+    padding:11px;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    background:#fff;
+    text-align:left;
+    transition:.2s;
+}
+
+.quick-action:hover{
+    border-color:var(--purple);
+    background:var(--purple-light);
+}
+
+.quick-icon{
+    font-size:15px;
+}
+
+.quick-action strong{
+    display:block;
+    margin-top:7px;
+    font-size:7px;
+}
+
+.quick-action span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:5px;
+}
+
+
+/* =========================
+   ACTIVE CONSULTATION
+========================= */
+
+.active-consultation{
+    margin-top:15px;
+}
+
+.live-box{
+    padding:14px;
+    background:#fff6f6;
+    border:1px solid #f1d2d4;
+    border-radius:8px;
+}
+
+.live-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.live-badge{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    color:var(--red);
+    font-size:6px;
+    font-weight:700;
+}
+
+.live-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--red);
+}
+
+.timer{
+    color:#555;
+    font-size:7px;
+    font-weight:700;
+}
+
+.customer{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-top:12px;
+}
+
+.customer-avatar{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#eee;
+    font-size:8px;
+}
+
+.customer strong{
+    display:block;
+    font-size:7px;
+}
+
+.customer span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+.end-btn{
+    width:100%;
+    height:30px;
+    margin-top:12px;
+    border:0;
+    border-radius:6px;
+    background:var(--red);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   AVAILABILITY
+========================= */
+
+.availability-card{
+    margin-top:15px;
+}
+
+.availability-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.availability-row:last-child{
+    border-bottom:0;
+}
+
+.day{
+    font-size:7px;
+    font-weight:700;
+}
+
+.time{
+    color:#888;
+    font-size:6px;
+}
+
+.available{
+    color:var(--green);
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   REVIEWS
+========================= */
+
+.review-summary{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.rating-big{
+    color:var(--gold);
+    font-size:28px;
+    font-weight:700;
+}
+
+.stars{
+    color:#e0a21b;
+    font-size:11px;
+}
+
+.review-summary span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.review{
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.review:last-child{
+    border-bottom:0;
+}
+
+.review-top{
+    display:flex;
+    justify-content:space-between;
+}
+
+.review-top strong{
+    font-size:7px;
+}
+
+.review-top span{
+    color:#aaa;
+    font-size:5px;
+}
+
+.review p{
+    margin-top:5px;
+    color:#777;
+    font-size:6px;
+    line-height:1.6;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:25px;
+    color:#aaa;
+    text-align:center;
+    font-size:6px;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:100;
+    min-width:220px;
+    padding:12px 14px;
+    border-radius:8px;
+    background:#171717;
+    color:#fff;
+    font-size:7px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    opacity:0;
+    transform:translateY(80px);
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1050px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .content{
+        padding:20px 15px 40px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .welcome{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .online-control{
+        width:100%;
+        justify-content:space-between;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .stat-card{
+        padding:12px;
+    }
+
+    .stat-value{
+        font-size:17px;
+    }
+
+    .request{
+        align-items:flex-start;
+        flex-wrap:wrap;
+    }
+
+    .request-actions{
+        width:100%;
+        margin-left:48px;
+    }
+
+    .request-actions button{
+        flex:1;
+    }
+
+    .top-profile-text{
+        display:none;
+    }
+
+}
+
+@media(max-width:420px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside
+    id="sidebar"
+    class="sidebar">
+
+
+    <a
+        href="../index.html"
+        class="sidebar-brand">
+
+        <div class="brand-icon">
+            ॐ
+        </div>
+
+        <div class="brand-name">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="panel-label">
+        ASTROLOGER PANEL
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="astrologer-dashboard.html"
+            class="nav-item active">
+
+            <span class="nav-icon">🏠</span>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="astrologer-availability.html"
+            class="nav-item">
+
+            <span class="nav-icon">🟢</span>
+
+            Availability
+
+        </a>
+
+
+        <a
+            href="astrologer-chat.html"
+            class="nav-item">
+
+            <span class="nav-icon">💬</span>
+
+            Chat
+
+            <span
+                id="chatBadge"
+                class="nav-badge">
+
+                2
+
+            </span>
+
+        </a>
+
+
+        <a
+            href="astrologer-call.html"
+            class="nav-item">
+
+            <span class="nav-icon">📞</span>
+
+            Audio / Video
+
+        </a>
+
+
+        <a
+            href="astrologer-earnings.html"
+            class="nav-item">
+
+            <span class="nav-icon">💰</span>
+
+            Earnings
+
+        </a>
+
+
+        <a
+            href="astrologer-reviews.html"
+            class="nav-item">
+
+            <span class="nav-icon">⭐</span>
+
+            Reviews
+
+        </a>
+
+
+        <a
+            href="astrologer-profile-edit.html"
+            class="nav-item">
+
+            <span class="nav-icon">👤</span>
+
+            My Profile
+
+        </a>
+
+
+        <a
+            href="astrologer-withdraw.html"
+            class="nav-item">
+
+            <span class="nav-icon">🏦</span>
+
+            Withdraw
+
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a
+            href="../SUPPORT/help.html"
+            class="nav-item">
+
+            <span class="nav-icon">❓</span>
+
+            Help & Support
+
+        </a>
+
+
+        <button
+            class="nav-item logout"
+            onclick="logout()">
+
+            <span class="nav-icon">↪</span>
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+
+        <button
+            id="menuBtn"
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+
+            ☰
+
+        </button>
+
+
+        <div></div>
+
+
+        <div class="topbar-right">
+
+
+            <button
+                class="notification"
+                onclick="showToast('No new notifications.')">
+
+                🔔
+
+                <span
+                    class="notification-dot">
+                </span>
+
+            </button>
+
+
+            <div class="top-profile">
+
+
+                <div
+                    id="topAvatar"
+                    class="top-avatar">
+
+                    A
+
+                </div>
+
+
+                <div class="top-profile-text">
+
+                    <strong
+                        id="topName">
+
+                        Astro Partner
+
+                    </strong>
+
+                    <span>
+                        Astrologer
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+
+            <div>
+
+                <h1>
+                    Good Morning, <span id="welcomeName">Astrologer</span> 👋
+                </h1>
+
+                <p>
+                    Manage your consultations, availability and earnings from here.
+                </p>
+
+            </div>
+
+
+            <div class="online-control">
+
+
+                <div class="online-text">
+
+                    <strong id="statusText">
+                        You're Offline
+                    </strong>
+
+                    <span id="statusSubtext">
+                        Customers cannot request consultations
+                    </span>
+
+                </div>
+
+
+                <button
+                    id="statusToggle"
+                    class="status-toggle"
+                    onclick="toggleOnline()">
+
+                    <span></span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- VERIFICATION -->
+
+        <div
+            id="verificationAlert"
+            class="verification-alert">
+
+            <div class="verification-alert-icon">
+                🛡️
+            </div>
+
+            <div>
+
+                <strong>
+                    Profile Verification
+                </strong>
+
+                <span>
+                    Your profile is currently under review. Customer visibility
+                    will be enabled after admin approval.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        💰
+                    </div>
+
+                    <div class="stat-change">
+                        +12.4%
+                    </div>
+
+                </div>
+
+                <div class="stat-value">
+                    ₹2,450
+                </div>
+
+                <div class="stat-label">
+                    Today's Earnings
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div class="stat-change">
+                        +8
+                    </div>
+
+                </div>
+
+                <div class="stat-value">
+                    24
+                </div>
+
+                <div class="stat-label">
+                    Today's Consultations
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        ⭐
+                    </div>
+
+                    <div class="stat-change">
+                        Excellent
+                    </div>
+
+                </div>
+
+                <div class="stat-value">
+                    4.8
+                </div>
+
+                <div class="stat-label">
+                    Average Rating
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        🏦
+                    </div>
+
+                    <div class="stat-change">
+                        Available
+                    </div>
+
+                </div>
+
+                <div class="stat-value">
+                    ₹18,750
+                </div>
+
+                <div class="stat-label">
+                    Withdrawable Balance
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- MAIN GRID -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- LEFT -->
+
+            <div>
+
+
+                <!-- REQUESTS -->
+
+                <section class="card">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Incoming Requests
+                        </h2>
+
+                        <a
+                            href="astrologer-chat.html">
+
+                            View All →
+
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        id="requests"
+                        class="card-body">
+
+
+                        <div class="request">
+
+                            <div class="request-avatar">
+                                RK
+                            </div>
+
+                            <div class="request-info">
+
+                                <strong>
+                                    Rahul K.
+                                </strong>
+
+                                <span>
+                                    Just now · Looking for career guidance
+                                </span>
+
+                                <span class="request-service">
+                                    💬 CHAT · ₹20/min
+                                </span>
+
+                            </div>
+
+                            <div class="request-actions">
+
+                                <button
+                                    class="accept"
+                                    onclick="acceptRequest(this,'Rahul K.')">
+
+                                    ACCEPT
+
+                                </button>
+
+                                <button
+                                    class="reject"
+                                    onclick="rejectRequest(this)">
+
+                                    ✕
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="request">
+
+                            <div class="request-avatar">
+                                PS
+                            </div>
+
+                            <div class="request-info">
+
+                                <strong>
+                                    Priya S.
+                                </strong>
+
+                                <span>
+                                    2 min ago · Marriage consultation
+                                </span>
+
+                                <span class="request-service">
+                                    📞 CALL · ₹30/min
+                                </span>
+
+                            </div>
+
+                            <div class="request-actions">
+
+                                <button
+                                    class="accept"
+                                    onclick="acceptRequest(this,'Priya S.')">
+
+                                    ACCEPT
+
+                                </button>
+
+                                <button
+                                    class="reject"
+                                    onclick="rejectRequest(this)">
+
+                                    ✕
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="request">
+
+                            <div class="request-avatar">
+                                AM
+                            </div>
+
+                            <div class="request-info">
+
+                                <strong>
+                                    Amit M.
+                                </strong>
+
+                                <span>
+                                    5 min ago · General consultation
+                                </span>
+
+                                <span class="request-service">
+                                    🎥 VIDEO · ₹40/min
+                                </span>
+
+                            </div>
+
+                            <div class="request-actions">
+
+                                <button
+                                    class="accept"
+                                    onclick="acceptRequest(this,'Amit M.')">
+
+                                    ACCEPT
+
+                                </button>
+
+                                <button
+                                    class="reject"
+                                    onclick="rejectRequest(this)">
+
+                                    ✕
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- EARNINGS -->
+
+                <section class="card"
+                         style="margin-top:15px;">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Earnings Overview
+                        </h2>
+
+                        <a
+                            href="astrologer-earnings.html">
+
+                            Full Report →
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div class="earnings-main">
+
+
+                            <div>
+
+                                <div class="earnings-label">
+                                    THIS WEEK
+                                </div>
+
+                                <div class="earnings-value">
+                                    ₹14,800
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="withdraw-btn"
+                                onclick="location.href='astrologer-withdraw.html'">
+
+                                WITHDRAW →
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="earnings-chart">
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:35%;">
+                                </div>
+                            </div>
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:55%;">
+                                </div>
+                            </div>
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:45%;">
+                                </div>
+                            </div>
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:72%;">
+                                </div>
+                            </div>
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:61%;">
+                                </div>
+                            </div>
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:88%;">
+                                </div>
+                            </div>
+
+
+                            <div class="bar-wrap">
+                                <div
+                                    class="bar"
+                                    style="height:100%;">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="bar-labels">
+
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- REVIEWS -->
+
+                <section class="card"
+                         style="margin-top:15px;">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Recent Reviews
+                        </h2>
+
+                        <a
+                            href="astrologer-reviews.html">
+
+                            View All →
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div class="review-summary">
+
+                            <div>
+
+                                <div class="rating-big">
+                                    4.8
+                                </div>
+
+                                <div class="stars">
+                                    ★★★★★
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong
+                                    style="font-size:8px;">
+
+                                    Excellent Rating
+
+                                </strong>
+
+                                <span>
+                                    Based on 186 customer reviews
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="review"
+                             style="margin-top:12px;">
+
+                            <div class="review-top">
+
+                                <strong>
+                                    Verified Customer
+                                </strong>
+
+                                <span>
+                                    2 hours ago
+                                </span>
+
+                            </div>
+
+                            <div class="stars">
+                                ★★★★★
+                            </div>
+
+                            <p>
+                                Very clear and helpful consultation.
+                                The guidance was easy to understand.
+                            </p>
+
+                        </div>
+
+
+                        <div class="review">
+
+                            <div class="review-top">
+
+                                <strong>
+                                    Verified Customer
+                                </strong>
+
+                                <span>
+                                    Yesterday
+                                </span>
+
+                            </div>
+
+                            <div class="stars">
+                                ★★★★★
+                            </div>
+
+                            <p>
+                                Good communication and detailed answers.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <section class="card">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div class="quick-grid">
+
+
+                            <button
+                                class="quick-action"
+                                onclick="location.href='astrologer-profile-edit.html'">
+
+                                <div class="quick-icon">
+                                    👤
+                                </div>
+
+                                <strong>
+                                    Edit Profile
+                                </strong>
+
+                                <span>
+                                    Update your profile
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="quick-action"
+                                onclick="location.href='astrologer-availability.html'">
+
+                                <div class="quick-icon">
+                                    🕐
+                                </div>
+
+                                <strong>
+                                    Availability
+                                </strong>
+
+                                <span>
+                                    Set working hours
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="quick-action"
+                                onclick="location.href='astrologer-earnings.html'">
+
+                                <div class="quick-icon">
+                                    📊
+                                </div>
+
+                                <strong>
+                                    Earnings
+                                </strong>
+
+                                <span>
+                                    View earnings
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="quick-action"
+                                onclick="location.href='astrologer-withdraw.html'">
+
+                                <div class="quick-icon">
+                                    🏦
+                                </div>
+
+                                <strong>
+                                    Withdraw
+                                </strong>
+
+                                <span>
+                                    Request payout
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ACTIVE CONSULTATION -->
+
+                <section
+                    id="activeConsultation"
+                    class="card active-consultation"
+                    style="display:none;">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Active Consultation
+                        </h2>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div class="live-box">
+
+
+                            <div class="live-header">
+
+                                <div class="live-badge">
+
+                                    <span class="live-dot"></span>
+
+                                    LIVE
+
+                                </div>
+
+
+                                <div
+                                    id="timer"
+                                    class="timer">
+
+                                    00:00
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="customer">
+
+                                <div
+                                    id="customerAvatar"
+                                    class="customer-avatar">
+
+                                    RK
+
+                                </div>
+
+                                <div>
+
+                                    <strong
+                                        id="customerName">
+
+                                        Customer
+
+                                    </strong>
+
+                                    <span>
+                                        Consultation in progress
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="end-btn"
+                                onclick="endConsultation()">
+
+                                END CONSULTATION
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- AVAILABILITY -->
+
+                <section class="card availability-card">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Today's Availability
+                        </h2>
+
+                        <a
+                            href="astrologer-availability.html">
+
+                            Manage →
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div class="availability-row">
+
+                            <div>
+
+                                <div class="day">
+                                    Today
+                                </div>
+
+                                <div class="time">
+                                    10:00 AM – 01:00 PM
+                                </div>
+
+                            </div>
+
+                            <div class="available">
+                                ● ACTIVE
+                            </div>
+
+                        </div>
+
+
+                        <div class="availability-row">
+
+                            <div>
+
+                                <div class="day">
+                                    Evening
+                                </div>
+
+                                <div class="time">
+                                    05:00 PM – 09:00 PM
+                                </div>
+
+                            </div>
+
+                            <div class="available">
+                                ● ACTIVE
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PROFILE COMPLETION -->
+
+                <section class="card"
+                         style="margin-top:15px;">
+
+
+                    <div class="card-header">
+
+                        <h2>
+                            Profile Strength
+                        </h2>
+
+                        <strong
+                            style="font-size:8px;color:var(--purple);">
+
+                            85%
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div style="
+                            height:7px;
+                            border-radius:10px;
+                            background:#eee;
+                            overflow:hidden;
+                        ">
+
+                            <div style="
+                                width:85%;
+                                height:100%;
+                                background:var(--purple);
+                                border-radius:10px;
+                            ">
+                            </div>
+
+                        </div>
+
+
+                        <p style="
+                            margin-top:8px;
+                            color:#999;
+                            font-size:6px;
+                            line-height:1.6;
+                        ">
+
+                            Add more profile information to improve
+                            your visibility to customers.
+
+                        </p>
+
+
+                        <button
+                            style="
+                                margin-top:10px;
+                                width:100%;
+                                height:30px;
+                                border:1px solid var(--purple);
+                                border-radius:6px;
+                                background:#fff;
+                                color:var(--purple);
+                                font-size:6px;
+                                font-weight:700;
+                            "
+                            onclick="location.href='astrologer-profile-edit.html'">
+
+                            COMPLETE PROFILE →
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+
+            © 2026 Astro With Talk · Astrologer Partner Dashboard
+
+        </div>
+
+
+    </main>
+
+</div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast">
+
+</div>
+
+
+<script>
+
+/* =========================================
+   LOAD ASTROLOGER
+========================================= */
+
+let astrologer =
+    JSON.parse(
+        localStorage.getItem(
+            "awt_astrologer"
+        ) || "null"
+    );
+
+
+if(!astrologer){
+
+    astrologer = {
+
+        name:
+            "Astro Partner",
+
+        status:
+            "offline",
+
+        chatRate:
+            20,
+
+        callRate:
+            30,
+
+        videoRate:
+            40
+
+    };
+
+}
+
+
+const displayName =
+    astrologer.name ||
+    "Astro Partner";
+
+
+document
+    .getElementById(
+        "welcomeName"
+    )
+    .innerText =
+        displayName;
+
+
+document
+    .getElementById(
+        "topName"
+    )
+    .innerText =
+        displayName;
+
+
+document
+    .getElementById(
+        "topAvatar"
+    )
+    .innerText =
+        getInitials(
+            displayName
+        );
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+let isOnline =
+    astrologer.status ===
+    "online";
+
+
+updateOnlineUI();
+
+
+function toggleOnline(){
+
+    isOnline =
+        !isOnline;
+
+
+    astrologer.status =
+        isOnline
+        ? "online"
+        : "offline";
+
+
+    localStorage.setItem(
+        "awt_astrologer",
+        JSON.stringify(
+            astrologer
+        )
+    );
+
+
+    updateOnlineUI();
+
+
+    showToast(
+        isOnline
+        ? "You are now ONLINE."
+        : "You are now OFFLINE."
+    );
+
+
+    /*
+       PRODUCTION:
+       PATCH /api/astrologers/me/availability
+    */
+
+}
+
+
+function updateOnlineUI(){
+
+    const toggle =
+        document
+        .getElementById(
+            "statusToggle"
+        );
+
+
+    const text =
+        document
+        .getElementById(
+            "statusText"
+        );
+
+
+    const subtext =
+        document
+        .getElementById(
+            "statusSubtext"
+        );
+
+
+    if(isOnline){
+
+        toggle.classList.add(
+            "online"
+        );
+
+        text.innerText =
+            "You're Online";
+
+        subtext.innerText =
+            "Customers can request consultations";
+
+    }else{
+
+        toggle.classList.remove(
+            "online"
+        );
+
+        text.innerText =
+            "You're Offline";
+
+        subtext.innerText =
+            "Customers cannot request consultations";
+
+    }
+
+}
+
+
+/* =========================================
+   REQUEST ACCEPT
+========================================= */
+
+function acceptRequest(
+    button,
+    customer
+){
+
+    const request =
+        button.closest(
+            ".request"
+        );
+
+
+    request.remove();
+
+
+    document
+        .getElementById(
+            "chatBadge"
+        )
+        .innerText =
+        Math.max(
+            0,
+            Number(
+                document
+                .getElementById(
+                    "chatBadge"
+                )
+                .innerText
+            ) - 1
+        );
+
+
+    startConsultation(
+        customer
+    );
+
+
+    showToast(
+        customer +
+        " consultation accepted."
+    );
+
+
+    /*
+       PRODUCTION:
+       POST /api/consultations/{id}/accept
+    */
+
+}
+
+
+/* =========================================
+   REQUEST REJECT
+========================================= */
+
+function rejectRequest(
+    button
+){
+
+    const request =
+        button.closest(
+            ".request"
+        );
+
+
+    request.remove();
+
+
+    showToast(
+        "Consultation request rejected."
+    );
+
+
+    /*
+       PRODUCTION:
+       POST /api/consultations/{id}/reject
+    */
+
+}
+
+
+/* =========================================
+   CONSULTATION
+========================================= */
+
+let consultationSeconds =
+    0;
+
+let consultationInterval =
+    null;
+
+
+function startConsultation(
+    customer
+){
+
+    document
+        .getElementById(
+            "activeConsultation"
+        )
+        .style.display =
+            "block";
+
+
+    document
+        .getElementById(
+            "customerName"
+        )
+        .innerText =
+            customer;
+
+
+    document
+        .getElementById(
+            "customerAvatar"
+        )
+        .innerText =
+            getInitials(
+                customer
+            );
+
+
+    consultationSeconds =
+        0;
+
+
+    clearInterval(
+        consultationInterval
+    );
+
+
+    consultationInterval =
+        setInterval(
+            function(){
+
+                consultationSeconds++;
+
+
+                const minutes =
+                    Math.floor(
+                        consultationSeconds /
+                        60
+                    )
+                    .toString()
+                    .padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const seconds =
+                    (
+                        consultationSeconds %
+                        60
+                    )
+                    .toString()
+                    .padStart(
+                        2,
+                        "0"
+                    );
+
+
+                document
+                    .getElementById(
+                        "timer"
+                    )
+                    .innerText =
+                        minutes +
+                        ":" +
+                        seconds;
+
+
+            },
+            1000
+        );
+
+
+}
+
+
+/* =========================================
+   END CONSULTATION
+========================================= */
+
+function endConsultation(){
+
+    clearInterval(
+        consultationInterval
+    );
+
+
+    const minutes =
+        Math.max(
+            1,
+            Math.ceil(
+                consultationSeconds /
+                60
+            )
+        );
+
+
+    document
+        .getElementById(
+            "activeConsultation"
+        )
+        .style.display =
+            "none";
+
+
+    document
+        .getElementById(
+            "timer"
+        )
+        .innerText =
+            "00:00";
+
+
+    showToast(
+        "Consultation completed. Duration: " +
+        minutes +
+        " minute(s)."
+    );
+
+
+    /*
+       PRODUCTION:
+       POST /api/consultations/{id}/complete
+
+       Backend will calculate:
+       duration
+       customer debit
+       platform commission
+       astrologer earning
+    */
+
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "awt_astrologer_logged_in"
+    );
+
+
+    location.href =
+        "astrologer-login.html";
+
+}
+
+
+/* =========================================
+   INITIALS
+========================================= */
+
+function getInitials(
+    name
+){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            word =>
+                word[0]
+                .toUpperCase()
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimeout;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document
+        .getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        "✓ " +
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimeout
+    );
+
+
+    toastTimeout =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2300
+        );
+
+}
+
+</script>
+
+</body>
+</html>

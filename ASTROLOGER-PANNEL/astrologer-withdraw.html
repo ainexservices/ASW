@@ -1,0 +1,2759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Profile | Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#249847;
+    --green-light:#eef9f1;
+    --border:#e3e3e3;
+    --bg:#f5f5f7;
+    --dark:#171717;
+    --muted:#888;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:235px;
+    background:#fff;
+    border-right:1px solid var(--border);
+    z-index:50;
+}
+
+.brand{
+    height:72px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border-bottom:1px solid #eee;
+}
+
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--red);
+    color:#fff;
+    font-size:19px;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.brand-name span{
+    color:var(--red);
+}
+
+.label{
+    padding:18px 20px 8px;
+    color:#aaa;
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:.8px;
+}
+
+.nav{
+    padding:0 10px;
+}
+
+.nav-item{
+    width:100%;
+    min-height:40px;
+    padding:0 11px;
+    margin-bottom:3px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:0;
+    border-radius:7px;
+    background:transparent;
+    color:#666;
+    font-size:8px;
+    font-weight:600;
+    text-align:left;
+}
+
+.nav-item:hover{
+    background:#f7f7f7;
+    color:var(--purple);
+}
+
+.nav-item.active{
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+.icon{
+    width:23px;
+    text-align:center;
+    font-size:13px;
+}
+
+.bottom{
+    margin:18px 10px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+}
+
+.logout{
+    color:#b51b21;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    width:calc(100% - 235px);
+    margin-left:235px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:72px;
+    padding:0 27px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.mobile-menu{
+    display:none;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    background:#fff;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.bell{
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+.avatar-small{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+}
+
+.top-name{
+    padding-left:10px;
+    border-left:1px solid #eee;
+}
+
+.top-name strong{
+    display:block;
+    font-size:7px;
+}
+
+.top-name span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:24px 27px 50px;
+    max-width:1120px;
+}
+
+.page-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:15px;
+}
+
+.page-title h1{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.page-title p{
+    margin-top:5px;
+    color:#888;
+    font-size:7px;
+}
+
+.title-actions{
+    display:flex;
+    gap:7px;
+}
+
+.preview-btn{
+    height:37px;
+    padding:0 12px;
+    border:1px solid var(--purple);
+    border-radius:7px;
+    background:#fff;
+    color:var(--purple);
+    font-size:6px;
+    font-weight:700;
+}
+
+.save-btn{
+    height:37px;
+    padding:0 15px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   PROFILE HEADER
+========================= */
+
+.profile-header{
+    margin-top:17px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.photo-wrap{
+    position:relative;
+}
+
+.profile-photo{
+    width:92px;
+    height:92px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:25px;
+    font-weight:700;
+    overflow:hidden;
+    border:3px solid #fff;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.profile-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.photo-button{
+    position:absolute;
+    right:0;
+    bottom:0;
+    width:29px;
+    height:29px;
+    border:2px solid #fff;
+    border-radius:50%;
+    background:var(--purple);
+    color:#fff;
+    font-size:12px;
+}
+
+.profile-info{
+    flex:1;
+}
+
+.profile-info h2{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.profile-info p{
+    margin-top:4px;
+    color:#888;
+    font-size:7px;
+}
+
+.profile-badges{
+    display:flex;
+    gap:6px;
+    margin-top:9px;
+    flex-wrap:wrap;
+}
+
+.pill{
+    padding:5px 8px;
+    border-radius:10px;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:5px;
+    font-weight:700;
+}
+
+.verified{
+    background:var(--green-light);
+    color:var(--green);
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.form-layout{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:1.5fr .75fr;
+    gap:15px;
+}
+
+.column{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.card-header{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+.card-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+}
+
+.card-header p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+label{
+    margin-bottom:6px;
+    color:#555;
+    font-size:6px;
+    font-weight:700;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    height:36px;
+    padding:0 9px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    outline:none;
+    background:#fff;
+    color:#333;
+    font-size:7px;
+}
+
+textarea{
+    height:110px;
+    padding:9px;
+    resize:vertical;
+    line-height:1.6;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--purple);
+    box-shadow:0 0 0 2px rgba(77,39,100,.06);
+}
+
+.helper{
+    margin-top:5px;
+    color:#aaa;
+    font-size:5px;
+}
+
+
+/* =========================
+   TAG INPUT
+========================= */
+
+.tag-box{
+    min-height:42px;
+    padding:6px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    flex-wrap:wrap;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+
+.tag{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:5px 7px;
+    border-radius:10px;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:5px;
+    font-weight:600;
+}
+
+.tag button{
+    border:0;
+    background:none;
+    color:var(--purple);
+    font-size:8px;
+}
+
+.tag-input{
+    flex:1;
+    min-width:100px;
+    height:27px;
+    border:0;
+    box-shadow:none !important;
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+.service{
+    padding:13px 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border-bottom:1px solid #eee;
+}
+
+.service:last-child{
+    border-bottom:0;
+}
+
+.service-icon{
+    width:36px;
+    height:36px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    background:var(--purple-light);
+    font-size:16px;
+}
+
+.service-info{
+    flex:1;
+}
+
+.service-info strong{
+    display:block;
+    font-size:7px;
+}
+
+.service-info span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:5px;
+}
+
+.service-rate{
+    width:85px;
+}
+
+
+/* =========================
+   SWITCH
+========================= */
+
+.switch{
+    position:relative;
+    width:36px;
+    height:20px;
+    flex:none;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    border-radius:20px;
+    background:#ccc;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:14px;
+    height:14px;
+    left:3px;
+    top:3px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:var(--green);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(16px);
+}
+
+
+/* =========================
+   VISIBILITY
+========================= */
+
+.visibility{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.visibility strong{
+    display:block;
+    font-size:7px;
+}
+
+.visibility span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:5px;
+}
+
+
+/* =========================
+   PROFILE PREVIEW
+========================= */
+
+.preview{
+    padding:15px;
+}
+
+.preview-box{
+    padding:16px;
+    border:1px solid #eee;
+    border-radius:9px;
+    text-align:center;
+}
+
+.preview-avatar{
+    width:68px;
+    height:68px;
+    margin:auto;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:19px;
+    font-weight:700;
+    overflow:hidden;
+}
+
+.preview-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.preview-box h3{
+    margin-top:9px;
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+}
+
+.preview-stars{
+    margin-top:4px;
+    color:#c99527;
+    font-size:9px;
+}
+
+.preview-box p{
+    margin-top:7px;
+    color:#888;
+    font-size:6px;
+    line-height:1.5;
+}
+
+.preview-rate{
+    margin-top:10px;
+    color:var(--purple);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* =========================
+   VERIFICATION
+========================= */
+
+.verification{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.verify-icon{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--green-light);
+    color:var(--green);
+}
+
+.verification strong{
+    display:block;
+    font-size:7px;
+}
+
+.verification span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:5px;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:11px 14px;
+    border-radius:7px;
+    background:#171717;
+    color:#fff;
+    font-size:7px;
+    opacity:0;
+    transform:translateY(50px);
+    transition:.25s;
+    z-index:100;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:25px;
+    text-align:center;
+    color:#aaa;
+    font-size:6px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+    .form-layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .content{
+        padding:20px 14px 35px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .page-title{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .title-actions{
+        width:100%;
+    }
+
+    .preview-btn,
+    .save-btn{
+        flex:1;
+    }
+
+    .profile-header{
+        align-items:flex-start;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .top-name{
+        display:none;
+    }
+
+    .profile-header{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+    }
+
+    .profile-badges{
+        justify-content:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside id="sidebar" class="sidebar">
+
+    <a href="../index.html" class="brand">
+
+        <div class="brand-icon">
+            ॐ
+        </div>
+
+        <div class="brand-name">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="label">
+        ASTROLOGER PANEL
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="astrologer-dashboard.html" class="nav-item">
+            <span class="icon">🏠</span>
+            Dashboard
+        </a>
+
+        <a href="astrologer-availability.html" class="nav-item">
+            <span class="icon">🟢</span>
+            Availability
+        </a>
+
+        <a href="astrologer-chat.html" class="nav-item">
+            <span class="icon">💬</span>
+            Chat
+        </a>
+
+        <a href="astrologer-call.html" class="nav-item">
+            <span class="icon">📞</span>
+            Audio / Video
+        </a>
+
+        <a href="astrologer-earnings.html" class="nav-item">
+            <span class="icon">💰</span>
+            Earnings
+        </a>
+
+        <a href="astrologer-reviews.html" class="nav-item">
+            <span class="icon">⭐</span>
+            Reviews
+        </a>
+
+        <a href="astrologer-profile-edit.html" class="nav-item active">
+            <span class="icon">👤</span>
+            My Profile
+        </a>
+
+        <a href="astrologer-withdraw.html" class="nav-item">
+            <span class="icon">🏦</span>
+            Withdraw
+        </a>
+
+    </nav>
+
+
+    <div class="bottom">
+
+        <a href="../SUPPORT/help.html" class="nav-item">
+            <span class="icon">❓</span>
+            Help & Support
+        </a>
+
+        <button
+            class="nav-item logout"
+            onclick="logout()">
+
+            <span class="icon">↪</span>
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+<header class="topbar">
+
+    <button
+        class="mobile-menu"
+        onclick="toggleSidebar()">
+
+        ☰
+
+    </button>
+
+
+    <div></div>
+
+
+    <div class="top-right">
+
+        <button
+            class="bell"
+            onclick="showToast('No new notifications.')">
+
+            🔔
+
+        </button>
+
+
+        <div
+            id="avatarSmall"
+            class="avatar-small">
+
+            A
+
+        </div>
+
+
+        <div class="top-name">
+
+            <strong id="topName">
+                Astro Partner
+            </strong>
+
+            <span>
+                Astrologer
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<section class="page-title">
+
+    <div>
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            Manage the information customers see on your astrologer profile.
+        </p>
+
+    </div>
+
+
+    <div class="title-actions">
+
+        <button
+            class="preview-btn"
+            onclick="previewProfile()">
+
+            👁 PREVIEW PROFILE
+
+        </button>
+
+
+        <button
+            class="save-btn"
+            onclick="saveProfile()">
+
+            ✓ SAVE CHANGES
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROFILE HEADER
+========================= -->
+
+<section class="profile-header">
+
+
+    <div class="photo-wrap">
+
+        <div
+            id="profilePhoto"
+            class="profile-photo">
+
+            AP
+
+        </div>
+
+
+        <button
+            class="photo-button"
+            onclick="document.getElementById('photoInput').click()">
+
+            ✎
+
+        </button>
+
+
+        <input
+            id="photoInput"
+            type="file"
+            accept="image/*"
+            style="display:none"
+            onchange="changePhoto(event)">
+
+    </div>
+
+
+    <div class="profile-info">
+
+        <h2 id="headerName">
+            Astro Partner
+        </h2>
+
+        <p>
+            Professional Vedic Astrologer
+        </p>
+
+
+        <div class="profile-badges">
+
+            <span class="pill verified">
+                ✓ Verified
+            </span>
+
+            <span class="pill">
+                ⭐ 4.8 Rating
+            </span>
+
+            <span class="pill">
+                👥 1,284 Reviews
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FORM LAYOUT
+========================= -->
+
+<div class="form-layout">
+
+
+<!-- =========================
+     LEFT COLUMN
+========================= -->
+
+<div class="column">
+
+
+<!-- BASIC INFORMATION -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Basic Information
+        </h2>
+
+        <p>
+            Your public identity and professional details
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    FULL NAME
+                </label>
+
+                <input
+                    id="fullName"
+                    type="text"
+                    value="Astro Partner"
+                    maxlength="80"
+                    oninput="updatePreview()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    DISPLAY NAME
+                </label>
+
+                <input
+                    id="displayName"
+                    type="text"
+                    value="Astro Partner"
+                    maxlength="50"
+                    oninput="updatePreview()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    GENDER
+                </label>
+
+                <select id="gender">
+
+                    <option value="male">
+                        Male
+                    </option>
+
+                    <option value="female">
+                        Female
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    EXPERIENCE
+                </label>
+
+                <select id="experience">
+
+                    <option>
+                        1–3 Years
+                    </option>
+
+                    <option selected>
+                        4–7 Years
+                    </option>
+
+                    <option>
+                        8–12 Years
+                    </option>
+
+                    <option>
+                        13–20 Years
+                    </option>
+
+                    <option>
+                        20+ Years
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    CITY
+                </label>
+
+                <input
+                    id="city"
+                    type="text"
+                    value="Delhi">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    COUNTRY
+                </label>
+
+                <input
+                    id="country"
+                    type="text"
+                    value="India">
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    PROFESSIONAL HEADLINE
+                </label>
+
+                <input
+                    id="headline"
+                    type="text"
+                    value="Vedic Astrologer • Career • Love & Relationship"
+                    maxlength="120"
+                    oninput="updatePreview()">
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    ABOUT ME
+                </label>
+
+                <textarea
+                    id="about"
+                    maxlength="1000">I am a professional Vedic astrologer dedicated to helping people understand their life path through astrology. My consultations focus on practical guidance, clarity and personalized solutions.</textarea>
+
+                <div class="helper">
+                    Maximum 1000 characters.
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SPECIALIZATION -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Specializations
+        </h2>
+
+        <p>
+            Select the areas you provide consultation in.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div
+            id="specializationTags"
+            class="tag-box">
+
+            <span class="tag">
+                Vedic Astrology
+                <button onclick="removeTag(this)">
+                    ×
+                </button>
+            </span>
+
+            <span class="tag">
+                Career
+                <button onclick="removeTag(this)">
+                    ×
+                </button>
+            </span>
+
+            <span class="tag">
+                Love & Relationship
+                <button onclick="removeTag(this)">
+                    ×
+                </button>
+            </span>
+
+            <input
+                id="specializationInput"
+                class="tag-input"
+                placeholder="Type and press Enter"
+                onkeydown="addTag(event)">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LANGUAGES -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Languages
+        </h2>
+
+        <p>
+            Languages available for consultations.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div
+            id="languageTags"
+            class="tag-box">
+
+            <span class="tag">
+                Hindi
+                <button onclick="removeTag(this)">
+                    ×
+                </button>
+            </span>
+
+            <span class="tag">
+                English
+                <button onclick="removeTag(this)">
+                    ×
+                </button>
+            </span>
+
+            <input
+                id="languageInput"
+                class="tag-input"
+                placeholder="Type and press Enter"
+                onkeydown="addLanguage(event)">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Consultation Services
+        </h2>
+
+        <p>
+            Set the services and per-minute rates customers can book.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                💬
+            </div>
+
+            <div class="service-info">
+
+                <strong>
+                    Live Chat
+                </strong>
+
+                <span>
+                    Customers can consult through chat.
+                </span>
+
+            </div>
+
+
+            <input
+                id="chatRate"
+                class="service-rate"
+                type="number"
+                min="1"
+                value="20"
+                title="Chat rate per minute">
+
+
+            <label class="switch">
+
+                <input
+                    id="chatEnabled"
+                    type="checkbox"
+                    checked>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                📞
+            </div>
+
+            <div class="service-info">
+
+                <strong>
+                    Audio Call
+                </strong>
+
+                <span>
+                    One-to-one voice consultation.
+                </span>
+
+            </div>
+
+
+            <input
+                id="audioRate"
+                class="service-rate"
+                type="number"
+                min="1"
+                value="30"
+                title="Audio rate per minute">
+
+
+            <label class="switch">
+
+                <input
+                    id="audioEnabled"
+                    type="checkbox"
+                    checked>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🎥
+            </div>
+
+            <div class="service-info">
+
+                <strong>
+                    Video Call
+                </strong>
+
+                <span>
+                    One-to-one video consultation.
+                </span>
+
+            </div>
+
+
+            <input
+                id="videoRate"
+                class="service-rate"
+                type="number"
+                min="1"
+                value="40"
+                title="Video rate per minute">
+
+
+            <label class="switch">
+
+                <input
+                    id="videoEnabled"
+                    type="checkbox"
+                    checked>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- =========================
+     RIGHT COLUMN
+========================= -->
+
+<div class="column">
+
+
+<!-- PREVIEW -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Profile Preview
+        </h2>
+
+        <p>
+            How customers may see you
+        </p>
+
+    </div>
+
+
+    <div class="preview">
+
+        <div class="preview-box">
+
+
+            <div
+                id="previewAvatar"
+                class="preview-avatar">
+
+                AP
+
+            </div>
+
+
+            <h3 id="previewName">
+                Astro Partner
+            </h3>
+
+
+            <div class="preview-stars">
+                ★★★★★
+            </div>
+
+
+            <p id="previewHeadline">
+                Vedic Astrologer • Career • Love & Relationship
+            </p>
+
+
+            <div class="preview-rate">
+                Chat ₹20/min
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- VISIBILITY -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Profile Visibility
+        </h2>
+
+        <p>
+            Control whether customers can discover your profile.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="visibility">
+
+            <div>
+
+                <strong>
+                    Show profile publicly
+                </strong>
+
+                <span>
+                    Customers can view your profile.
+                </span>
+
+            </div>
+
+
+            <label class="switch">
+
+                <input
+                    id="profileVisible"
+                    type="checkbox"
+                    checked>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <div
+            style="
+                margin-top:15px;
+                padding-top:15px;
+                border-top:1px solid #eee;
+            ">
+
+            <div class="visibility">
+
+                <div>
+
+                    <strong>
+                        Accept new consultations
+                    </strong>
+
+                    <span>
+                        Controlled separately by availability.
+                    </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                    <input
+                        id="acceptConsultations"
+                        type="checkbox"
+                        checked>
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- VERIFICATION -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Verification
+        </h2>
+
+        <p>
+            Account verification status
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="verification">
+
+            <div class="verify-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Profile Verified
+                </strong>
+
+                <span>
+                    Your identity and professional documents
+                    have been verified.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ACCOUNT INFO -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Account Information
+        </h2>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="form-group">
+
+            <label>
+                REGISTERED EMAIL
+            </label>
+
+            <input
+                type="email"
+                value="astrologer@example.com"
+                disabled>
+
+        </div>
+
+
+        <div
+            class="form-group"
+            style="margin-top:12px;">
+
+            <label>
+                MOBILE NUMBER
+            </label>
+
+            <input
+                type="tel"
+                value="+91 XXXXX XXXXX"
+                disabled>
+
+        </div>
+
+
+        <div class="helper">
+            Contact support if you need to change verified
+            account information.
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+    © 2026 Astro With Talk · Astrologer Partner Portal
+
+</div>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
+<script>
+
+/* =========================================
+   PROFILE DATA
+========================================= */
+
+let profile =
+    JSON.parse(
+        localStorage.getItem(
+            "awt_astrologer"
+        ) || "null"
+    );
+
+
+if(!profile){
+
+    profile = {
+        name:"Astro Partner",
+        chatRate:20,
+        callRate:30,
+        videoRate:40
+    };
+
+}
+
+
+function getName(){
+
+    return (
+        profile.displayName ||
+        profile.name ||
+        "Astro Partner"
+    );
+
+}
+
+
+/* =========================================
+   LOAD PROFILE
+========================================= */
+
+function loadProfile(){
+
+    const name =
+        getName();
+
+
+    document
+        .getElementById(
+            "fullName"
+        )
+        .value =
+            profile.name ||
+            name;
+
+
+    document
+        .getElementById(
+            "displayName"
+        )
+        .value =
+            profile.displayName ||
+            name;
+
+
+    document
+        .getElementById(
+            "chatRate"
+        )
+        .value =
+            profile.chatRate ||
+            20;
+
+
+    document
+        .getElementById(
+            "audioRate"
+        )
+        .value =
+            profile.callRate ||
+            30;
+
+
+    document
+        .getElementById(
+            "videoRate"
+        )
+        .value =
+            profile.videoRate ||
+            40;
+
+
+    document
+        .getElementById(
+            "topName"
+        )
+        .innerText =
+            name;
+
+
+    document
+        .getElementById(
+            "headerName"
+        )
+        .innerText =
+            name;
+
+
+    setAvatar(
+        "avatarSmall",
+        name
+    );
+
+
+    setAvatar(
+        "profilePhoto",
+        name
+    );
+
+
+    updatePreview();
+
+}
+
+
+loadProfile();
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+function setAvatar(
+    id,
+    name
+){
+
+    const el =
+        document
+        .getElementById(
+            id
+        );
+
+
+    if(!el){
+        return;
+    }
+
+
+    if(profile.photo){
+
+        el.innerHTML =
+            `<img src="${profile.photo}" alt="Profile">`;
+
+    }else{
+
+        el.innerText =
+            initials(name);
+
+    }
+
+}
+
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+function updatePreview(){
+
+    const name =
+        document
+        .getElementById(
+            "displayName"
+        )
+        .value
+        .trim() ||
+        "Astro Partner";
+
+
+    const headline =
+        document
+        .getElementById(
+            "headline"
+        )
+        .value
+        .trim();
+
+
+    const chatRate =
+        Number(
+            document
+            .getElementById(
+                "chatRate"
+            )
+            .value
+        ) || 0;
+
+
+    document
+        .getElementById(
+            "headerName"
+        )
+        .innerText =
+            name;
+
+
+    document
+        .getElementById(
+            "topName"
+        )
+        .innerText =
+            name;
+
+
+    setAvatar(
+        "avatarSmall",
+        name
+    );
+
+
+    if(
+        !profile.photo
+    ){
+
+        setAvatar(
+            "profilePhoto",
+            name
+        );
+
+    }
+
+
+    const previewAvatar =
+        document
+        .getElementById(
+            "previewAvatar"
+        );
+
+
+    if(profile.photo){
+
+        previewAvatar.innerHTML =
+            `<img src="${profile.photo}" alt="Profile">`;
+
+    }else{
+
+        previewAvatar.innerText =
+            initials(name);
+
+    }
+
+
+    document
+        .getElementById(
+            "previewName"
+        )
+        .innerText =
+            name;
+
+
+    document
+        .getElementById(
+            "previewHeadline"
+        )
+        .innerText =
+            headline ||
+            "Professional Astrologer";
+
+
+    document
+        .querySelector(
+            ".preview-rate"
+        )
+        .innerText =
+            "Chat ₹" +
+            chatRate +
+            "/min";
+
+}
+
+
+/* =========================================
+   PHOTO
+========================================= */
+
+function changePhoto(
+    event
+){
+
+    const file =
+        event
+        .target
+        .files[0];
+
+
+    if(!file){
+        return;
+    }
+
+
+    if(
+        !file.type
+        .startsWith(
+            "image/"
+        )
+    ){
+
+        showToast(
+            "Please select an image."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        file.size >
+        5 * 1024 * 1024
+    ){
+
+        showToast(
+            "Image must be under 5 MB."
+        );
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e){
+
+            profile.photo =
+                e.target.result;
+
+
+            document
+                .getElementById(
+                    "profilePhoto"
+                )
+                .innerHTML =
+                    `<img src="${profile.photo}" alt="Profile">`;
+
+
+            document
+                .getElementById(
+                    "previewAvatar"
+                )
+                .innerHTML =
+                    `<img src="${profile.photo}" alt="Profile">`;
+
+
+            document
+                .getElementById(
+                    "avatarSmall"
+                )
+                .innerHTML =
+                    `<img src="${profile.photo}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+
+            showToast(
+                "Profile photo selected."
+            );
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
+
+}
+
+
+/* =========================================
+   SPECIALIZATION TAG
+========================================= */
+
+function addTag(
+    event
+){
+
+    if(
+        event.key !==
+        "Enter"
+    ){
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    const input =
+        document
+        .getElementById(
+            "specializationInput"
+        );
+
+
+    const value =
+        input.value
+        .trim();
+
+
+    if(!value){
+        return;
+    }
+
+
+    createTag(
+        "specializationTags",
+        value,
+        input
+    );
+
+}
+
+
+function addLanguage(
+    event
+){
+
+    if(
+        event.key !==
+        "Enter"
+    ){
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    const input =
+        document
+        .getElementById(
+            "languageInput"
+        );
+
+
+    const value =
+        input.value
+        .trim();
+
+
+    if(!value){
+        return;
+    }
+
+
+    createTag(
+        "languageTags",
+        value,
+        input
+    );
+
+}
+
+
+function createTag(
+    containerId,
+    value,
+    input
+){
+
+    const tag =
+        document.createElement(
+            "span"
+        );
+
+
+    tag.className =
+        "tag";
+
+
+    tag.innerHTML =
+        `
+        ${escapeHtml(value)}
+        <button onclick="removeTag(this)">
+            ×
+        </button>
+        `;
+
+
+    input
+        .parentNode
+        .insertBefore(
+            tag,
+            input
+        );
+
+
+    input.value =
+        "";
+
+}
+
+
+function removeTag(
+    button
+){
+
+    button
+        .parentElement
+        .remove();
+
+}
+
+
+/* =========================================
+   SAVE PROFILE
+========================================= */
+
+function saveProfile(){
+
+    const name =
+        document
+        .getElementById(
+            "fullName"
+        )
+        .value
+        .trim();
+
+
+    const displayName =
+        document
+        .getElementById(
+            "displayName"
+        )
+        .value
+        .trim();
+
+
+    if(!name){
+
+        showToast(
+            "Full name is required."
+        );
+
+        return;
+
+    }
+
+
+    if(!displayName){
+
+        showToast(
+            "Display name is required."
+        );
+
+        return;
+
+    }
+
+
+    profile.name =
+        name;
+
+
+    profile.displayName =
+        displayName;
+
+
+    profile.gender =
+        document
+        .getElementById(
+            "gender"
+        )
+        .value;
+
+
+    profile.experience =
+        document
+        .getElementById(
+            "experience"
+        )
+        .value;
+
+
+    profile.city =
+        document
+        .getElementById(
+            "city"
+        )
+        .value
+        .trim();
+
+
+    profile.country =
+        document
+        .getElementById(
+            "country"
+        )
+        .value
+        .trim();
+
+
+    profile.headline =
+        document
+        .getElementById(
+            "headline"
+        )
+        .value
+        .trim();
+
+
+    profile.about =
+        document
+        .getElementById(
+            "about"
+        )
+        .value
+        .trim();
+
+
+    profile.chatRate =
+        Number(
+            document
+            .getElementById(
+                "chatRate"
+            )
+            .value
+        ) || 0;
+
+
+    profile.callRate =
+        Number(
+            document
+            .getElementById(
+                "audioRate"
+            )
+            .value
+        ) || 0;
+
+
+    profile.videoRate =
+        Number(
+            document
+            .getElementById(
+                "videoRate"
+            )
+            .value
+        ) || 0;
+
+
+    profile.services = {
+
+        chat:
+            document
+            .getElementById(
+                "chatEnabled"
+            )
+            .checked,
+
+        audio:
+            document
+            .getElementById(
+                "audioEnabled"
+            )
+            .checked,
+
+        video:
+            document
+            .getElementById(
+                "videoEnabled"
+            )
+            .checked
+
+    };
+
+
+    profile.profileVisible =
+        document
+        .getElementById(
+            "profileVisible"
+        )
+        .checked;
+
+
+    profile.acceptConsultations =
+        document
+        .getElementById(
+            "acceptConsultations"
+        )
+        .checked;
+
+
+    profile.updatedAt =
+        new Date()
+        .toISOString();
+
+
+    localStorage.setItem(
+        "awt_astrologer",
+        JSON.stringify(
+            profile
+        )
+    );
+
+
+    updatePreview();
+
+
+    showToast(
+        "Profile changes saved."
+    );
+
+
+    /*
+       PRODUCTION API:
+
+       PATCH
+       /api/astrologers/me
+
+       Backend should validate:
+
+       - profile fields
+       - rate limits
+       - allowed services
+       - verification rules
+       - moderation
+       - profile visibility
+       - photo upload
+    */
+
+}
+
+
+/* =========================================
+   PREVIEW PROFILE
+========================================= */
+
+function previewProfile(){
+
+    saveProfile();
+
+
+    setTimeout(
+        function(){
+
+            window.location.href =
+                "astrologer-profile-public.html";
+
+        },
+        500
+    );
+
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "awt_astrologer_logged_in"
+    );
+
+
+    location.href =
+        "astrologer-login.html";
+
+}
+
+
+/* =========================================
+   INITIALS
+========================================= */
+
+function initials(
+    name
+){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            x =>
+                x[0]
+                .toUpperCase()
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHtml(
+    text
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document
+        .getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        "✓ " +
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reviews & Ratings | Astrologer Panel | Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#249847;
+    --green-light:#eef9f1;
+    --gold:#c99527;
+    --border:#e3e3e3;
+    --bg:#f5f5f7;
+    --dark:#171717;
+    --muted:#888;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:235px;
+    background:#fff;
+    border-right:1px solid var(--border);
+    z-index:50;
+}
+
+.brand{
+    height:72px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border-bottom:1px solid #eee;
+}
+
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--red);
+    color:#fff;
+    font-size:19px;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.brand-name span{
+    color:var(--red);
+}
+
+.label{
+    padding:18px 20px 8px;
+    color:#aaa;
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:.8px;
+}
+
+.nav{
+    padding:0 10px;
+}
+
+.nav-item{
+    width:100%;
+    min-height:40px;
+    padding:0 11px;
+    margin-bottom:3px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:0;
+    border-radius:7px;
+    background:transparent;
+    color:#666;
+    font-size:8px;
+    font-weight:600;
+    text-align:left;
+}
+
+.nav-item:hover{
+    background:#f7f7f7;
+    color:var(--purple);
+}
+
+.nav-item.active{
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+.icon{
+    width:23px;
+    text-align:center;
+    font-size:13px;
+}
+
+.badge{
+    margin-left:auto;
+    min-width:17px;
+    height:17px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    font-size:6px;
+}
+
+.bottom{
+    margin:18px 10px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+}
+
+.logout{
+    color:#b51b21;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    width:calc(100% - 235px);
+    margin-left:235px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:72px;
+    padding:0 27px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.mobile-menu{
+    display:none;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    background:#fff;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.bell{
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+.avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+}
+
+.top-name{
+    padding-left:10px;
+    border-left:1px solid #eee;
+}
+
+.top-name strong{
+    display:block;
+    font-size:7px;
+}
+
+.top-name span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:24px 27px 50px;
+    max-width:1150px;
+}
+
+.page-title{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.page-title h1{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.page-title p{
+    margin-top:5px;
+    color:#888;
+    font-size:7px;
+}
+
+.profile-link{
+    height:36px;
+    padding:0 12px;
+    border:1px solid var(--purple);
+    border-radius:7px;
+    background:#fff;
+    color:var(--purple);
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:1.1fr 1.9fr;
+    gap:14px;
+}
+
+
+/* =========================
+   RATING CARD
+========================= */
+
+.rating-card{
+    padding:18px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.rating-main{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.rating-number{
+    font-family:"Playfair Display",serif;
+    font-size:46px;
+    line-height:1;
+}
+
+.stars{
+    color:var(--gold);
+    font-size:15px;
+    letter-spacing:1px;
+}
+
+.rating-info span{
+    display:block;
+    margin-top:5px;
+    color:#999;
+    font-size:6px;
+}
+
+.verified{
+    display:inline-flex;
+    margin-top:9px;
+    padding:4px 7px;
+    border-radius:10px;
+    background:var(--green-light);
+    color:var(--green);
+    font-size:5px;
+    font-weight:700;
+}
+
+
+/* =========================
+   DISTRIBUTION
+========================= */
+
+.distribution{
+    padding:18px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.distribution h2{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+}
+
+.dist-row{
+    display:grid;
+    grid-template-columns:35px 1fr 32px;
+    align-items:center;
+    gap:8px;
+    margin-top:9px;
+}
+
+.dist-row span{
+    color:#777;
+    font-size:6px;
+}
+
+.bar-bg{
+    height:7px;
+    overflow:hidden;
+    border-radius:5px;
+    background:#eee;
+}
+
+.bar-fill{
+    height:100%;
+    border-radius:5px;
+    background:var(--gold);
+}
+
+.dist-count{
+    text-align:right;
+    color:#999 !important;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+}
+
+.stat{
+    padding:14px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+.stat span{
+    display:block;
+    color:#999;
+    font-size:6px;
+}
+
+.stat strong{
+    display:block;
+    margin-top:5px;
+    font-size:18px;
+    font-family:"Playfair Display",serif;
+}
+
+
+/* =========================
+   REVIEWS
+========================= */
+
+.reviews-card{
+    margin-top:15px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.reviews-header{
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    border-bottom:1px solid #eee;
+}
+
+.reviews-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+}
+
+.reviews-header p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+}
+
+.search{
+    width:180px;
+    height:32px;
+    padding:0 9px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    outline:none;
+    font-size:6px;
+}
+
+.filter{
+    height:32px;
+    padding:0 8px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    outline:none;
+    color:#555;
+    font-size:6px;
+}
+
+
+/* =========================
+   REVIEW ITEM
+========================= */
+
+.review-list{
+    padding:0 15px;
+}
+
+.review{
+    padding:17px 0;
+    border-bottom:1px solid #eee;
+}
+
+.review:last-child{
+    border-bottom:0;
+}
+
+.review-top{
+    display:flex;
+    gap:10px;
+}
+
+.review-avatar{
+    width:38px;
+    height:38px;
+    flex:none;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:8px;
+    font-weight:700;
+}
+
+.review-info{
+    flex:1;
+}
+
+.review-name-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+}
+
+.review-name{
+    font-size:8px;
+    font-weight:700;
+}
+
+.review-date{
+    color:#aaa;
+    font-size:5px;
+}
+
+.review-stars{
+    margin-top:3px;
+    color:var(--gold);
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+.review-text{
+    margin:9px 0 0 48px;
+    color:#555;
+    font-size:7px;
+    line-height:1.7;
+}
+
+.review-meta{
+    margin:9px 0 0 48px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.review-tag{
+    padding:4px 6px;
+    border-radius:10px;
+    background:#f5f5f5;
+    color:#888;
+    font-size:5px;
+}
+
+.review-verified{
+    padding:4px 6px;
+    border-radius:10px;
+    background:var(--green-light);
+    color:var(--green);
+    font-size:5px;
+    font-weight:600;
+}
+
+
+/* =========================
+   REPLY
+========================= */
+
+.reply{
+    margin:11px 0 0 48px;
+    padding:11px;
+    border-left:3px solid var(--purple);
+    background:var(--purple-light);
+    border-radius:0 7px 7px 0;
+}
+
+.reply-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.reply-head strong{
+    color:var(--purple);
+    font-size:6px;
+}
+
+.reply-head span{
+    color:#999;
+    font-size:5px;
+}
+
+.reply p{
+    margin-top:5px;
+    color:#666;
+    font-size:6px;
+    line-height:1.6;
+}
+
+.reply-btn{
+    margin:10px 0 0 48px;
+    height:29px;
+    padding:0 9px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    color:#555;
+    font-size:6px;
+    font-weight:600;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.45);
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:470px;
+    background:#fff;
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+}
+
+.modal-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+}
+
+.close{
+    width:28px;
+    height:28px;
+    border:0;
+    border-radius:50%;
+    background:#f5f5f5;
+}
+
+.modal-body{
+    padding:15px;
+}
+
+.modal-review{
+    padding:10px;
+    background:#f8f8f8;
+    border-radius:7px;
+    color:#666;
+    font-size:6px;
+    line-height:1.6;
+}
+
+textarea{
+    width:100%;
+    height:105px;
+    margin-top:11px;
+    padding:10px;
+    resize:none;
+    border:1px solid #ddd;
+    border-radius:7px;
+    outline:none;
+    font-size:7px;
+}
+
+textarea:focus{
+    border-color:var(--purple);
+}
+
+.modal-footer{
+    padding:12px 15px;
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+    border-top:1px solid #eee;
+}
+
+.cancel{
+    height:34px;
+    padding:0 12px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    font-size:6px;
+}
+
+.submit{
+    height:34px;
+    padding:0 13px;
+    border:0;
+    border-radius:6px;
+    background:var(--purple);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination{
+    padding:13px 15px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:5px;
+    border-top:1px solid #eee;
+}
+
+.page{
+    width:28px;
+    height:28px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    background:#fff;
+    font-size:6px;
+}
+
+.page.active{
+    background:var(--purple);
+    border-color:var(--purple);
+    color:#fff;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:11px 14px;
+    border-radius:7px;
+    background:#171717;
+    color:#fff;
+    font-size:7px;
+    opacity:0;
+    transform:translateY(50px);
+    transition:.25s;
+    z-index:150;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:25px;
+    text-align:center;
+    color:#aaa;
+    font-size:6px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .content{
+        padding:20px 14px 35px;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .page-title{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .profile-link{
+        width:100%;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .reviews-header{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .filters{
+        width:100%;
+    }
+
+    .search{
+        flex:1;
+        width:auto;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .top-name{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .review-name-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .review-text,
+    .review-meta,
+    .reply,
+    .reply-btn{
+        margin-left:0;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside id="sidebar" class="sidebar">
+
+    <a href="../index.html" class="brand">
+
+        <div class="brand-icon">
+            ॐ
+        </div>
+
+        <div class="brand-name">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="label">
+        ASTROLOGER PANEL
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="astrologer-dashboard.html" class="nav-item">
+            <span class="icon">🏠</span>
+            Dashboard
+        </a>
+
+        <a href="astrologer-availability.html" class="nav-item">
+            <span class="icon">🟢</span>
+            Availability
+        </a>
+
+        <a href="astrologer-chat.html" class="nav-item">
+            <span class="icon">💬</span>
+            Chat
+        </a>
+
+        <a href="astrologer-call.html" class="nav-item">
+            <span class="icon">📞</span>
+            Audio / Video
+        </a>
+
+        <a href="astrologer-earnings.html" class="nav-item">
+            <span class="icon">💰</span>
+            Earnings
+        </a>
+
+        <a href="astrologer-reviews.html" class="nav-item active">
+            <span class="icon">⭐</span>
+            Reviews
+        </a>
+
+        <a href="astrologer-profile-edit.html" class="nav-item">
+            <span class="icon">👤</span>
+            My Profile
+        </a>
+
+        <a href="astrologer-withdraw.html" class="nav-item">
+            <span class="icon">🏦</span>
+            Withdraw
+        </a>
+
+    </nav>
+
+
+    <div class="bottom">
+
+        <a href="../SUPPORT/help.html" class="nav-item">
+            <span class="icon">❓</span>
+            Help & Support
+        </a>
+
+        <button
+            class="nav-item logout"
+            onclick="logout()">
+
+            <span class="icon">↪</span>
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+<header class="topbar">
+
+    <button
+        class="mobile-menu"
+        onclick="toggleSidebar()">
+
+        ☰
+
+    </button>
+
+
+    <div></div>
+
+
+    <div class="top-right">
+
+        <button
+            class="bell"
+            onclick="showToast('No new notifications.')">
+
+            🔔
+
+        </button>
+
+
+        <div
+            id="avatar"
+            class="avatar">
+
+            A
+
+        </div>
+
+
+        <div class="top-name">
+
+            <strong id="topName">
+                Astro Partner
+            </strong>
+
+            <span>
+                Astrologer
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<section class="page-title">
+
+    <div>
+
+        <h1>
+            Reviews & Ratings
+        </h1>
+
+        <p>
+            See what customers say about your consultations.
+        </p>
+
+    </div>
+
+
+    <button
+        class="profile-link"
+        onclick="viewProfile()">
+
+        👤 VIEW PUBLIC PROFILE
+
+    </button>
+
+</section>
+
+
+<!-- =========================
+     SUMMARY
+========================= -->
+
+<section class="summary">
+
+
+    <div class="rating-card">
+
+        <div class="rating-main">
+
+            <div class="rating-number">
+                4.8
+            </div>
+
+
+            <div class="rating-info">
+
+                <div class="stars">
+                    ★★★★★
+                </div>
+
+                <span>
+                    Based on 1,284 customer reviews
+                </span>
+
+                <div class="verified">
+                    ✓ Trusted Astrologer
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="distribution">
+
+        <h2>
+            Rating Distribution
+        </h2>
+
+
+        <div class="dist-row">
+
+            <span>
+                5 ★
+            </span>
+
+            <div class="bar-bg">
+                <div
+                    class="bar-fill"
+                    style="width:84%;">
+                </div>
+            </div>
+
+            <span class="dist-count">
+                1080
+            </span>
+
+        </div>
+
+
+        <div class="dist-row">
+
+            <span>
+                4 ★
+            </span>
+
+            <div class="bar-bg">
+                <div
+                    class="bar-fill"
+                    style="width:12%;">
+                </div>
+            </div>
+
+            <span class="dist-count">
+                154
+            </span>
+
+        </div>
+
+
+        <div class="dist-row">
+
+            <span>
+                3 ★
+            </span>
+
+            <div class="bar-bg">
+                <div
+                    class="bar-fill"
+                    style="width:3%;">
+                </div>
+            </div>
+
+            <span class="dist-count">
+                38
+            </span>
+
+        </div>
+
+
+        <div class="dist-row">
+
+            <span>
+                2 ★
+            </span>
+
+            <div class="bar-bg">
+                <div
+                    class="bar-fill"
+                    style="width:1%;">
+                </div>
+            </div>
+
+            <span class="dist-count">
+                8
+            </span>
+
+        </div>
+
+
+        <div class="dist-row">
+
+            <span>
+                1 ★
+            </span>
+
+            <div class="bar-bg">
+                <div
+                    class="bar-fill"
+                    style="width:.4%;">
+                </div>
+            </div>
+
+            <span class="dist-count">
+                4
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section class="stats">
+
+
+    <div class="stat">
+
+        <span>
+            TOTAL REVIEWS
+        </span>
+
+        <strong>
+            1,284
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span>
+            5 STAR
+        </span>
+
+        <strong>
+            1,080
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span>
+            RESPONSE RATE
+        </span>
+
+        <strong>
+            94%
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span>
+            THIS MONTH
+        </span>
+
+        <strong>
+            +86
+        </strong>
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================
+     REVIEWS
+========================= -->
+
+<section class="reviews-card">
+
+
+    <div class="reviews-header">
+
+        <div>
+
+            <h2>
+                Customer Reviews
+            </h2>
+
+            <p>
+                Your latest consultation feedback
+            </p>
+
+        </div>
+
+
+        <div class="filters">
+
+            <input
+                id="reviewSearch"
+                class="search"
+                type="text"
+                placeholder="Search reviews..."
+                oninput="filterReviews()">
+
+
+            <select
+                id="ratingFilter"
+                class="filter"
+                onchange="filterReviews()">
+
+                <option value="all">
+                    All Ratings
+                </option>
+
+                <option value="5">
+                    5 Star
+                </option>
+
+                <option value="4">
+                    4 Star
+                </option>
+
+                <option value="3">
+                    3 Star
+                </option>
+
+                <option value="2">
+                    2 Star
+                </option>
+
+                <option value="1">
+                    1 Star
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="reviewList"
+        class="review-list">
+
+
+        <!-- REVIEW 1 -->
+
+        <article
+            class="review"
+            data-rating="5"
+            data-text="Very accurate guidance. Explained everything patiently and clearly.">
+
+
+            <div class="review-top">
+
+                <div class="review-avatar">
+                    RK
+                </div>
+
+
+                <div class="review-info">
+
+                    <div class="review-name-row">
+
+                        <span class="review-name">
+                            Rahul Kumar
+                        </span>
+
+                        <span class="review-date">
+                            27 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="review-text">
+                Very accurate guidance. Explained everything patiently
+                and clearly. I got a much better understanding of my
+                career situation.
+            </p>
+
+
+            <div class="review-meta">
+
+                <span class="review-tag">
+                    💬 Chat Consultation
+                </span>
+
+                <span class="review-verified">
+                    ✓ Verified Customer
+                </span>
+
+            </div>
+
+
+            <div class="reply">
+
+                <div class="reply-head">
+
+                    <strong>
+                        Your reply
+                    </strong>
+
+                    <span>
+                        27 Aug 2026
+                    </span>
+
+                </div>
+
+                <p>
+                    Thank you Rahul 🙏 I'm glad the consultation
+                    helped you. Wishing you success in your career.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- REVIEW 2 -->
+
+        <article
+            class="review"
+            data-rating="5"
+            data-text="Excellent astrologer. The explanation was detailed and very helpful.">
+
+
+            <div class="review-top">
+
+                <div class="review-avatar">
+                    PS
+                </div>
+
+
+                <div class="review-info">
+
+                    <div class="review-name-row">
+
+                        <span class="review-name">
+                            Priya Sharma
+                        </span>
+
+                        <span class="review-date">
+                            26 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="review-text">
+                Excellent astrologer. The explanation was detailed
+                and very helpful. I especially liked the way every
+                point was explained.
+            </p>
+
+
+            <div class="review-meta">
+
+                <span class="review-tag">
+                    📞 Audio Call
+                </span>
+
+                <span class="review-verified">
+                    ✓ Verified Customer
+                </span>
+
+            </div>
+
+
+            <button
+                class="reply-btn"
+                onclick="openReply(this)">
+
+                ↩ Reply to review
+
+            </button>
+
+        </article>
+
+
+        <!-- REVIEW 3 -->
+
+        <article
+            class="review"
+            data-rating="4"
+            data-text="Good consultation and practical advice.">
+
+
+            <div class="review-top">
+
+                <div class="review-avatar">
+                    AM
+                </div>
+
+
+                <div class="review-info">
+
+                    <div class="review-name-row">
+
+                        <span class="review-name">
+                            Amit Mehta
+                        </span>
+
+                        <span class="review-date">
+                            25 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div class="review-stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="review-text">
+                Good consultation and practical advice. I would
+                definitely recommend this astrologer.
+            </p>
+
+
+            <div class="review-meta">
+
+                <span class="review-tag">
+                    🎥 Video Call
+                </span>
+
+                <span class="review-verified">
+                    ✓ Verified Customer
+                </span>
+
+            </div>
+
+
+            <button
+                class="reply-btn"
+                onclick="openReply(this)">
+
+                ↩ Reply to review
+
+            </button>
+
+        </article>
+
+
+        <!-- REVIEW 4 -->
+
+        <article
+            class="review"
+            data-rating="5"
+            data-text="Very calm and professional consultation.">
+
+
+            <div class="review-top">
+
+                <div class="review-avatar">
+                    NS
+                </div>
+
+
+                <div class="review-info">
+
+                    <div class="review-name-row">
+
+                        <span class="review-name">
+                            Neha Singh
+                        </span>
+
+                        <span class="review-date">
+                            24 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="review-text">
+                Very calm and professional consultation. The
+                astrologer listened carefully and answered all
+                my questions.
+            </p>
+
+
+            <div class="review-meta">
+
+                <span class="review-tag">
+                    💬 Chat Consultation
+                </span>
+
+                <span class="review-verified">
+                    ✓ Verified Customer
+                </span>
+
+            </div>
+
+
+            <button
+                class="reply-btn"
+                onclick="openReply(this)">
+
+                ↩ Reply to review
+
+            </button>
+
+        </article>
+
+
+        <!-- REVIEW 5 -->
+
+        <article
+            class="review"
+            data-rating="3"
+            data-text="Consultation was okay but I expected more detail.">
+
+
+            <div class="review-top">
+
+                <div class="review-avatar">
+                    VK
+                </div>
+
+
+                <div class="review-info">
+
+                    <div class="review-name-row">
+
+                        <span class="review-name">
+                            Vikash Kumar
+                        </span>
+
+                        <span class="review-date">
+                            22 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div class="review-stars">
+                        ★★★☆☆
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="review-text">
+                Consultation was okay but I expected more detail.
+                Some questions were answered well, while others
+                could have been explained further.
+            </p>
+
+
+            <div class="review-meta">
+
+                <span class="review-tag">
+                    📞 Audio Call
+                </span>
+
+                <span class="review-verified">
+                    ✓ Verified Customer
+                </span>
+
+            </div>
+
+
+            <button
+                class="reply-btn"
+                onclick="openReply(this)">
+
+                ↩ Reply to review
+
+            </button>
+
+        </article>
+
+
+    </div>
+
+
+    <!-- PAGINATION -->
+
+    <div class="pagination">
+
+        <button class="page">
+            ‹
+        </button>
+
+        <button class="page active">
+            1
+        </button>
+
+        <button class="page">
+            2
+        </button>
+
+        <button class="page">
+            3
+        </button>
+
+        <button class="page">
+            4
+        </button>
+
+        <button class="page">
+            ›
+        </button>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+
+    © 2026 Astro With Talk · Astrologer Partner Portal
+
+</div>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     REPLY MODAL
+========================= -->
+
+<div
+    id="replyModal"
+    class="modal-overlay">
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Reply to Customer
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeReply()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div
+                id="selectedReview"
+                class="modal-review">
+
+                Customer review will appear here.
+
+            </div>
+
+
+            <textarea
+                id="replyText"
+                placeholder="Write a professional reply..."></textarea>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="cancel"
+                onclick="closeReply()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                class="submit"
+                onclick="submitReply()">
+
+                POST REPLY
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
+<script>
+
+/* =========================================
+   PROFILE
+========================================= */
+
+let profile =
+    JSON.parse(
+        localStorage.getItem(
+            "awt_astrologer"
+        ) || "null"
+    );
+
+
+if(!profile){
+
+    profile = {
+        name:"Astro Partner"
+    };
+
+}
+
+
+const astrologerName =
+    profile.name ||
+    "Astro Partner";
+
+
+document
+    .getElementById(
+        "topName"
+    )
+    .innerText =
+        astrologerName;
+
+
+document
+    .getElementById(
+        "avatar"
+    )
+    .innerText =
+        initials(
+            astrologerName
+        );
+
+
+/* =========================================
+   FILTER REVIEWS
+========================================= */
+
+function filterReviews(){
+
+    const search =
+        document
+        .getElementById(
+            "reviewSearch"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const rating =
+        document
+        .getElementById(
+            "ratingFilter"
+        )
+        .value;
+
+
+    document
+        .querySelectorAll(
+            ".review"
+        )
+        .forEach(
+            review => {
+
+                const text =
+                    review
+                    .dataset
+                    .text
+                    .toLowerCase();
+
+
+                const reviewRating =
+                    review
+                    .dataset
+                    .rating;
+
+
+                const searchMatch =
+                    !search ||
+                    text.includes(
+                        search
+                    );
+
+
+                const ratingMatch =
+                    rating === "all" ||
+                    rating === reviewRating;
+
+
+                review.style.display =
+                    searchMatch &&
+                    ratingMatch
+                    ? ""
+                    : "none";
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   REPLY
+========================================= */
+
+let currentReview = null;
+
+
+function openReply(
+    button
+){
+
+    currentReview =
+        button
+        .closest(
+            ".review"
+        );
+
+
+    const text =
+        currentReview
+        .querySelector(
+            ".review-text"
+        )
+        .innerText;
+
+
+    document
+        .getElementById(
+            "selectedReview"
+        )
+        .innerText =
+            '"' +
+            text +
+            '"';
+
+
+    document
+        .getElementById(
+            "replyText"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "replyModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+
+    document
+        .getElementById(
+            "replyText"
+        )
+        .focus();
+
+}
+
+
+function closeReply(){
+
+    document
+        .getElementById(
+            "replyModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+
+    currentReview =
+        null;
+
+}
+
+
+function submitReply(){
+
+    const text =
+        document
+        .getElementById(
+            "replyText"
+        )
+        .value
+        .trim();
+
+
+    if(!text){
+
+        showToast(
+            "Please write a reply."
+        );
+
+        return;
+
+    }
+
+
+    if(!currentReview){
+
+        return;
+
+    }
+
+
+    /*
+       Demo UI update.
+       Production में POST API होगा.
+    */
+
+    let reply =
+        currentReview
+        .querySelector(
+            ".reply"
+        );
+
+
+    if(!reply){
+
+        reply =
+            document.createElement(
+                "div"
+            );
+
+        reply.className =
+            "reply";
+
+
+        reply.innerHTML = `
+
+            <div class="reply-head">
+
+                <strong>
+                    Your reply
+                </strong>
+
+                <span>
+                    Just now
+                </span>
+
+            </div>
+
+            <p></p>
+
+        `;
+
+
+        currentReview
+            .appendChild(
+                reply
+            );
+
+    }
+
+
+    reply
+        .querySelector(
+            "p"
+        )
+        .innerText =
+            text;
+
+
+    closeReply();
+
+
+    showToast(
+        "Your reply has been posted."
+    );
+
+
+    /*
+       PRODUCTION:
+
+       POST
+       /api/reviews/{reviewId}/reply
+
+       Backend:
+
+       review_id
+       astrologer_id
+       reply
+       created_at
+
+       फिर public astrologer profile
+       पर reply दिखाई देगा.
+    */
+
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+function viewProfile(){
+
+    window.location.href =
+        "astrologer-profile-public.html";
+
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "awt_astrologer_logged_in"
+    );
+
+
+    location.href =
+        "astrologer-login.html";
+
+}
+
+
+/* =========================================
+   INITIALS
+========================================= */
+
+function initials(
+    name
+){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            x =>
+                x[0]
+                .toUpperCase()
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document
+        .getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        "✓ " +
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================
+   CLOSE MODAL OUTSIDE
+========================================= */
+
+document
+    .getElementById(
+        "replyModal"
+    )
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closeReply();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Audio & Video Calls | Astrologer Panel | Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#249847;
+    --green-light:#eef9f1;
+    --border:#e3e3e3;
+    --bg:#f5f5f7;
+    --dark:#171717;
+    --muted:#888;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:235px;
+    background:#fff;
+    border-right:1px solid var(--border);
+    z-index:50;
+}
+
+.brand{
+    height:72px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border-bottom:1px solid #eee;
+}
+
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--red);
+    color:#fff;
+    font-size:19px;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.brand-name span{
+    color:var(--red);
+}
+
+.label{
+    padding:18px 20px 8px;
+    color:#aaa;
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:.8px;
+}
+
+.nav{
+    padding:0 10px;
+}
+
+.nav-item{
+    width:100%;
+    min-height:40px;
+    padding:0 11px;
+    margin-bottom:3px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:0;
+    border-radius:7px;
+    background:transparent;
+    color:#666;
+    font-size:8px;
+    font-weight:600;
+    text-align:left;
+}
+
+.nav-item:hover{
+    background:#f7f7f7;
+    color:var(--purple);
+}
+
+.nav-item.active{
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+.icon{
+    width:23px;
+    text-align:center;
+    font-size:13px;
+}
+
+.badge{
+    margin-left:auto;
+    min-width:17px;
+    height:17px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    font-size:6px;
+}
+
+.bottom{
+    margin:18px 10px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+}
+
+.logout{
+    color:#b51b21;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    width:calc(100% - 235px);
+    margin-left:235px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:72px;
+    padding:0 27px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.mobile-menu{
+    display:none;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    background:#fff;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.bell{
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+.avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+}
+
+.top-name{
+    padding-left:10px;
+    border-left:1px solid #eee;
+}
+
+.top-name strong{
+    display:block;
+    font-size:7px;
+}
+
+.top-name span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:23px 26px 45px;
+    max-width:1100px;
+}
+
+.page-title{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.page-title h1{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+}
+
+.page-title p{
+    margin-top:4px;
+    color:#888;
+    font-size:7px;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:8px;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#aaa;
+}
+
+.status-dot.online{
+    background:var(--green);
+    box-shadow:0 0 0 4px rgba(36,152,71,.10);
+}
+
+.status strong{
+    display:block;
+    font-size:7px;
+}
+
+.status span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:5px;
+}
+
+
+/* =========================
+   REQUEST
+========================= */
+
+.request{
+    margin-top:17px;
+    padding:15px;
+    background:#fff;
+    border:1px solid #eadff0;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.request-icon{
+    width:47px;
+    height:47px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:21px;
+}
+
+.request-info{
+    flex:1;
+}
+
+.request-info strong{
+    display:block;
+    font-size:9px;
+}
+
+.request-info span{
+    display:block;
+    margin-top:3px;
+    color:#888;
+    font-size:6px;
+}
+
+.request-actions{
+    display:flex;
+    gap:7px;
+}
+
+.accept{
+    height:36px;
+    padding:0 14px;
+    border:0;
+    border-radius:6px;
+    background:var(--green);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+.reject{
+    height:36px;
+    padding:0 13px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    color:#777;
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   CALL GRID
+========================= */
+
+.call-grid{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:1fr 280px;
+    gap:15px;
+}
+
+
+/* =========================
+   CALL CARD
+========================= */
+
+.call-card{
+    min-height:510px;
+    background:#171717;
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+}
+
+.call-card.video{
+    background:#121212;
+}
+
+.call-main{
+    flex:1;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.call-avatar{
+    width:110px;
+    height:110px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--purple);
+    color:#fff;
+    font-size:27px;
+    font-weight:700;
+    box-shadow:0 0 0 12px rgba(255,255,255,.04);
+}
+
+.video-preview{
+    position:absolute;
+    right:13px;
+    top:13px;
+    width:125px;
+    height:160px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:8px;
+    background:#292929;
+    color:#aaa;
+    font-size:7px;
+}
+
+.call-card.video .video-preview{
+    display:flex;
+}
+
+.call-user{
+    position:absolute;
+    top:15px;
+    left:15px;
+    color:#fff;
+}
+
+.call-user strong{
+    display:block;
+    font-size:9px;
+}
+
+.call-user span{
+    display:block;
+    margin-top:3px;
+    color:#bbb;
+    font-size:6px;
+}
+
+.call-time{
+    position:absolute;
+    top:15px;
+    right:15px;
+    padding:6px 9px;
+    border-radius:6px;
+    background:rgba(0,0,0,.55);
+    color:#fff;
+    font-size:7px;
+    font-weight:700;
+}
+
+.call-state{
+    position:absolute;
+    bottom:92px;
+    left:0;
+    right:0;
+    text-align:center;
+    color:#bbb;
+    font-size:6px;
+}
+
+.call-controls{
+    min-height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#1d1d1d;
+    border-top:1px solid #292929;
+}
+
+.control{
+    width:42px;
+    height:42px;
+    border:1px solid #444;
+    border-radius:50%;
+    background:#292929;
+    color:#fff;
+    font-size:15px;
+}
+
+.control.active{
+    background:#fff;
+    color:#222;
+}
+
+.end{
+    width:54px;
+    height:42px;
+    border:0;
+    border-radius:22px;
+    background:var(--red);
+    color:#fff;
+    font-size:15px;
+}
+
+
+/* =========================
+   SIDE PANEL
+========================= */
+
+.side-column{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.card-header{
+    padding:14px 15px;
+    border-bottom:1px solid #eee;
+}
+
+.card-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:15px;
+}
+
+.card-header p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.card-body{
+    padding:14px;
+}
+
+
+/* =========================
+   CUSTOMER
+========================= */
+
+.customer{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.customer-avatar{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+}
+
+.customer strong{
+    display:block;
+    font-size:8px;
+}
+
+.customer span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stat-row{
+    padding:10px 0;
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+}
+
+.stat-row:last-child{
+    border-bottom:0;
+}
+
+.stat-row span{
+    color:#999;
+    font-size:6px;
+}
+
+.stat-row strong{
+    font-size:7px;
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+.service-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.service-row:last-child{
+    border-bottom:0;
+}
+
+.service-left{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.service-icon{
+    width:29px;
+    height:29px;
+    display:grid;
+    place-items:center;
+    border-radius:6px;
+    background:var(--purple-light);
+}
+
+.service-left strong{
+    font-size:7px;
+}
+
+.service-price{
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   BILLING
+========================= */
+
+.earning{
+    padding:14px;
+    background:var(--purple-light);
+    border-radius:8px;
+    text-align:center;
+}
+
+.earning span{
+    display:block;
+    color:#777;
+    font-size:6px;
+}
+
+.earning strong{
+    display:block;
+    margin-top:4px;
+    color:var(--purple);
+    font-size:22px;
+    font-family:"Playfair Display",serif;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary{
+    margin-top:15px;
+    padding:15px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.summary-box{
+    padding:5px 12px;
+    border-right:1px solid #eee;
+}
+
+.summary-box:last-child{
+    border-right:0;
+}
+
+.summary-box span{
+    display:block;
+    color:#999;
+    font-size:6px;
+}
+
+.summary-box strong{
+    display:block;
+    margin-top:5px;
+    font-size:10px;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:11px 14px;
+    border-radius:7px;
+    background:#171717;
+    color:#fff;
+    font-size:7px;
+    opacity:0;
+    transform:translateY(50px);
+    transition:.25s;
+    z-index:100;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:24px;
+    color:#aaa;
+    text-align:center;
+    font-size:6px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+    .call-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .content{
+        padding:18px 14px 30px;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .page-title{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .request{
+        flex-wrap:wrap;
+    }
+
+    .request-actions{
+        width:100%;
+    }
+
+    .accept,
+    .reject{
+        flex:1;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .summary-box{
+        padding:10px;
+        border-right:0;
+        border-bottom:1px solid #eee;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .top-name{
+        display:none;
+    }
+
+    .call-card{
+        min-height:450px;
+    }
+
+    .video-preview{
+        width:90px;
+        height:120px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside id="sidebar" class="sidebar">
+
+    <a href="../index.html" class="brand">
+
+        <div class="brand-icon">
+            ॐ
+        </div>
+
+        <div class="brand-name">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="label">
+        ASTROLOGER PANEL
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="astrologer-dashboard.html" class="nav-item">
+            <span class="icon">🏠</span>
+            Dashboard
+        </a>
+
+        <a href="astrologer-availability.html" class="nav-item">
+            <span class="icon">🟢</span>
+            Availability
+        </a>
+
+        <a href="astrologer-chat.html" class="nav-item">
+            <span class="icon">💬</span>
+            Chat
+        </a>
+
+        <a href="astrologer-call.html" class="nav-item active">
+            <span class="icon">📞</span>
+            Audio / Video
+            <span class="badge">1</span>
+        </a>
+
+        <a href="astrologer-earnings.html" class="nav-item">
+            <span class="icon">💰</span>
+            Earnings
+        </a>
+
+        <a href="astrologer-reviews.html" class="nav-item">
+            <span class="icon">⭐</span>
+            Reviews
+        </a>
+
+        <a href="astrologer-profile-edit.html" class="nav-item">
+            <span class="icon">👤</span>
+            My Profile
+        </a>
+
+        <a href="astrologer-withdraw.html" class="nav-item">
+            <span class="icon">🏦</span>
+            Withdraw
+        </a>
+
+    </nav>
+
+
+    <div class="bottom">
+
+        <a href="../SUPPORT/help.html" class="nav-item">
+            <span class="icon">❓</span>
+            Help & Support
+        </a>
+
+        <button
+            class="nav-item logout"
+            onclick="logout()">
+
+            <span class="icon">↪</span>
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+<header class="topbar">
+
+    <button
+        class="mobile-menu"
+        onclick="toggleSidebar()">
+
+        ☰
+
+    </button>
+
+
+    <div></div>
+
+
+    <div class="top-right">
+
+        <button
+            class="bell"
+            onclick="showToast('No new notifications.')">
+
+            🔔
+
+        </button>
+
+
+        <div
+            id="topAvatar"
+            class="avatar">
+
+            A
+
+        </div>
+
+
+        <div class="top-name">
+
+            <strong id="topName">
+                Astro Partner
+            </strong>
+
+            <span>
+                Astrologer
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<section class="page-title">
+
+    <div>
+
+        <h1>
+            Audio / Video Calls
+        </h1>
+
+        <p>
+            Manage incoming consultation calls and active sessions.
+        </p>
+
+    </div>
+
+
+    <div class="status">
+
+        <span
+            id="statusDot"
+            class="status-dot">
+
+        </span>
+
+
+        <div>
+
+            <strong id="statusText">
+                Offline
+            </strong>
+
+            <span id="statusSubtext">
+                Call requests paused
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     INCOMING REQUEST
+========================= -->
+
+<section
+    id="request"
+    class="request">
+
+    <div class="request-icon">
+        📞
+    </div>
+
+
+    <div class="request-info">
+
+        <strong>
+            Incoming Audio Call
+        </strong>
+
+        <span>
+            Rahul Kumar is requesting a consultation · Career Guidance
+        </span>
+
+    </div>
+
+
+    <div class="request-actions">
+
+        <button
+            class="accept"
+            onclick="acceptCall('audio')">
+
+            ✓ ACCEPT
+
+        </button>
+
+
+        <button
+            class="reject"
+            onclick="rejectCall()">
+
+            ✕ REJECT
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CALL AREA
+========================= -->
+
+<div class="call-grid">
+
+
+<section
+    id="callCard"
+    class="call-card">
+
+
+    <div class="call-main">
+
+
+        <div class="call-user">
+
+            <strong id="callCustomer">
+                Rahul Kumar
+            </strong>
+
+            <span id="callType">
+                Audio Consultation
+            </span>
+
+        </div>
+
+
+        <div
+            id="callTime"
+            class="call-time">
+
+            00:00
+
+        </div>
+
+
+        <div
+            id="callAvatar"
+            class="call-avatar">
+
+            RK
+
+        </div>
+
+
+        <div
+            id="videoPreview"
+            class="video-preview">
+
+            🎥 CAMERA PREVIEW
+
+        </div>
+
+
+        <div
+            id="callState"
+            class="call-state">
+
+            Waiting for call...
+
+        </div>
+
+    </div>
+
+
+    <div class="call-controls">
+
+
+        <button
+            id="muteBtn"
+            class="control"
+            onclick="toggleMute()"
+            title="Mute">
+
+            🎙️
+
+        </button>
+
+
+        <button
+            id="speakerBtn"
+            class="control active"
+            onclick="toggleSpeaker()"
+            title="Speaker">
+
+            🔊
+
+        </button>
+
+
+        <button
+            id="cameraBtn"
+            class="control"
+            onclick="toggleCamera()"
+            title="Camera">
+
+            📹
+
+        </button>
+
+
+        <button
+            class="end"
+            onclick="endCall()"
+            title="End Call">
+
+            ☎
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SIDE
+========================= -->
+
+<div class="side-column">
+
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Customer
+        </h2>
+
+        <p>
+            Current consultation
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="customer">
+
+            <div class="customer-avatar">
+                RK
+            </div>
+
+            <div>
+
+                <strong>
+                    Rahul Kumar
+                </strong>
+
+                <span>
+                    Career Guidance
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Session Details
+        </h2>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="stat-row">
+
+            <span>
+                Call Type
+            </span>
+
+            <strong id="detailType">
+                Audio
+            </strong>
+
+        </div>
+
+
+        <div class="stat-row">
+
+            <span>
+                Rate
+            </span>
+
+            <strong>
+                ₹<span id="callRate">30</span>/min
+            </strong>
+
+        </div>
+
+
+        <div class="stat-row">
+
+            <span>
+                Duration
+            </span>
+
+            <strong id="detailDuration">
+                00:00
+            </strong>
+
+        </div>
+
+
+        <div class="stat-row">
+
+            <span>
+                Status
+            </span>
+
+            <strong
+                id="detailStatus"
+                style="color:#999;">
+
+                Waiting
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Services
+        </h2>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="service-row">
+
+            <div class="service-left">
+
+                <div class="service-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <strong>
+                        Audio Call
+                    </strong>
+
+                    <div class="service-price">
+                        ₹30/min
+                    </div>
+
+                </div>
+
+            </div>
+
+            <span>
+                🟢
+            </span>
+
+        </div>
+
+
+        <div class="service-row">
+
+            <div class="service-left">
+
+                <div class="service-icon">
+                    🎥
+                </div>
+
+                <div>
+
+                    <strong>
+                        Video Call
+                    </strong>
+
+                    <div class="service-price">
+                        ₹40/min
+                    </div>
+
+                </div>
+
+            </div>
+
+            <span>
+                🟢
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Current Earning
+        </h2>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="earning">
+
+            <span>
+                SESSION EARNING
+            </span>
+
+            <strong>
+                ₹<span id="earning">0</span>
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     SUMMARY
+========================= -->
+
+<section class="summary">
+
+    <div class="summary-grid">
+
+
+        <div class="summary-box">
+
+            <span>
+                TODAY'S CALLS
+            </span>
+
+            <strong id="todayCalls">
+                8
+            </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span>
+                TOTAL MINUTES
+            </span>
+
+            <strong id="todayMinutes">
+                126
+            </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span>
+                CALL EARNINGS
+            </span>
+
+            <strong>
+                ₹<span id="todayEarnings">
+                    3,780
+                </span>
+            </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span>
+                SUCCESS RATE
+            </span>
+
+            <strong>
+                96%
+            </strong>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+
+    © 2026 Astro With Talk · Astrologer Partner Portal
+
+</div>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
+<script>
+
+/* =========================================
+   PROFILE
+========================================= */
+
+let profile =
+    JSON.parse(
+        localStorage.getItem(
+            "awt_astrologer"
+        ) || "null"
+    );
+
+
+if(!profile){
+
+    profile = {
+
+        name:"Astro Partner",
+
+        status:"offline",
+
+        callRate:30,
+
+        videoRate:40
+
+    };
+
+}
+
+
+const name =
+    profile.name ||
+    "Astro Partner";
+
+
+const callRate =
+    Number(
+        profile.callRate ||
+        30
+    );
+
+
+const videoRate =
+    Number(
+        profile.videoRate ||
+        40
+    );
+
+
+document
+    .getElementById(
+        "topName"
+    )
+    .innerText =
+        name;
+
+
+document
+    .getElementById(
+        "topAvatar"
+    )
+    .innerText =
+        initials(name);
+
+
+document
+    .getElementById(
+        "callRate"
+    )
+    .innerText =
+        callRate;
+
+
+/* =========================================
+   STATE
+========================================= */
+
+let currentType =
+    "audio";
+
+
+let activeCall =
+    false;
+
+
+let muted =
+    false;
+
+
+let speaker =
+    true;
+
+
+let camera =
+    false;
+
+
+let seconds =
+    0;
+
+
+let timer =
+    null;
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+const isOnline =
+    profile.status ===
+    "online";
+
+
+if(isOnline){
+
+    document
+        .getElementById(
+            "statusDot"
+        )
+        .classList.add(
+            "online"
+        );
+
+    document
+        .getElementById(
+            "statusText"
+        )
+        .innerText =
+            "Online";
+
+    document
+        .getElementById(
+            "statusSubtext"
+        )
+        .innerText =
+            "Ready for calls";
+
+}else{
+
+    document
+        .getElementById(
+            "statusText"
+        )
+        .innerText =
+            "Offline";
+
+    document
+        .getElementById(
+            "statusSubtext"
+        )
+        .innerText =
+            "Call requests paused";
+
+}
+
+
+/* =========================================
+   ACCEPT CALL
+========================================= */
+
+function acceptCall(
+    type
+){
+
+    currentType =
+        type;
+
+
+    activeCall =
+        true;
+
+
+    seconds =
+        0;
+
+
+    const rate =
+        type === "video"
+        ? videoRate
+        : callRate;
+
+
+    document
+        .getElementById(
+            "callRate"
+        )
+        .innerText =
+            rate;
+
+
+    document
+        .getElementById(
+            "detailType"
+        )
+        .innerText =
+            type === "video"
+            ? "Video"
+            : "Audio";
+
+
+    document
+        .getElementById(
+            "callType"
+        )
+        .innerText =
+            type === "video"
+            ? "Video Consultation"
+            : "Audio Consultation";
+
+
+    document
+        .getElementById(
+            "callState"
+        )
+        .innerText =
+            "Connected · Consultation active";
+
+
+    document
+        .getElementById(
+            "detailStatus"
+        )
+        .innerText =
+            "Active";
+
+
+    document
+        .getElementById(
+            "detailStatus"
+        )
+        .style.color =
+            "#249847";
+
+
+    document
+        .getElementById(
+            "request"
+        )
+        .style.display =
+            "none";
+
+
+    if(type === "video"){
+
+        document
+            .getElementById(
+                "callCard"
+            )
+            .classList.add(
+                "video"
+            );
+
+    }else{
+
+        document
+            .getElementById(
+                "callCard"
+            )
+            .classList.remove(
+                "video"
+            );
+
+    }
+
+
+    startTimer();
+
+
+    showToast(
+        type === "video"
+        ? "Video call connected."
+        : "Audio call connected."
+    );
+
+
+    /*
+       PRODUCTION:
+
+       POST
+       /api/calls/{callId}/accept
+
+       Then establish:
+
+       WebRTC signaling
+       ICE candidates
+       STUN/TURN
+       encrypted media connection
+    */
+
+}
+
+
+/* =========================================
+   REJECT
+========================================= */
+
+function rejectCall(){
+
+    document
+        .getElementById(
+            "request"
+        )
+        .style.display =
+            "none";
+
+
+    document
+        .getElementById(
+            "callState"
+        )
+        .innerText =
+            "Call request rejected";
+
+
+    document
+        .getElementById(
+            "detailStatus"
+        )
+        .innerText =
+            "Rejected";
+
+
+    showToast(
+        "Call request rejected."
+    );
+
+
+    /*
+       PRODUCTION:
+
+       POST
+       /api/calls/{callId}/reject
+    */
+
+}
+
+
+/* =========================================
+   TIMER
+========================================= */
+
+function startTimer(){
+
+    clearInterval(
+        timer
+    );
+
+
+    timer =
+        setInterval(
+            function(){
+
+                if(!activeCall){
+
+                    return;
+
+                }
+
+
+                seconds++;
+
+
+                const min =
+                    Math.floor(
+                        seconds / 60
+                    )
+                    .toString()
+                    .padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const sec =
+                    (
+                        seconds % 60
+                    )
+                    .toString()
+                    .padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const display =
+                    min +
+                    ":" +
+                    sec;
+
+
+                document
+                    .getElementById(
+                        "callTime"
+                    )
+                    .innerText =
+                        display;
+
+
+                document
+                    .getElementById(
+                        "detailDuration"
+                    )
+                    .innerText =
+                        display;
+
+
+                const rate =
+                    currentType ===
+                    "video"
+                    ? videoRate
+                    : callRate;
+
+
+                const earning =
+                    Math.floor(
+                        seconds / 60
+                    ) *
+                    rate;
+
+
+                document
+                    .getElementById(
+                        "earning"
+                    )
+                    .innerText =
+                        earning;
+
+
+            },
+            1000
+        );
+
+}
+
+
+/* =========================================
+   MUTE
+========================================= */
+
+function toggleMute(){
+
+    muted =
+        !muted;
+
+
+    const btn =
+        document
+        .getElementById(
+            "muteBtn"
+        );
+
+
+    if(muted){
+
+        btn.classList.add(
+            "active"
+        );
+
+        btn.innerText =
+            "🔇";
+
+        showToast(
+            "Microphone muted."
+        );
+
+    }else{
+
+        btn.classList.remove(
+            "active"
+        );
+
+        btn.innerText =
+            "🎙️";
+
+        showToast(
+            "Microphone unmuted."
+        );
+
+    }
+
+
+    /*
+       PRODUCTION:
+
+       localAudioTrack.enabled =
+           !muted;
+    */
+
+}
+
+
+/* =========================================
+   SPEAKER
+========================================= */
+
+function toggleSpeaker(){
+
+    speaker =
+        !speaker;
+
+
+    const btn =
+        document
+        .getElementById(
+            "speakerBtn"
+        );
+
+
+    if(speaker){
+
+        btn.classList.add(
+            "active"
+        );
+
+        btn.innerText =
+            "🔊";
+
+        showToast(
+            "Speaker enabled."
+        );
+
+    }else{
+
+        btn.classList.remove(
+            "active"
+        );
+
+        btn.innerText =
+            "🔇";
+
+        showToast(
+            "Speaker muted."
+        );
+
+    }
+
+
+    /*
+       PRODUCTION:
+
+       Apply audio output
+       routing where supported.
+    */
+
+}
+
+
+/* =========================================
+   CAMERA
+========================================= */
+
+function toggleCamera(){
+
+    camera =
+        !camera;
+
+
+    const btn =
+        document
+        .getElementById(
+            "cameraBtn"
+        );
+
+
+    if(camera){
+
+        btn.classList.add(
+            "active"
+        );
+
+        btn.innerText =
+            "📹";
+
+        showToast(
+            "Camera enabled."
+        );
+
+    }else{
+
+        btn.classList.remove(
+            "active"
+        );
+
+        btn.innerText =
+            "📷";
+
+        showToast(
+            "Camera disabled."
+        );
+
+    }
+
+
+    /*
+       PRODUCTION:
+
+       videoTrack.enabled =
+           camera;
+    */
+
+}
+
+
+/* =========================================
+   END CALL
+========================================= */
+
+function endCall(){
+
+    if(!activeCall){
+
+        showToast(
+            "No active call."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "End this consultation?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    activeCall =
+        false;
+
+
+    clearInterval(
+        timer
+    );
+
+
+    const rate =
+        currentType ===
+        "video"
+        ? videoRate
+        : callRate;
+
+
+    const finalEarning =
+        Math.floor(
+            seconds / 60
+        ) *
+        rate;
+
+
+    document
+        .getElementById(
+            "callState"
+        )
+        .innerText =
+            "Call ended";
+
+
+    document
+        .getElementById(
+            "detailStatus"
+        )
+        .innerText =
+            "Completed";
+
+
+    document
+        .getElementById(
+            "detailStatus"
+        )
+        .style.color =
+            "#777";
+
+
+    showToast(
+        "Consultation ended · Earning ₹" +
+        finalEarning
+    );
+
+
+    /*
+       PRODUCTION:
+
+       POST
+       /api/calls/{callId}/complete
+
+       Backend MUST calculate:
+
+       duration
+       customer debit
+       platform commission
+       astrologer earning
+       transaction
+       call history
+
+       Frontend amount is only
+       visual information.
+    */
+
+
+    setTimeout(
+        function(){
+
+            resetCall();
+
+        },
+        1500
+    );
+
+}
+
+
+/* =========================================
+   RESET
+========================================= */
+
+function resetCall(){
+
+    seconds =
+        0;
+
+
+    activeCall =
+        false;
+
+
+    document
+        .getElementById(
+            "callTime"
+        )
+        .innerText =
+            "00:00";
+
+
+    document
+        .getElementById(
+            "detailDuration"
+        )
+        .innerText =
+            "00:00";
+
+
+    document
+        .getElementById(
+            "earning"
+        )
+        .innerText =
+            "0";
+
+
+    document
+        .getElementById(
+            "callState"
+        )
+        .innerText =
+            "Waiting for call...";
+
+
+    document
+        .getElementById(
+            "request"
+        )
+        .style.display =
+            "flex";
+
+
+    document
+        .getElementById(
+            "detailStatus"
+        )
+        .innerText =
+            "Waiting";
+
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    clearInterval(
+        timer
+    );
+
+
+    localStorage.removeItem(
+        "awt_astrologer_logged_in"
+    );
+
+
+    location.href =
+        "astrologer-login.html";
+
+}
+
+
+/* =========================================
+   INITIALS
+========================================= */
+
+function initials(
+    name
+){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            x =>
+                x[0]
+                .toUpperCase()
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document
+        .getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        "✓ " +
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+</script>
+
+</body>
+</html>
