@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Chat with Astrologer | Astro With Talk</title>
+
+<meta name="description"
+content="Chat live with an astrologer on Astro With Talk. Get personalized astrology guidance through a secure online chat consultation.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f6f6f6;
+    --border:#e4e4e4;
+
+    --purple:#48235f;
+    --purple-light:#f7f2fb;
+
+    --green:#25a34a;
+    --green-light:#edf8f0;
+
+    --gold:#b98417;
+    --gold-light:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:#fff7e5;
+
+    border:1px solid #ead9b3;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border:1px solid #ddd;
+
+    border-radius:50%;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:27px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:13px;
+
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+
+    overflow:hidden;
+
+    padding:37px 38px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 82% 20%,
+            rgba(255,255,255,.17),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #271332,
+            #502565,
+            #784c94
+        );
+}
+
+.hero::after{
+    content:"CHAT";
+
+    position:absolute;
+
+    right:25px;
+    bottom:-50px;
+
+    font-size:135px;
+
+    font-weight:700;
+
+    opacity:.06;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:42px;
+}
+
+.hero p{
+    max-width:720px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.hero-actions{
+    display:flex;
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.hero-btn{
+    padding:10px 14px;
+
+    border:0;
+    border-radius:8px;
+
+    background:#fff;
+
+    color:var(--purple);
+
+    font-size:8px;
+    font-weight:700;
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.3);
+}
+
+
+/* MAIN */
+
+.chat-layout{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        300px;
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+
+/* CHAT APP */
+
+.chat-app{
+    overflow:hidden;
+
+    min-height:650px;
+
+    display:flex;
+    flex-direction:column;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.06);
+}
+
+
+/* CHAT HEADER */
+
+.chat-header{
+    padding:15px 18px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid #eee;
+}
+
+.astrologer{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+}
+
+.avatar-wrap{
+    position:relative;
+}
+
+.avatar{
+    width:47px;
+    height:47px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    display:grid;
+    place-items:center;
+
+    font-size:21px;
+}
+
+.online-dot{
+    position:absolute;
+
+    right:0;
+    bottom:1px;
+
+    width:13px;
+    height:13px;
+
+    border-radius:50%;
+
+    background:#32c85b;
+
+    border:3px solid #fff;
+}
+
+.astrologer-name{
+    font-size:10px;
+    font-weight:700;
+}
+
+.verified{
+    color:#4285f4;
+
+    font-family:Arial;
+
+    font-size:11px;
+}
+
+.status{
+    margin-top:3px;
+
+    color:var(--green);
+
+    font-size:7px;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+}
+
+.rate{
+    padding:7px 9px;
+
+    border-radius:7px;
+
+    background:var(--gold-light);
+
+    color:#8c6919;
+
+    border:1px solid #efdfb8;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.end-btn{
+    padding:8px 10px;
+
+    border:1px solid #f0cccc;
+
+    border-radius:7px;
+
+    background:#fff4f4;
+
+    color:var(--red);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* CHAT BODY */
+
+.chat-body{
+    flex:1;
+
+    min-height:455px;
+
+    overflow-y:auto;
+
+    padding:20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fbfbfc,
+            #f7f7f8
+        );
+}
+
+.date-divider{
+    text-align:center;
+
+    margin-bottom:18px;
+
+    color:#aaa;
+
+    font-size:6px;
+}
+
+.message{
+    display:flex;
+
+    margin-bottom:13px;
+}
+
+.message.user{
+    justify-content:flex-end;
+}
+
+.bubble{
+    max-width:70%;
+
+    padding:10px 12px;
+
+    border-radius:12px;
+
+    font-size:8px;
+
+    line-height:1.65;
+}
+
+.message.astro .bubble{
+    background:#fff;
+
+    border:1px solid #e5e5e5;
+
+    border-top-left-radius:4px;
+
+    color:#555;
+}
+
+.message.user .bubble{
+    background:var(--purple);
+
+    color:#fff;
+
+    border-top-right-radius:4px;
+}
+
+.message-time{
+    margin-top:4px;
+
+    color:#aaa;
+
+    font-size:6px;
+}
+
+.message.user .message-time{
+    text-align:right;
+}
+
+.typing{
+    display:none;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-bottom:12px;
+}
+
+.typing.show{
+    display:flex;
+}
+
+.typing-avatar{
+    width:27px;
+    height:27px;
+
+    border-radius:50%;
+
+    background:#c28a65;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:11px;
+}
+
+.typing-bubble{
+    padding:8px 10px;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    border:1px solid #e5e5e5;
+}
+
+.typing-dots{
+    display:flex;
+    gap:3px;
+}
+
+.typing-dots span{
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:#999;
+
+    animation:bounce 1s infinite;
+}
+
+.typing-dots span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing-dots span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes bounce{
+
+    0%,60%,100%{
+        transform:translateY(0);
+    }
+
+    30%{
+        transform:translateY(-3px);
+    }
+
+}
+
+
+/* QUICK QUESTIONS */
+
+.quick{
+    padding:10px 15px;
+
+    border-top:1px solid #eee;
+
+    background:#fff;
+}
+
+.quick-label{
+    color:#999;
+
+    font-size:6px;
+
+    margin-bottom:6px;
+}
+
+.quick-list{
+    display:flex;
+
+    gap:5px;
+
+    overflow-x:auto;
+}
+
+.quick-btn{
+    flex-shrink:0;
+
+    padding:7px 9px;
+
+    border:1px solid #ddd;
+
+    border-radius:20px;
+
+    background:#fff;
+
+    color:#666;
+
+    font-size:6px;
+}
+
+
+/* INPUT */
+
+.chat-input{
+    padding:10px 13px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    border-top:1px solid #eee;
+
+    background:#fff;
+}
+
+.attach{
+    width:33px;
+    height:33px;
+
+    border:1px solid #ddd;
+
+    border-radius:7px;
+
+    background:#fff;
+
+    color:#777;
+
+    font-size:13px;
+}
+
+.message-input{
+    flex:1;
+
+    height:35px;
+
+    padding:0 10px;
+
+    border:1px solid #ddd;
+
+    border-radius:7px;
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.message-input:focus{
+    border-color:#bda9c9;
+}
+
+.send{
+    width:38px;
+    height:35px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:14px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+
+    gap:13px;
+}
+
+.side-card{
+    padding:17px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+}
+
+.side-card h3{
+    margin-bottom:11px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:18px;
+}
+
+
+/* PROFILE */
+
+.profile-card{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding-bottom:13px;
+
+    border-bottom:1px solid #eee;
+}
+
+.profile-avatar{
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    display:grid;
+    place-items:center;
+
+    font-size:22px;
+}
+
+.profile-name{
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.profile-status{
+    margin-top:3px;
+
+    color:var(--green);
+
+    font-size:7px;
+}
+
+.info-row{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    padding:9px 0;
+
+    border-bottom:1px solid #eee;
+
+    font-size:8px;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-row span{
+    color:#999;
+}
+
+.info-row strong{
+    color:#333;
+}
+
+
+/* BALANCE */
+
+.balance-card{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-light);
+
+    border:1px solid #efdfb8;
+}
+
+.balance-label{
+    color:#999;
+
+    font-size:7px;
+}
+
+.balance{
+    margin-top:2px;
+
+    color:var(--red);
+
+    font-size:21px;
+
+    font-weight:700;
+}
+
+.balance-warning{
+    display:none;
+
+    margin-top:4px;
+
+    color:var(--red);
+
+    font-size:6px;
+}
+
+.recharge{
+    width:100%;
+
+    height:35px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* SESSION */
+
+.session-info{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:9px;
+}
+
+.session-item{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:8px;
+}
+
+.session-icon{
+    width:29px;
+    height:29px;
+
+    border-radius:7px;
+
+    background:var(--purple-light);
+
+    display:grid;
+    place-items:center;
+
+    font-size:13px;
+}
+
+.session-item strong{
+    display:block;
+
+    font-size:8px;
+}
+
+.session-item p{
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:6px;
+
+    line-height:1.5;
+}
+
+
+/* END SESSION OVERLAY */
+
+.overlay{
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    background:rgba(0,0,0,.62);
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.end-modal{
+    width:min(390px,100%);
+
+    padding:25px;
+
+    border-radius:17px;
+
+    background:#fff;
+
+    text-align:center;
+}
+
+.end-icon{
+    width:55px;
+    height:55px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#fff0f0;
+
+    display:grid;
+
+    place-items:center;
+
+    color:var(--red);
+
+    font-size:25px;
+}
+
+.end-modal h2{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:22px;
+}
+
+.end-modal p{
+    margin-top:6px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.end-actions{
+    display:flex;
+
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.end-actions button{
+    flex:1;
+
+    height:38px;
+
+    border-radius:7px;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.cancel{
+    border:1px solid #ddd;
+
+    background:#fff;
+}
+
+.confirm{
+    border:0;
+
+    background:var(--red);
+
+    color:#fff;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:40px 0 18px;
+
+    background:#171717;
+
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .chat-layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+    }
+
+    .hero-btn{
+        width:100%;
+    }
+
+    .chat-header{
+        align-items:flex-start;
+
+        gap:8px;
+    }
+
+    .rate{
+        display:none;
+    }
+
+    .chat-body{
+        padding:14px;
+    }
+
+    .bubble{
+        max-width:82%;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../FREE-SERVICES/free-services.html">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Live Features /
+        <span>Live Chat</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                💬 LIVE ASTROLOGY CHAT
+            </div>
+
+            <h1>
+                Chat with an Astrologer
+            </h1>
+
+            <p>
+                Get personalized guidance through a private text
+                consultation. Ask questions, share your concerns and
+                receive guidance directly from your selected astrologer.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <button
+                    class="hero-btn"
+                    onclick="document.getElementById('chatApp').scrollIntoView({behavior:'smooth'})">
+
+                    💬 Start Chat
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="location.href='../astrologers.html'">
+
+                    Find Astrologer →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CHAT LAYOUT -->
+
+    <div class="chat-layout">
+
+
+        <!-- CHAT -->
+
+        <section
+            id="chatApp"
+            class="chat-app">
+
+
+            <!-- HEADER -->
+
+            <div class="chat-header">
+
+
+                <div class="astrologer">
+
+                    <div class="avatar-wrap">
+
+                        <div class="avatar">
+                            🔮
+                        </div>
+
+                        <div class="online-dot"></div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="astrologer-name">
+
+                            Astro Guide
+
+                            <span class="verified">
+                                ✓
+                            </span>
+
+                        </div>
+
+                        <div class="status">
+                            ● Online • Usually replies instantly
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="header-right">
+
+                    <div class="rate">
+                        ₹25 / min
+                    </div>
+
+                    <button
+                        class="end-btn"
+                        onclick="openEndModal()">
+
+                        End Chat
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div
+                id="chatBody"
+                class="chat-body">
+
+
+                <div class="date-divider">
+                    TODAY
+                </div>
+
+
+                <div class="message astro">
+
+                    <div>
+
+                        <div class="bubble">
+
+                            Namaste 🙏 Welcome to Astro With Talk.
+                            How can I help you today?
+
+                        </div>
+
+                        <div class="message-time">
+                            11:24 AM
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="message user">
+
+                    <div>
+
+                        <div class="bubble">
+
+                            I want guidance regarding my career
+                            and upcoming opportunities.
+
+                        </div>
+
+                        <div class="message-time">
+                            11:25 AM
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="message astro">
+
+                    <div>
+
+                        <div class="bubble">
+
+                            Certainly. Please tell me what area of
+                            your career you would like to understand
+                            first.
+
+                        </div>
+
+                        <div class="message-time">
+                            11:25 AM
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="typing"
+                    class="typing">
+
+                    <div class="typing-avatar">
+                        🔮
+                    </div>
+
+                    <div class="typing-bubble">
+
+                        <div class="typing-dots">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- QUICK QUESTIONS -->
+
+            <div class="quick">
+
+                <div class="quick-label">
+                    QUICK QUESTIONS
+                </div>
+
+
+                <div class="quick-list">
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickMessage('Career guidance')">
+
+                        Career guidance
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickMessage('Marriage timing')">
+
+                        Marriage timing
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickMessage('Relationship')">
+
+                        Relationship
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickMessage('Financial outlook')">
+
+                        Financial outlook
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickMessage('Kundli analysis')">
+
+                        Kundli analysis
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- INPUT -->
+
+            <div class="chat-input">
+
+                <button
+                    class="attach"
+                    onclick="alert('Attachment feature will be connected to the production chat service.')">
+
+                    +
+
+                </button>
+
+
+                <input
+                    id="messageInput"
+                    class="message-input"
+                    type="text"
+                    placeholder="Type your message...">
+
+
+                <button
+                    class="send"
+                    onclick="sendMessage()">
+
+                    ➤
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <!-- ASTROLOGER -->
+
+            <div class="side-card">
+
+                <h3>
+                    Astrologer
+                </h3>
+
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar">
+                        🔮
+                    </div>
+
+                    <div>
+
+                        <div class="profile-name">
+                            Astro Guide ✓
+                        </div>
+
+                        <div class="profile-status">
+                            ● Online
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Experience
+                    </span>
+
+                    <strong>
+                        8+ Years
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Rating
+                    </span>
+
+                    <strong>
+                        ⭐ 4.9
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Chat Rate
+                    </span>
+
+                    <strong>
+                        ₹25/min
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Languages
+                    </span>
+
+                    <strong>
+                        Hindi, English
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- WALLET -->
+
+            <div class="side-card">
+
+                <h3>
+                    Your Wallet
+                </h3>
+
+
+                <div class="balance-card">
+
+                    <div class="balance-label">
+                        AVAILABLE BALANCE
+                    </div>
+
+
+                    <div
+                        id="sideBalance"
+                        class="balance">
+
+                        ₹500
+
+                    </div>
+
+
+                    <div
+                        id="balanceWarning"
+                        class="balance-warning">
+
+                        ⚠ Low balance — recharge to continue.
+
+                    </div>
+
+
+                    <button
+                        class="recharge"
+                        onclick="location.href='../wallet/recharge.html'">
+
+                        + Recharge Wallet
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- SESSION -->
+
+            <div class="side-card">
+
+                <h3>
+                    Chat Guidelines
+                </h3>
+
+
+                <div class="session-info">
+
+
+                    <div class="session-item">
+
+                        <div class="session-icon">
+                            🔒
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Private Consultation
+                            </strong>
+
+                            <p>
+                                Keep your conversation respectful
+                                and private.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="session-item">
+
+                        <div class="session-icon">
+                            💰
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Per-Minute Billing
+                            </strong>
+
+                            <p>
+                                Your wallet is charged according to
+                                the active consultation duration.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="session-item">
+
+                        <div class="session-icon">
+                            📝
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Ask Clearly
+                            </strong>
+
+                            <p>
+                                One clear question at a time can make
+                                the consultation easier to follow.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="session-item">
+
+                        <div class="session-icon">
+                            ⭐
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Rate Your Experience
+                            </strong>
+
+                            <p>
+                                After the chat, you can review your
+                                consultation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Live Features
+        </h4>
+
+        <a href="audio-call.html">
+            Audio Call
+        </a>
+
+        <a href="live-astrology.html">
+            Live Astrology
+        </a>
+
+        <a href="live-chat.html">
+            Live Chat
+        </a>
+
+        <a href="video-consultation.html">
+            Video Consultation
+        </a>
+
+        <a href="waiting-room.html">
+            Waiting Room
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="../wallet/transactions.html">
+            Transactions
+        </a>
+
+        <a href="../history.html">
+            Consultation History
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- END CHAT MODAL -->
+
+<div
+    id="endOverlay"
+    class="overlay">
+
+    <div class="end-modal">
+
+        <div class="end-icon">
+            💬
+        </div>
+
+        <h2>
+            End Chat?
+        </h2>
+
+        <p>
+            Are you sure you want to end this consultation?
+            Your session details will be saved in your consultation
+            history.
+        </p>
+
+
+        <div class="end-actions">
+
+            <button
+                class="cancel"
+                onclick="closeEndModal()">
+
+                Continue Chat
+
+            </button>
+
+
+            <button
+                class="confirm"
+                onclick="endChat()">
+
+                End Chat
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+    WALLET
+
+    This browser implementation is only a front-end prototype.
+    Production billing must be performed and verified server-side.
+*/
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+function updateWallet(){
+
+    document
+        .getElementById("wallet")
+        .innerText =
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById("sideBalance")
+        .innerText =
+            "₹" +
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+
+    const warning =
+        document.getElementById(
+            "balanceWarning"
+        );
+
+
+    if(
+        wallet <= 100
+    ){
+
+        warning.style.display =
+            "block";
+
+    }else{
+
+        warning.style.display =
+            "none";
+
+    }
+
+}
+
+
+updateWallet();
+
+
+/* CHAT STATE */
+
+let chatActive = true;
+
+let seconds = 0;
+
+let billingTimer;
+
+
+/* START BILLING TIMER */
+
+function startBilling(){
+
+    billingTimer =
+        setInterval(
+            ()=>{
+
+                if(!chatActive){
+                    return;
+                }
+
+
+                seconds++;
+
+
+                /*
+                    Demo billing:
+                    ₹25 per completed minute.
+
+                    Production implementation:
+                    backend-controlled billing.
+                */
+
+                if(
+                    seconds % 60 === 0
+                ){
+
+                    wallet =
+                        Math.max(
+                            0,
+                            wallet - 25
+                        );
+
+
+                    localStorage.setItem(
+                        "awt_wallet_balance",
+                        wallet
+                    );
+
+
+                    updateWallet();
+
+
+                    if(
+                        wallet <= 0
+                    ){
+
+                        autoEndChat();
+
+                    }
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+startBilling();
+
+
+/* SEND MESSAGE */
+
+function sendMessage(){
+
+    if(!chatActive){
+        return;
+    }
+
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+        return;
+    }
+
+
+    appendUserMessage(
+        text
+    );
+
+
+    input.value = "";
+
+
+    showTyping();
+
+
+    /*
+        Demo astrologer response.
+
+        Production version should receive
+        messages from the real-time chat backend.
+    */
+
+    setTimeout(
+        ()=>{
+
+            hideTyping();
+
+            appendAstroMessage(
+                generateReply(text)
+            );
+
+        },
+        1200
+    );
+
+}
+
+
+/* QUICK MESSAGE */
+
+function quickMessage(
+    text
+){
+
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .value =
+            text;
+
+
+    sendMessage();
+
+}
+
+
+/* USER MESSAGE */
+
+function appendUserMessage(
+    text
+){
+
+    const body =
+        document.getElementById(
+            "chatBody"
+        );
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "message user";
+
+
+    const now =
+        new Date()
+        .toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    wrapper.innerHTML =
+        `
+        <div>
+            <div class="bubble">
+                ${escapeHtml(text)}
+            </div>
+
+            <div class="message-time">
+                ${now}
+            </div>
+        </div>
+        `;
+
+
+    body.insertBefore(
+        wrapper,
+        document.getElementById(
+            "typing"
+        )
+    );
+
+
+    scrollChat();
+
+}
+
+
+/* ASTRO MESSAGE */
+
+function appendAstroMessage(
+    text
+){
+
+    const body =
+        document.getElementById(
+            "chatBody"
+        );
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "message astro";
+
+
+    const now =
+        new Date()
+        .toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    wrapper.innerHTML =
+        `
+        <div>
+            <div class="bubble">
+                ${escapeHtml(text)}
+            </div>
+
+            <div class="message-time">
+                ${now}
+            </div>
+        </div>
+        `;
+
+
+    body.insertBefore(
+        wrapper,
+        document.getElementById(
+            "typing"
+        )
+    );
+
+
+    scrollChat();
+
+}
+
+
+/* DEMO RESPONSE */
+
+function generateReply(
+    text
+){
+
+    const lower =
+        text.toLowerCase();
+
+
+    if(
+        lower.includes("career")
+    ){
+
+        return "Career questions can be explored by looking at the relevant birth-chart factors, planetary periods and current transits. Please share your birth details if you want a personalized analysis.";
+
+    }
+
+
+    if(
+        lower.includes("marriage")
+    ){
+
+        return "Marriage timing is traditionally assessed through the 7th house, its lord, Venus or Jupiter depending on the chart, planetary periods and relevant transits.";
+
+    }
+
+
+    if(
+        lower.includes("relationship")
+    ){
+
+        return "For relationship guidance, a detailed birth-chart analysis can consider the 5th and 7th houses, Venus, Moon and relevant planetary periods.";
+
+    }
+
+
+    if(
+        lower.includes("finance") ||
+        lower.includes("financial")
+    ){
+
+        return "Financial astrology is traditionally explored through the 2nd and 11th houses, their lords, Jupiter, Venus and applicable planetary periods.";
+
+    }
+
+
+    return "Thank you for sharing your question. I can help you explore it through a traditional astrological perspective. Please share your birth details or explain the situation in a little more detail.";
+
+}
+
+
+/* TYPING */
+
+function showTyping(){
+
+    document
+        .getElementById(
+            "typing"
+        )
+        .classList
+        .add("show");
+
+
+    scrollChat();
+
+}
+
+
+function hideTyping(){
+
+    document
+        .getElementById(
+            "typing"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* SCROLL */
+
+function scrollChat(){
+
+    const body =
+        document.getElementById(
+            "chatBody"
+        );
+
+
+    setTimeout(
+        ()=>{
+            body.scrollTop =
+                body.scrollHeight;
+        },
+        20
+    );
+
+}
+
+
+/* ENTER */
+
+document
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter"
+            ){
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+/* END MODAL */
+
+function openEndModal(){
+
+    if(!chatActive){
+        return;
+    }
+
+
+    document
+        .getElementById(
+            "endOverlay"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+function closeEndModal(){
+
+    document
+        .getElementById(
+            "endOverlay"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* END CHAT */
+
+function endChat(){
+
+    if(!chatActive){
+        return;
+    }
+
+
+    chatActive = false;
+
+
+    clearInterval(
+        billingTimer
+    );
+
+
+    localStorage.setItem(
+        "awt_last_chat",
+        JSON.stringify({
+
+            type:"chat",
+
+            astrologer:
+                "Astro Guide",
+
+            duration:
+                seconds,
+
+            rate:
+                25,
+
+            date:
+                new Date()
+                .toISOString()
+
+        })
+    );
+
+
+    closeEndModal();
+
+
+    setTimeout(
+        ()=>{
+
+            location.href =
+                "../history.html";
+
+        },
+        400
+    );
+
+}
+
+
+/* AUTO END */
+
+function autoEndChat(){
+
+    chatActive = false;
+
+
+    clearInterval(
+        billingTimer
+    );
+
+
+    alert(
+        "Your wallet balance has reached ₹0. Please recharge your wallet to continue the consultation."
+    );
+
+
+    location.href =
+        "../wallet/recharge.html";
+
+}
+
+
+/* ESCAPE */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.innerText =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* SAVE SESSION */
+
+localStorage.setItem(
+    "awt_live_chat_last_visit",
+    new Date().toISOString()
+);
+
+</script>
+
+</body>
+</html>

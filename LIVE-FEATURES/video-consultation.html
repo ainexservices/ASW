@@ -1,0 +1,2088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Video Consultation | Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --light:#f6f6f6;
+    --border:#e4e4e4;
+    --green:#25a34a;
+    --purple:#4d2764;
+    --gold:#b98417;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+    border-radius:8px;
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:26px 0 60px;
+}
+
+.breadcrumb{
+    margin-bottom:14px;
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:36px;
+    border-radius:20px;
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,.17),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #21102b,
+            #4b2460,
+            #75498d
+        );
+}
+
+.hero::after{
+    content:"VIDEO";
+    position:absolute;
+    right:20px;
+    bottom:-50px;
+    font-size:120px;
+    font-weight:700;
+    opacity:.05;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    padding:7px 11px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:40px;
+}
+
+.hero p{
+    max-width:720px;
+    margin-top:8px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.8;
+}
+
+
+/* LAYOUT */
+
+.consult-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 300px;
+    gap:18px;
+    margin-top:18px;
+}
+
+
+/* VIDEO CARD */
+
+.video-card{
+    overflow:hidden;
+    background:#10161e;
+    border-radius:18px;
+    color:#fff;
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+}
+
+.video-header{
+    padding:14px 17px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.doctor{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.doctor-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#b97b55,#e2b08b);
+    display:grid;
+    place-items:center;
+    font-size:18px;
+}
+
+.doctor-name{
+    font-size:9px;
+    font-weight:700;
+}
+
+.doctor-status{
+    margin-top:2px;
+    color:#67d982;
+    font-size:6px;
+}
+
+.video-status{
+    padding:7px 9px;
+    border-radius:7px;
+    background:rgba(36,161,72,.12);
+    color:#83df96;
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* VIDEO AREA */
+
+.video-area{
+    position:relative;
+    min-height:500px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at 50% 38%,
+            #5c3471,
+            #1b2530 60%,
+            #0d131a
+        );
+}
+
+.main-video{
+    width:210px;
+    height:210px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    border:6px solid rgba(255,255,255,.13);
+
+    display:grid;
+    place-items:center;
+
+    font-size:82px;
+
+    box-shadow:
+        0 0 0 18px rgba(255,255,255,.025),
+        0 25px 60px rgba(0,0,0,.35);
+}
+
+.live-tag{
+    position:absolute;
+    left:15px;
+    top:15px;
+
+    padding:7px 10px;
+
+    border-radius:6px;
+
+    background:var(--red);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.timer{
+    position:absolute;
+    top:15px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    padding:7px 11px;
+
+    border-radius:6px;
+
+    background:rgba(0,0,0,.45);
+
+    font-size:8px;
+    letter-spacing:1px;
+}
+
+.network{
+    position:absolute;
+    right:15px;
+    top:15px;
+
+    padding:7px 10px;
+
+    border-radius:6px;
+
+    background:rgba(0,0,0,.45);
+
+    color:#83df96;
+
+    font-size:7px;
+}
+
+.video-name{
+    position:absolute;
+    left:17px;
+    bottom:18px;
+
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.self-video{
+    position:absolute;
+
+    right:16px;
+    bottom:16px;
+
+    width:125px;
+    height:90px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #25313e,
+            #111820
+        );
+
+    border:2px solid rgba(255,255,255,.15);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:27px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+.self-label{
+    position:absolute;
+    left:7px;
+    bottom:6px;
+    color:#bbb;
+    font-size:6px;
+}
+
+
+/* CONTROLS */
+
+.controls{
+    padding:17px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    border-top:1px solid rgba(255,255,255,.1);
+}
+
+.control{
+    width:47px;
+    height:47px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.14);
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+    font-size:17px;
+}
+
+.control.active{
+    background:#fff;
+    color:#222;
+}
+
+.end-call{
+    width:56px;
+    height:56px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:21px;
+}
+
+.video-footer{
+    padding:0 17px 17px;
+
+    text-align:center;
+
+    color:#7e8994;
+
+    font-size:7px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    padding:17px;
+    border-radius:15px;
+    background:#fff;
+    border:1px solid var(--border);
+}
+
+.side-card h3{
+    margin-bottom:11px;
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+    font-size:8px;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-row span{
+    color:#999;
+}
+
+.info-row strong{
+    color:#333;
+}
+
+
+/* BALANCE */
+
+.balance-box{
+    padding:14px;
+    border-radius:10px;
+    background:#fff8e8;
+    border:1px solid #efdfb8;
+}
+
+.balance-label{
+    color:#999;
+    font-size:7px;
+}
+
+.balance{
+    margin-top:2px;
+    color:var(--red);
+    font-size:21px;
+    font-weight:700;
+}
+
+.low-balance{
+    display:none;
+    margin-top:4px;
+    color:var(--red);
+    font-size:6px;
+}
+
+.recharge{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* CONSULTATION DETAILS */
+
+.detail-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.detail{
+    display:flex;
+    gap:8px;
+}
+
+.detail-icon{
+    width:30px;
+    height:30px;
+    flex-shrink:0;
+    border-radius:8px;
+    background:#f7f2fb;
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.detail strong{
+    display:block;
+    font-size:8px;
+}
+
+.detail p{
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+    line-height:1.5;
+}
+
+
+/* CHAT */
+
+.chat-card{
+    padding:17px;
+    border-radius:15px;
+    background:#fff;
+    border:1px solid var(--border);
+}
+
+.chat-card h3{
+    margin-bottom:10px;
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+}
+
+.chat-messages{
+    height:160px;
+    overflow-y:auto;
+    padding:9px;
+
+    border-radius:9px;
+
+    background:#f7f7f8;
+}
+
+.message{
+    margin-bottom:9px;
+    font-size:7px;
+    line-height:1.5;
+}
+
+.message strong{
+    color:var(--purple);
+}
+
+.message-input{
+    display:flex;
+    gap:5px;
+    margin-top:8px;
+}
+
+.message-input input{
+    flex:1;
+    height:32px;
+    padding:0 8px;
+
+    border:1px solid #ddd;
+    border-radius:6px;
+
+    outline:none;
+    font-size:7px;
+}
+
+.send{
+    width:34px;
+    border:0;
+    border-radius:6px;
+    background:var(--red);
+    color:#fff;
+}
+
+
+/* MODAL */
+
+.modal{
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    z-index:100;
+
+    background:rgba(0,0,0,.65);
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(390px,100%);
+    padding:25px;
+    border-radius:17px;
+    background:#fff;
+    text-align:center;
+}
+
+.modal-icon{
+    width:55px;
+    height:55px;
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#fff0f0;
+
+    display:grid;
+    place-items:center;
+
+    font-size:24px;
+}
+
+.modal-box h2{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.modal-box p{
+    margin-top:6px;
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px;
+    margin-top:17px;
+}
+
+.modal-actions button{
+    flex:1;
+    height:38px;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.cancel{
+    background:#fff;
+    border:1px solid #ddd;
+}
+
+.confirm{
+    background:var(--red);
+    color:#fff;
+    border:0;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:40px 0 18px;
+    background:#171717;
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+    color:#aaa;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+    margin:6px 0;
+    color:#aaa;
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+    padding-top:13px;
+    border-top:1px solid #333;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .consult-layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .video-area{
+        min-height:430px;
+    }
+
+    .main-video{
+        width:155px;
+        height:155px;
+        font-size:60px;
+    }
+
+    .self-video{
+        width:95px;
+        height:70px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../FREE-SERVICES/free-services.html">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Live Features /
+        <span>Video Consultation</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🎥 PRIVATE VIDEO CONSULTATION
+            </div>
+
+            <h1>
+                Personal Video Consultation
+            </h1>
+
+            <p>
+                Connect face-to-face with your selected astrologer
+                through a private video consultation and receive
+                personalized astrology guidance.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <div class="consult-layout">
+
+
+        <!-- VIDEO -->
+
+        <section class="video-card">
+
+
+            <div class="video-header">
+
+                <div class="doctor">
+
+                    <div class="doctor-avatar">
+                        🔮
+                    </div>
+
+                    <div>
+
+                        <div class="doctor-name">
+                            Astro Guide ✓
+                        </div>
+
+                        <div class="doctor-status">
+                            ● Online • Ready for consultation
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="video-status">
+                    🔒 PRIVATE
+                </div>
+
+            </div>
+
+
+            <div class="video-area">
+
+
+                <div class="live-tag">
+                    VIDEO CALL
+                </div>
+
+
+                <div
+                    id="timer"
+                    class="timer">
+
+                    00:00
+
+                </div>
+
+
+                <div class="network">
+                    ● Good Connection
+                </div>
+
+
+                <div class="main-video">
+                    🔮
+                </div>
+
+
+                <div class="video-name">
+                    Astro Guide
+                </div>
+
+
+                <div class="self-video">
+
+                    👤
+
+                    <div class="self-label">
+                        You
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTROLS -->
+
+            <div class="controls">
+
+
+                <button
+                    id="micBtn"
+                    class="control"
+                    onclick="toggleMic()">
+
+                    🎙️
+
+                </button>
+
+
+                <button
+                    id="cameraBtn"
+                    class="control"
+                    onclick="toggleCamera()">
+
+                    📹
+
+                </button>
+
+
+                <button
+                    id="speakerBtn"
+                    class="control"
+                    onclick="toggleSpeaker()">
+
+                    🔊
+
+                </button>
+
+
+                <button
+                    class="end-call"
+                    onclick="openModal()">
+
+                    ☎
+
+                </button>
+
+            </div>
+
+
+            <div class="video-footer">
+
+                Your consultation is charged according to the
+                astrologer's per-minute rate.
+
+            </div>
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <!-- ASTROLOGER -->
+
+            <div class="side-card">
+
+                <h3>
+                    Astrologer
+                </h3>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Name
+                    </span>
+
+                    <strong>
+                        Astro Guide ✓
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Experience
+                    </span>
+
+                    <strong>
+                        8+ Years
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Rating
+                    </span>
+
+                    <strong>
+                        ⭐ 4.9
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Video Rate
+                    </span>
+
+                    <strong>
+                        ₹40/min
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Languages
+                    </span>
+
+                    <strong>
+                        Hindi, English
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- WALLET -->
+
+            <div class="side-card">
+
+                <h3>
+                    Wallet
+                </h3>
+
+
+                <div class="balance-box">
+
+                    <div class="balance-label">
+                        AVAILABLE BALANCE
+                    </div>
+
+
+                    <div
+                        id="sideBalance"
+                        class="balance">
+
+                        ₹500
+
+                    </div>
+
+
+                    <div
+                        id="lowBalance"
+                        class="low-balance">
+
+                        ⚠ Low balance
+
+                    </div>
+
+
+                    <button
+                        class="recharge"
+                        onclick="location.href='../wallet/recharge.html'">
+
+                        + Recharge Wallet
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="side-card">
+
+                <h3>
+                    Consultation
+                </h3>
+
+
+                <div class="detail-list">
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🔒
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Private Session
+                            </strong>
+
+                            <p>
+                                Your video consultation is intended
+                                for a private one-to-one session.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            💰
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Per-Minute Billing
+                            </strong>
+
+                            <p>
+                                Eligible consultation charges are
+                                calculated according to duration.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🎥
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Camera & Microphone
+                            </strong>
+
+                            <p>
+                                Use the controls below the video to
+                                manage your call.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            ⭐
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Review Session
+                            </strong>
+
+                            <p>
+                                After ending the consultation you can
+                                view the session in your history.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAT -->
+
+            <div class="chat-card">
+
+                <h3>
+                    Quick Chat
+                </h3>
+
+
+                <div
+                    id="messages"
+                    class="chat-messages">
+
+
+                    <div class="message">
+                        <strong>Astro Guide:</strong>
+                        Namaste 🙏 Can you hear me clearly?
+                    </div>
+
+
+                    <div class="message">
+                        <strong>You:</strong>
+                        Yes, I can hear you.
+                    </div>
+
+
+                    <div class="message">
+                        <strong>Astro Guide:</strong>
+                        Great. Please tell me your main question.
+                    </div>
+
+
+                </div>
+
+
+                <div class="message-input">
+
+                    <input
+                        id="messageInput"
+                        type="text"
+                        placeholder="Send a message...">
+
+                    <button
+                        class="send"
+                        onclick="sendMessage()">
+
+                        ➤
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Live Features
+        </h4>
+
+        <a href="audio-call.html">
+            Audio Call
+        </a>
+
+        <a href="live-astrology.html">
+            Live Astrology
+        </a>
+
+        <a href="live-chat.html">
+            Live Chat
+        </a>
+
+        <a href="video-consultation.html">
+            Video Consultation
+        </a>
+
+        <a href="waiting-room.html">
+            Waiting Room
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="../wallet/transactions.html">
+            Transactions
+        </a>
+
+        <a href="../history.html">
+            Consultation History
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- END MODAL -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-icon">
+            📹
+        </div>
+
+        <h2>
+            End Video Consultation?
+        </h2>
+
+        <p>
+            Are you sure you want to end this consultation?
+            Your session information will be saved to consultation history.
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel"
+                onclick="closeModal()">
+
+                Continue Call
+
+            </button>
+
+
+            <button
+                class="confirm"
+                onclick="endConsultation()">
+
+                End Consultation
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+    Front-end prototype only.
+
+    Production video calls should use a secure
+    real-time communication service and server-side
+    authorization/billing.
+*/
+
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+function updateWallet(){
+
+    document
+        .getElementById("wallet")
+        .innerText =
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById("sideBalance")
+        .innerText =
+            "₹" +
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById("lowBalance")
+        .style.display =
+            wallet <= 100
+            ?
+            "block"
+            :
+            "none";
+
+}
+
+
+updateWallet();
+
+
+/* CALL */
+
+let callActive = true;
+
+let seconds = 0;
+
+let billingTimer;
+
+
+/* START */
+
+billingTimer =
+    setInterval(
+        ()=>{
+
+            if(!callActive){
+                return;
+            }
+
+
+            seconds++;
+
+
+            updateTimer();
+
+
+            /*
+                Demo rate:
+                ₹40 per completed minute.
+            */
+
+            if(
+                seconds % 60 === 0
+            ){
+
+                wallet =
+                    Math.max(
+                        0,
+                        wallet - 40
+                    );
+
+
+                localStorage.setItem(
+                    "awt_wallet_balance",
+                    wallet
+                );
+
+
+                updateWallet();
+
+
+                if(
+                    wallet <= 0
+                ){
+
+                    autoEnd();
+
+                }
+
+            }
+
+        },
+        1000
+    );
+
+
+/* TIMER */
+
+function updateTimer(){
+
+    const mins =
+        Math.floor(
+            seconds / 60
+        );
+
+    const secs =
+        seconds % 60;
+
+
+    document
+        .getElementById("timer")
+        .innerText =
+            String(mins)
+            .padStart(2,"0")
+            +
+            ":"
+            +
+            String(secs)
+            .padStart(2,"0");
+
+}
+
+
+/* MICROPHONE */
+
+let micOn = true;
+
+function toggleMic(){
+
+    micOn =
+        !micOn;
+
+
+    const button =
+        document.getElementById(
+            "micBtn"
+        );
+
+
+    button.classList.toggle(
+        "active",
+        !micOn
+    );
+
+
+    button.innerText =
+        micOn
+        ?
+        "🎙️"
+        :
+        "🔇";
+
+}
+
+
+/* CAMERA */
+
+let cameraOn = true;
+
+function toggleCamera(){
+
+    cameraOn =
+        !cameraOn;
+
+
+    const button =
+        document.getElementById(
+            "cameraBtn"
+        );
+
+
+    button.classList.toggle(
+        "active",
+        !cameraOn
+    );
+
+
+    button.innerText =
+        cameraOn
+        ?
+        "📹"
+        :
+        "🚫";
+
+
+    document
+        .querySelector(
+            ".self-video"
+        )
+        .innerText =
+            cameraOn
+            ?
+            "👤"
+            :
+            "📵";
+
+}
+
+
+/* SPEAKER */
+
+let speakerOn = true;
+
+function toggleSpeaker(){
+
+    speakerOn =
+        !speakerOn;
+
+
+    document
+        .getElementById(
+            "speakerBtn"
+        )
+        .classList.toggle(
+            "active",
+            !speakerOn
+        );
+
+}
+
+
+/* CHAT */
+
+function sendMessage(){
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+        return;
+    }
+
+
+    addMessage(
+        "You",
+        text
+    );
+
+
+    input.value = "";
+
+
+    setTimeout(
+        ()=>{
+
+            addMessage(
+                "Astro Guide",
+                "Yes, please continue. I am listening."
+            );
+
+        },
+        1000
+    );
+
+}
+
+
+function addMessage(
+    name,
+    text
+){
+
+    const box =
+        document.getElementById(
+            "messages"
+        );
+
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+
+    item.className =
+        "message";
+
+
+    item.innerHTML =
+        `
+        <strong>${escapeHtml(name)}:</strong>
+        ${escapeHtml(text)}
+        `;
+
+
+    box.appendChild(
+        item
+    );
+
+
+    box.scrollTop =
+        box.scrollHeight;
+
+}
+
+
+document
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter"
+            ){
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+/* MODAL */
+
+function openModal(){
+
+    if(!callActive){
+        return;
+    }
+
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* END */
+
+function endConsultation(){
+
+    if(!callActive){
+        return;
+    }
+
+
+    callActive = false;
+
+
+    clearInterval(
+        billingTimer
+    );
+
+
+    localStorage.setItem(
+        "awt_last_video_consultation",
+        JSON.stringify({
+
+            type:"video",
+
+            astrologer:
+                "Astro Guide",
+
+            duration:
+                seconds,
+
+            rate:
+                40,
+
+            date:
+                new Date()
+                .toISOString()
+
+        })
+    );
+
+
+    closeModal();
+
+
+    setTimeout(
+        ()=>{
+
+            location.href =
+                "../history.html";
+
+        },
+        500
+    );
+
+}
+
+
+/* AUTO END */
+
+function autoEnd(){
+
+    callActive = false;
+
+    clearInterval(
+        billingTimer
+    );
+
+
+    alert(
+        "Your wallet balance has reached ₹0. Please recharge your wallet to continue."
+    );
+
+
+    location.href =
+        "../wallet/recharge.html";
+
+}
+
+
+/* ESCAPE */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.innerText =
+        value;
+
+    return div.innerHTML;
+
+}
+
+
+/* SAVE VISIT */
+
+localStorage.setItem(
+    "awt_video_consultation_last_visit",
+    new Date().toISOString()
+);
+
+</script>
+
+</body>
+</html>

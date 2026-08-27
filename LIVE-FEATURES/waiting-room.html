@@ -1,0 +1,2889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Waiting Room | Astro With Talk</title>
+
+<meta name="description"
+      content="Join your Astro With Talk consultation waiting room and get ready for your astrology session.">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --red:#d71920;
+
+    --dark:#171717;
+
+    --light:#f6f6f6;
+
+    --border:#e4e4e4;
+
+    --green:#25a34a;
+
+    --green-light:#edf8f0;
+
+    --purple:#4d2764;
+
+    --purple-light:#f7f2fb;
+
+    --gold:#b98417;
+
+    --gold-light:#fff8e8;
+
+}
+
+body{
+
+    font-family:"DM Sans",sans-serif;
+
+    background:var(--light);
+
+    color:var(--dark);
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+button{
+
+    font-family:inherit;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+
+    width:min(
+        1150px,
+        calc(100% - 30px)
+    );
+
+    margin:auto;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+
+    height:70px;
+
+    background:#fff;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.nav{
+
+    height:70px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+}
+
+.logo-icon{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    color:#fff;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:20px;
+
+}
+
+.logo-text{
+
+    font-size:19px;
+
+    font-weight:700;
+
+}
+
+.logo-text span{
+
+    color:var(--red);
+
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:21px;
+
+}
+
+.nav-links a{
+
+    color:#555;
+
+    font-size:9px;
+
+    font-weight:600;
+
+}
+
+.nav-links a:hover{
+
+    color:var(--red);
+
+}
+
+.nav-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+}
+
+.wallet{
+
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:#fff7e5;
+
+    border:1px solid #ead9b3;
+
+    font-size:9px;
+
+    font-weight:700;
+
+}
+
+.wallet span{
+
+    color:var(--red);
+
+}
+
+.profile{
+
+    width:35px;
+
+    height:35px;
+
+    border-radius:50%;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+
+    padding:27px 0 65px;
+
+}
+
+.breadcrumb{
+
+    margin-bottom:14px;
+
+    color:#999;
+
+    font-size:8px;
+
+}
+
+.breadcrumb span{
+
+    color:var(--red);
+
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:38px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    background:
+
+        radial-gradient(
+            circle at 84% 18%,
+            rgba(255,255,255,.18),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            125deg,
+            #24112e,
+            #4b2460,
+            #76508d
+        );
+
+}
+
+.hero::after{
+
+    content:"WAIT";
+
+    position:absolute;
+
+    right:20px;
+
+    bottom:-55px;
+
+    font-size:135px;
+
+    font-weight:700;
+
+    opacity:.05;
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.badge{
+
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+
+    font-weight:700;
+
+}
+
+.hero h1{
+
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:41px;
+
+}
+
+.hero p{
+
+    max-width:720px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+
+    line-height:1.8;
+
+}
+
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.waiting-layout{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        300px;
+
+    gap:18px;
+
+    margin-top:18px;
+
+}
+
+
+/* =========================
+   WAITING CARD
+========================= */
+
+.waiting-card{
+
+    overflow:hidden;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.06);
+
+}
+
+
+/* =========================
+   TOP STATUS
+========================= */
+
+.status-top{
+
+    padding:15px 18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.status-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+}
+
+.status-icon{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    background:var(--green-light);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:16px;
+
+}
+
+.status-title{
+
+    font-size:10px;
+
+    font-weight:700;
+
+}
+
+.status-sub{
+
+    margin-top:2px;
+
+    color:#888;
+
+    font-size:6px;
+
+}
+
+.live-status{
+
+    padding:7px 9px;
+
+    border-radius:7px;
+
+    background:var(--green-light);
+
+    color:var(--green);
+
+    font-size:7px;
+
+    font-weight:700;
+
+}
+
+
+/* =========================
+   ASTROLOGER
+========================= */
+
+.astrologer-section{
+
+    padding:28px 20px 20px;
+
+    text-align:center;
+
+}
+
+.astro-avatar-wrap{
+
+    position:relative;
+
+    display:inline-block;
+
+}
+
+.astro-avatar{
+
+    width:105px;
+
+    height:105px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    border:5px solid #fff;
+
+    box-shadow:
+        0 0 0 5px #f0eaf3,
+        0 12px 30px rgba(0,0,0,.12);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:43px;
+
+}
+
+.online-dot{
+
+    position:absolute;
+
+    right:4px;
+
+    bottom:7px;
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:#32c85b;
+
+    border:4px solid #fff;
+
+}
+
+.astro-name{
+
+    margin-top:17px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:24px;
+
+}
+
+.verified{
+
+    color:#4285f4;
+
+    font-family:Arial;
+
+    font-size:13px;
+
+}
+
+.astro-speciality{
+
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:7px;
+
+}
+
+.rating{
+
+    margin-top:7px;
+
+    color:#a97913;
+
+    font-size:7px;
+
+    font-weight:700;
+
+}
+
+
+/* =========================
+   QUEUE
+========================= */
+
+.queue-box{
+
+    width:min(
+        500px,
+        100%
+    );
+
+    margin:20px auto 0;
+
+    padding:20px;
+
+    border-radius:13px;
+
+    background:#faf9fb;
+
+    border:1px solid #ebe5ee;
+
+}
+
+.queue-label{
+
+    color:#999;
+
+    font-size:7px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.queue-number{
+
+    margin-top:3px;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:var(--purple);
+
+}
+
+.queue-text{
+
+    margin-top:2px;
+
+    color:#777;
+
+    font-size:7px;
+
+}
+
+.progress{
+
+    height:7px;
+
+    margin-top:15px;
+
+    overflow:hidden;
+
+    border-radius:10px;
+
+    background:#e9e5eb;
+
+}
+
+.progress-bar{
+
+    width:68%;
+
+    height:100%;
+
+    border-radius:10px;
+
+    background:var(--purple);
+
+    transition:width .5s;
+
+}
+
+.wait-time{
+
+    margin-top:10px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#777;
+
+    font-size:7px;
+
+}
+
+.wait-time strong{
+
+    color:#333;
+
+}
+
+
+/* =========================
+   APPOINTMENT
+========================= */
+
+.appointment{
+
+    margin:0 20px 20px;
+
+    padding:17px;
+
+    border-radius:12px;
+
+    border:1px solid #eee;
+
+}
+
+.appointment h3{
+
+    font-family:"Playfair Display",serif;
+
+    font-size:18px;
+
+}
+
+.appointment-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:9px;
+
+    margin-top:12px;
+
+}
+
+.appointment-item{
+
+    padding:11px;
+
+    border-radius:8px;
+
+    background:#fafafa;
+
+}
+
+.appointment-item span{
+
+    display:block;
+
+    color:#999;
+
+    font-size:6px;
+
+}
+
+.appointment-item strong{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#333;
+
+    font-size:8px;
+
+}
+
+
+/* =========================
+   READY MESSAGE
+========================= */
+
+.ready-message{
+
+    margin:0 20px 20px;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--green-light);
+
+    border:1px solid #d5ebda;
+
+    color:#28783c;
+
+    text-align:center;
+
+    font-size:7px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+
+    padding:0 20px 20px;
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.action{
+
+    flex:1;
+
+    height:38px;
+
+    border-radius:7px;
+
+    font-size:8px;
+
+    font-weight:700;
+
+}
+
+.primary{
+
+    border:0;
+
+    background:var(--red);
+
+    color:#fff;
+
+}
+
+.secondary{
+
+    border:1px solid #ddd;
+
+    background:#fff;
+
+    color:#555;
+
+}
+
+.disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:13px;
+
+}
+
+.side-card{
+
+    padding:17px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+}
+
+.side-card h3{
+
+    margin-bottom:11px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:18px;
+
+}
+
+
+/* =========================
+   SESSION TYPE
+========================= */
+
+.session-box{
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--purple-light);
+
+    border:1px solid #e7dced;
+
+}
+
+.session-icon{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:9px;
+
+    background:#fff;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:17px;
+
+}
+
+.session-box strong{
+
+    display:block;
+
+    margin-top:8px;
+
+    font-size:10px;
+
+}
+
+.session-box p{
+
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:7px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================
+   WALLET
+========================= */
+
+.balance-box{
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-light);
+
+    border:1px solid #efdfb8;
+
+}
+
+.balance-label{
+
+    color:#999;
+
+    font-size:7px;
+
+}
+
+.balance{
+
+    margin-top:2px;
+
+    color:var(--red);
+
+    font-size:21px;
+
+    font-weight:700;
+
+}
+
+.recharge{
+
+    width:100%;
+
+    height:35px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+
+}
+
+
+/* =========================
+   CHECKLIST
+========================= */
+
+.checklist{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.check{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+}
+
+.check-icon{
+
+    width:28px;
+
+    height:28px;
+
+    flex-shrink:0;
+
+    border-radius:7px;
+
+    background:var(--green-light);
+
+    color:var(--green);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:11px;
+
+}
+
+.check strong{
+
+    display:block;
+
+    font-size:8px;
+
+}
+
+.check p{
+
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:6px;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================
+   CANCEL MODAL
+========================= */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    background:rgba(0,0,0,.65);
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+}
+
+.modal.show{
+
+    display:flex;
+
+}
+
+.modal-box{
+
+    width:min(
+        400px,
+        100%
+    );
+
+    padding:25px;
+
+    border-radius:17px;
+
+    background:#fff;
+
+    text-align:center;
+
+}
+
+.modal-icon{
+
+    width:55px;
+
+    height:55px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#fff0f0;
+
+    display:grid;
+
+    place-items:center;
+
+    color:var(--red);
+
+    font-size:23px;
+
+}
+
+.modal-box h2{
+
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:22px;
+
+}
+
+.modal-box p{
+
+    margin-top:6px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.7;
+
+}
+
+.modal-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:17px;
+
+}
+
+.modal-actions button{
+
+    flex:1;
+
+    height:38px;
+
+    border-radius:7px;
+
+    font-size:8px;
+
+    font-weight:700;
+
+}
+
+.cancel-btn{
+
+    border:1px solid #ddd;
+
+    background:#fff;
+
+}
+
+.confirm-btn{
+
+    border:0;
+
+    background:var(--red);
+
+    color:#fff;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    padding:40px 0 18px;
+
+    background:#171717;
+
+    color:#fff;
+
+}
+
+.footer-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+.footer-brand p{
+
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+
+}
+
+.footer-col h4{
+
+    margin-bottom:9px;
+
+    font-size:10px;
+
+}
+
+.footer-col a{
+
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+
+}
+
+.copyright{
+
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+    .nav-links{
+
+        display:none;
+
+    }
+
+    .waiting-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .sidebar{
+
+        display:grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .container{
+
+        width:calc(100% - 24px);
+
+    }
+
+    .wallet{
+
+        display:none;
+
+    }
+
+    .hero{
+
+        padding:28px 21px;
+
+    }
+
+    .hero h1{
+
+        font-size:29px;
+
+    }
+
+    .appointment-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .actions{
+
+        flex-direction:column;
+
+    }
+
+    .sidebar{
+
+        display:block;
+
+    }
+
+    .footer-grid{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+    .footer-brand{
+
+        grid-column:1/-1;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../FREE-SERVICES/free-services.html">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+
+            💰 ₹<span id="wallet">
+                500
+            </span>
+
+        </div>
+
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     PAGE
+========================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+
+        Home / Live Features /
+        <span>
+            Waiting Room
+        </span>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+
+                🕐 CONSULTATION WAITING ROOM
+
+            </div>
+
+
+            <h1>
+
+                Your Consultation is Almost Ready
+
+            </h1>
+
+
+            <p>
+
+                Stay in the waiting room while your astrologer
+                prepares for the consultation. You will be able
+                to enter the session when it is your turn.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN -->
+
+    <div class="waiting-layout">
+
+
+        <!-- WAITING CARD -->
+
+        <section class="waiting-card">
+
+
+            <!-- STATUS -->
+
+            <div class="status-top">
+
+
+                <div class="status-left">
+
+                    <div class="status-icon">
+
+                        ✓
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="status-title">
+
+                            Appointment Confirmed
+
+                        </div>
+
+
+                        <div class="status-sub">
+
+                            Your place in the consultation queue is reserved.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="live-status">
+
+                    ● ASTROLOGER ONLINE
+
+                </div>
+
+            </div>
+
+
+            <!-- ASTROLOGER -->
+
+            <div class="astrologer-section">
+
+
+                <div class="astro-avatar-wrap">
+
+                    <div class="astro-avatar">
+
+                        🔮
+
+                    </div>
+
+
+                    <div class="online-dot"></div>
+
+                </div>
+
+
+                <div class="astro-name">
+
+                    Astro Guide
+
+                    <span class="verified">
+                        ✓
+                    </span>
+
+                </div>
+
+
+                <div class="astro-speciality">
+
+                    Vedic Astrology • Kundli • Career • Relationships
+
+                </div>
+
+
+                <div class="rating">
+
+                    ⭐ 4.9 • 8+ Years Experience
+
+                </div>
+
+
+                <!-- QUEUE -->
+
+                <div class="queue-box">
+
+
+                    <div class="queue-label">
+
+                        YOUR QUEUE POSITION
+
+                    </div>
+
+
+                    <div
+                        id="queueNumber"
+                        class="queue-number">
+
+                        #3
+
+                    </div>
+
+
+                    <div class="queue-text">
+
+                        Please wait while the astrologer finishes
+                        the current consultation.
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            id="progressBar"
+                            class="progress-bar">
+                        </div>
+
+                    </div>
+
+
+                    <div class="wait-time">
+
+                        <span>
+
+                            Estimated waiting time
+
+                        </span>
+
+
+                        <strong
+                            id="waitTime">
+
+                            04:30
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPOINTMENT -->
+
+            <div class="appointment">
+
+
+                <h3>
+
+                    Appointment Details
+
+                </h3>
+
+
+                <div class="appointment-grid">
+
+
+                    <div class="appointment-item">
+
+                        <span>
+                            CONSULTATION ID
+                        </span>
+
+                        <strong>
+                            AWT-2026-0842
+                        </strong>
+
+                    </div>
+
+
+                    <div class="appointment-item">
+
+                        <span>
+                            DATE
+                        </span>
+
+                        <strong>
+                            27 August 2026
+                        </strong>
+
+                    </div>
+
+
+                    <div class="appointment-item">
+
+                        <span>
+                            TIME
+                        </span>
+
+                        <strong>
+                            11:30 AM
+                        </strong>
+
+                    </div>
+
+
+                    <div class="appointment-item">
+
+                        <span>
+                            CONSULTATION
+                        </span>
+
+                        <strong
+                            id="consultationType">
+
+                            Video Consultation
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="appointment-item">
+
+                        <span>
+                            RATE
+                        </span>
+
+                        <strong>
+                            ₹40 / minute
+                        </strong>
+
+                    </div>
+
+
+                    <div class="appointment-item">
+
+                        <span>
+                            STATUS
+                        </span>
+
+                        <strong
+                            id="appointmentStatus">
+
+                            Waiting
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- READY -->
+
+            <div
+                id="readyMessage"
+                class="ready-message">
+
+                🔔 Keep this page open.
+                When your astrologer is ready, the consultation
+                will become available here.
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+
+                <button
+                    id="enterBtn"
+                    class="action primary disabled"
+                    disabled
+                    onclick="enterConsultation()">
+
+                    🔒 Waiting for Astrologer
+
+                </button>
+
+
+                <button
+                    class="action secondary"
+                    onclick="openCancelModal()">
+
+                    Cancel Appointment
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <!-- SESSION -->
+
+            <div class="side-card">
+
+                <h3>
+                    Session Type
+                </h3>
+
+
+                <div class="session-box">
+
+                    <div class="session-icon">
+                        🎥
+                    </div>
+
+
+                    <strong
+                        id="sideConsultationType">
+
+                        Video Consultation
+
+                    </strong>
+
+
+                    <p>
+
+                        Private one-to-one astrology consultation
+                        with your selected astrologer.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- WALLET -->
+
+            <div class="side-card">
+
+                <h3>
+                    Wallet
+                </h3>
+
+
+                <div class="balance-box">
+
+
+                    <div class="balance-label">
+
+                        AVAILABLE BALANCE
+
+                    </div>
+
+
+                    <div
+                        id="sideBalance"
+                        class="balance">
+
+                        ₹500
+
+                    </div>
+
+
+                    <button
+                        class="recharge"
+                        onclick="location.href='../wallet/recharge.html'">
+
+                        + Recharge Wallet
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PREPARATION -->
+
+            <div class="side-card">
+
+                <h3>
+                    Before You Join
+                </h3>
+
+
+                <div class="checklist">
+
+
+                    <div class="check">
+
+                        <div class="check-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Check Internet
+                            </strong>
+
+                            <p>
+                                Make sure your internet connection
+                                is stable.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="check">
+
+                        <div class="check-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Prepare Your Question
+                            </strong>
+
+                            <p>
+                                Keep your main questions ready for
+                                the consultation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="check">
+
+                        <div class="check-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Keep Device Ready
+                            </strong>
+
+                            <p>
+                                For video consultation, check your
+                                camera and microphone.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="check">
+
+                        <div class="check-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Keep Wallet Funded
+                            </strong>
+
+                            <p>
+                                Maintain enough wallet balance for
+                                the expected consultation duration.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- HELP -->
+
+            <div class="side-card">
+
+                <h3>
+                    Need Help?
+                </h3>
+
+
+                <p style="
+                    color:#888;
+                    font-size:7px;
+                    line-height:1.7;
+                ">
+
+                    If your astrologer does not join within the
+                    expected time, please contact Astro With Talk
+                    support.
+
+                </p>
+
+
+                <button
+                    style="
+                        width:100%;
+                        height:34px;
+                        margin-top:10px;
+                        border:1px solid #ddd;
+                        border-radius:7px;
+                        background:#fff;
+                        color:#555;
+                        font-size:7px;
+                        font-weight:700;
+                    "
+                    onclick="location.href='../SUPPORT/contact.html'">
+
+                    Contact Support
+
+                </button>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+
+        <p>
+
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Live Features
+        </h4>
+
+        <a href="audio-call.html">
+            Audio Call
+        </a>
+
+        <a href="live-astrology.html">
+            Live Astrology
+        </a>
+
+        <a href="live-chat.html">
+            Live Chat
+        </a>
+
+        <a href="video-consultation.html">
+            Video Consultation
+        </a>
+
+        <a href="waiting-room.html">
+            Waiting Room
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="../wallet/transactions.html">
+            Transactions
+        </a>
+
+        <a href="../history.html">
+            Consultation History
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- =========================
+     CANCEL MODAL
+========================= -->
+
+<div
+    id="cancelModal"
+    class="modal">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-icon">
+            ×
+        </div>
+
+
+        <h2>
+            Cancel Appointment?
+        </h2>
+
+
+        <p>
+
+            Are you sure you want to cancel this consultation?
+            Cancellation and refund rules will be applied according
+            to the platform's booking policy.
+
+        </p>
+
+
+        <div class="modal-actions">
+
+
+            <button
+                class="cancel-btn"
+                onclick="closeCancelModal()">
+
+                Keep Appointment
+
+            </button>
+
+
+            <button
+                class="confirm-btn"
+                onclick="cancelAppointment()">
+
+                Cancel
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   WALLET
+===================================== */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+function updateWallet(){
+
+    document
+        .getElementById(
+            "wallet"
+        )
+        .innerText =
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById(
+            "sideBalance"
+        )
+        .innerText =
+            "₹" +
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+}
+
+
+updateWallet();
+
+
+/* =====================================
+   SESSION DATA
+===================================== */
+
+let sessionData = {
+
+    astrologer:
+        "Astro Guide",
+
+    type:
+        "video",
+
+    consultationType:
+        "Video Consultation",
+
+    rate:
+        40,
+
+    queue:
+        3,
+
+    waitSeconds:
+        270
+
+};
+
+
+/*
+   If another page has selected
+   a consultation type, use it.
+*/
+
+const savedType =
+    localStorage.getItem(
+        "awt_consultation_type"
+    );
+
+
+if(
+    savedType === "audio"
+){
+
+    sessionData.type =
+        "audio";
+
+    sessionData.consultationType =
+        "Audio Call";
+
+    sessionData.rate =
+        30;
+
+}
+
+
+if(
+    savedType === "chat"
+){
+
+    sessionData.type =
+        "chat";
+
+    sessionData.consultationType =
+        "Live Chat";
+
+    sessionData.rate =
+        25;
+
+}
+
+
+if(
+    savedType === "video"
+){
+
+    sessionData.type =
+        "video";
+
+    sessionData.consultationType =
+        "Video Consultation";
+
+    sessionData.rate =
+        40;
+
+}
+
+
+/* Update type */
+
+document
+    .getElementById(
+        "consultationType"
+    )
+    .innerText =
+        sessionData.consultationType;
+
+
+document
+    .getElementById(
+        "sideConsultationType"
+    )
+    .innerText =
+        sessionData.consultationType;
+
+
+/* Rate */
+
+document
+    .querySelector(
+        ".appointment-item:nth-child(5) strong"
+    )
+    .innerText =
+        "₹" +
+        sessionData.rate +
+        " / minute";
+
+
+/* =====================================
+   QUEUE
+===================================== */
+
+let queue =
+    sessionData.queue;
+
+
+let waitSeconds =
+    sessionData.waitSeconds;
+
+
+let ready =
+    false;
+
+
+function formatTime(
+    totalSeconds
+){
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return (
+        String(minutes)
+        .padStart(2,"0")
+        +
+        ":"
+        +
+        String(seconds)
+        .padStart(2,"0")
+    );
+
+}
+
+
+function updateQueue(){
+
+    document
+        .getElementById(
+            "queueNumber"
+        )
+        .innerText =
+            "#" +
+            queue;
+
+
+    document
+        .getElementById(
+            "waitTime"
+        )
+        .innerText =
+            formatTime(
+                waitSeconds
+            );
+
+
+    /*
+       Simulated progress.
+
+       Production system should receive
+       real queue state from backend.
+    */
+
+    const progress =
+        Math.max(
+            15,
+            Math.min(
+                100,
+                100 -
+                (
+                    waitSeconds /
+                    600
+                ) * 100
+            )
+        );
+
+
+    document
+        .getElementById(
+            "progressBar"
+        )
+        .style.width =
+            progress +
+            "%";
+
+}
+
+
+updateQueue();
+
+
+/* =====================================
+   WAITING LOOP
+===================================== */
+
+const queueTimer =
+    setInterval(
+        ()=>{
+
+            if(ready){
+                return;
+            }
+
+
+            if(
+                waitSeconds > 0
+            ){
+
+                waitSeconds--;
+
+            }
+
+
+            /*
+               Simulate queue movement.
+            */
+
+            if(
+                waitSeconds === 180
+            ){
+
+                queue = 2;
+
+            }
+
+
+            if(
+                waitSeconds === 90
+            ){
+
+                queue = 1;
+
+            }
+
+
+            if(
+                waitSeconds <= 0
+            ){
+
+                queue = 0;
+
+                makeReady();
+
+            }
+
+
+            updateQueue();
+
+        },
+        1000
+    );
+
+
+/* =====================================
+   READY
+===================================== */
+
+function makeReady(){
+
+    ready = true;
+
+
+    clearInterval(
+        queueTimer
+    );
+
+
+    document
+        .getElementById(
+            "queueNumber"
+        )
+        .innerText =
+            "READY";
+
+
+    document
+        .getElementById(
+            "waitTime"
+        )
+        .innerText =
+            "00:00";
+
+
+    document
+        .getElementById(
+            "progressBar"
+        )
+        .style.width =
+            "100%";
+
+
+    document
+        .getElementById(
+            "appointmentStatus"
+        )
+        .innerText =
+            "Ready to Join";
+
+
+    const button =
+        document.getElementById(
+            "enterBtn"
+        );
+
+
+    button.disabled =
+        false;
+
+
+    button.classList.remove(
+        "disabled"
+    );
+
+
+    button.innerText =
+        getJoinText();
+
+
+    document
+        .getElementById(
+            "readyMessage"
+        )
+        .innerHTML =
+            "🎉 Your astrologer is ready! You can enter the consultation now.";
+
+}
+
+
+/* =====================================
+   JOIN TEXT
+===================================== */
+
+function getJoinText(){
+
+    if(
+        sessionData.type === "audio"
+    ){
+
+        return "🎙️ Join Audio Call";
+
+    }
+
+
+    if(
+        sessionData.type === "chat"
+    ){
+
+        return "💬 Join Live Chat";
+
+    }
+
+
+    return "🎥 Join Video Consultation";
+
+}
+
+
+/* =====================================
+   ENTER CONSULTATION
+===================================== */
+
+function enterConsultation(){
+
+    if(!ready){
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "awt_consultation_started",
+        "true"
+    );
+
+
+    localStorage.setItem(
+        "awt_consultation_astrologer",
+        sessionData.astrologer
+    );
+
+
+    localStorage.setItem(
+        "awt_consultation_type",
+        sessionData.type
+    );
+
+
+    localStorage.setItem(
+        "awt_consultation_start_time",
+        new Date().toISOString()
+    );
+
+
+    if(
+        sessionData.type === "audio"
+    ){
+
+        location.href =
+            "audio-call.html";
+
+        return;
+
+    }
+
+
+    if(
+        sessionData.type === "chat"
+    ){
+
+        location.href =
+            "live-chat.html";
+
+        return;
+
+    }
+
+
+    location.href =
+        "video-consultation.html";
+
+}
+
+
+/* =====================================
+   CANCEL MODAL
+===================================== */
+
+function openCancelModal(){
+
+    document
+        .getElementById(
+            "cancelModal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+function closeCancelModal(){
+
+    document
+        .getElementById(
+            "cancelModal"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* =====================================
+   CANCEL APPOINTMENT
+===================================== */
+
+function cancelAppointment(){
+
+    clearInterval(
+        queueTimer
+    );
+
+
+    localStorage.setItem(
+        "awt_last_cancelled_appointment",
+        JSON.stringify({
+
+            astrologer:
+                sessionData.astrologer,
+
+            type:
+                sessionData.type,
+
+            date:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    closeCancelModal();
+
+
+    alert(
+        "Your appointment cancellation request has been recorded."
+    );
+
+
+    location.href =
+        "../history.html";
+
+}
+
+
+/* =====================================
+   PAGE VISIT
+===================================== */
+
+localStorage.setItem(
+    "awt_waiting_room_last_visit",
+    new Date().toISOString()
+);
+
+
+/* =====================================
+   DEMO RESTORE
+===================================== */
+
+const existingSession =
+    localStorage.getItem(
+        "awt_consultation_type"
+    );
+
+
+if(
+    existingSession
+){
+
+    /*
+       Keep the selected session type
+       when coming from another flow.
+    */
+
+}
+
+
+/*
+   Demo mode:
+   waiting room becomes ready after
+   the simulated countdown.
+
+   Production:
+   Replace this with real-time backend
+   appointment/queue events.
+*/
+
+</script>
+
+</body>
+</html>

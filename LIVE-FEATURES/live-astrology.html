@@ -1,0 +1,2690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Astrology | Astro With Talk</title>
+
+<meta name="description"
+content="Join live astrology sessions, watch astrologers, ask questions and connect with the Astro With Talk community.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f6f6f6;
+    --border:#e4e4e4;
+
+    --purple:#48235f;
+    --purple2:#70428c;
+    --purple-bg:#f7f2fb;
+
+    --green:#28a745;
+    --gold:#b98417;
+    --gold-bg:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+
+    background:#fff;
+
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    color:#fff;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+
+    font-size:9px;
+
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:#fff7e5;
+
+    border:1px solid #ead9b3;
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border-radius:50%;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:27px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:13px;
+
+    color:#999;
+
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+
+    overflow:hidden;
+
+    padding:38px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,.18),
+            transparent 29%
+        ),
+        linear-gradient(
+            125deg,
+            #281333,
+            #512465,
+            #7a4b96
+        );
+}
+
+.hero::after{
+    content:"LIVE";
+
+    position:absolute;
+
+    right:28px;
+
+    bottom:-55px;
+
+    font-size:145px;
+
+    font-weight:700;
+
+    opacity:.06;
+}
+
+.hero-content{
+    position:relative;
+
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:42px;
+}
+
+.hero p{
+    max-width:730px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.hero-buttons{
+    display:flex;
+
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.hero-btn{
+    padding:10px 14px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:#fff;
+
+    color:var(--purple);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.3);
+}
+
+
+/* FILTER */
+
+.filter-bar{
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-top:18px;
+
+    overflow-x:auto;
+}
+
+.filter{
+    flex-shrink:0;
+
+    padding:9px 13px;
+
+    border:1px solid #ddd;
+
+    border-radius:20px;
+
+    background:#fff;
+
+    color:#666;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.filter.active{
+    background:var(--red);
+
+    color:#fff;
+
+    border-color:var(--red);
+}
+
+
+/* LIVE GRID */
+
+.live-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+
+    margin-top:15px;
+}
+
+.live-card{
+    overflow:hidden;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    transition:.2s;
+}
+
+.live-card:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.07);
+}
+
+.live-cover{
+    height:180px;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(255,255,255,.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #251331,
+            #5a2d75
+        );
+
+    color:#fff;
+}
+
+.live-avatar{
+    width:82px;
+    height:82px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    border:4px solid rgba(255,255,255,.25);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:34px;
+}
+
+.live-label{
+    position:absolute;
+
+    left:10px;
+    top:10px;
+
+    padding:6px 8px;
+
+    border-radius:5px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:6px;
+
+    font-weight:700;
+}
+
+.viewer-label{
+    position:absolute;
+
+    right:10px;
+    top:10px;
+
+    padding:6px 8px;
+
+    border-radius:5px;
+
+    background:rgba(0,0,0,.45);
+
+    color:#fff;
+
+    font-size:6px;
+}
+
+.live-duration{
+    position:absolute;
+
+    right:10px;
+    bottom:10px;
+
+    padding:5px 7px;
+
+    border-radius:5px;
+
+    background:rgba(0,0,0,.45);
+
+    color:#fff;
+
+    font-size:6px;
+}
+
+.live-info{
+    padding:14px;
+}
+
+.live-name{
+    font-family:"Playfair Display",serif;
+
+    font-size:16px;
+}
+
+.verified{
+    color:#4285f4;
+
+    font-family:Arial;
+
+    font-size:11px;
+}
+
+.live-speciality{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:7px;
+}
+
+.live-meta{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-top:9px;
+
+    font-size:7px;
+}
+
+.rating{
+    color:#b77d0c;
+
+    font-weight:700;
+}
+
+.live-now{
+    color:var(--green);
+
+    font-weight:700;
+}
+
+.join-btn{
+    width:100%;
+
+    height:35px;
+
+    margin-top:11px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* LIVE ROOM */
+
+.room{
+    display:none;
+
+    margin-top:18px;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    background:#101720;
+
+    color:#fff;
+}
+
+.room.show{
+    display:block;
+}
+
+.room-top{
+    padding:13px 17px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.room-profile{
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+}
+
+.room-avatar{
+    width:39px;
+    height:39px;
+
+    border-radius:50%;
+
+    background:#b97b55;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:17px;
+}
+
+.room-name{
+    font-size:9px;
+
+    font-weight:700;
+}
+
+.room-status{
+    margin-top:2px;
+
+    color:#65db7e;
+
+    font-size:6px;
+}
+
+.room-viewers{
+    padding:6px 9px;
+
+    border-radius:6px;
+
+    background:rgba(255,255,255,.08);
+
+    font-size:7px;
+}
+
+.room-main{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        300px;
+
+    min-height:450px;
+}
+
+.video-stage{
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #4d2962,
+            #161f2a 60%
+        );
+}
+
+.stage-avatar{
+    width:155px;
+    height:155px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    border:5px solid rgba(255,255,255,.16);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:62px;
+}
+
+.live-stage-label{
+    position:absolute;
+
+    top:15px;
+    left:15px;
+
+    padding:7px 9px;
+
+    border-radius:6px;
+
+    background:var(--red);
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.stage-title{
+    position:absolute;
+
+    left:15px;
+    bottom:15px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:20px;
+}
+
+
+/* CHAT */
+
+.chat-panel{
+    display:flex;
+
+    flex-direction:column;
+
+    background:#121a23;
+
+    border-left:1px solid rgba(255,255,255,.08);
+}
+
+.chat-head{
+    padding:13px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+.chat-messages{
+    flex:1;
+
+    min-height:300px;
+
+    max-height:390px;
+
+    overflow-y:auto;
+
+    padding:12px;
+}
+
+.message{
+    margin-bottom:10px;
+
+    font-size:7px;
+
+    line-height:1.6;
+}
+
+.message strong{
+    color:#d5a9ef;
+
+    margin-right:4px;
+}
+
+.message span{
+    color:#c5ccd3;
+}
+
+.chat-input{
+    padding:10px;
+
+    display:flex;
+
+    gap:6px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.chat-input input{
+    flex:1;
+
+    height:34px;
+
+    padding:0 9px;
+
+    border:0;
+
+    outline:none;
+
+    border-radius:6px;
+
+    background:#26313d;
+
+    color:#fff;
+
+    font-size:7px;
+}
+
+.send-btn{
+    width:38px;
+
+    border:0;
+
+    border-radius:6px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:13px;
+}
+
+
+/* ROOM FOOTER */
+
+.room-footer{
+    padding:12px 15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.room-actions{
+    display:flex;
+
+    gap:6px;
+}
+
+.room-action{
+    padding:8px 10px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:7px;
+
+    background:rgba(255,255,255,.07);
+
+    color:#fff;
+
+    font-size:7px;
+}
+
+.consult-btn{
+    padding:9px 13px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+
+/* FEATURES */
+
+.section{
+    margin-top:18px;
+
+    padding:22px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+
+    font-size:24px;
+}
+
+.section-sub{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.feature-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:10px;
+
+    margin-top:16px;
+}
+
+.feature{
+    padding:14px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#fff;
+}
+
+.feature-icon{
+    width:36px;
+    height:36px;
+
+    border-radius:9px;
+
+    background:var(--purple-bg);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:15px;
+}
+
+.feature h3{
+    margin-top:8px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:12px;
+}
+
+.feature p{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:7px;
+
+    line-height:1.6;
+}
+
+
+/* WALLET */
+
+.wallet-box{
+    margin-top:16px;
+
+    padding:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    border-radius:11px;
+
+    background:var(--gold-bg);
+
+    border:1px solid #efdfb8;
+}
+
+.wallet-info strong{
+    display:block;
+
+    font-size:10px;
+}
+
+.wallet-info p{
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:7px;
+}
+
+.balance{
+    color:var(--red);
+
+    font-size:20px;
+
+    font-weight:700;
+}
+
+.recharge{
+    padding:9px 12px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    margin-top:45px;
+
+    padding:40px 0 18px;
+
+    background:#171717;
+
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .live-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .room-main{
+        grid-template-columns:1fr;
+    }
+
+    .chat-panel{
+        border-left:0;
+
+        border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .feature-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .hero-btn{
+        width:100%;
+    }
+
+    .live-grid{
+        grid-template-columns:1fr;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .wallet-box{
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .room-footer{
+        flex-direction:column;
+
+        align-items:stretch;
+    }
+
+    .room-actions{
+        justify-content:center;
+    }
+
+    .consult-btn{
+        width:100%;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../FREE-SERVICES/free-services.html">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Live Features /
+        <span>Live Astrology</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🔴 LIVE ASTROLOGY
+            </div>
+
+            <h1>
+                Live Astrology Sessions
+            </h1>
+
+            <p>
+                Join live astrology sessions, listen to astrologers,
+                explore spiritual topics and interact with the live
+                community in real time.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <button
+                    class="hero-btn"
+                    onclick="document.getElementById('liveSessions').scrollIntoView({behavior:'smooth'})">
+
+                    🔴 Watch Live
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="location.href='../astrologers.html'">
+
+                    Find an Astrologer →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FILTER -->
+
+    <div
+        id="liveSessions"
+        class="filter-bar">
+
+        <button
+            class="filter active"
+            onclick="filterLive('all',this)">
+
+            🔴 All Live
+
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterLive('vedic',this)">
+
+            Vedic Astrology
+
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterLive('tarot',this)">
+
+            Tarot
+
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterLive('relationship',this)">
+
+            Relationships
+
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterLive('career',this)">
+
+            Career
+
+        </button>
+
+    </div>
+
+
+    <!-- LIVE CARDS -->
+
+    <div class="live-grid">
+
+
+        <article
+            class="live-card"
+            data-category="vedic">
+
+            <div class="live-cover">
+
+                <div class="live-avatar">
+                    🔮
+                </div>
+
+                <div class="live-label">
+                    ● LIVE
+                </div>
+
+                <div class="viewer-label">
+                    👁 1.2K
+                </div>
+
+                <div class="live-duration">
+                    24 min
+                </div>
+
+            </div>
+
+
+            <div class="live-info">
+
+                <div class="live-name">
+                    Astro Guide
+                    <span class="verified">✓</span>
+                </div>
+
+                <div class="live-speciality">
+                    Vedic Astrology • Kundli
+                </div>
+
+                <div class="live-meta">
+
+                    <span class="rating">
+                        ⭐ 4.9
+                    </span>
+
+                    <span class="live-now">
+                        ● Live Now
+                    </span>
+
+                </div>
+
+                <button
+                    class="join-btn"
+                    onclick="joinLive('Astro Guide','Vedic Astrology • Kundli',1200)">
+
+                    Join Live →
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="live-card"
+            data-category="tarot">
+
+            <div class="live-cover">
+
+                <div class="live-avatar">
+                    🃏
+                </div>
+
+                <div class="live-label">
+                    ● LIVE
+                </div>
+
+                <div class="viewer-label">
+                    👁 856
+                </div>
+
+                <div class="live-duration">
+                    18 min
+                </div>
+
+            </div>
+
+
+            <div class="live-info">
+
+                <div class="live-name">
+                    Tarot Guide
+                    <span class="verified">✓</span>
+                </div>
+
+                <div class="live-speciality">
+                    Tarot • Love Reading
+                </div>
+
+                <div class="live-meta">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span class="live-now">
+                        ● Live Now
+                    </span>
+
+                </div>
+
+                <button
+                    class="join-btn"
+                    onclick="joinLive('Tarot Guide','Tarot • Love Reading',856)">
+
+                    Join Live →
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="live-card"
+            data-category="relationship">
+
+            <div class="live-cover">
+
+                <div class="live-avatar">
+                    ❤️
+                </div>
+
+                <div class="live-label">
+                    ● LIVE
+                </div>
+
+                <div class="viewer-label">
+                    👁 642
+                </div>
+
+                <div class="live-duration">
+                    31 min
+                </div>
+
+            </div>
+
+
+            <div class="live-info">
+
+                <div class="live-name">
+                    Relationship Astro
+                    <span class="verified">✓</span>
+                </div>
+
+                <div class="live-speciality">
+                    Relationships • Compatibility
+                </div>
+
+                <div class="live-meta">
+
+                    <span class="rating">
+                        ⭐ 4.7
+                    </span>
+
+                    <span class="live-now">
+                        ● Live Now
+                    </span>
+
+                </div>
+
+                <button
+                    class="join-btn"
+                    onclick="joinLive('Relationship Astro','Relationships • Compatibility',642)">
+
+                    Join Live →
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="live-card"
+            data-category="career">
+
+            <div class="live-cover">
+
+                <div class="live-avatar">
+                    💼
+                </div>
+
+                <div class="live-label">
+                    ● LIVE
+                </div>
+
+                <div class="viewer-label">
+                    👁 514
+                </div>
+
+                <div class="live-duration">
+                    12 min
+                </div>
+
+            </div>
+
+
+            <div class="live-info">
+
+                <div class="live-name">
+                    Career Astro
+                    <span class="verified">✓</span>
+                </div>
+
+                <div class="live-speciality">
+                    Career • Finance Astrology
+                </div>
+
+                <div class="live-meta">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span class="live-now">
+                        ● Live Now
+                    </span>
+
+                </div>
+
+                <button
+                    class="join-btn"
+                    onclick="joinLive('Career Astro','Career • Finance Astrology',514)">
+
+                    Join Live →
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="live-card"
+            data-category="vedic">
+
+            <div class="live-cover">
+
+                <div class="live-avatar">
+                    🕉️
+                </div>
+
+                <div class="live-label">
+                    ● LIVE
+                </div>
+
+                <div class="viewer-label">
+                    👁 389
+                </div>
+
+                <div class="live-duration">
+                    8 min
+                </div>
+
+            </div>
+
+
+            <div class="live-info">
+
+                <div class="live-name">
+                    Vedic Wisdom
+                    <span class="verified">✓</span>
+                </div>
+
+                <div class="live-speciality">
+                    Vedic Astrology • Remedies
+                </div>
+
+                <div class="live-meta">
+
+                    <span class="rating">
+                        ⭐ 4.9
+                    </span>
+
+                    <span class="live-now">
+                        ● Live Now
+                    </span>
+
+                </div>
+
+                <button
+                    class="join-btn"
+                    onclick="joinLive('Vedic Wisdom','Vedic Astrology • Remedies',389)">
+
+                    Join Live →
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="live-card"
+            data-category="tarot">
+
+            <div class="live-cover">
+
+                <div class="live-avatar">
+                    ✨
+                </div>
+
+                <div class="live-label">
+                    ● LIVE
+                </div>
+
+                <div class="viewer-label">
+                    👁 271
+                </div>
+
+                <div class="live-duration">
+                    42 min
+                </div>
+
+            </div>
+
+
+            <div class="live-info">
+
+                <div class="live-name">
+                    Mystic Tarot
+                    <span class="verified">✓</span>
+                </div>
+
+                <div class="live-speciality">
+                    Tarot • Spiritual Guidance
+                </div>
+
+                <div class="live-meta">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span class="live-now">
+                        ● Live Now
+                    </span>
+
+                </div>
+
+                <button
+                    class="join-btn"
+                    onclick="joinLive('Mystic Tarot','Tarot • Spiritual Guidance',271)">
+
+                    Join Live →
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+
+    <!-- LIVE ROOM -->
+
+    <section
+        id="liveRoom"
+        class="room">
+
+
+        <div class="room-top">
+
+            <div class="room-profile">
+
+                <div
+                    id="roomAvatar"
+                    class="room-avatar">
+
+                    🔮
+
+                </div>
+
+                <div>
+
+                    <div
+                        id="roomName"
+                        class="room-name">
+
+                        Astro Guide
+
+                    </div>
+
+                    <div class="room-status">
+                        ● LIVE NOW
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="roomViewers"
+                class="room-viewers">
+
+                👁 1.2K watching
+
+            </div>
+
+        </div>
+
+
+        <div class="room-main">
+
+
+            <div class="video-stage">
+
+                <div class="live-stage-label">
+                    🔴 LIVE
+                </div>
+
+
+                <div
+                    id="stageAvatar"
+                    class="stage-avatar">
+
+                    🔮
+
+                </div>
+
+
+                <div
+                    id="stageTitle"
+                    class="stage-title">
+
+                    Live Astrology Session
+
+                </div>
+
+            </div>
+
+
+            <div class="chat-panel">
+
+
+                <div class="chat-head">
+                    💬 Live Chat
+                </div>
+
+
+                <div
+                    id="chatMessages"
+                    class="chat-messages">
+
+
+                    <div class="message">
+                        <strong>Rahul:</strong>
+                        <span>
+                            What is the best time for marriage?
+                        </span>
+                    </div>
+
+
+                    <div class="message">
+                        <strong>Priya:</strong>
+                        <span>
+                            Please explain my Moon sign.
+                        </span>
+                    </div>
+
+
+                    <div class="message">
+                        <strong>Aman:</strong>
+                        <span>
+                            🙏 Thank you for the guidance.
+                        </span>
+                    </div>
+
+
+                    <div class="message">
+                        <strong>Neha:</strong>
+                        <span>
+                            Can you discuss career astrology?
+                        </span>
+                    </div>
+
+
+                </div>
+
+
+                <div class="chat-input">
+
+                    <input
+                        id="messageInput"
+                        type="text"
+                        placeholder="Write a message...">
+
+                    <button
+                        class="send-btn"
+                        onclick="sendMessage()">
+
+                        ➤
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="room-footer">
+
+
+            <div class="room-actions">
+
+                <button
+                    class="room-action"
+                    onclick="toggleFollow()">
+
+                    ❤️ <span id="followText">Follow</span>
+
+                </button>
+
+
+                <button
+                    class="room-action"
+                    onclick="sendLike()">
+
+                    👍 Like
+
+                </button>
+
+
+                <button
+                    class="room-action"
+                    onclick="sendGift()">
+
+                    🎁 Gift
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="consult-btn"
+                onclick="startConsultation()">
+
+                📞 Private Consultation
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            What You Can Do in Live Astrology
+        </h2>
+
+        <p class="section-sub">
+            Explore the interactive features available during a live
+            astrology session.
+        </p>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔴
+                </div>
+
+                <h3>
+                    Watch Live
+                </h3>
+
+                <p>
+                    Join an active astrology session and follow the
+                    ongoing discussion.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💬
+                </div>
+
+                <h3>
+                    Live Chat
+                </h3>
+
+                <p>
+                    Send messages and interact with other viewers during
+                    the live session.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎁
+                </div>
+
+                <h3>
+                    Send Gifts
+                </h3>
+
+                <p>
+                    Support your favorite live astrologers through
+                    virtual gifts.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📞
+                </div>
+
+                <h3>
+                    Private Consultation
+                </h3>
+
+                <p>
+                    Move from a public live session to a private
+                    consultation when available.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="wallet-box">
+
+            <div class="wallet-info">
+
+                <strong>
+                    💰 Your Astro With Talk Wallet
+                </strong>
+
+                <p>
+                    Wallet balance can be used for eligible paid
+                    consultations and platform features.
+                </p>
+
+            </div>
+
+
+            <div
+                id="sectionBalance"
+                class="balance">
+
+                ₹500
+
+            </div>
+
+
+            <button
+                class="recharge"
+                onclick="location.href='../wallet/recharge.html'">
+
+                Recharge Wallet
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Live Features
+        </h4>
+
+        <a href="audio-call.html">
+            Audio Call
+        </a>
+
+        <a href="live-astrology.html">
+            Live Astrology
+        </a>
+
+        <a href="live-chat.html">
+            Live Chat
+        </a>
+
+        <a href="video-consultation.html">
+            Video Consultation
+        </a>
+
+        <a href="waiting-room.html">
+            Waiting Room
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="../wallet/transactions.html">
+            Transactions
+        </a>
+
+        <a href="../history.html">
+            Consultation History
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+function updateWallet(){
+
+    document
+        .getElementById("wallet")
+        .innerText =
+            wallet.toLocaleString("en-IN");
+
+    document
+        .getElementById("sectionBalance")
+        .innerText =
+            "₹" +
+            wallet.toLocaleString("en-IN");
+
+}
+
+updateWallet();
+
+
+/* LIVE DATA */
+
+let currentAstrologer =
+    "Astro Guide";
+
+let currentCategory =
+    "Vedic Astrology • Kundli";
+
+let currentViewers =
+    1200;
+
+let followed = false;
+
+
+/* FILTER */
+
+function filterLive(
+    category,
+    button
+){
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(
+            item =>
+                item.classList.remove(
+                    "active"
+                )
+        );
+
+    button.classList.add("active");
+
+
+    document
+        .querySelectorAll(".live-card")
+        .forEach(
+            card => {
+
+                if(
+                    category === "all" ||
+                    card.dataset.category === category
+                ){
+
+                    card.style.display =
+                        "block";
+
+                }else{
+
+                    card.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+}
+
+
+/* JOIN LIVE */
+
+function joinLive(
+    name,
+    category,
+    viewers
+){
+
+    currentAstrologer =
+        name;
+
+    currentCategory =
+        category;
+
+    currentViewers =
+        viewers;
+
+
+    document
+        .getElementById("roomName")
+        .innerText =
+            name;
+
+
+    document
+        .getElementById("stageTitle")
+        .innerText =
+            category;
+
+
+    document
+        .getElementById("roomViewers")
+        .innerText =
+            "👁 " +
+            formatViewers(viewers) +
+            " watching";
+
+
+    /*
+        Change stage icon according
+        to session type.
+    */
+
+    let icon = "🔮";
+
+
+    if(
+        category.toLowerCase()
+        .includes("tarot")
+    ){
+
+        icon = "🃏";
+
+    }
+
+    if(
+        category.toLowerCase()
+        .includes("relationship")
+    ){
+
+        icon = "❤️";
+
+    }
+
+    if(
+        category.toLowerCase()
+        .includes("career")
+    ){
+
+        icon = "💼";
+
+    }
+
+
+    document
+        .getElementById("roomAvatar")
+        .innerText =
+            icon;
+
+    document
+        .getElementById("stageAvatar")
+        .innerText =
+            icon;
+
+
+    document
+        .getElementById("liveRoom")
+        .classList
+        .add("show");
+
+
+    document
+        .getElementById("liveRoom")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+
+    localStorage.setItem(
+        "awt_live_session",
+        JSON.stringify({
+
+            astrologer:name,
+
+            category:category,
+
+            viewers:viewers,
+
+            joinedAt:
+                new Date()
+                .toISOString()
+
+        })
+    );
+
+}
+
+
+/* VIEWER FORMAT */
+
+function formatViewers(
+    value
+){
+
+    if(
+        value >= 1000
+    ){
+
+        return (
+            value / 1000
+        ).toFixed(1)
+        .replace(".0","")
+        +
+        "K";
+
+    }
+
+    return value;
+
+}
+
+
+/* SEND MESSAGE */
+
+function sendMessage(){
+
+    const input =
+        document
+        .getElementById(
+            "messageInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+        return;
+    }
+
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+
+    message.className =
+        "message";
+
+
+    message.innerHTML =
+        `
+        <strong>You:</strong>
+        <span>${escapeHtml(text)}</span>
+        `;
+
+
+    document
+        .getElementById(
+            "chatMessages"
+        )
+        .appendChild(
+            message
+        );
+
+
+    input.value = "";
+
+
+    const box =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    box.scrollTop =
+        box.scrollHeight;
+
+}
+
+
+/* ENTER MESSAGE */
+
+document
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter"
+            ){
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.innerText =
+        value;
+
+    return div.innerHTML;
+
+}
+
+
+/* FOLLOW */
+
+function toggleFollow(){
+
+    followed =
+        !followed;
+
+
+    document
+        .getElementById(
+            "followText"
+        )
+        .innerText =
+            followed
+            ?
+            "Following"
+            :
+            "Follow";
+
+
+    localStorage.setItem(
+        "awt_followed_astrologer",
+        followed
+            ?
+            currentAstrologer
+            :
+            ""
+    );
+
+}
+
+
+/* LIKE */
+
+function sendLike(){
+
+    currentViewers++;
+
+    document
+        .getElementById(
+            "roomViewers"
+        )
+        .innerText =
+            "👁 " +
+            formatViewers(
+                currentViewers
+            ) +
+            " watching";
+
+}
+
+
+/* GIFT */
+
+function sendGift(){
+
+    const giftCost = 10;
+
+
+    if(
+        wallet < giftCost
+    ){
+
+        alert(
+            "Your wallet balance is insufficient. Please recharge your wallet."
+        );
+
+        location.href =
+            "../wallet/recharge.html";
+
+        return;
+
+    }
+
+
+    wallet -= giftCost;
+
+
+    localStorage.setItem(
+        "awt_wallet_balance",
+        wallet
+    );
+
+
+    updateWallet();
+
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+
+    message.className =
+        "message";
+
+
+    message.innerHTML =
+        `
+        <strong>You:</strong>
+        <span>🎁 Sent a virtual gift to ${escapeHtml(currentAstrologer)}</span>
+        `;
+
+
+    document
+        .getElementById(
+            "chatMessages"
+        )
+        .appendChild(
+            message
+        );
+
+}
+
+
+/* CONSULTATION */
+
+function startConsultation(){
+
+    localStorage.setItem(
+        "awt_consultation_source",
+        "live-astrology"
+    );
+
+    localStorage.setItem(
+        "awt_selected_astrologer",
+        currentAstrologer
+    );
+
+
+    /*
+        Connect into the existing
+        astrologer/audio-call flow.
+    */
+
+    location.href =
+        "audio-call.html";
+
+}
+
+
+/* PAGE VISIT */
+
+localStorage.setItem(
+    "awt_live_astrology_last_visit",
+    new Date().toISOString()
+);
+
+</script>
+
+</body>
+</html>
