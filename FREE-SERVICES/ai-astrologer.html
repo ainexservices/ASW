@@ -1,0 +1,2365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Astrologer - Astro With Talk</title>
+
+<meta name="description"
+content="Ask astrology questions and explore AI-powered astrology guidance with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f7f7f7;
+    --border:#e5e5e5;
+
+    --purple:#5d3479;
+    --purple-dark:#422458;
+    --purple-bg:#f7f2fb;
+
+    --blue:#315d87;
+    --blue-bg:#f2f7fc;
+
+    --gold-bg:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    border:1px solid #ead9b3;
+
+    background:#fff7e5;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border:1px solid #ddd;
+    border-radius:50%;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+
+    font-size:8px;
+
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    border-radius:20px;
+
+    padding:38px;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(255,255,255,.2),
+            transparent 27%
+        ),
+        linear-gradient(
+            125deg,
+            #382044,
+            #63377f,
+            #8b58a6
+        );
+}
+
+.hero::after{
+    content:"✦";
+
+    position:absolute;
+
+    right:40px;
+    top:-75px;
+
+    font-size:250px;
+
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:42px;
+}
+
+.hero p{
+    max-width:730px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+    line-height:1.8;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-top:16px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+
+    border-radius:7px;
+
+    background:rgba(255,255,255,.11);
+
+    border:1px solid rgba(255,255,255,.22);
+
+    font-size:7px;
+}
+
+
+/* MAIN */
+
+.main-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        290px;
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    overflow:hidden;
+}
+
+.section{
+    padding:22px;
+
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+
+    font-size:8px;
+    line-height:1.7;
+
+    margin-top:4px;
+}
+
+
+/* CHAT */
+
+.chat-shell{
+    margin-top:17px;
+
+    border:1px solid #e4d9eb;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:#faf8fc;
+}
+
+.chat-top{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    padding:13px 15px;
+
+    background:#fff;
+
+    border-bottom:1px solid #eee;
+}
+
+.ai-profile{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.ai-avatar{
+    width:37px;
+    height:37px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5c3478,
+            #9863b3
+        );
+
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:17px;
+}
+
+.ai-profile strong{
+    display:block;
+    font-size:9px;
+}
+
+.ai-profile span{
+    display:block;
+
+    margin-top:2px;
+
+    color:#3c8758;
+
+    font-size:7px;
+}
+
+.status{
+    padding:6px 8px;
+
+    border-radius:6px;
+
+    background:#f0f8f2;
+
+    color:#36724b;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.messages{
+    min-height:390px;
+    max-height:500px;
+
+    overflow-y:auto;
+
+    padding:18px;
+}
+
+.message{
+    display:flex;
+
+    gap:8px;
+
+    margin-bottom:14px;
+}
+
+.message.user{
+    justify-content:flex-end;
+}
+
+.message-avatar{
+    width:28px;
+    height:28px;
+
+    flex:none;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    font-size:12px;
+}
+
+.message.ai .message-avatar{
+    background:var(--purple-bg);
+}
+
+.message.user .message-avatar{
+    background:#fff0f0;
+}
+
+.bubble{
+    max-width:75%;
+
+    padding:10px 12px;
+
+    border-radius:10px;
+
+    font-size:8px;
+    line-height:1.7;
+}
+
+.message.ai .bubble{
+    background:#fff;
+
+    border:1px solid #e7e1ea;
+}
+
+.message.user .bubble{
+    background:var(--purple);
+
+    color:#fff;
+}
+
+.quick-title{
+    padding:0 18px 9px;
+
+    color:#888;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.quick-options{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:6px;
+
+    padding:0 18px 14px;
+}
+
+.quick-btn{
+    padding:7px 9px;
+
+    border-radius:7px;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+
+    color:#555;
+
+    font-size:7px;
+}
+
+.quick-btn:hover{
+    border-color:var(--purple);
+    color:var(--purple);
+}
+
+.chat-input{
+    display:flex;
+    gap:8px;
+
+    padding:12px;
+
+    background:#fff;
+
+    border-top:1px solid #eee;
+}
+
+.chat-input textarea{
+    flex:1;
+
+    min-height:42px;
+    max-height:100px;
+
+    resize:none;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    padding:11px;
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.chat-input textarea:focus{
+    border-color:var(--purple);
+}
+
+.send-btn{
+    width:46px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:var(--purple);
+
+    color:#fff;
+
+    font-size:16px;
+}
+
+.chat-footer{
+    padding:9px 12px;
+
+    background:#fff8e8;
+
+    border-top:1px solid #f0dfb7;
+
+    color:#876d39;
+
+    text-align:center;
+
+    font-size:7px;
+}
+
+
+/* BIRTH DETAILS */
+
+.birth-box{
+    margin-top:16px;
+
+    padding:17px;
+
+    border-radius:13px;
+
+    background:var(--purple-bg);
+
+    border:1px solid #e6dced;
+}
+
+.birth-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:5px;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+
+    height:40px;
+
+    padding:0 10px;
+
+    border:1px solid #ddd;
+
+    border-radius:7px;
+
+    outline:none;
+
+    background:#fff;
+
+    font-size:8px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:var(--purple);
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.save-btn{
+    width:100%;
+
+    height:40px;
+
+    margin-top:11px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--purple);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* TOPICS */
+
+.topic-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:9px;
+
+    margin-top:15px;
+}
+
+.topic{
+    padding:13px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#fff;
+
+    transition:.2s;
+}
+
+.topic:hover{
+    transform:translateY(-2px);
+
+    border-color:#d5c7dc;
+}
+
+.topic-icon{
+    width:32px;
+    height:32px;
+
+    border-radius:8px;
+
+    background:var(--purple-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:14px;
+}
+
+.topic strong{
+    display:block;
+
+    margin-top:7px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:11px;
+}
+
+.topic span{
+    display:block;
+
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:7px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+
+    font-size:17px;
+
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:9px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+
+    border-radius:8px;
+
+    background:var(--purple-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:7px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--red);
+
+    color:#fff;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    margin-top:5px;
+
+    color:#ffe7e7;
+
+    font-size:7px;
+    line-height:1.7;
+}
+
+.cta button{
+    width:100%;
+
+    height:35px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:#fff;
+
+    color:var(--red);
+
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* INFO */
+
+.info-box{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-bg);
+
+    border:1px solid #f0dfb7;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:7px;
+    line-height:1.7;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+
+    color:#fff;
+
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    font-size:10px;
+
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .topic-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .birth-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+}
+
+@media(max-width:520px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .topic-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .messages{
+        min-height:340px;
+    }
+
+    .bubble{
+        max-width:84%;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a
+            href="free-services.html"
+            class="active">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Free Services /
+        <span>AI Astrologer</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🤖 AI ASTROLOGY ASSISTANT
+            </div>
+
+            <h1>
+                Ask Your AI Astrologer
+            </h1>
+
+            <p>
+                Ask questions about love, career, marriage, finance,
+                family, daily astrology and more. Add your birth details
+                for a more personalized astrology experience.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🤖 AI Guidance
+                </div>
+
+                <div class="hero-pill">
+                    ❤️ Love
+                </div>
+
+                <div class="hero-pill">
+                    💼 Career
+                </div>
+
+                <div class="hero-pill">
+                    💍 Marriage
+                </div>
+
+                <div class="hero-pill">
+                    💰 Finance
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="main-grid">
+
+
+        <!-- MAIN -->
+
+        <section class="card">
+
+
+            <!-- CHAT -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Chat with AI Astrologer
+                </h2>
+
+                <p class="section-sub">
+                    Start with a question or select one of the popular
+                    topics below.
+                </p>
+
+
+                <div class="chat-shell">
+
+
+                    <div class="chat-top">
+
+                        <div class="ai-profile">
+
+                            <div class="ai-avatar">
+                                ✨
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Astro With Talk AI
+                                </strong>
+
+                                <span>
+                                    ● Online
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="status">
+                            FREE
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="messages"
+                        class="messages">
+
+
+                        <div class="message ai">
+
+                            <div class="message-avatar">
+                                ✨
+                            </div>
+
+                            <div class="bubble">
+
+                                Namaste 🙏 I'm Astro With Talk AI
+                                Astrologer. Ask me anything about
+                                your love life, career, marriage,
+                                finances or astrology.
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="message ai">
+
+                            <div class="message-avatar">
+                                ✨
+                            </div>
+
+                            <div class="bubble">
+
+                                For more personalized guidance,
+                                you can add your date, time and place
+                                of birth below.
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="quick-title">
+                        Popular Questions
+                    </div>
+
+
+                    <div class="quick-options">
+
+                        <button
+                            class="quick-btn"
+                            onclick="askQuestion('How is my love life looking?')">
+
+                            ❤️ Love Life
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="askQuestion('What does my career path look like?')">
+
+                            💼 Career
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="askQuestion('What should I know about marriage?')">
+
+                            💍 Marriage
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="askQuestion('What does astrology say about my finances?')">
+
+                            💰 Finance
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="askQuestion('Give me a general astrology reading.')">
+
+                            🔮 General Reading
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="chat-input">
+
+                        <textarea
+                            id="question"
+                            placeholder="Ask your astrology question..."></textarea>
+
+
+                        <button
+                            class="send-btn"
+                            onclick="sendQuestion()">
+
+                            ➤
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="chat-footer">
+
+                        ⚠️ AI guidance is for informational and
+                        entertainment purposes. It is not a substitute
+                        for professional advice.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BIRTH DETAILS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Add Birth Details
+                </h2>
+
+                <p class="section-sub">
+                    Save your basic birth information locally in this
+                    browser to personalize future AI questions.
+                </p>
+
+
+                <div class="birth-box">
+
+
+                    <div class="birth-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                id="birthName"
+                                type="text"
+                                placeholder="Your name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Gender
+                            </label>
+
+                            <select id="gender">
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option>
+                                    Male
+                                </option>
+
+                                <option>
+                                    Female
+                                </option>
+
+                                <option>
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Date of Birth
+                            </label>
+
+                            <input
+                                id="birthDate"
+                                type="date">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Time of Birth
+                            </label>
+
+                            <input
+                                id="birthTime"
+                                type="time">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Birth Place
+                            </label>
+
+                            <input
+                                id="birthPlace"
+                                type="text"
+                                placeholder="City, State, Country">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button
+                        class="save-btn"
+                        onclick="saveBirthDetails()">
+
+                        💾 Save Birth Details
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOPICS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Ask About
+                </h2>
+
+                <p class="section-sub">
+                    Choose a topic to start your conversation.
+                </p>
+
+
+                <div class="topic-grid">
+
+
+                    <div
+                        class="topic"
+                        onclick="askQuestion('Tell me about my love and relationship prospects.')">
+
+                        <div class="topic-icon">
+                            ❤️
+                        </div>
+
+                        <strong>
+                            Love & Relationship
+                        </strong>
+
+                        <span>
+                            Relationship questions
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="topic"
+                        onclick="askQuestion('Give me astrology guidance about my career and profession.')">
+
+                        <div class="topic-icon">
+                            💼
+                        </div>
+
+                        <strong>
+                            Career
+                        </strong>
+
+                        <span>
+                            Career direction
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="topic"
+                        onclick="askQuestion('What can astrology tell me about marriage timing and compatibility?')">
+
+                        <div class="topic-icon">
+                            💍
+                        </div>
+
+                        <strong>
+                            Marriage
+                        </strong>
+
+                        <span>
+                            Marriage questions
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="topic"
+                        onclick="askQuestion('Give me traditional astrology guidance about money and finances.')">
+
+                        <div class="topic-icon">
+                            💰
+                        </div>
+
+                        <strong>
+                            Finance
+                        </strong>
+
+                        <span>
+                            Money questions
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="topic"
+                        onclick="askQuestion('Give me a general astrology reading based on my information.')">
+
+                        <div class="topic-icon">
+                            🔮
+                        </div>
+
+                        <strong>
+                            General Reading
+                        </strong>
+
+                        <span>
+                            Overall guidance
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="topic"
+                        onclick="askQuestion('Tell me what today's astrology could mean for me.')">
+
+                        <div class="topic-icon">
+                            ⭐
+                        </div>
+
+                        <strong>
+                            Daily Guidance
+                        </strong>
+
+                        <span>
+                            Today's guidance
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        🔐 Your Birth Details
+                    </strong>
+
+                    <p>
+                        This prototype stores the entered birth details
+                        in your browser's localStorage. In the production
+                        system, this should be replaced with authenticated
+                        backend storage and appropriate privacy controls.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Free Services
+                </h3>
+
+
+                <a
+                    href="free-services.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🆓
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            All Free Services
+                        </strong>
+
+                        <span>
+                            Services home
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="ai-astrologer.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🤖
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            AI Astrologer
+                        </strong>
+
+                        <span>
+                            AI astrology chat
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="daily-remedies.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Daily Remedies
+                        </strong>
+
+                        <span>
+                            Traditional remedies
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="dream-meaning.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Dream Meaning
+                        </strong>
+
+                        <span>
+                            Dream interpretations
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="mantra.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Mantra
+                        </strong>
+
+                        <span>
+                            Mantras & chanting
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="numerology.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🔢
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Numerology
+                        </strong>
+
+                        <span>
+                            Number guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        👨‍🏫 Talk to a Human Astrologer
+                    </strong>
+
+                    <p>
+                        For personalized interpretation, connect with
+                        a verified Astro With Talk astrologer.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Find Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Free Services
+        </h4>
+
+        <a href="free-services.html">
+            All Services
+        </a>
+
+        <a href="ai-astrologer.html">
+            AI Astrologer
+        </a>
+
+        <a href="daily-remedies.html">
+            Daily Remedies
+        </a>
+
+        <a href="dream-meaning.html">
+            Dream Meaning
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Tools
+        </h4>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+        <a href="numerology.html">
+            Numerology
+        </a>
+
+        <a href="mantra.html">
+            Mantra
+        </a>
+
+        <a href="palm-reading.html">
+            Palm Reading
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+document
+    .getElementById("wallet")
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* BIRTH DETAILS */
+
+function saveBirthDetails(){
+
+    const data = {
+
+        name:
+            document
+            .getElementById("birthName")
+            .value
+            .trim(),
+
+        gender:
+            document
+            .getElementById("gender")
+            .value,
+
+        date:
+            document
+            .getElementById("birthDate")
+            .value,
+
+        time:
+            document
+            .getElementById("birthTime")
+            .value,
+
+        place:
+            document
+            .getElementById("birthPlace")
+            .value
+            .trim()
+
+    };
+
+
+    localStorage.setItem(
+        "awt_ai_birth_details",
+        JSON.stringify(data)
+    );
+
+
+    addMessage(
+        "ai",
+        "Your birth details have been saved in this browser. Future questions can use these details in this prototype."
+    );
+
+}
+
+
+/* LOAD DETAILS */
+
+function loadBirthDetails(){
+
+    const saved =
+        localStorage.getItem(
+            "awt_ai_birth_details"
+        );
+
+
+    if(!saved){
+        return;
+    }
+
+
+    try{
+
+        const data =
+            JSON.parse(saved);
+
+
+        document
+            .getElementById("birthName")
+            .value =
+                data.name || "";
+
+
+        document
+            .getElementById("gender")
+            .value =
+                data.gender || "";
+
+
+        document
+            .getElementById("birthDate")
+            .value =
+                data.date || "";
+
+
+        document
+            .getElementById("birthTime")
+            .value =
+                data.time || "";
+
+
+        document
+            .getElementById("birthPlace")
+            .value =
+                data.place || "";
+
+    }catch(error){
+
+        console.log(
+            "Birth details could not be loaded."
+        );
+
+    }
+
+}
+
+
+/* ADD MESSAGE */
+
+function addMessage(
+    type,
+    text
+){
+
+    const messages =
+        document
+        .getElementById("messages");
+
+
+    const message =
+        document.createElement("div");
+
+
+    message.className =
+        "message " + type;
+
+
+    const avatar =
+        document.createElement("div");
+
+
+    avatar.className =
+        "message-avatar";
+
+
+    avatar.innerText =
+        type === "ai"
+        ? "✨"
+        : "👤";
+
+
+    const bubble =
+        document.createElement("div");
+
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.innerText =
+        text;
+
+
+    if(type === "user"){
+
+        message.appendChild(
+            bubble
+        );
+
+        message.appendChild(
+            avatar
+        );
+
+    }else{
+
+        message.appendChild(
+            avatar
+        );
+
+        message.appendChild(
+            bubble
+        );
+
+    }
+
+
+    messages.appendChild(
+        message
+    );
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* SEND QUESTION */
+
+function sendQuestion(){
+
+    const input =
+        document
+        .getElementById("question");
+
+
+    const question =
+        input.value.trim();
+
+
+    if(!question){
+        return;
+    }
+
+
+    addMessage(
+        "user",
+        question
+    );
+
+
+    input.value = "";
+
+
+    /*
+        Prototype response.
+
+        In production this function will
+        call the secure backend AI service.
+    */
+
+    setTimeout(
+        ()=>{
+
+            const response =
+                generateDemoResponse(
+                    question
+                );
+
+
+            addMessage(
+                "ai",
+                response
+            );
+
+        },
+        650
+    );
+
+}
+
+
+/* QUICK QUESTION */
+
+function askQuestion(
+    question
+){
+
+    document
+        .getElementById("question")
+        .value =
+            question;
+
+
+    sendQuestion();
+
+}
+
+
+/* DEMO AI RESPONSE */
+
+function generateDemoResponse(
+    question
+){
+
+    const q =
+        question.toLowerCase();
+
+
+    if(
+        q.includes("love") ||
+        q.includes("relationship")
+    ){
+
+        return "For relationship questions, astrology traditionally considers Venus, the 7th house, its lord and relevant planetary periods. For a meaningful personalized reading, your complete birth chart should be calculated first.";
+
+    }
+
+
+    if(
+        q.includes("career") ||
+        q.includes("job") ||
+        q.includes("profession")
+    ){
+
+        return "Career analysis in Vedic astrology traditionally examines the 10th house, its lord, Saturn, the Sun and relevant planetary periods. Your birth details can help create a more personalized chart-based interpretation.";
+
+    }
+
+
+    if(
+        q.includes("marriage") ||
+        q.includes("wedding")
+    ){
+
+        return "Traditional marriage analysis looks at the 7th house, its lord, Venus or Jupiter depending on the chart, Navamsa and planetary periods. A complete Kundli is needed before making a personalized interpretation.";
+
+    }
+
+
+    if(
+        q.includes("money") ||
+        q.includes("finance") ||
+        q.includes("financial")
+    ){
+
+        return "Traditional Vedic astrology examines the 2nd and 11th houses, their lords, Jupiter and relevant planetary periods when discussing finances. Astrology should not replace professional financial advice.";
+
+    }
+
+
+    if(
+        q.includes("today") ||
+        q.includes("daily")
+    ){
+
+        return "Daily astrology traditionally considers current planetary transits in relation to the birth chart. For a personalized transit reading, your accurate birth date, time and place are important.";
+
+    }
+
+
+    return "Astrology interpretations depend on the complete birth chart rather than one question or one planetary placement. Add your birth details above and then ask a specific question about love, career, marriage, family or another area of life.";
+
+}
+
+
+/* ENTER KEY */
+
+document
+    .getElementById("question")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter" &&
+                !event.shiftKey
+            ){
+
+                event.preventDefault();
+
+                sendQuestion();
+
+            }
+
+        }
+    );
+
+
+/* LOAD */
+
+loadBirthDetails();
+
+</script>
+
+</body>
+</html>
