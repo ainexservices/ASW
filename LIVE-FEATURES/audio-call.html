@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Audio Call Consultation | Astro With Talk</title>
+
+<meta name="description"
+content="Connect with an astrologer through a private audio consultation on Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f6f6f6;
+    --border:#e4e4e4;
+
+    --green:#24a148;
+    --green-bg:#edf9f0;
+
+    --blue:#315d87;
+    --blue-bg:#f1f6fb;
+
+    --gold:#b98417;
+    --gold-bg:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:20px;
+}
+
+.nav-links a{
+    font-size:9px;
+    color:#555;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    background:#fff7e5;
+
+    border:1px solid #ead9b3;
+
+    border-radius:8px;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border:1px solid #ddd;
+
+    border-radius:50%;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:25px 0 60px;
+}
+
+.breadcrumb{
+    margin-bottom:13px;
+
+    color:#999;
+
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* MAIN */
+
+.call-layout{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        300px;
+
+    gap:18px;
+}
+
+
+/* CALL CARD */
+
+.call-card{
+    min-height:650px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255,255,255,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #111827,
+            #172638,
+            #0c1119
+        );
+
+    color:#fff;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.12);
+}
+
+.call-top{
+    padding:20px 23px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.secure{
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    color:#a9d8b5;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.call-status{
+    padding:7px 10px;
+
+    border-radius:20px;
+
+    background:rgba(36,161,72,.13);
+
+    border:1px solid rgba(100,220,125,.22);
+
+    color:#8de29d;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.astrologer-area{
+    min-height:415px;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.avatar-wrap{
+    position:relative;
+}
+
+.avatar{
+    width:145px;
+    height:145px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    border:5px solid rgba(255,255,255,.14);
+
+    display:grid;
+    place-items:center;
+
+    font-size:60px;
+
+    box-shadow:
+        0 0 0 13px rgba(255,255,255,.03),
+        0 20px 45px rgba(0,0,0,.3);
+}
+
+.online-dot{
+    position:absolute;
+
+    right:7px;
+    bottom:12px;
+
+    width:19px;
+    height:19px;
+
+    border-radius:50%;
+
+    background:#35d565;
+
+    border:4px solid #142131;
+}
+
+.astrologer-name{
+    margin-top:20px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:27px;
+}
+
+.verified{
+    display:inline-flex;
+
+    margin-left:5px;
+
+    color:#68a9ff;
+
+    font-family:Arial;
+    font-size:14px;
+}
+
+.speciality{
+    margin-top:5px;
+
+    color:#b9c2cc;
+
+    font-size:8px;
+}
+
+.call-timer{
+    margin-top:14px;
+
+    font-size:21px;
+
+    font-weight:600;
+
+    letter-spacing:2px;
+}
+
+.rate{
+    margin-top:5px;
+
+    color:#9ea9b4;
+
+    font-size:7px;
+}
+
+
+/* CALL CONTROLS */
+
+.controls{
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:20px;
+}
+
+.control{
+    width:48px;
+    height:48px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+    font-size:17px;
+}
+
+.control:hover{
+    background:rgba(255,255,255,.16);
+}
+
+.control.active{
+    background:#fff;
+
+    color:#222;
+}
+
+.end-call{
+    width:57px;
+    height:57px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:21px;
+
+    box-shadow:
+        0 7px 20px rgba(215,25,32,.3);
+}
+
+.call-bottom{
+    padding:12px 23px 22px;
+
+    text-align:center;
+
+    color:#737f8c;
+
+    font-size:7px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:17px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+
+    font-size:18px;
+
+    margin-bottom:12px;
+}
+
+
+/* ASTRO PROFILE */
+
+.mini-profile{
+    display:flex;
+    gap:10px;
+
+    align-items:center;
+
+    padding-bottom:13px;
+
+    border-bottom:1px solid #eee;
+}
+
+.mini-avatar{
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b97b55,
+            #e2b08b
+        );
+
+    display:grid;
+    place-items:center;
+
+    font-size:21px;
+}
+
+.mini-name{
+    font-size:10px;
+    font-weight:700;
+}
+
+.mini-status{
+    margin-top:3px;
+
+    color:var(--green);
+
+    font-size:7px;
+}
+
+.info-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #eee;
+
+    font-size:8px;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-row span{
+    color:#999;
+}
+
+.info-row strong{
+    color:#333;
+}
+
+
+/* COST */
+
+.cost-box{
+    margin-top:13px;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    background:var(--blue-bg);
+
+    border:1px solid #dce7f1;
+}
+
+.cost-box strong{
+    display:block;
+
+    font-size:10px;
+}
+
+.cost-box p{
+    margin-top:4px;
+
+    color:#777;
+
+    font-size:7px;
+
+    line-height:1.6;
+}
+
+
+/* BALANCE */
+
+.balance-box{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-bg);
+
+    border:1px solid #efdfb8;
+}
+
+.balance-label{
+    color:#999;
+
+    font-size:7px;
+}
+
+.balance{
+    margin-top:2px;
+
+    color:var(--red);
+
+    font-size:20px;
+
+    font-weight:700;
+}
+
+.recharge{
+    width:100%;
+
+    height:34px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* CALL INFO */
+
+.info-list{
+    display:flex;
+
+    flex-direction:column;
+    gap:9px;
+}
+
+.info-item{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:8px;
+}
+
+.info-icon{
+    width:30px;
+    height:30px;
+
+    flex-shrink:0;
+
+    border-radius:8px;
+
+    background:var(--green-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:13px;
+}
+
+.info-item strong{
+    display:block;
+
+    font-size:8px;
+}
+
+.info-item p{
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:7px;
+
+    line-height:1.5;
+}
+
+
+/* END MODAL */
+
+.modal{
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    background:rgba(0,0,0,.62);
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(390px,100%);
+
+    padding:25px;
+
+    border-radius:17px;
+
+    background:#fff;
+
+    text-align:center;
+}
+
+.modal-icon{
+    width:55px;
+    height:55px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#fff0f0;
+
+    display:grid;
+    place-items:center;
+
+    font-size:25px;
+}
+
+.modal-box h2{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:22px;
+}
+
+.modal-box p{
+    margin-top:6px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.modal-actions{
+    display:flex;
+
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.modal-actions button{
+    flex:1;
+
+    height:38px;
+
+    border-radius:7px;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.stay{
+    border:1px solid #ddd;
+
+    background:#fff;
+}
+
+.history{
+    border:0;
+
+    background:var(--red);
+
+    color:#fff;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:40px 0 18px;
+
+    background:#171717;
+
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .call-layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .call-card{
+        min-height:590px;
+    }
+
+    .astrologer-area{
+        min-height:360px;
+    }
+
+    .avatar{
+        width:120px;
+        height:120px;
+
+        font-size:50px;
+    }
+
+    .astrologer-name{
+        font-size:23px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../FREE-SERVICES/free-services.html">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Live Features /
+        <span>Audio Call</span>
+    </div>
+
+
+    <div class="call-layout">
+
+
+        <!-- CALL SCREEN -->
+
+        <section class="call-card">
+
+
+            <div class="call-top">
+
+                <div class="secure">
+                    🔒 Private & Secure Call
+                </div>
+
+                <div
+                    id="callStatus"
+                    class="call-status">
+
+                    ● CONNECTED
+
+                </div>
+
+            </div>
+
+
+            <div class="astrologer-area">
+
+
+                <div class="avatar-wrap">
+
+                    <div class="avatar">
+                        🔮
+                    </div>
+
+                    <div class="online-dot"></div>
+
+                </div>
+
+
+                <div class="astrologer-name">
+
+                    Astro Guide
+
+                    <span class="verified">
+                        ✓
+                    </span>
+
+                </div>
+
+
+                <div class="speciality">
+
+                    Vedic Astrology • Kundli • Relationships
+
+                </div>
+
+
+                <div
+                    id="timer"
+                    class="call-timer">
+
+                    00:00
+
+                </div>
+
+
+                <div class="rate">
+
+                    ₹30 / minute
+
+                </div>
+
+            </div>
+
+
+            <div class="controls">
+
+
+                <button
+                    id="muteBtn"
+                    class="control"
+                    onclick="toggleMute()">
+
+                    🎙️
+
+                </button>
+
+
+                <button
+                    id="speakerBtn"
+                    class="control"
+                    onclick="toggleSpeaker()">
+
+                    🔊
+
+                </button>
+
+
+                <button
+                    class="end-call"
+                    onclick="openEndModal()">
+
+                    ☎
+
+                </button>
+
+
+            </div>
+
+
+            <div class="call-bottom">
+
+                Your consultation is charged according to
+                the astrologer's per-minute rate.
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Astrologer
+                </h3>
+
+
+                <div class="mini-profile">
+
+                    <div class="mini-avatar">
+                        🔮
+                    </div>
+
+                    <div>
+
+                        <div class="mini-name">
+                            Astro Guide ✓
+                        </div>
+
+                        <div class="mini-status">
+                            ● Online
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Experience
+                    </span>
+
+                    <strong>
+                        8+ Years
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Languages
+                    </span>
+
+                    <strong>
+                        Hindi, English
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Rating
+                    </span>
+
+                    <strong>
+                        ⭐ 4.9
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Call Rate
+                    </span>
+
+                    <strong>
+                        ₹30/min
+                    </strong>
+
+                </div>
+
+
+                <div class="cost-box">
+
+                    <strong>
+                        💳 Consultation Cost
+                    </strong>
+
+                    <p>
+                        Your wallet balance is automatically used
+                        according to the active consultation duration.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <h3>
+                    Wallet
+                </h3>
+
+
+                <div class="balance-box">
+
+                    <div class="balance-label">
+                        AVAILABLE BALANCE
+                    </div>
+
+                    <div
+                        id="sideBalance"
+                        class="balance">
+
+                        ₹500
+
+                    </div>
+
+
+                    <button
+                        class="recharge"
+                        onclick="location.href='../wallet/recharge.html'">
+
+                        + Recharge Wallet
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <h3>
+                    During Your Call
+                </h3>
+
+
+                <div class="info-list">
+
+
+                    <div class="info-item">
+
+                        <div class="info-icon">
+                            🎙️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Clear Conversation
+                            </strong>
+
+                            <p>
+                                Speak clearly and ask one question
+                                at a time.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <div class="info-icon">
+                            🔒
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Private Session
+                            </strong>
+
+                            <p>
+                                Keep personal information private
+                                during consultations.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <div class="info-icon">
+                            💰
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Wallet Based Billing
+                            </strong>
+
+                            <p>
+                                Monitor your wallet balance during
+                                the consultation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Live Features
+        </h4>
+
+        <a href="audio-call.html">
+            Audio Call
+        </a>
+
+        <a href="live-chat.html">
+            Live Chat
+        </a>
+
+        <a href="live-astrology.html">
+            Live Astrology
+        </a>
+
+        <a href="video-consultation.html">
+            Video Consultation
+        </a>
+
+        <a href="waiting-room.html">
+            Waiting Room
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="../wallet/transactions.html">
+            Transactions
+        </a>
+
+        <a href="../history.html">
+            Consultation History
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- END CALL MODAL -->
+
+<div
+    id="endModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-icon">
+            ☎
+        </div>
+
+        <h2>
+            End Audio Call?
+        </h2>
+
+        <p>
+            Are you sure you want to end this consultation?
+            Your session summary will be available in your history.
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="stay"
+                onclick="closeEndModal()">
+
+                Continue Call
+
+            </button>
+
+
+            <button
+                class="history"
+                onclick="endCall()">
+
+                End Call
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+function updateWallet(){
+
+    document
+        .getElementById("wallet")
+        .innerText =
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+    document
+        .getElementById("sideBalance")
+        .innerText =
+            "₹" +
+            wallet.toLocaleString(
+                "en-IN"
+            );
+
+}
+
+updateWallet();
+
+
+/* CALL STATE */
+
+let seconds = 0;
+
+let callActive = true;
+
+let muted = false;
+
+let speaker = false;
+
+let timer;
+
+
+/* START TIMER */
+
+function startTimer(){
+
+    timer =
+        setInterval(
+            ()=>{
+
+                if(!callActive){
+                    return;
+                }
+
+                seconds++;
+
+                const mins =
+                    Math.floor(
+                        seconds / 60
+                    );
+
+                const secs =
+                    seconds % 60;
+
+
+                document
+                    .getElementById("timer")
+                    .innerText =
+                        String(mins)
+                        .padStart(2,"0")
+                        +
+                        ":"
+                        +
+                        String(secs)
+                        .padStart(2,"0");
+
+
+                /*
+                    Demo billing.
+
+                    Production version should
+                    perform billing on the
+                    backend rather than trusting
+                    browser JavaScript.
+                */
+
+                if(
+                    seconds % 60 === 0
+                ){
+
+                    wallet =
+                        Math.max(
+                            0,
+                            wallet - 30
+                        );
+
+                    localStorage.setItem(
+                        "awt_wallet_balance",
+                        wallet
+                    );
+
+                    updateWallet();
+
+
+                    if(
+                        wallet <= 0
+                    ){
+
+                        autoEndCall();
+
+                    }
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+startTimer();
+
+
+/* MUTE */
+
+function toggleMute(){
+
+    muted =
+        !muted;
+
+
+    const button =
+        document
+        .getElementById(
+            "muteBtn"
+        );
+
+
+    button.classList.toggle(
+        "active",
+        muted
+    );
+
+
+    button.innerText =
+        muted
+        ?
+        "🔇"
+        :
+        "🎙️";
+
+}
+
+
+/* SPEAKER */
+
+function toggleSpeaker(){
+
+    speaker =
+        !speaker;
+
+
+    document
+        .getElementById(
+            "speakerBtn"
+        )
+        .classList
+        .toggle(
+            "active",
+            speaker
+        );
+
+}
+
+
+/* MODAL */
+
+function openEndModal(){
+
+    if(!callActive){
+        return;
+    }
+
+    document
+        .getElementById(
+            "endModal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+function closeEndModal(){
+
+    document
+        .getElementById(
+            "endModal"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* END CALL */
+
+function endCall(){
+
+    callActive = false;
+
+    clearInterval(timer);
+
+    localStorage.setItem(
+        "awt_last_call",
+        JSON.stringify({
+
+            type:"audio",
+
+            duration:seconds,
+
+            astrologer:
+                "Astro Guide",
+
+            rate:30,
+
+            date:
+                new Date()
+                .toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById(
+            "callStatus"
+        )
+        .innerText =
+            "● CALL ENDED";
+
+
+    document
+        .getElementById(
+            "callStatus"
+        )
+        .style.color =
+            "#ff9a9a";
+
+
+    document
+        .getElementById(
+            "callStatus"
+        )
+        .style.background =
+            "rgba(215,25,32,.13)";
+
+
+    closeEndModal();
+
+
+    setTimeout(
+        ()=>{
+
+            location.href =
+                "../history.html";
+
+        },
+        700
+    );
+
+}
+
+
+/* LOW BALANCE */
+
+function autoEndCall(){
+
+    if(!callActive){
+        return;
+    }
+
+    callActive = false;
+
+    clearInterval(timer);
+
+    alert(
+        "Your wallet balance has reached ₹0. Please recharge your wallet to continue."
+    );
+
+
+    location.href =
+        "../wallet/recharge.html";
+
+}
+
+
+/* PAGE VISIT */
+
+localStorage.setItem(
+    "awt_audio_call_last_visit",
+    new Date().toISOString()
+);
+
+</script>
+
+</body>
+</html>
