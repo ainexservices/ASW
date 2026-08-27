@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nakshatra Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate your birth Nakshatra with Astro With Talk using birth date, time and place.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --purple:#7547a8;
+    --purple-bg:#f6f0ff;
+    --blue:#2867a8;
+    --blue-bg:#f1f7ff;
+    --green:#23794a;
+    --green-bg:#effaf4;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 85% 10%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#4d2371,#7547a8);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"✦";
+    position:absolute;
+    right:50px;
+    top:-55px;
+    font-size:200px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:730px;
+    color:rgba(255,255,255,.87);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #e2d8eb;
+    background:linear-gradient(180deg,#fbf8ff,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#a68ac2;
+    box-shadow:0 0 0 3px rgba(117,71,168,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--purple);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:#63348f;
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.result-main{
+    max-width:610px;
+    margin:18px auto 0;
+    border:1px solid #e1d5ea;
+    background:var(--purple-bg);
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.star-symbol{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    margin:auto;
+    display:grid;
+    place-items:center;
+    background:#fff;
+    border:7px solid #e7dcef;
+    font-size:39px;
+}
+
+.result-main h4{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+    margin-top:10px;
+}
+
+.result-main .sanskrit{
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.result-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.result-pill{
+    background:#fff;
+    border:1px solid #e0d6e8;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:7px;
+}
+
+
+/* DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.detail-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-card .icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:15px;
+}
+
+.detail-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.detail-card p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* NAKSHATRAS */
+
+.nakshatra-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:16px;
+}
+
+.nakshatra{
+    border:1px solid #eee;
+    border-radius:9px;
+    padding:10px;
+}
+
+.nakshatra strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:10px;
+}
+
+.nakshatra span{
+    display:block;
+    color:#999;
+    font-size:6px;
+    margin-top:3px;
+}
+
+.nakshatra:hover{
+    border-color:#d8c7e5;
+    background:#fcfaff;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .nakshatra-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .nakshatra-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Nakshatra Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Nakshatra Calculator ⭐
+            </h1>
+
+            <p>
+                Enter your birth date, time and place to explore your
+                Janma Nakshatra. In traditional Vedic astrology,
+                Nakshatra refers to the lunar mansion associated with
+                the Moon's position at birth.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ⭐ 27 Nakshatras
+                </div>
+
+                <div class="hero-pill">
+                    🌙 Moon Position
+                </div>
+
+                <div class="hero-pill">
+                    🪐 Vedic Astrology
+                </div>
+
+                <div class="hero-pill">
+                    📍 Birth Place
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- FORM -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Your Nakshatra
+                </h2>
+
+                <p class="section-sub">
+                    Accurate birth time and location are important for
+                    an actual astronomical calculation.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="nakshatraForm"
+                        onsubmit="calculateNakshatra(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="tob">
+                                    Time of Birth
+                                </label>
+
+                                <input
+                                    id="tob"
+                                    type="time"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Birth Place
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="City / Place"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <input
+                                    id="country"
+                                    type="text"
+                                    value="India"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            ⭐ Calculate My Nakshatra
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Nakshatra Result
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="result-main">
+
+                            <div
+                                class="star-symbol"
+                                id="nakshatraSymbol">
+                                ⭐
+                            </div>
+
+
+                            <h4 id="nakshatraName">
+                                Ashwini
+                            </h4>
+
+
+                            <div
+                                class="sanskrit"
+                                id="nakshatraHindi">
+                                अश्विनी
+                            </div>
+
+
+                            <div class="result-pills">
+
+                                <div
+                                    class="result-pill"
+                                    id="padaPill">
+                                    Pada 1
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="lordPill">
+                                    Lord: Ketu
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="deityPill">
+                                    Deity: Ashwini Kumaras
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="details-grid">
+
+
+                            <div class="detail-card">
+
+                                <div class="icon">
+                                    🪐
+                                </div>
+
+                                <strong>
+                                    Nakshatra Lord
+                                </strong>
+
+                                <p id="lordText">
+                                    Your Nakshatra lord appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="detail-card">
+
+                                <div class="icon">
+                                    🛕
+                                </div>
+
+                                <strong>
+                                    Presiding Deity
+                                </strong>
+
+                                <p id="deityText">
+                                    Traditional deity information appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="detail-card">
+
+                                <div class="icon">
+                                    ✨
+                                </div>
+
+                                <strong>
+                                    Traditional Theme
+                                </strong>
+
+                                <p id="themeText">
+                                    Traditional Nakshatra theme appears here.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 27 NAKSHATRAS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    27 Nakshatras
+                </h2>
+
+                <p class="section-sub">
+                    Traditional Vedic astrology divides the zodiacal
+                    circle into 27 lunar mansions.
+                </p>
+
+
+                <div class="nakshatra-grid">
+
+
+                    <div class="nakshatra">
+                        <strong>Ashwini</strong>
+                        <span>अश्विनी • Ketu</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Bharani</strong>
+                        <span>भरणी • Venus</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Krittika</strong>
+                        <span>कृत्तिका • Sun</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Rohini</strong>
+                        <span>रोहिणी • Moon</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Mrigashira</strong>
+                        <span>मृगशीर्ष • Mars</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Ardra</strong>
+                        <span>आर्द्रा • Rahu</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Punarvasu</strong>
+                        <span>पुनर्वसु • Jupiter</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Pushya</strong>
+                        <span>पुष्य • Saturn</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Ashlesha</strong>
+                        <span>आश्लेषा • Mercury</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Magha</strong>
+                        <span>मघा • Ketu</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Purva Phalguni</strong>
+                        <span>पूर्व फाल्गुनी • Venus</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Uttara Phalguni</strong>
+                        <span>उत्तर फाल्गुनी • Sun</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Hasta</strong>
+                        <span>हस्त • Moon</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Chitra</strong>
+                        <span>चित्रा • Mars</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Swati</strong>
+                        <span>स्वाती • Rahu</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Vishakha</strong>
+                        <span>विशाखा • Jupiter</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Anuradha</strong>
+                        <span>अनुराधा • Saturn</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Jyeshtha</strong>
+                        <span>ज्येष्ठा • Mercury</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Mula</strong>
+                        <span>मूल • Ketu</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Purva Ashadha</strong>
+                        <span>पूर्वाषाढ़ा • Venus</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Uttara Ashadha</strong>
+                        <span>उत्तराषाढ़ा • Sun</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Shravana</strong>
+                        <span>श्रवण • Moon</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Dhanishta</strong>
+                        <span>धनिष्ठा • Mars</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Shatabhisha</strong>
+                        <span>शतभिषा • Rahu</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Purva Bhadrapada</strong>
+                        <span>पूर्व भाद्रपदा • Jupiter</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Uttara Bhadrapada</strong>
+                        <span>उत्तर भाद्रपदा • Saturn</span>
+                    </div>
+
+                    <div class="nakshatra">
+                        <strong>Revati</strong>
+                        <span>रेवती • Mercury</span>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This page currently uses a deterministic frontend
+                        demonstration calculation. A production version
+                        should calculate the Moon's sidereal longitude from
+                        an astronomical ephemeris, exact birth coordinates,
+                        timezone and the selected ayanamsa, then determine
+                        the Nakshatra and Pada from that longitude.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Rashi Calculator</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="numerology-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Numerology</strong>
+                        <span>Number analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="sun-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">☀️</div>
+
+                    <div class="side-content">
+                        <strong>Sun Sign</strong>
+                        <span>Zodiac sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rising-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">⬆️</div>
+
+                    <div class="side-content">
+                        <strong>Rising Sign</strong>
+                        <span>Ascendant</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/free-kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Free Kundli</strong>
+                        <span>Full birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Personal Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for a deeper
+                        interpretation of your Nakshatra and birth chart.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="rashi-calculator.html">Rashi</a>
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Horoscope</h4>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="../HOROSCOPE/daily-horoscope.html">Daily</a>
+        <a href="../HOROSCOPE/weekly-horoscope.html">Weekly</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/*
+    NAKSHATRA DATA
+
+    This data is used for the frontend prototype.
+*/
+
+const nakshatras = [
+
+    {
+        name:"Ashwini",
+        hindi:"अश्विनी",
+        lord:"Ketu",
+        deity:"Ashwini Kumaras",
+        theme:
+        "Traditionally associated with speed, beginnings, healing and initiative."
+    },
+
+    {
+        name:"Bharani",
+        hindi:"भरणी",
+        lord:"Venus",
+        deity:"Yama",
+        theme:
+        "Traditionally associated with responsibility, transformation and endurance."
+    },
+
+    {
+        name:"Krittika",
+        hindi:"कृत्तिका",
+        lord:"Sun",
+        deity:"Agni",
+        theme:
+        "Traditionally associated with purification, courage and decisive action."
+    },
+
+    {
+        name:"Rohini",
+        hindi:"रोहिणी",
+        lord:"Moon",
+        deity:"Brahma",
+        theme:
+        "Traditionally associated with growth, beauty, creativity and attraction."
+    },
+
+    {
+        name:"Mrigashira",
+        hindi:"मृगशीर्ष",
+        lord:"Mars",
+        deity:"Soma",
+        theme:
+        "Traditionally associated with curiosity, searching and exploration."
+    },
+
+    {
+        name:"Ardra",
+        hindi:"आर्द्रा",
+        lord:"Rahu",
+        deity:"Rudra",
+        theme:
+        "Traditionally associated with intensity, transformation and inquiry."
+    },
+
+    {
+        name:"Punarvasu",
+        hindi:"पुनर्वसु",
+        lord:"Jupiter",
+        deity:"Aditi",
+        theme:
+        "Traditionally associated with renewal, return and restoration."
+    },
+
+    {
+        name:"Pushya",
+        hindi:"पुष्य",
+        lord:"Saturn",
+        deity:"Brihaspati",
+        theme:
+        "Traditionally associated with nourishment, learning and support."
+    },
+
+    {
+        name:"Ashlesha",
+        hindi:"आश्लेषा",
+        lord:"Mercury",
+        deity:"Nagas",
+        theme:
+        "Traditionally associated with perception, depth and subtle awareness."
+    },
+
+    {
+        name:"Magha",
+        hindi:"मघा",
+        lord:"Ketu",
+        deity:"Pitris",
+        theme:
+        "Traditionally associated with heritage, ancestry and authority."
+    },
+
+    {
+        name:"Purva Phalguni",
+        hindi:"पूर्व फाल्गुनी",
+        lord:"Venus",
+        deity:"Bhaga",
+        theme:
+        "Traditionally associated with enjoyment, creativity and relationships."
+    },
+
+    {
+        name:"Uttara Phalguni",
+        hindi:"उत्तर फाल्गुनी",
+        lord:"Sun",
+        deity:"Aryaman",
+        theme:
+        "Traditionally associated with agreements, generosity and lasting bonds."
+    },
+
+    {
+        name:"Hasta",
+        hindi:"हस्त",
+        lord:"Moon",
+        deity:"Savitar",
+        theme:
+        "Traditionally associated with skill, craftsmanship and practical ability."
+    },
+
+    {
+        name:"Chitra",
+        hindi:"चित्रा",
+        lord:"Mars",
+        deity:"Tvashtar",
+        theme:
+        "Traditionally associated with beauty, design and creative expression."
+    },
+
+    {
+        name:"Swati",
+        hindi:"स्वाती",
+        lord:"Rahu",
+        deity:"Vayu",
+        theme:
+        "Traditionally associated with independence, movement and adaptability."
+    },
+
+    {
+        name:"Vishakha",
+        hindi:"विशाखा",
+        lord:"Jupiter",
+        deity:"Indra-Agni",
+        theme:
+        "Traditionally associated with determination, ambition and focused goals."
+    },
+
+    {
+        name:"Anuradha",
+        hindi:"अनुराधा",
+        lord:"Saturn",
+        deity:"Mitra",
+        theme:
+        "Traditionally associated with friendship, devotion and cooperation."
+    },
+
+    {
+        name:"Jyeshtha",
+        hindi:"ज्येष्ठा",
+        lord:"Mercury",
+        deity:"Indra",
+        theme:
+        "Traditionally associated with protection, responsibility and seniority."
+    },
+
+    {
+        name:"Mula",
+        hindi:"मूल",
+        lord:"Ketu",
+        deity:"Nirriti",
+        theme:
+        "Traditionally associated with roots, investigation and transformation."
+    },
+
+    {
+        name:"Purva Ashadha",
+        hindi:"पूर्वाषाढ़ा",
+        lord:"Venus",
+        deity:"Apas",
+        theme:
+        "Traditionally associated with confidence, renewal and invigoration."
+    },
+
+    {
+        name:"Uttara Ashadha",
+        hindi:"उत्तराषाढ़ा",
+        lord:"Sun",
+        deity:"Vishvadevas",
+        theme:
+        "Traditionally associated with persistence, leadership and lasting success."
+    },
+
+    {
+        name:"Shravana",
+        hindi:"श्रवण",
+        lord:"Moon",
+        deity:"Vishnu",
+        theme:
+        "Traditionally associated with listening, learning and knowledge."
+    },
+
+    {
+        name:"Dhanishta",
+        hindi:"धनिष्ठा",
+        lord:"Mars",
+        deity:"Vasus",
+        theme:
+        "Traditionally associated with rhythm, resources and achievement."
+    },
+
+    {
+        name:"Shatabhisha",
+        hindi:"शतभिषा",
+        lord:"Rahu",
+        deity:"Varuna",
+        theme:
+        "Traditionally associated with healing, investigation and independence."
+    },
+
+    {
+        name:"Purva Bhadrapada",
+        hindi:"पूर्व भाद्रपदा",
+        lord:"Jupiter",
+        deity:"Aja Ekapada",
+        theme:
+        "Traditionally associated with ideals, intensity and transformation."
+    },
+
+    {
+        name:"Uttara Bhadrapada",
+        hindi:"उत्तर भाद्रपदा",
+        lord:"Saturn",
+        deity:"Ahir Budhnya",
+        theme:
+        "Traditionally associated with depth, patience and stability."
+    },
+
+    {
+        name:"Revati",
+        hindi:"रेवती",
+        lord:"Mercury",
+        deity:"Pushan",
+        theme:
+        "Traditionally associated with protection, journeys, compassion and completion."
+    }
+
+];
+
+
+/* HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* CALCULATE */
+
+function calculateNakshatra(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const tob =
+        document.getElementById(
+            "tob"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const country =
+        document.getElementById(
+            "country"
+        ).value.trim();
+
+
+    if(
+        !name ||
+        !dob ||
+        !tob ||
+        !place ||
+        !country
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        name.toLowerCase()
+        + "|"
+        + dob
+        + "|"
+        + tob
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + country.toLowerCase();
+
+
+    const hash =
+        stringHash(seed);
+
+
+    const index =
+        hash % nakshatras.length;
+
+
+    const pada =
+        (hash % 4) + 1;
+
+
+    const data =
+        nakshatras[index];
+
+
+    document.getElementById(
+        "nakshatraSymbol"
+    ).innerText =
+        "⭐";
+
+
+    document.getElementById(
+        "nakshatraName"
+    ).innerText =
+        data.name;
+
+
+    document.getElementById(
+        "nakshatraHindi"
+    ).innerText =
+        data.hindi;
+
+
+    document.getElementById(
+        "padaPill"
+    ).innerText =
+        "Pada " + pada;
+
+
+    document.getElementById(
+        "lordPill"
+    ).innerText =
+        "Lord: " + data.lord;
+
+
+    document.getElementById(
+        "deityPill"
+    ).innerText =
+        "Deity: " + data.deity;
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name +
+        " • " +
+        dob +
+        " • " +
+        tob;
+
+
+    document.getElementById(
+        "lordText"
+    ).innerText =
+        data.lord +
+        " is traditionally associated with the selected Nakshatra.";
+
+
+    document.getElementById(
+        "deityText"
+    ).innerText =
+        data.deity +
+        " is the traditional presiding deity listed for this Nakshatra.";
+
+
+    document.getElementById(
+        "themeText"
+    ).innerText =
+        data.theme;
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_nakshatra_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            tob:tob,
+
+            place:place,
+
+            country:country,
+
+            nakshatra:data.name,
+
+            hindi:data.hindi,
+
+            lord:data.lord,
+
+            deity:data.deity,
+
+            pada:pada,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

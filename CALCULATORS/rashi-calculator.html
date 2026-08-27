@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rashi Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate your Moon Rashi from your birth details with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --blue:#2867a8;
+    --blue-bg:#f1f7ff;
+    --purple:#7547a8;
+    --purple-bg:#f6f0ff;
+    --green:#23794a;
+    --green-bg:#effaf4;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 85% 10%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#162d55,#2867a8);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"☾";
+    position:absolute;
+    right:45px;
+    top:-55px;
+    font-size:190px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:730px;
+    color:rgba(255,255,255,.87);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #dce5ef;
+    background:linear-gradient(180deg,#f7fbff,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#86a9cc;
+    box-shadow:0 0 0 3px rgba(40,103,168,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--blue);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:#1e548a;
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.rashi-result{
+    max-width:570px;
+    margin:18px auto 0;
+    border:1px solid #dce5ef;
+    background:var(--blue-bg);
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.rashi-symbol{
+    width:90px;
+    height:90px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff;
+    border:7px solid #dce8f4;
+    display:grid;
+    place-items:center;
+    font-size:42px;
+}
+
+.rashi-result h4{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+    margin-top:10px;
+}
+
+.rashi-result .english{
+    color:var(--blue);
+    font-size:8px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.rashi-result .details{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:11px;
+}
+
+.detail-pill{
+    padding:6px 9px;
+    background:#fff;
+    border:1px solid #dce5ef;
+    border-radius:20px;
+    font-size:7px;
+}
+
+
+/* INSIGHTS */
+
+.insights{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.insight{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.insight-icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+}
+
+.insight strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.insight p{
+    color:#888;
+    font-size:7px;
+    line-height:1.6;
+    margin-top:4px;
+}
+
+
+/* ZODIAC GRID */
+
+.zodiac-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+    margin-top:16px;
+}
+
+.zodiac{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:10px 5px;
+    text-align:center;
+    transition:.2s;
+}
+
+.zodiac:hover{
+    border-color:#c8d9e9;
+    transform:translateY(-2px);
+}
+
+.zodiac-symbol{
+    font-size:21px;
+}
+
+.zodiac strong{
+    display:block;
+    font-size:7px;
+    margin-top:4px;
+}
+
+.zodiac span{
+    display:block;
+    color:#999;
+    font-size:6px;
+    margin-top:2px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--blue-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .insights{
+        grid-template-columns:1fr;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Rashi Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Rashi Calculator 🌙
+            </h1>
+
+            <p>
+                Enter your birth details to explore your Moon Rashi.
+                In Vedic astrology, Rashi commonly refers to the zodiac
+                sign occupied by the Moon at the time of birth.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🌙 Moon Sign
+                </div>
+
+                <div class="hero-pill">
+                    ♈ 12 Rashis
+                </div>
+
+                <div class="hero-pill">
+                    🪐 Vedic Astrology
+                </div>
+
+                <div class="hero-pill">
+                    📅 Birth Details
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- FORM -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Your Rashi
+                </h2>
+
+                <p class="section-sub">
+                    For an accurate production calculation, the system
+                    should use the exact birth time, birthplace and
+                    astronomical planetary-position data.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="rashiForm"
+                        onsubmit="calculateRashi(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    placeholder="Enter your full name"
+                                    maxlength="80"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="tob">
+                                    Time of Birth
+                                </label>
+
+                                <input
+                                    id="tob"
+                                    type="time"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Birth Place
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    placeholder="City / Place of birth"
+                                    maxlength="100"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <input
+                                    id="country"
+                                    type="text"
+                                    value="India"
+                                    placeholder="Country"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🌙 Calculate My Rashi
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Rashi Result
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="rashi-result">
+
+
+                            <div
+                                class="rashi-symbol"
+                                id="rashiSymbol">
+                                ♈
+                            </div>
+
+
+                            <h4 id="rashiName">
+                                Aries
+                            </h4>
+
+
+                            <div
+                                class="english"
+                                id="rashiHindi">
+                                मेष राशि
+                            </div>
+
+
+                            <div class="details">
+
+
+                                <div class="detail-pill">
+                                    🌙 Moon Sign
+                                </div>
+
+
+                                <div
+                                    class="detail-pill"
+                                    id="elementPill">
+                                    🔥 Fire
+                                </div>
+
+
+                                <div
+                                    class="detail-pill"
+                                    id="qualityPill">
+                                    Cardinal
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="insights">
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🌙
+                                </div>
+
+                                <strong>
+                                    Rashi
+                                </strong>
+
+                                <p id="rashiMeaning">
+                                    Your Moon sign result appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🪐
+                                </div>
+
+                                <strong>
+                                    Ruling Planet
+                                </strong>
+
+                                <p id="planetMeaning">
+                                    Ruling planet information appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    ✨
+                                </div>
+
+                                <strong>
+                                    Traditional Theme
+                                </strong>
+
+                                <p id="themeMeaning">
+                                    Traditional theme appears here.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ZODIAC -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    12 Rashis
+                </h2>
+
+                <p class="section-sub">
+                    The zodiac is traditionally divided into twelve signs.
+                </p>
+
+
+                <div class="zodiac-grid">
+
+
+                    <a href="../HOROSCOPE/aries-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♈</div>
+                        <strong>Aries</strong>
+                        <span>Mesha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/taurus-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♉</div>
+                        <strong>Taurus</strong>
+                        <span>Vrishabha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/gemini-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♊</div>
+                        <strong>Gemini</strong>
+                        <span>Mithuna</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/cancer-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♋</div>
+                        <strong>Cancer</strong>
+                        <span>Karka</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/leo-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♌</div>
+                        <strong>Leo</strong>
+                        <span>Simha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/virgo-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♍</div>
+                        <strong>Virgo</strong>
+                        <span>Kanya</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/libra-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♎</div>
+                        <strong>Libra</strong>
+                        <span>Tula</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/scorpio-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♏</div>
+                        <strong>Scorpio</strong>
+                        <span>Vrishchika</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/sagittarius-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♐</div>
+                        <strong>Sagittarius</strong>
+                        <span>Dhanu</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/capricorn-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♑</div>
+                        <strong>Capricorn</strong>
+                        <span>Makara</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/aquarius-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♒</div>
+                        <strong>Aquarius</strong>
+                        <span>Kumbha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/pisces-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♓</div>
+                        <strong>Pisces</strong>
+                        <span>Meena</span>
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This frontend prototype uses a deterministic
+                        demonstration calculation so the page works
+                        without a backend. A production Astro With Talk
+                        implementation should calculate the actual Moon
+                        longitude from the precise birth date, time,
+                        timezone, coordinates and chosen ayanamsa before
+                        assigning the Rashi.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="numerology-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Numerology</strong>
+                        <span>Number analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="nakshatra-calculator.html" class="side-link">
+
+                    <div class="side-icon">⭐</div>
+
+                    <div class="side-content">
+                        <strong>Nakshatra</strong>
+                        <span>Birth star</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="sun-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">☀️</div>
+
+                    <div class="side-content">
+                        <strong>Sun Sign</strong>
+                        <span>Zodiac sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rising-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">⬆️</div>
+
+                    <div class="side-content">
+                        <strong>Rising Sign</strong>
+                        <span>Ascendant</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/free-kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Free Kundli</strong>
+                        <span>Full birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Complete Analysis?
+                    </strong>
+
+                    <p>
+                        Generate your complete Kundli and consult
+                        an astrologer for deeper interpretation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../KUNDLI/free-kundli.html'">
+
+                        Generate Kundli →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="rashi-calculator.html">Rashi</a>
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Zodiac</h4>
+
+        <a href="../HOROSCOPE/aries-horoscope.html">Aries</a>
+        <a href="../HOROSCOPE/taurus-horoscope.html">Taurus</a>
+        <a href="../HOROSCOPE/gemini-horoscope.html">Gemini</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/*
+    Prototype Rashi calculation.
+
+    NOTE:
+    Real Moon-sign calculation requires astronomical
+    ephemeris data + exact birth coordinates/timezone.
+    This local algorithm is intentionally deterministic
+    so the frontend remains functional before backend
+    integration.
+*/
+
+
+const rashis = [
+
+    {
+        name:"Aries",
+        hindi:"मेष राशि",
+        symbol:"♈",
+        element:"🔥 Fire",
+        quality:"Movable",
+        planet:"Mars",
+        theme:
+        "Traditionally associated with initiative, directness and energetic expression."
+    },
+
+    {
+        name:"Taurus",
+        hindi:"वृषभ राशि",
+        symbol:"♉",
+        element:"🌍 Earth",
+        quality:"Fixed",
+        planet:"Venus",
+        theme:
+        "Traditionally associated with stability, practicality and appreciation of comfort."
+    },
+
+    {
+        name:"Gemini",
+        hindi:"मिथुन राशि",
+        symbol:"♊",
+        element:"🌬️ Air",
+        quality:"Dual",
+        planet:"Mercury",
+        theme:
+        "Traditionally associated with communication, curiosity and adaptability."
+    },
+
+    {
+        name:"Cancer",
+        hindi:"कर्क राशि",
+        symbol:"♋",
+        element:"💧 Water",
+        quality:"Movable",
+        planet:"Moon",
+        theme:
+        "Traditionally associated with sensitivity, nurturing and emotional awareness."
+    },
+
+    {
+        name:"Leo",
+        hindi:"सिंह राशि",
+        symbol:"♌",
+        element:"🔥 Fire",
+        quality:"Fixed",
+        planet:"Sun",
+        theme:
+        "Traditionally associated with confidence, expression and leadership."
+    },
+
+    {
+        name:"Virgo",
+        hindi:"कन्या राशि",
+        symbol:"♍",
+        element:"🌍 Earth",
+        quality:"Dual",
+        planet:"Mercury",
+        theme:
+        "Traditionally associated with analysis, organization and practical thinking."
+    },
+
+    {
+        name:"Libra",
+        hindi:"तुला राशि",
+        symbol:"♎",
+        element:"🌬️ Air",
+        quality:"Movable",
+        planet:"Venus",
+        theme:
+        "Traditionally associated with balance, relationships and harmony."
+    },
+
+    {
+        name:"Scorpio",
+        hindi:"वृश्चिक राशि",
+        symbol:"♏",
+        element:"💧 Water",
+        quality:"Fixed",
+        planet:"Mars",
+        theme:
+        "Traditionally associated with depth, determination and transformation."
+    },
+
+    {
+        name:"Sagittarius",
+        hindi:"धनु राशि",
+        symbol:"♐",
+        element:"🔥 Fire",
+        quality:"Dual",
+        planet:"Jupiter",
+        theme:
+        "Traditionally associated with exploration, learning and broad perspective."
+    },
+
+    {
+        name:"Capricorn",
+        hindi:"मकर राशि",
+        symbol:"♑",
+        element:"🌍 Earth",
+        quality:"Movable",
+        planet:"Saturn",
+        theme:
+        "Traditionally associated with discipline, responsibility and long-term goals."
+    },
+
+    {
+        name:"Aquarius",
+        hindi:"कुंभ राशि",
+        symbol:"♒",
+        element:"🌬️ Air",
+        quality:"Fixed",
+        planet:"Saturn",
+        theme:
+        "Traditionally associated with independent thinking, ideals and social themes."
+    },
+
+    {
+        name:"Pisces",
+        hindi:"मीन राशि",
+        symbol:"♓",
+        element:"💧 Water",
+        quality:"Dual",
+        planet:"Jupiter",
+        theme:
+        "Traditionally associated with imagination, compassion and intuition."
+    }
+
+];
+
+
+/* SIMPLE HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* CALCULATE */
+
+function calculateRashi(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const tob =
+        document.getElementById(
+            "tob"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const country =
+        document.getElementById(
+            "country"
+        ).value.trim();
+
+
+    if(
+        !name ||
+        !dob ||
+        !tob ||
+        !place ||
+        !country
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        name.toLowerCase()
+        + "|"
+        + dob
+        + "|"
+        + tob
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + country.toLowerCase();
+
+
+    const index =
+        stringHash(seed)
+        % rashis.length;
+
+
+    const rashi =
+        rashis[index];
+
+
+    document.getElementById(
+        "rashiSymbol"
+    ).innerText =
+        rashi.symbol;
+
+
+    document.getElementById(
+        "rashiName"
+    ).innerText =
+        rashi.name;
+
+
+    document.getElementById(
+        "rashiHindi"
+    ).innerText =
+        rashi.hindi;
+
+
+    document.getElementById(
+        "elementPill"
+    ).innerText =
+        rashi.element;
+
+
+    document.getElementById(
+        "qualityPill"
+    ).innerText =
+        rashi.quality;
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name +
+        " • " +
+        dob +
+        " • " +
+        tob;
+
+
+    document.getElementById(
+        "rashiMeaning"
+    ).innerText =
+        "Your prototype result identifies " +
+        rashi.name +
+        " (" +
+        rashi.hindi +
+        ") as the selected Rashi.";
+
+
+    document.getElementById(
+        "planetMeaning"
+    ).innerText =
+        rashi.planet +
+        " is traditionally associated with " +
+        rashi.name +
+        " in this simplified presentation.";
+
+
+    document.getElementById(
+        "themeMeaning"
+    ).innerText =
+        rashi.theme;
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_rashi_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            tob:tob,
+
+            place:place,
+
+            country:country,
+
+            rashi:rashi,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Moon Phase Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate the Moon phase for a selected date with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --navy:#17243f;
+    --navy-2:#293d69;
+    --moon-bg:#f3f6fd;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 88% 10%,rgba(255,255,255,.20),transparent 27%),
+        linear-gradient(125deg,#111c34,#344d7b);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"☾";
+    position:absolute;
+    right:40px;
+    top:-75px;
+    font-size:230px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:770px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #d9e1ee;
+    background:linear-gradient(180deg,#f9fbff,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#8195bd;
+    box-shadow:0 0 0 3px rgba(41,61,105,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--navy-2);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--navy);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.moon-result{
+    max-width:650px;
+    margin:18px auto 0;
+    padding:24px;
+    border-radius:15px;
+    background:var(--moon-bg);
+    border:1px solid #dce4f1;
+    text-align:center;
+}
+
+.moon{
+    width:120px;
+    height:120px;
+    margin:auto;
+    border-radius:50%;
+    background:#e9edf4;
+    box-shadow:
+        inset -15px -10px 0 rgba(80,91,113,.12),
+        0 8px 25px rgba(20,35,65,.10);
+    display:grid;
+    place-items:center;
+    font-size:55px;
+}
+
+.moon-result h4{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    margin-top:12px;
+}
+
+.phase-percent{
+    color:var(--navy-2);
+    font-size:9px;
+    font-weight:700;
+    margin-top:4px;
+}
+
+.result-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.result-pill{
+    background:#fff;
+    border:1px solid #d9e1ed;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:7px;
+}
+
+
+/* PROGRESS */
+
+.progress-box{
+    max-width:650px;
+    margin:18px auto 0;
+}
+
+.progress-label{
+    display:flex;
+    justify-content:space-between;
+    color:#777;
+    font-size:7px;
+    margin-bottom:6px;
+}
+
+.progress{
+    height:9px;
+    background:#e7ebf2;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    width:0;
+    background:#536d9f;
+    border-radius:20px;
+    transition:.4s;
+}
+
+
+/* PHASE GRID */
+
+.phase-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:16px;
+}
+
+.phase-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.phase-icon{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:var(--moon-bg);
+    display:grid;
+    place-items:center;
+    font-size:17px;
+}
+
+.phase-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.phase-card p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--moon-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .phase-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .phase-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+
+        <a href="calculators.html" class="active">Calculators</a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Moon Phase Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Moon Phase Calculator 🌙
+            </h1>
+
+            <p>
+                Find the Moon phase for a selected date and explore
+                the lunar cycle from New Moon to Full Moon and back.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🌑 New Moon
+                </div>
+
+                <div class="hero-pill">
+                    🌓 First Quarter
+                </div>
+
+                <div class="hero-pill">
+                    🌕 Full Moon
+                </div>
+
+                <div class="hero-pill">
+                    🌗 Last Quarter
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Moon Phase
+                </h2>
+
+                <p class="section-sub">
+                    Select a date to see the approximate lunar phase
+                    and illumination.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="moonForm"
+                        onsubmit="calculateMoon(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="moonDate">
+                                    Select Date
+                                </label>
+
+                                <input
+                                    id="moonDate"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🌙 Calculate Moon Phase
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Moon Phase Result
+                            </h3>
+
+                            <p id="resultDate">
+                                Selected date
+                            </p>
+
+                        </div>
+
+
+                        <div class="moon-result">
+
+                            <div
+                                id="moonVisual"
+                                class="moon">
+                                🌙
+                            </div>
+
+
+                            <h4 id="phaseName">
+                                Waxing Crescent
+                            </h4>
+
+
+                            <div
+                                class="phase-percent"
+                                id="illumination">
+                                Approx. 25% illuminated
+                            </div>
+
+
+                            <div class="result-pills">
+
+                                <div
+                                    class="result-pill"
+                                    id="agePill">
+                                    Moon Age: —
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="cyclePill">
+                                    Cycle: —
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="distancePill">
+                                    Reference: —
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progress-box">
+
+                            <div class="progress-label">
+
+                                <span>
+                                    Lunar Cycle
+                                </span>
+
+                                <span id="progressText">
+                                    0%
+                                </span>
+
+                            </div>
+
+                            <div class="progress">
+                                <span id="progressBar"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHASES -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    8 Major Moon Phases
+                </h2>
+
+                <p class="section-sub">
+                    The lunar cycle is commonly described through
+                    eight recognizable phases.
+                </p>
+
+
+                <div class="phase-grid">
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌑</div>
+
+                        <strong>New Moon</strong>
+
+                        <p>
+                            The Moon is near the beginning of
+                            a new synodic cycle.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌒</div>
+
+                        <strong>Waxing Crescent</strong>
+
+                        <p>
+                            A growing illuminated portion appears
+                            after the New Moon.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌓</div>
+
+                        <strong>First Quarter</strong>
+
+                        <p>
+                            Approximately half of the visible
+                            lunar disk is illuminated.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌔</div>
+
+                        <strong>Waxing Gibbous</strong>
+
+                        <p>
+                            More than half of the visible disk
+                            is illuminated and increasing.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌕</div>
+
+                        <strong>Full Moon</strong>
+
+                        <p>
+                            The visible lunar disk is approximately
+                            fully illuminated.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌖</div>
+
+                        <strong>Waning Gibbous</strong>
+
+                        <p>
+                            Illumination begins decreasing after
+                            the Full Moon.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌗</div>
+
+                        <strong>Last Quarter</strong>
+
+                        <p>
+                            Approximately half of the visible
+                            disk remains illuminated.
+                        </p>
+
+                    </div>
+
+
+                    <div class="phase-card">
+
+                        <div class="phase-icon">🌘</div>
+
+                        <strong>Waning Crescent</strong>
+
+                        <p>
+                            The illuminated portion continues
+                            decreasing toward New Moon.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Calculation Note
+                    </strong>
+
+                    <p>
+                        This frontend calculator uses an approximate
+                        synodic-month algorithm for the displayed phase.
+                        A production astronomical implementation should
+                        use precise ephemeris data and the user's exact
+                        date, time, timezone and observing location when
+                        calculating Moon longitude, illumination and
+                        rise/set information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Rashi</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="nakshatra-calculator.html" class="side-link">
+
+                    <div class="side-icon">⭐</div>
+
+                    <div class="side-content">
+                        <strong>Nakshatra</strong>
+                        <span>Birth star</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="shani-sade-sati-calculator.html" class="side-link">
+
+                    <div class="side-icon">♄</div>
+
+                    <div class="side-content">
+                        <strong>Sade Sati</strong>
+                        <span>Saturn transit</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="transit-chart-calculator.html" class="side-link">
+
+                    <div class="side-icon">🛰️</div>
+
+                    <div class="side-content">
+                        <strong>Transit Chart</strong>
+                        <span>Planetary transits</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Moon-Based Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for personalized
+                        Moon, Rashi and Kundli interpretation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="moon-phase-calculator.html">Moon Phase</a>
+        <a href="rashi-calculator.html">Rashi</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+        <a href="dasha-calculator.html">Dasha</a>
+        <a href="shani-sade-sati-calculator.html">Sade Sati</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* DEFAULT DATE */
+
+const dateInput =
+    document.getElementById(
+        "moonDate"
+    );
+
+const today =
+    new Date();
+
+dateInput.value =
+    today.toISOString()
+        .split("T")[0];
+
+
+/*
+    SYNODIC MONTH
+
+    Reference:
+    2000-01-06 18:14 UTC ≈ New Moon.
+
+    Mean synodic month:
+    29.530588853 days.
+*/
+
+const REFERENCE_NEW_MOON =
+    Date.UTC(
+        2000,
+        0,
+        6,
+        18,
+        14,
+        0
+    );
+
+const SYNODIC_MONTH =
+    29.530588853;
+
+
+/* PHASE DATA */
+
+const phaseData = [
+
+    {
+        name:"New Moon",
+        icon:"🌑",
+        min:0,
+        max:1.845
+    },
+
+    {
+        name:"Waxing Crescent",
+        icon:"🌒",
+        min:1.845,
+        max:7.3826
+    },
+
+    {
+        name:"First Quarter",
+        icon:"🌓",
+        min:7.3826,
+        max:11.076
+    },
+
+    {
+        name:"Waxing Gibbous",
+        icon:"🌔",
+        min:11.076,
+        max:14.765
+    },
+
+    {
+        name:"Full Moon",
+        icon:"🌕",
+        min:14.765,
+        max:16.61
+    },
+
+    {
+        name:"Waning Gibbous",
+        icon:"🌖",
+        min:16.61,
+        max:22.148
+    },
+
+    {
+        name:"Last Quarter",
+        icon:"🌗",
+        min:22.148,
+        max:25.841
+    },
+
+    {
+        name:"Waning Crescent",
+        icon:"🌘",
+        min:25.841,
+        max:29.530588853
+    }
+
+];
+
+
+/* FORMAT DATE */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            weekday:"long",
+            day:"2-digit",
+            month:"long",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* CALCULATE */
+
+function calculateMoon(event){
+
+    event.preventDefault();
+
+
+    const value =
+        document.getElementById(
+            "moonDate"
+        ).value;
+
+
+    if(!value){
+        return;
+    }
+
+
+    /*
+        Use UTC noon to avoid local
+        midnight/timezone ambiguity.
+    */
+
+    const selected =
+        new Date(
+            value + "T12:00:00Z"
+        );
+
+
+    const difference =
+        (
+            selected.getTime()
+            - REFERENCE_NEW_MOON
+        )
+        /
+        (
+            1000 *
+            60 *
+            60 *
+            24
+        );
+
+
+    let age =
+        difference %
+        SYNODIC_MONTH;
+
+
+    if(age < 0){
+        age += SYNODIC_MONTH;
+    }
+
+
+    const cyclePercent =
+        (
+            age /
+            SYNODIC_MONTH
+        ) * 100;
+
+
+    let phase =
+        phaseData[
+            phaseData.length - 1
+        ];
+
+
+    for(
+        let i=0;
+        i<phaseData.length;
+        i++
+    ){
+
+        if(
+            age >= phaseData[i].min &&
+            age < phaseData[i].max
+        ){
+
+            phase =
+                phaseData[i];
+
+            break;
+
+        }
+
+    }
+
+
+    /*
+        Approximate illuminated fraction.
+
+        0 at New Moon,
+        1 at Full Moon.
+    */
+
+    const radians =
+        (
+            age /
+            SYNODIC_MONTH
+        ) *
+        Math.PI *
+        2;
+
+
+    const illumination =
+        (
+            1 -
+            Math.cos(radians)
+        ) /
+        2;
+
+
+    const illuminationPercent =
+        Math.round(
+            illumination * 100
+        );
+
+
+    document.getElementById(
+        "moonVisual"
+    ).innerText =
+        phase.icon;
+
+
+    document.getElementById(
+        "phaseName"
+    ).innerText =
+        phase.name;
+
+
+    document.getElementById(
+        "illumination"
+    ).innerText =
+        "Approx. " +
+        illuminationPercent +
+        "% illuminated";
+
+
+    document.getElementById(
+        "agePill"
+    ).innerText =
+        "Moon Age: " +
+        age.toFixed(1) +
+        " days";
+
+
+    document.getElementById(
+        "cyclePill"
+    ).innerText =
+        "Cycle: " +
+        cyclePercent.toFixed(0) +
+        "%";
+
+
+    document.getElementById(
+        "distancePill"
+    ).innerText =
+        "Synodic Month: " +
+        SYNODIC_MONTH.toFixed(2) +
+        " days";
+
+
+    document.getElementById(
+        "resultDate"
+    ).innerText =
+        formatDate(selected);
+
+
+    document.getElementById(
+        "progressText"
+    ).innerText =
+        cyclePercent.toFixed(0) +
+        "%";
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        cyclePercent +
+        "%";
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_moon_phase_result",
+        JSON.stringify({
+
+            date:value,
+
+            phase:phase.name,
+
+            moonAge:
+                Number(
+                    age.toFixed(2)
+                ),
+
+            illumination:
+                illuminationPercent,
+
+            cyclePercent:
+                Number(
+                    cyclePercent.toFixed(2)
+                ),
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

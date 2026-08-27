@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rising Sign Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate your Rising Sign or Ascendant from your birth date, time and place with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --teal:#167d78;
+    --teal-dark:#105f5b;
+    --teal-bg:#eefaf9;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 86% 12%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#0d4f4c,#167d78);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"ASC";
+    position:absolute;
+    right:20px;
+    top:-48px;
+    font-family:"Playfair Display",serif;
+    font-size:145px;
+    font-weight:700;
+    opacity:.07;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:740px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #d6e8e7;
+    background:linear-gradient(180deg,#f7fcfc,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#78b7b4;
+    box-shadow:0 0 0 3px rgba(22,125,120,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--teal);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--teal-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.result-main{
+    max-width:600px;
+    margin:18px auto 0;
+    border:1px solid #d5e7e5;
+    background:var(--teal-bg);
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.asc-symbol{
+    width:94px;
+    height:94px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff;
+    border:7px solid #d9ebea;
+    display:grid;
+    place-items:center;
+    font-size:42px;
+}
+
+.result-main h4{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+    margin-top:10px;
+}
+
+.result-main .hindi{
+    color:var(--teal);
+    font-size:9px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.result-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.result-pill{
+    background:#fff;
+    border:1px solid #d6e6e5;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:7px;
+}
+
+
+/* INSIGHTS */
+
+.insights{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.insight{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.insight-icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--teal-bg);
+    display:grid;
+    place-items:center;
+}
+
+.insight strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.insight p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* ZODIAC */
+
+.zodiac-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+    margin-top:16px;
+}
+
+.zodiac{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:10px 5px;
+    text-align:center;
+    transition:.2s;
+}
+
+.zodiac:hover{
+    border-color:#b8d8d5;
+    background:#fbfefe;
+    transform:translateY(-2px);
+}
+
+.zodiac-symbol{
+    font-size:21px;
+}
+
+.zodiac strong{
+    display:block;
+    font-size:7px;
+    margin-top:4px;
+}
+
+.zodiac span{
+    display:block;
+    color:#999;
+    font-size:6px;
+    margin-top:2px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--teal-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .insights{
+        grid-template-columns:1fr;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Rising Sign Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Rising Sign Calculator ⬆️
+            </h1>
+
+            <p>
+                Find your Ascendant or Rising Sign using your exact
+                birth date, time and place. In astrology, the Ascendant
+                is the zodiac sign rising on the eastern horizon at birth.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ⬆️ Ascendant
+                </div>
+
+                <div class="hero-pill">
+                    🕐 Exact Birth Time
+                </div>
+
+                <div class="hero-pill">
+                    📍 Birth Location
+                </div>
+
+                <div class="hero-pill">
+                    ♈ 12 Signs
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Your Rising Sign
+                </h2>
+
+                <p class="section-sub">
+                    Exact birth time and geographic location are
+                    particularly important for Ascendant calculations.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="risingForm"
+                        onsubmit="calculateRising(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="tob">
+                                    Time of Birth
+                                </label>
+
+                                <input
+                                    id="tob"
+                                    type="time"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Birth Place
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="City / Place"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <input
+                                    id="country"
+                                    type="text"
+                                    value="India"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            ⬆️ Calculate My Rising Sign
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Rising Sign
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="result-main">
+
+                            <div
+                                class="asc-symbol"
+                                id="ascSymbol">
+                                ♈
+                            </div>
+
+
+                            <h4 id="signName">
+                                Aries Rising
+                            </h4>
+
+
+                            <div
+                                class="hindi"
+                                id="signHindi">
+                                मेष लग्न
+                            </div>
+
+
+                            <div class="result-pills">
+
+                                <div
+                                    class="result-pill"
+                                    id="elementPill">
+                                    🔥 Fire
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="planetPill">
+                                    Ruler: Mars
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="qualityPill">
+                                    Movable
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="insights">
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    👤
+                                </div>
+
+                                <strong>
+                                    First Impression
+                                </strong>
+
+                                <p id="impressionText">
+                                    Your Rising Sign presentation
+                                    appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🧭
+                                </div>
+
+                                <strong>
+                                    Approach to Life
+                                </strong>
+
+                                <p id="approachText">
+                                    Your traditional Ascendant theme
+                                    appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🪐
+                                </div>
+
+                                <strong>
+                                    Ruling Planet
+                                </strong>
+
+                                <p id="rulerText">
+                                    Your Ascendant ruler appears here.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ZODIAC -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    12 Ascendant Signs
+                </h2>
+
+                <p class="section-sub">
+                    The Ascendant can fall in any of the twelve zodiac signs.
+                </p>
+
+
+                <div class="zodiac-grid">
+
+
+                    <a href="../HOROSCOPE/aries-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♈</div>
+                        <strong>Aries</strong>
+                        <span>Mesha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/taurus-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♉</div>
+                        <strong>Taurus</strong>
+                        <span>Vrishabha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/gemini-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♊</div>
+                        <strong>Gemini</strong>
+                        <span>Mithuna</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/cancer-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♋</div>
+                        <strong>Cancer</strong>
+                        <span>Karka</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/leo-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♌</div>
+                        <strong>Leo</strong>
+                        <span>Simha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/virgo-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♍</div>
+                        <strong>Virgo</strong>
+                        <span>Kanya</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/libra-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♎</div>
+                        <strong>Libra</strong>
+                        <span>Tula</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/scorpio-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♏</div>
+                        <strong>Scorpio</strong>
+                        <span>Vrishchika</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/sagittarius-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♐</div>
+                        <strong>Sagittarius</strong>
+                        <span>Dhanu</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/capricorn-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♑</div>
+                        <strong>Capricorn</strong>
+                        <span>Makara</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/aquarius-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♒</div>
+                        <strong>Aquarius</strong>
+                        <span>Kumbha</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/pisces-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♓</div>
+                        <strong>Pisces</strong>
+                        <span>Meena</span>
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This frontend version uses a deterministic
+                        demonstration calculation. A production
+                        Ascendant engine must use exact birth coordinates,
+                        local time, timezone, sidereal or tropical settings,
+                        and astronomical calculations for local sidereal
+                        time and the eastern horizon.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="sun-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">☀️</div>
+
+                    <div class="side-content">
+                        <strong>Sun Sign</strong>
+                        <span>Zodiac sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Rashi</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="nakshatra-calculator.html" class="side-link">
+
+                    <div class="side-icon">⭐</div>
+
+                    <div class="side-content">
+                        <strong>Nakshatra</strong>
+                        <span>Birth star</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="dasha-calculator.html" class="side-link">
+
+                    <div class="side-icon">🪐</div>
+
+                    <div class="side-content">
+                        <strong>Dasha Calculator</strong>
+                        <span>Planetary periods</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/free-kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Free Kundli</strong>
+                        <span>Full birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Complete Birth Analysis?
+                    </strong>
+
+                    <p>
+                        Generate a complete Kundli and connect with
+                        an astrologer for detailed interpretation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="sun-sign-calculator.html">Sun Sign</a>
+        <a href="rashi-calculator.html">Rashi</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Birth Tools</h4>
+
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+        <a href="rising-sign-calculator.html">Rising Sign</a>
+        <a href="dasha-calculator.html">Dasha</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* ASCENDANT DATA */
+
+const signs = [
+
+    {
+        name:"Aries",
+        hindi:"मेष लग्न",
+        symbol:"♈",
+        element:"🔥 Fire",
+        planet:"Mars",
+        quality:"Movable",
+        impression:
+        "Often presented as direct, energetic and action-oriented in traditional astrology.",
+        approach:
+        "Traditionally associated with initiative, independence and a willingness to begin new things."
+    },
+
+    {
+        name:"Taurus",
+        hindi:"वृषभ लग्न",
+        symbol:"♉",
+        element:"🌍 Earth",
+        planet:"Venus",
+        quality:"Fixed",
+        impression:
+        "Often presented as calm, grounded and steady in traditional astrology.",
+        approach:
+        "Traditionally associated with patience, consistency and practical decision-making."
+    },
+
+    {
+        name:"Gemini",
+        hindi:"मिथुन लग्न",
+        symbol:"♊",
+        element:"🌬️ Air",
+        planet:"Mercury",
+        quality:"Dual",
+        impression:
+        "Often presented as curious, communicative and mentally active.",
+        approach:
+        "Traditionally associated with learning, conversation and adaptability."
+    },
+
+    {
+        name:"Cancer",
+        hindi:"कर्क लग्न",
+        symbol:"♋",
+        element:"💧 Water",
+        planet:"Moon",
+        quality:"Movable",
+        impression:
+        "Often presented as caring, receptive and emotionally aware.",
+        approach:
+        "Traditionally associated with protection, belonging and emotional connection."
+    },
+
+    {
+        name:"Leo",
+        hindi:"सिंह लग्न",
+        symbol:"♌",
+        element:"🔥 Fire",
+        planet:"Sun",
+        quality:"Fixed",
+        impression:
+        "Often presented as confident, expressive and noticeable.",
+        approach:
+        "Traditionally associated with creativity, self-expression and leadership."
+    },
+
+    {
+        name:"Virgo",
+        hindi:"कन्या लग्न",
+        symbol:"♍",
+        element:"🌍 Earth",
+        planet:"Mercury",
+        quality:"Dual",
+        impression:
+        "Often presented as observant, organized and detail-conscious.",
+        approach:
+        "Traditionally associated with analysis, improvement and practical problem-solving."
+    },
+
+    {
+        name:"Libra",
+        hindi:"तुला लग्न",
+        symbol:"♎",
+        element:"🌬️ Air",
+        planet:"Venus",
+        quality:"Movable",
+        impression:
+        "Often presented as diplomatic, pleasant and relationship-aware.",
+        approach:
+        "Traditionally associated with balance, cooperation and social harmony."
+    },
+
+    {
+        name:"Scorpio",
+        hindi:"वृश्चिक लग्न",
+        symbol:"♏",
+        element:"💧 Water",
+        planet:"Mars",
+        quality:"Fixed",
+        impression:
+        "Often presented as intense, private and observant.",
+        approach:
+        "Traditionally associated with determination, depth and transformation."
+    },
+
+    {
+        name:"Sagittarius",
+        hindi:"धनु लग्न",
+        symbol:"♐",
+        element:"🔥 Fire",
+        planet:"Jupiter",
+        quality:"Dual",
+        impression:
+        "Often presented as open, optimistic and exploratory.",
+        approach:
+        "Traditionally associated with learning, travel, growth and broad perspective."
+    },
+
+    {
+        name:"Capricorn",
+        hindi:"मकर लग्न",
+        symbol:"♑",
+        element:"🌍 Earth",
+        planet:"Saturn",
+        quality:"Movable",
+        impression:
+        "Often presented as composed, responsible and goal-oriented.",
+        approach:
+        "Traditionally associated with structure, persistence and long-term achievement."
+    },
+
+    {
+        name:"Aquarius",
+        hindi:"कुंभ लग्न",
+        symbol:"♒",
+        element:"🌬️ Air",
+        planet:"Saturn",
+        quality:"Fixed",
+        impression:
+        "Often presented as independent, thoughtful and unconventional.",
+        approach:
+        "Traditionally associated with ideas, independence and wider social themes."
+    },
+
+    {
+        name:"Pisces",
+        hindi:"मीन लग्न",
+        symbol:"♓",
+        element:"💧 Water",
+        planet:"Jupiter",
+        quality:"Dual",
+        impression:
+        "Often presented as gentle, receptive and imaginative.",
+        approach:
+        "Traditionally associated with intuition, compassion and adaptability."
+    }
+
+];
+
+
+/* HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* CALCULATE */
+
+function calculateRising(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const tob =
+        document.getElementById(
+            "tob"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const country =
+        document.getElementById(
+            "country"
+        ).value.trim();
+
+
+    if(
+        !name ||
+        !dob ||
+        !tob ||
+        !place ||
+        !country
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        name.toLowerCase()
+        + "|"
+        + dob
+        + "|"
+        + tob
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + country.toLowerCase();
+
+
+    const index =
+        stringHash(seed)
+        % signs.length;
+
+
+    const sign =
+        signs[index];
+
+
+    document.getElementById(
+        "ascSymbol"
+    ).innerText =
+        sign.symbol;
+
+
+    document.getElementById(
+        "signName"
+    ).innerText =
+        sign.name +
+        " Rising";
+
+
+    document.getElementById(
+        "signHindi"
+    ).innerText =
+        sign.hindi;
+
+
+    document.getElementById(
+        "elementPill"
+    ).innerText =
+        sign.element;
+
+
+    document.getElementById(
+        "planetPill"
+    ).innerText =
+        "Ruler: " +
+        sign.planet;
+
+
+    document.getElementById(
+        "qualityPill"
+    ).innerText =
+        sign.quality;
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name +
+        " • " +
+        dob +
+        " • " +
+        tob;
+
+
+    document.getElementById(
+        "impressionText"
+    ).innerText =
+        sign.impression;
+
+
+    document.getElementById(
+        "approachText"
+    ).innerText =
+        sign.approach;
+
+
+    document.getElementById(
+        "rulerText"
+    ).innerText =
+        sign.planet +
+        " is traditionally associated with " +
+        sign.name +
+        " Ascendant in this presentation.";
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_rising_sign_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            tob:tob,
+
+            place:place,
+
+            country:country,
+
+            sign:sign.name,
+
+            hindi:sign.hindi,
+
+            element:sign.element,
+
+            planet:sign.planet,
+
+            quality:sign.quality,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

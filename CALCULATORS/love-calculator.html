@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Use the Astro With Talk Love Calculator for a fun name-based compatibility reading.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --pink:#e83e68;
+    --pink-bg:#fff0f4;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#23794a;
+    --green-bg:#effaf4;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 85% 10%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#8d102c,#d71920);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"❤️";
+    position:absolute;
+    right:45px;
+    top:-40px;
+    font-size:165px;
+    opacity:.09;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:730px;
+    color:rgba(255,255,255,.86);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* MAIN LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* CALCULATOR */
+
+.calculator-box{
+    max-width:680px;
+    margin:18px auto 0;
+    border:1px solid #efd5da;
+    border-radius:15px;
+    background:linear-gradient(180deg,#fff8fa,#fff);
+    padding:22px;
+}
+
+.people{
+    display:grid;
+    grid-template-columns:1fr 55px 1fr;
+    gap:12px;
+    align-items:center;
+}
+
+.person{
+    border:1px solid #eee;
+    background:#fff;
+    border-radius:12px;
+    padding:15px;
+}
+
+.person-icon{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--pink-bg);
+    font-size:19px;
+    margin-bottom:10px;
+}
+
+.person h3{
+    font-family:"Playfair Display",serif;
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.person input{
+    width:100%;
+    height:42px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    font-size:9px;
+    outline:none;
+}
+
+.person input:focus{
+    border-color:#e49aa7;
+    box-shadow:0 0 0 3px rgba(215,25,32,.06);
+}
+
+.heart{
+    width:49px;
+    height:49px;
+    border-radius:50%;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:21px;
+    border:1px solid #efd0d0;
+}
+
+.calculate-btn{
+    width:100%;
+    height:47px;
+    margin-top:16px;
+    border:0;
+    border-radius:8px;
+    background:var(--red);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--dark-red);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+    text-align:center;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-label{
+    color:#888;
+    font-size:8px;
+}
+
+.result-names{
+    margin-top:5px;
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+}
+
+.result-circle{
+    width:155px;
+    height:155px;
+    margin:17px auto;
+    border-radius:50%;
+    border:11px solid #f5dce1;
+    display:grid;
+    place-items:center;
+    background:#fff;
+}
+
+.result-circle strong{
+    display:block;
+    color:var(--red);
+    font-family:"Playfair Display",serif;
+    font-size:37px;
+    line-height:1;
+}
+
+.result-circle span{
+    display:block;
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.result-status{
+    display:inline-block;
+    padding:6px 11px;
+    border-radius:20px;
+    background:var(--green-bg);
+    color:var(--green);
+    font-size:7px;
+    font-weight:700;
+}
+
+.result-text{
+    max-width:480px;
+    margin:9px auto 0;
+    color:#777;
+    font-size:8px;
+    line-height:1.8;
+}
+
+
+/* FEATURES */
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:16px;
+}
+
+.feature{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+}
+
+.feature-icon{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    background:var(--pink-bg);
+    display:grid;
+    place-items:center;
+    font-size:15px;
+}
+
+.feature strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:12px;
+    margin-top:7px;
+}
+
+.feature p{
+    color:#888;
+    font-size:7px;
+    line-height:1.6;
+    margin-top:4px;
+}
+
+
+/* RELATED */
+
+.related{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:16px;
+}
+
+.related a{
+    border:1px solid #eee;
+    border-radius:9px;
+    padding:11px;
+    font-size:7px;
+    font-weight:700;
+}
+
+.related a:hover{
+    border-color:#e5aab1;
+    color:var(--red);
+}
+
+
+/* INFO */
+
+.info-box{
+    background:#fff8e8;
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .people{
+        grid-template-columns:1fr;
+    }
+
+    .heart{
+        margin:auto;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .related{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Love Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Love Calculator ❤️
+            </h1>
+
+            <p>
+                Enter two names to generate a fun compatibility-style
+                love reading. This calculator is designed for
+                entertainment and is not a scientific measurement
+                of relationship compatibility.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ❤️ Love
+                </div>
+
+                <div class="hero-pill">
+                    💕 Compatibility
+                </div>
+
+                <div class="hero-pill">
+                    ✨ Fun Calculator
+                </div>
+
+                <div class="hero-pill">
+                    🔢 Name Based
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- CALCULATOR -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Love Compatibility
+                </h2>
+
+                <p class="section-sub">
+                    Enter the names of two people below.
+                </p>
+
+
+                <div class="calculator-box">
+
+
+                    <form
+                        id="loveForm"
+                        onsubmit="calculateLove(event)">
+
+
+                        <div class="people">
+
+
+                            <div class="person">
+
+                                <div class="person-icon">
+                                    👨
+                                </div>
+
+                                <h3>
+                                    Person 1
+                                </h3>
+
+                                <input
+                                    id="name1"
+                                    type="text"
+                                    placeholder="Enter first name"
+                                    maxlength="40"
+                                    required>
+
+                            </div>
+
+
+                            <div class="heart">
+                                ❤️
+                            </div>
+
+
+                            <div class="person">
+
+                                <div class="person-icon">
+                                    👩
+                                </div>
+
+                                <h3>
+                                    Person 2
+                                </h3>
+
+                                <input
+                                    id="name2"
+                                    type="text"
+                                    placeholder="Enter second name"
+                                    maxlength="40"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="calculate-btn">
+
+                            ❤️ Calculate Love Percentage
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+                        <div class="result-label">
+                            Compatibility Result
+                        </div>
+
+                        <div
+                            id="resultNames"
+                            class="result-names">
+                        </div>
+
+
+                        <div class="result-circle">
+
+                            <div>
+
+                                <strong id="score">
+                                    0%
+                                </strong>
+
+                                <span>
+                                    compatibility
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="resultStatus"
+                            class="result-status">
+                            Good Connection
+                        </div>
+
+
+                        <p
+                            id="resultText"
+                            class="result-text">
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOW IT WORKS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    How This Calculator Works
+                </h2>
+
+                <p class="section-sub">
+                    The calculator generates a repeatable entertainment
+                    score from the names entered.
+                </p>
+
+
+                <div class="feature-grid">
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🔤
+                        </div>
+
+                        <strong>
+                            Name Input
+                        </strong>
+
+                        <p>
+                            Enter the names of both people to begin
+                            the calculation.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🧮
+                        </div>
+
+                        <strong>
+                            Score Generation
+                        </strong>
+
+                        <p>
+                            A client-side algorithm converts the names
+                            into a repeatable compatibility score.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            ❤️
+                        </div>
+
+                        <strong>
+                            Fun Reading
+                        </strong>
+
+                        <p>
+                            The resulting percentage is accompanied by
+                            a light compatibility interpretation.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- RELATED -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Related Calculators
+                </h2>
+
+
+                <div class="related">
+
+                    <a href="friendship-calculator.html">
+                        🤝 Friendship Calculator
+                    </a>
+
+                    <a href="flames-calculator.html">
+                        🔥 FLAMES Calculator
+                    </a>
+
+                    <a href="name-compatibility-calculator.html">
+                        🔤 Name Compatibility
+                    </a>
+
+                    <a href="../KUNDLI/kundli-matching.html">
+                        💍 Kundli Matching
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Please Note
+                    </strong>
+
+                    <p>
+                        This Love Calculator is an entertainment feature.
+                        Its percentage is not a scientific, psychological
+                        or astrological assessment of a relationship.
+                        For a traditional astrology-based relationship
+                        analysis, use Kundli Matching with accurate birth
+                        details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">
+                        🧮
+                    </div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-content">
+                        <strong>Rashi Calculator</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="numerology-calculator.html" class="side-link">
+
+                    <div class="side-icon">
+                        🔢
+                    </div>
+
+                    <div class="side-content">
+                        <strong>Numerology</strong>
+                        <span>Number analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="friendship-calculator.html" class="side-link">
+
+                    <div class="side-icon">
+                        🤝
+                    </div>
+
+                    <div class="side-content">
+                        <strong>Friendship</strong>
+                        <span>Fun compatibility</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="flames-calculator.html" class="side-link">
+
+                    <div class="side-icon">
+                        🔥
+                    </div>
+
+                    <div class="side-content">
+                        <strong>FLAMES</strong>
+                        <span>Relationship game</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli-matching.html" class="side-link">
+
+                    <div class="side-icon">
+                        💍
+                    </div>
+
+                    <div class="side-content">
+                        <strong>Kundli Matching</strong>
+                        <span>Birth chart matching</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        💍 Want Astrology-Based Matching?
+                    </strong>
+
+                    <p>
+                        Compare two complete birth profiles using
+                        traditional Kundli matching.
+                    </p>
+
+                    <button
+                        onclick="location.href='../KUNDLI/kundli-matching.html'">
+
+                        Match Kundli →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="love-calculator.html">Love</a>
+        <a href="numerology-calculator.html">Numerology</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Compatibility</h4>
+
+        <a href="friendship-calculator.html">Friendship</a>
+        <a href="flames-calculator.html">FLAMES</a>
+        <a href="../KUNDLI/kundli-matching.html">Kundli Matching</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+        <a href="../KUNDLI/navamsa-chart.html">Navamsa</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* LOVE CALCULATOR */
+
+function calculateLove(event){
+
+    event.preventDefault();
+
+
+    const name1 =
+        document.getElementById(
+            "name1"
+        ).value.trim();
+
+
+    const name2 =
+        document.getElementById(
+            "name2"
+        ).value.trim();
+
+
+    if(!name1 || !name2){
+        return;
+    }
+
+
+    /*
+        Deterministic entertainment algorithm.
+
+        The same pair of names will always
+        produce the same score.
+    */
+
+    const combined =
+        (
+            name1.toLowerCase()
+            + "|"
+            + name2.toLowerCase()
+        );
+
+
+    let hash = 0;
+
+
+    for(
+        let i = 0;
+        i < combined.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + combined.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+
+    const score =
+        55 +
+        Math.abs(hash) % 46;
+
+
+    let status =
+        "Good Connection";
+
+
+    let text =
+        "There appears to be a positive connection. " +
+        "Enjoy getting to know each other and build " +
+        "your relationship through communication and trust.";
+
+
+    if(score >= 90){
+
+        status =
+            "Strong Connection";
+
+        text =
+            "This fun reading shows a very high compatibility " +
+            "score. Keep communication, mutual respect and " +
+            "understanding at the center of the relationship.";
+
+    }else if(score >= 75){
+
+        status =
+            "Great Connection";
+
+        text =
+            "The name-based reading suggests a promising " +
+            "connection. Shared interests and honest communication " +
+            "can help strengthen the bond.";
+
+    }else if(score < 65){
+
+        status =
+            "Interesting Connection";
+
+        text =
+            "Every relationship is unique. This entertainment " +
+            "score is only a fun result and does not determine " +
+            "real relationship compatibility.";
+
+    }
+
+
+    document.getElementById(
+        "resultNames"
+    ).innerText =
+        name1 + " ❤️ " + name2;
+
+
+    document.getElementById(
+        "score"
+    ).innerText =
+        score + "%";
+
+
+    document.getElementById(
+        "resultStatus"
+    ).innerText =
+        status;
+
+
+    document.getElementById(
+        "resultText"
+    ).innerText =
+        text;
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_love_calculator",
+        JSON.stringify({
+            name1:name1,
+            name2:name2,
+            score:score,
+            createdAt:new Date().toISOString()
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+}
+
+</script>
+
+</body>
+</html>

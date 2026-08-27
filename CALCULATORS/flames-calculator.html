@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FLAMES Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Play the classic FLAMES relationship calculator with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --border:#e5e5e5;
+    --gray:#777;
+
+    --purple:#6a3c86;
+    --purple-dark:#4e2b64;
+    --purple-bg:#f8f3fc;
+
+    --gold-bg:#fff8e8;
+
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 90% 10%,rgba(255,255,255,.2),transparent 28%),
+        linear-gradient(125deg,#4d2564,#8b55a7);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"F";
+    position:absolute;
+    right:55px;
+    top:-75px;
+    font-family:"Playfair Display",serif;
+    font-size:250px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:780px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #e7dcef;
+    background:linear-gradient(180deg,#fcf9fe,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#8b5aa5;
+    box-shadow:0 0 0 3px rgba(106,60,134,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--purple);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--purple-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* FLAMES */
+
+.flames-card{
+    max-width:680px;
+    margin:20px auto 0;
+    padding:27px;
+    border-radius:15px;
+    background:var(--purple-bg);
+    border:1px solid #e6d9ed;
+    text-align:center;
+}
+
+.names-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+}
+
+.name-box{
+    min-width:160px;
+    padding:14px;
+    background:#fff;
+    border:1px solid #e5dbea;
+    border-radius:10px;
+}
+
+.name-box .icon{
+    width:45px;
+    height:45px;
+    margin:auto;
+    border-radius:50%;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:19px;
+}
+
+.name-box strong{
+    display:block;
+    margin-top:7px;
+    font-size:9px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.plus{
+    color:var(--purple);
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.letters{
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    flex-wrap:wrap;
+    margin:22px auto 0;
+}
+
+.flame-letter{
+    width:43px;
+    height:43px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    background:#fff;
+    border:1px solid #e1d4e8;
+    color:var(--purple);
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    font-weight:700;
+}
+
+.flame-letter.active{
+    background:var(--purple);
+    color:#fff;
+    border-color:var(--purple);
+}
+
+.result-symbol{
+    width:105px;
+    height:105px;
+    margin:20px auto 0;
+    border-radius:50%;
+    background:#fff;
+    border:8px solid #e8ddef;
+    display:grid;
+    place-items:center;
+    box-shadow:0 8px 20px rgba(70,35,90,.08);
+}
+
+.result-symbol span{
+    font-size:42px;
+}
+
+.flames-card h4{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    margin-top:14px;
+}
+
+.flames-card p{
+    max-width:530px;
+    margin:5px auto 0;
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+}
+
+
+/* SUMMARY */
+
+.summary-grid{
+    max-width:680px;
+    margin:18px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.summary-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+    text-align:center;
+}
+
+.summary-card span{
+    display:block;
+    color:#999;
+    font-size:7px;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+    margin-top:4px;
+}
+
+
+/* STEPS */
+
+.steps{
+    max-width:680px;
+    margin:18px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.step{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.step-number{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:var(--purple-bg);
+    color:var(--purple);
+    display:grid;
+    place-items:center;
+    font-size:8px;
+    font-weight:700;
+}
+
+.step strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.step p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .summary-grid,
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .names-row{
+        flex-direction:column;
+    }
+
+    .plus{
+        transform:rotate(90deg);
+    }
+
+    .name-box{
+        width:100%;
+        max-width:270px;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators /
+        <span>FLAMES Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                FLAMES Calculator 🔥❤️
+            </h1>
+
+            <p>
+                Try the classic FLAMES name game. Enter two names and
+                calculate the traditional playful result: Friendship,
+                Love, Affection, Marriage, Enemy or Siblings.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🔥 FLAMES
+                </div>
+
+                <div class="hero-pill">
+                    ❤️ Love
+                </div>
+
+                <div class="hero-pill">
+                    🤝 Friendship
+                </div>
+
+                <div class="hero-pill">
+                    🎮 Fun Game
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Play FLAMES
+                </h2>
+
+                <p class="section-sub">
+                    Enter two names. Common letters are cancelled and
+                    the remaining letter count is used in the traditional
+                    FLAMES elimination game.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="flamesForm"
+                        onsubmit="calculateFlames(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="nameOne">
+                                    Name 1
+                                </label>
+
+                                <input
+                                    id="nameOne"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter first name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="nameTwo">
+                                    Name 2
+                                </label>
+
+                                <input
+                                    id="nameTwo"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter second name"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🔥 Calculate FLAMES
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your FLAMES Result
+                            </h3>
+
+                            <p id="resultNames">
+                                —
+                            </p>
+
+                        </div>
+
+
+                        <div class="flames-card">
+
+
+                            <div class="names-row">
+
+
+                                <div class="name-box">
+
+                                    <div class="icon">
+                                        🧑
+                                    </div>
+
+                                    <strong id="personOne">
+                                        Name 1
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="plus">
+                                    +
+                                </div>
+
+
+                                <div class="name-box">
+
+                                    <div class="icon">
+                                        🧑
+                                    </div>
+
+                                    <strong id="personTwo">
+                                        Name 2
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="letters">
+
+                                <div
+                                    id="letterF"
+                                    class="flame-letter">
+                                    F
+                                </div>
+
+                                <div
+                                    id="letterL"
+                                    class="flame-letter">
+                                    L
+                                </div>
+
+                                <div
+                                    id="letterA"
+                                    class="flame-letter">
+                                    A
+                                </div>
+
+                                <div
+                                    id="letterM"
+                                    class="flame-letter">
+                                    M
+                                </div>
+
+                                <div
+                                    id="letterE"
+                                    class="flame-letter">
+                                    E
+                                </div>
+
+                                <div
+                                    id="letterS"
+                                    class="flame-letter">
+                                    S
+                                </div>
+
+                            </div>
+
+
+                            <div class="result-symbol">
+
+                                <span id="resultEmoji">
+                                    🔥
+                                </span>
+
+                            </div>
+
+
+                            <h4 id="resultTitle">
+                                Friendship
+                            </h4>
+
+
+                            <p id="resultDescription">
+                                —
+                            </p>
+
+                        </div>
+
+
+                        <div class="summary-grid">
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Remaining Letters
+                                </span>
+
+                                <strong id="remainingCount">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    FLAMES Letter
+                                </span>
+
+                                <strong id="resultLetter">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Result
+                                </span>
+
+                                <strong id="resultShort">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEPS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    How FLAMES Works
+                </h2>
+
+                <p class="section-sub">
+                    FLAMES is a classic recreational name game. The
+                    algorithm used here follows the common elimination
+                    approach.
+                </p>
+
+
+                <div class="steps">
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+                        <strong>
+                            Compare Names
+                        </strong>
+
+                        <p>
+                            The names are normalized and common letters
+                            are cancelled from both names.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <strong>
+                            Count Remaining
+                        </strong>
+
+                        <p>
+                            The letters left after cancellation are
+                            counted.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <strong>
+                            Eliminate
+                        </strong>
+
+                        <p>
+                            The count is used repeatedly around
+                            F-L-A-M-E-S until one letter remains.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Just for Fun
+                    </strong>
+
+                    <p>
+                        FLAMES is a recreational name game and has no
+                        scientific or predictive validity. Its result
+                        should be treated purely as entertainment and
+                        should not be used to make decisions about
+                        relationships or marriage.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="name-compatibility-calculator.html" class="side-link">
+
+                    <div class="side-icon">❤️</div>
+
+                    <div class="side-content">
+                        <strong>Name Compatibility</strong>
+                        <span>Name comparison</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="friendship-calculator.html" class="side-link">
+
+                    <div class="side-icon">🤝</div>
+
+                    <div class="side-content">
+                        <strong>Friendship</strong>
+                        <span>Friendship score</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lucky-number-calculator.html" class="side-link">
+
+                    <div class="side-icon">🍀</div>
+
+                    <div class="side-content">
+                        <strong>Lucky Number</strong>
+                        <span>Numerology number</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lo-shu-grid-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Lo Shu Grid</strong>
+                        <span>Numerology grid</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">✨</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Complete chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Real Relationship Guidance?
+                    </strong>
+
+                    <p>
+                        Move beyond fun calculators and connect with a
+                        professional astrologer for a personalized reading.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">
+            All Calculators
+        </a>
+
+        <a href="flames-calculator.html">
+            FLAMES
+        </a>
+
+        <a href="friendship-calculator.html">
+            Friendship
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Relationship</h4>
+
+        <a href="name-compatibility-calculator.html">
+            Compatibility
+        </a>
+
+        <a href="friendship-calculator.html">
+            Friendship
+        </a>
+
+        <a href="flames-calculator.html">
+            FLAMES
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Numerology</h4>
+
+        <a href="lucky-number-calculator.html">
+            Lucky Number
+        </a>
+
+        <a href="lo-shu-grid-calculator.html">
+            Lo Shu Grid
+        </a>
+
+        <a href="lucky-vehicle-number-calculator.html">
+            Vehicle Number
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/*
+    FLAMES DATA
+
+    F = Friends
+    L = Love
+    A = Affection
+    M = Marriage
+    E = Enemy
+    S = Siblings
+*/
+
+const flamesData = {
+
+    F:{
+        title:"Friendship",
+        emoji:"🤝",
+        description:
+            "The classic FLAMES result is Friendship — a playful indication of friendly bonding."
+    },
+
+    L:{
+        title:"Love",
+        emoji:"❤️",
+        description:
+            "The classic FLAMES result is Love — a playful relationship-game result."
+    },
+
+    A:{
+        title:"Affection",
+        emoji:"💕",
+        description:
+            "The classic FLAMES result is Affection — a playful indication of fondness."
+    },
+
+    M:{
+        title:"Marriage",
+        emoji:"💍",
+        description:
+            "The classic FLAMES result is Marriage — a playful result from the traditional game."
+    },
+
+    E:{
+        title:"Enemy",
+        emoji:"⚡",
+        description:
+            "The classic FLAMES result is Enemy — a playful game outcome, not a real relationship prediction."
+    },
+
+    S:{
+        title:"Siblings",
+        emoji:"👫",
+        description:
+            "The classic FLAMES result is Siblings — a playful outcome from the name game."
+    }
+
+};
+
+
+/* NORMALIZE */
+
+function normalizeName(name){
+
+    return name
+        .toUpperCase()
+        .replace(
+            /[^A-Z]/g,
+            ""
+        );
+
+}
+
+
+/*
+    COUNT REMAINING LETTERS
+
+    Each common letter is cancelled
+    one-for-one.
+*/
+
+function getRemainingCount(
+    first,
+    second
+){
+
+    const a =
+        first
+        .split("");
+
+
+    const b =
+        second
+        .split("");
+
+
+    let remainingA = [];
+
+
+    for(
+        const letter of a
+    ){
+
+        const index =
+            b.indexOf(
+                letter
+            );
+
+
+        if(index !== -1){
+
+            b.splice(
+                index,
+                1
+            );
+
+        }else{
+
+            remainingA.push(
+                letter
+            );
+
+        }
+
+    }
+
+
+    return (
+        remainingA.length +
+        b.length
+    );
+
+}
+
+
+/*
+    FLAMES ELIMINATION
+
+    We maintain the current array and
+    remove every nth item until one
+    remains.
+*/
+
+function getFlamesResult(
+    count
+){
+
+    let letters =
+        [
+            "F",
+            "L",
+            "A",
+            "M",
+            "E",
+            "S"
+        ];
+
+
+    /*
+        If there are no remaining
+        letters, use the standard
+        six-letter cycle count.
+    */
+
+    if(
+        count <= 0
+    ){
+
+        count = 6;
+
+    }
+
+
+    let index = 0;
+
+
+    while(
+        letters.length > 1
+    ){
+
+        index =
+            (
+                index +
+                count -
+                1
+            )
+            %
+            letters.length;
+
+
+        letters.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    return letters[0];
+
+}
+
+
+/* RESET ACTIVE */
+
+function resetFlamesLetters(){
+
+    [
+        "letterF",
+        "letterL",
+        "letterA",
+        "letterM",
+        "letterE",
+        "letterS"
+    ]
+    .forEach(
+        id=>{
+
+            document
+                .getElementById(id)
+                .classList
+                .remove("active");
+
+        }
+    );
+
+}
+
+
+/* CALCULATE */
+
+function calculateFlames(event){
+
+    event.preventDefault();
+
+
+    const nameOne =
+        normalizeName(
+            document.getElementById(
+                "nameOne"
+            ).value
+        );
+
+
+    const nameTwo =
+        normalizeName(
+            document.getElementById(
+                "nameTwo"
+            ).value
+        );
+
+
+    if(
+        !nameOne ||
+        !nameTwo
+    ){
+
+        return;
+
+    }
+
+
+    const remaining =
+        getRemainingCount(
+            nameOne,
+            nameTwo
+        );
+
+
+    const resultLetter =
+        getFlamesResult(
+            remaining
+        );
+
+
+    const result =
+        flamesData[
+            resultLetter
+        ];
+
+
+    /*
+        DISPLAY NAMES
+    */
+
+    document.getElementById(
+        "personOne"
+    ).innerText =
+        document.getElementById(
+            "nameOne"
+        ).value.trim();
+
+
+    document.getElementById(
+        "personTwo"
+    ).innerText =
+        document.getElementById(
+            "nameTwo"
+        ).value.trim();
+
+
+    document.getElementById(
+        "resultNames"
+    ).innerText =
+        document.getElementById(
+            "nameOne"
+        ).value.trim()
+        + " 🔥 "
+        + document.getElementById(
+            "nameTwo"
+        ).value.trim();
+
+
+    /*
+        HIGHLIGHT LETTER
+    */
+
+    resetFlamesLetters();
+
+
+    document
+        .getElementById(
+            "letter" +
+            resultLetter
+        )
+        .classList
+        .add("active");
+
+
+    /*
+        RESULT
+    */
+
+    document.getElementById(
+        "resultEmoji"
+    ).innerText =
+        result.emoji;
+
+
+    document.getElementById(
+        "resultTitle"
+    ).innerText =
+        result.title;
+
+
+    document.getElementById(
+        "resultDescription"
+    ).innerText =
+        result.description;
+
+
+    /*
+        SUMMARY
+    */
+
+    document.getElementById(
+        "remainingCount"
+    ).innerText =
+        remaining;
+
+
+    document.getElementById(
+        "resultLetter"
+    ).innerText =
+        resultLetter;
+
+
+    document.getElementById(
+        "resultShort"
+    ).innerText =
+        result.title;
+
+
+    /*
+        SHOW
+    */
+
+    document
+        .getElementById("result")
+        .classList
+        .add("show");
+
+
+    /*
+        SAVE
+    */
+
+    localStorage.setItem(
+        "awt_flames_result",
+        JSON.stringify({
+
+            nameOne:
+                document.getElementById(
+                    "nameOne"
+                ).value.trim(),
+
+            nameTwo:
+                document.getElementById(
+                    "nameTwo"
+                ).value.trim(),
+
+            normalizedOne:nameOne,
+
+            normalizedTwo:nameTwo,
+
+            remainingCount:
+                remaining,
+
+            resultLetter:
+                resultLetter,
+
+            result:
+                result.title,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    /*
+        SCROLL
+    */
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

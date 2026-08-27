@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sun Sign Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate your Sun Sign from your date of birth with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --orange:#e77d18;
+    --orange-bg:#fff4e9;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 88% 12%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#9d4c0b,#e77d18);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"☀";
+    position:absolute;
+    right:35px;
+    top:-65px;
+    font-size:205px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:730px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:680px;
+    margin:18px auto 0;
+    border:1px solid #f0dcc8;
+    background:linear-gradient(180deg,#fffaf5,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#e1a66c;
+    box-shadow:0 0 0 3px rgba(231,125,24,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--orange);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:#c9660e;
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.result-main{
+    max-width:580px;
+    margin:18px auto 0;
+    border:1px solid #f0dcc8;
+    background:var(--orange-bg);
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.sun-symbol{
+    width:92px;
+    height:92px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff;
+    border:7px solid #f4dfca;
+    display:grid;
+    place-items:center;
+    font-size:43px;
+}
+
+.result-main h4{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+    margin-top:10px;
+}
+
+.result-main .hindi{
+    color:var(--orange);
+    font-size:9px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.result-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.result-pill{
+    background:#fff;
+    border:1px solid #efdcca;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:7px;
+}
+
+
+/* INSIGHTS */
+
+.insights{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.insight{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.insight-icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--orange-bg);
+    display:grid;
+    place-items:center;
+}
+
+.insight strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.insight p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* ZODIAC */
+
+.zodiac-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+    margin-top:16px;
+}
+
+.zodiac{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:10px 5px;
+    text-align:center;
+    transition:.2s;
+}
+
+.zodiac:hover{
+    border-color:#edc9a7;
+    transform:translateY(-2px);
+}
+
+.zodiac-symbol{
+    font-size:21px;
+}
+
+.zodiac strong{
+    display:block;
+    font-size:7px;
+    margin-top:4px;
+}
+
+.zodiac span{
+    display:block;
+    color:#999;
+    font-size:6px;
+    margin-top:2px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--orange-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .insights{
+        grid-template-columns:1fr;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Sun Sign Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Sun Sign Calculator ☀️
+            </h1>
+
+            <p>
+                Enter your date of birth to find your zodiac Sun Sign.
+                Your Sun Sign is determined by the Sun's apparent
+                zodiac position at the time of birth.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ☀️ Sun Sign
+                </div>
+
+                <div class="hero-pill">
+                    ♈ 12 Zodiac Signs
+                </div>
+
+                <div class="hero-pill">
+                    📅 Date Based
+                </div>
+
+                <div class="hero-pill">
+                    ✨ Zodiac Profile
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Find Your Sun Sign
+                </h2>
+
+                <p class="section-sub">
+                    Enter your name and date of birth below.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="sunForm"
+                        onsubmit="calculateSunSign(event)">
+
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                id="fullName"
+                                type="text"
+                                maxlength="80"
+                                placeholder="Enter your full name"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="dob">
+                                Date of Birth
+                            </label>
+
+                            <input
+                                id="dob"
+                                type="date"
+                                required>
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            ☀️ Calculate My Sun Sign
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Sun Sign
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="result-main">
+
+                            <div
+                                class="sun-symbol"
+                                id="sunSymbol">
+                                ☀️
+                            </div>
+
+
+                            <h4 id="signName">
+                                Aries
+                            </h4>
+
+
+                            <div
+                                class="hindi"
+                                id="signHindi">
+                                मेष
+                            </div>
+
+
+                            <div class="result-pills">
+
+                                <div
+                                    class="result-pill"
+                                    id="datePill">
+                                    Mar 21 – Apr 19
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="elementPill">
+                                    🔥 Fire
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="planetPill">
+                                    Ruler: Mars
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="insights">
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🌟
+                                </div>
+
+                                <strong>
+                                    Personality
+                                </strong>
+
+                                <p id="personalityText">
+                                    Your traditional Sun Sign personality
+                                    theme appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🔥
+                                </div>
+
+                                <strong>
+                                    Element
+                                </strong>
+
+                                <p id="elementText">
+                                    Your zodiac element appears here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="insight">
+
+                                <div class="insight-icon">
+                                    🪐
+                                </div>
+
+                                <strong>
+                                    Ruling Planet
+                                </strong>
+
+                                <p id="planetText">
+                                    Your ruling planet appears here.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ZODIAC -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    12 Sun Signs
+                </h2>
+
+                <p class="section-sub">
+                    Explore the twelve traditional zodiac signs.
+                </p>
+
+
+                <div class="zodiac-grid">
+
+
+                    <a href="../HOROSCOPE/aries-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♈</div>
+                        <strong>Aries</strong>
+                        <span>Mar 21 – Apr 19</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/taurus-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♉</div>
+                        <strong>Taurus</strong>
+                        <span>Apr 20 – May 20</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/gemini-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♊</div>
+                        <strong>Gemini</strong>
+                        <span>May 21 – Jun 20</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/cancer-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♋</div>
+                        <strong>Cancer</strong>
+                        <span>Jun 21 – Jul 22</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/leo-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♌</div>
+                        <strong>Leo</strong>
+                        <span>Jul 23 – Aug 22</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/virgo-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♍</div>
+                        <strong>Virgo</strong>
+                        <span>Aug 23 – Sep 22</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/libra-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♎</div>
+                        <strong>Libra</strong>
+                        <span>Sep 23 – Oct 22</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/scorpio-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♏</div>
+                        <strong>Scorpio</strong>
+                        <span>Oct 23 – Nov 21</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/sagittarius-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♐</div>
+                        <strong>Sagittarius</strong>
+                        <span>Nov 22 – Dec 21</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/capricorn-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♑</div>
+                        <strong>Capricorn</strong>
+                        <span>Dec 22 – Jan 19</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/aquarius-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♒</div>
+                        <strong>Aquarius</strong>
+                        <span>Jan 20 – Feb 18</span>
+                    </a>
+
+
+                    <a href="../HOROSCOPE/pisces-horoscope.html" class="zodiac">
+                        <div class="zodiac-symbol">♓</div>
+                        <strong>Pisces</strong>
+                        <span>Feb 19 – Mar 20</span>
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Calculation Note
+                    </strong>
+
+                    <p>
+                        Sun Sign is primarily date-based, but exact
+                        boundary dates can vary slightly by year and
+                        astrology system. A production version should
+                        calculate the Sun's actual longitude using an
+                        astronomical ephemeris rather than relying only
+                        on fixed calendar ranges.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Rashi Calculator</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="nakshatra-calculator.html" class="side-link">
+
+                    <div class="side-icon">⭐</div>
+
+                    <div class="side-content">
+                        <strong>Nakshatra</strong>
+                        <span>Birth star</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rising-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">⬆️</div>
+
+                    <div class="side-content">
+                        <strong>Rising Sign</strong>
+                        <span>Ascendant</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="numerology-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Numerology</strong>
+                        <span>Number analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/free-kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Free Kundli</strong>
+                        <span>Full birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Complete Analysis?
+                    </strong>
+
+                    <p>
+                        Generate your complete birth chart and consult
+                        an astrologer for deeper guidance.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="rashi-calculator.html">Rashi</a>
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Zodiac</h4>
+
+        <a href="../HOROSCOPE/aries-horoscope.html">Aries</a>
+        <a href="../HOROSCOPE/leo-horoscope.html">Leo</a>
+        <a href="../HOROSCOPE/pisces-horoscope.html">Pisces</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* SUN SIGN DATA */
+
+const signs = [
+
+    {
+        name:"Aries",
+        hindi:"मेष",
+        symbol:"♈",
+        start:[3,21],
+        end:[4,19],
+        dates:"Mar 21 – Apr 19",
+        element:"🔥 Fire",
+        planet:"Mars",
+        personality:
+        "Traditionally associated with initiative, courage, directness and energetic self-expression."
+    },
+
+    {
+        name:"Taurus",
+        hindi:"वृषभ",
+        symbol:"♉",
+        start:[4,20],
+        end:[5,20],
+        dates:"Apr 20 – May 20",
+        element:"🌍 Earth",
+        planet:"Venus",
+        personality:
+        "Traditionally associated with stability, patience, practicality and appreciation of comfort."
+    },
+
+    {
+        name:"Gemini",
+        hindi:"मिथुन",
+        symbol:"♊",
+        start:[5,21],
+        end:[6,20],
+        dates:"May 21 – Jun 20",
+        element:"🌬️ Air",
+        planet:"Mercury",
+        personality:
+        "Traditionally associated with curiosity, communication, flexibility and intellectual exploration."
+    },
+
+    {
+        name:"Cancer",
+        hindi:"कर्क",
+        symbol:"♋",
+        start:[6,21],
+        end:[7,22],
+        dates:"Jun 21 – Jul 22",
+        element:"💧 Water",
+        planet:"Moon",
+        personality:
+        "Traditionally associated with sensitivity, nurturing, emotional awareness and protectiveness."
+    },
+
+    {
+        name:"Leo",
+        hindi:"सिंह",
+        symbol:"♌",
+        start:[7,23],
+        end:[8,22],
+        dates:"Jul 23 – Aug 22",
+        element:"🔥 Fire",
+        planet:"Sun",
+        personality:
+        "Traditionally associated with confidence, creativity, warmth and expressive leadership."
+    },
+
+    {
+        name:"Virgo",
+        hindi:"कन्या",
+        symbol:"♍",
+        start:[8,23],
+        end:[9,22],
+        dates:"Aug 23 – Sep 22",
+        element:"🌍 Earth",
+        planet:"Mercury",
+        personality:
+        "Traditionally associated with analysis, organization, practicality and attention to detail."
+    },
+
+    {
+        name:"Libra",
+        hindi:"तुला",
+        symbol:"♎",
+        start:[9,23],
+        end:[10,22],
+        dates:"Sep 23 – Oct 22",
+        element:"🌬️ Air",
+        planet:"Venus",
+        personality:
+        "Traditionally associated with balance, diplomacy, aesthetics and relationship-oriented thinking."
+    },
+
+    {
+        name:"Scorpio",
+        hindi:"वृश्चिक",
+        symbol:"♏",
+        start:[10,23],
+        end:[11,21],
+        dates:"Oct 23 – Nov 21",
+        element:"💧 Water",
+        planet:"Mars",
+        personality:
+        "Traditionally associated with intensity, determination, depth and transformative experiences."
+    },
+
+    {
+        name:"Sagittarius",
+        hindi:"धनु",
+        symbol:"♐",
+        start:[11,22],
+        end:[12,21],
+        dates:"Nov 22 – Dec 21",
+        element:"🔥 Fire",
+        planet:"Jupiter",
+        personality:
+        "Traditionally associated with exploration, optimism, learning and broad perspectives."
+    },
+
+    {
+        name:"Capricorn",
+        hindi:"मकर",
+        symbol:"♑",
+        start:[12,22],
+        end:[1,19],
+        dates:"Dec 22 – Jan 19",
+        element:"🌍 Earth",
+        planet:"Saturn",
+        personality:
+        "Traditionally associated with discipline, ambition, responsibility and long-term planning."
+    },
+
+    {
+        name:"Aquarius",
+        hindi:"कुंभ",
+        symbol:"♒",
+        start:[1,20],
+        end:[2,18],
+        dates:"Jan 20 – Feb 18",
+        element:"🌬️ Air",
+        planet:"Saturn",
+        personality:
+        "Traditionally associated with independent thinking, originality, ideals and social perspectives."
+    },
+
+    {
+        name:"Pisces",
+        hindi:"मीन",
+        symbol:"♓",
+        start:[2,19],
+        end:[3,20],
+        dates:"Feb 19 – Mar 20",
+        element:"💧 Water",
+        planet:"Jupiter",
+        personality:
+        "Traditionally associated with imagination, compassion, intuition and emotional sensitivity."
+    }
+
+];
+
+
+/* GET SIGN */
+
+function getSunSign(dateString){
+
+    const date =
+        new Date(
+            dateString + "T00:00:00"
+        );
+
+    const month =
+        date.getMonth() + 1;
+
+    const day =
+        date.getDate();
+
+
+    for(
+        const sign of signs
+    ){
+
+        const [sm,sd] =
+            sign.start;
+
+        const [em,ed] =
+            sign.end;
+
+
+        /*
+            Normal range:
+            start month <= end month
+
+            Capricorn crosses the year,
+            so it receives separate handling.
+        */
+
+        if(
+            sign.name === "Capricorn"
+        ){
+
+            if(
+                (month === 12 && day >= sd) ||
+                (month === 1 && day <= ed)
+            ){
+
+                return sign;
+
+            }
+
+        }else{
+
+            if(
+                (
+                    month === sm &&
+                    day >= sd
+                )
+                ||
+                (
+                    month === em &&
+                    day <= ed
+                )
+                ||
+                (
+                    sm < em &&
+                    month > sm &&
+                    month < em
+                )
+            ){
+
+                return sign;
+
+            }
+
+        }
+
+    }
+
+
+    return signs[0];
+
+}
+
+
+/* CALCULATE */
+
+function calculateSunSign(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    if(
+        !name ||
+        !dob
+    ){
+
+        return;
+
+    }
+
+
+    const sign =
+        getSunSign(dob);
+
+
+    document.getElementById(
+        "sunSymbol"
+    ).innerText =
+        sign.symbol;
+
+
+    document.getElementById(
+        "signName"
+    ).innerText =
+        sign.name;
+
+
+    document.getElementById(
+        "signHindi"
+    ).innerText =
+        sign.hindi;
+
+
+    document.getElementById(
+        "datePill"
+    ).innerText =
+        sign.dates;
+
+
+    document.getElementById(
+        "elementPill"
+    ).innerText =
+        sign.element;
+
+
+    document.getElementById(
+        "planetPill"
+    ).innerText =
+        "Ruler: " + sign.planet;
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name +
+        " • " +
+        dob;
+
+
+    document.getElementById(
+        "personalityText"
+    ).innerText =
+        sign.personality;
+
+
+    document.getElementById(
+        "elementText"
+    ).innerText =
+        sign.element +
+        " is the traditional element associated with this sign.";
+
+
+    document.getElementById(
+        "planetText"
+    ).innerText =
+        sign.planet +
+        " is traditionally associated with " +
+        sign.name +
+        " in this zodiac presentation.";
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_sun_sign_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            sign:sign.name,
+
+            hindi:sign.hindi,
+
+            element:sign.element,
+
+            planet:sign.planet,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

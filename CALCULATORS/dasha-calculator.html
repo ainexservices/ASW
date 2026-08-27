@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dasha Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate Vimshottari Dasha periods from birth details with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --purple:#65418f;
+    --purple-dark:#4f2f73;
+    --purple-bg:#f7f2fc;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 87% 10%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#43235f,#7651a0);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"ॐ";
+    position:absolute;
+    right:45px;
+    top:-65px;
+    font-size:210px;
+    opacity:.07;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:740px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #e1d8e9;
+    background:linear-gradient(180deg,#fbf8fe,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#a58abd;
+    box-shadow:0 0 0 3px rgba(101,65,143,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--purple);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--purple-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.current-dasha{
+    max-width:690px;
+    margin:18px auto 0;
+    padding:20px;
+    border-radius:15px;
+    background:var(--purple-bg);
+    border:1px solid #e0d3ea;
+}
+
+.current-label{
+    text-align:center;
+    color:#777;
+    font-size:8px;
+    font-weight:600;
+}
+
+.current-planet{
+    text-align:center;
+    font-family:"Playfair Display",serif;
+    color:var(--purple);
+    font-size:29px;
+    margin-top:5px;
+}
+
+.current-info{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+
+.current-pill{
+    background:#fff;
+    border:1px solid #ded4e6;
+    border-radius:20px;
+    padding:6px 11px;
+    font-size:7px;
+}
+
+
+/* TIMELINE */
+
+.timeline{
+    max-width:690px;
+    margin:18px auto 0;
+}
+
+.timeline-title{
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.timeline-item{
+    display:grid;
+    grid-template-columns:78px 1fr 92px;
+    gap:10px;
+    align-items:center;
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:11px;
+    margin-bottom:7px;
+}
+
+.timeline-item.active{
+    border-color:#d9c8e7;
+    background:#fcf9ff;
+}
+
+.planet{
+    font-family:"Playfair Display",serif;
+    font-size:12px;
+    color:var(--purple);
+}
+
+.period{
+    height:7px;
+    background:#eee;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.period span{
+    display:block;
+    height:100%;
+    background:#a486c0;
+    border-radius:10px;
+}
+
+.period-text{
+    text-align:right;
+    color:#888;
+    font-size:7px;
+}
+
+
+/* DASHA CARDS */
+
+.dasha-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.dasha-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.dasha-icon{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:15px;
+}
+
+.dasha-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.dasha-card p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .dasha-grid{
+        grid-template-columns:1fr;
+    }
+
+    .timeline-item{
+        grid-template-columns:65px 1fr;
+    }
+
+    .period-text{
+        grid-column:2;
+        text-align:left;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+
+        <a href="calculators.html" class="active">Calculators</a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Dasha Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Dasha Calculator 🪐
+            </h1>
+
+            <p>
+                Explore the traditional Vimshottari Dasha sequence
+                using your birth details. Dashas are planetary periods
+                used in Vedic astrology to organize major life-period
+                interpretations.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🪐 Vimshottari Dasha
+                </div>
+
+                <div class="hero-pill">
+                    ⏳ Planetary Periods
+                </div>
+
+                <div class="hero-pill">
+                    ⭐ Nakshatra Based
+                </div>
+
+                <div class="hero-pill">
+                    📅 Timeline
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Your Dasha
+                </h2>
+
+                <p class="section-sub">
+                    Enter accurate birth details to generate a
+                    personalized Dasha timeline.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="dashaForm"
+                        onsubmit="calculateDasha(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="tob">
+                                    Time of Birth
+                                </label>
+
+                                <input
+                                    id="tob"
+                                    type="time"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Birth Place
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="City / Place"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <input
+                                    id="country"
+                                    type="text"
+                                    value="India"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🪐 Calculate My Dasha
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Dasha Timeline
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="current-dasha">
+
+                            <div class="current-label">
+                                DEMO CURRENT MAHA DASHA
+                            </div>
+
+                            <div
+                                class="current-planet"
+                                id="currentPlanet">
+                                Venus
+                            </div>
+
+                            <div class="current-info">
+
+                                <div
+                                    class="current-pill"
+                                    id="currentPeriod">
+                                    20 Years
+
+                                </div>
+
+                                <div
+                                    class="current-pill"
+                                    id="currentLord">
+                                    Planetary Lord
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="timeline">
+
+                            <div class="timeline-title">
+                                Vimshottari Maha Dasha Sequence
+                            </div>
+
+                            <div id="timelineList"></div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PLANETS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Vimshottari Dasha Lords
+                </h2>
+
+                <p class="section-sub">
+                    The traditional Vimshottari system uses nine
+                    planetary periods totaling 120 years.
+                </p>
+
+
+                <div class="dasha-grid">
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">☀️</div>
+
+                        <strong>Sun — 6 Years</strong>
+
+                        <p>
+                            Traditionally associated with authority,
+                            identity, confidence and leadership.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">🌙</div>
+
+                        <strong>Moon — 10 Years</strong>
+
+                        <p>
+                            Traditionally associated with emotions,
+                            mind, nurturing and adaptability.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">🔥</div>
+
+                        <strong>Mars — 7 Years</strong>
+
+                        <p>
+                            Traditionally associated with energy,
+                            courage, competition and action.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">☊</div>
+
+                        <strong>Rahu — 18 Years</strong>
+
+                        <p>
+                            Traditionally associated with ambition,
+                            unconventional experiences and desire.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">🪐</div>
+
+                        <strong>Jupiter — 16 Years</strong>
+
+                        <p>
+                            Traditionally associated with learning,
+                            expansion, wisdom and opportunity.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">♀</div>
+
+                        <strong>Saturn — 19 Years</strong>
+
+                        <p>
+                            Traditionally associated with discipline,
+                            responsibility and persistence.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">☿</div>
+
+                        <strong>Mercury — 17 Years</strong>
+
+                        <p>
+                            Traditionally associated with communication,
+                            analysis and learning.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">☋</div>
+
+                        <strong>Ketu — 7 Years</strong>
+
+                        <p>
+                            Traditionally associated with detachment,
+                            introspection and spiritual themes.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dasha-card">
+
+                        <div class="dasha-icon">♀</div>
+
+                        <strong>Venus — 20 Years</strong>
+
+                        <p>
+                            Traditionally associated with relationships,
+                            creativity, comforts and aesthetics.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This page is a frontend demonstration. A production
+                        Dasha engine should determine the Moon's exact
+                        sidereal longitude and birth Nakshatra using an
+                        astronomical ephemeris, calculate the remaining
+                        portion of the starting Nakshatra lord's period,
+                        and then derive Maha Dasha and Antardasha dates.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="nakshatra-calculator.html" class="side-link">
+
+                    <div class="side-icon">⭐</div>
+
+                    <div class="side-content">
+                        <strong>Nakshatra</strong>
+                        <span>Birth star</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Rashi</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rising-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">⬆️</div>
+
+                    <div class="side-content">
+                        <strong>Rising Sign</strong>
+                        <span>Ascendant</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="mangal-dosha-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔥</div>
+
+                    <div class="side-content">
+                        <strong>Mangal Dosha</strong>
+                        <span>Dosha check</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/free-kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Free Kundli</strong>
+                        <span>Full birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Dasha Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for a detailed
+                        interpretation of your planetary periods.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+        <a href="dasha-calculator.html">Dasha</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Birth Tools</h4>
+
+        <a href="rashi-calculator.html">Rashi</a>
+        <a href="rising-sign-calculator.html">Rising Sign</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/*
+    VIMSHOTTARI DASHA DATA
+
+    Traditional sequence and durations.
+*/
+
+const dashas = [
+
+    {
+        planet:"Ketu",
+        icon:"☋",
+        years:7
+    },
+
+    {
+        planet:"Venus",
+        icon:"♀",
+        years:20
+    },
+
+    {
+        planet:"Sun",
+        icon:"☀️",
+        years:6
+    },
+
+    {
+        planet:"Moon",
+        icon:"🌙",
+        years:10
+    },
+
+    {
+        planet:"Mars",
+        icon:"🔥",
+        years:7
+    },
+
+    {
+        planet:"Rahu",
+        icon:"☊",
+        years:18
+    },
+
+    {
+        planet:"Jupiter",
+        icon:"🪐",
+        years:16
+    },
+
+    {
+        planet:"Saturn",
+        icon:"♄",
+        years:19
+    },
+
+    {
+        planet:"Mercury",
+        icon:"☿",
+        years:17
+    }
+
+];
+
+
+/* HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* DATE FORMAT */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* ADD YEARS */
+
+function addYears(date,years){
+
+    const result =
+        new Date(date);
+
+    result.setFullYear(
+        result.getFullYear() + years
+    );
+
+    return result;
+
+}
+
+
+/* CALCULATE */
+
+function calculateDasha(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const tob =
+        document.getElementById(
+            "tob"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const country =
+        document.getElementById(
+            "country"
+        ).value.trim();
+
+
+    if(
+        !name ||
+        !dob ||
+        !tob ||
+        !place ||
+        !country
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        name.toLowerCase()
+        + "|"
+        + dob
+        + "|"
+        + tob
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + country.toLowerCase();
+
+
+    const hash =
+        stringHash(seed);
+
+
+    /*
+        Demo starting Dasha.
+        Production version will derive
+        this from Moon's Nakshatra.
+    */
+
+    const startIndex =
+        hash % dashas.length;
+
+
+    const startDasha =
+        dashas[startIndex];
+
+
+    document.getElementById(
+        "currentPlanet"
+    ).innerText =
+        startDasha.planet;
+
+
+    document.getElementById(
+        "currentPeriod"
+    ).innerText =
+        startDasha.years +
+        " Years";
+
+
+    document.getElementById(
+        "currentLord"
+    ).innerText =
+        "Lord: " +
+        startDasha.planet;
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name +
+        " • " +
+        dob +
+        " • " +
+        tob;
+
+
+    const birthDate =
+        new Date(
+            dob + "T00:00:00"
+        );
+
+
+    const timeline =
+        [];
+
+
+    /*
+        Generate a 120-year cycle
+        beginning from selected lord.
+    */
+
+    for(
+        let i=0;
+        i<dashas.length;
+        i++
+    ){
+
+        const dasha =
+            dashas[
+                (startIndex + i)
+                % dashas.length
+            ];
+
+
+        const startDate =
+            timeline.length === 0
+                ? new Date(birthDate)
+                : new Date(
+                    timeline[
+                        timeline.length - 1
+                    ].endDate
+                );
+
+
+        const endDate =
+            addYears(
+                startDate,
+                dasha.years
+            );
+
+
+        timeline.push({
+
+            planet:dasha.planet,
+
+            icon:dasha.icon,
+
+            years:dasha.years,
+
+            startDate:startDate,
+
+            endDate:endDate
+
+        });
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    let activeIndex = 0;
+
+
+    timeline.forEach(
+        (item,index)=>{
+
+            if(
+                today >= item.startDate &&
+                today < item.endDate
+            ){
+
+                activeIndex =
+                    index;
+
+            }
+
+        }
+    );
+
+
+    const timelineList =
+        document.getElementById(
+            "timelineList"
+        );
+
+
+    timelineList.innerHTML = "";
+
+
+    timeline.forEach(
+        (item,index)=>{
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "timeline-item" +
+                (
+                    index === activeIndex
+                        ? " active"
+                        : ""
+                );
+
+
+            const percent =
+                (
+                    item.years / 20
+                ) * 100;
+
+
+            row.innerHTML = `
+
+                <div class="planet">
+                    ${item.icon}
+                    ${item.planet}
+                </div>
+
+                <div class="period">
+                    <span
+                        style="width:${Math.min(
+                            percent,
+                            100
+                        )}%">
+                    </span>
+                </div>
+
+                <div class="period-text">
+
+                    ${formatDate(
+                        item.startDate
+                    )}
+
+                    →
+
+                    ${formatDate(
+                        item.endDate
+                    )}
+
+                </div>
+
+            `;
+
+
+            timelineList.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_dasha_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            tob:tob,
+
+            place:place,
+
+            country:country,
+
+            startingDasha:
+                startDasha.planet,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

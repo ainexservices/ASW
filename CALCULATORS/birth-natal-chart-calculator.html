@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birth Natal Chart Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Generate a birth natal chart overview using birth date, time and place with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --purple:#573c79;
+    --purple-dark:#402b5d;
+    --purple-bg:#f7f3fb;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 87% 9%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#302046,#694b8e);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"✦";
+    position:absolute;
+    right:45px;
+    top:-70px;
+    font-size:230px;
+    opacity:.07;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:780px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #e1d9eb;
+    background:linear-gradient(180deg,#fbf9fd,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#987db8;
+    box-shadow:0 0 0 3px rgba(87,60,121,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--purple);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--purple-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* CHART */
+
+.chart-wrap{
+    max-width:650px;
+    margin:20px auto 0;
+    display:grid;
+    grid-template-columns:1fr 200px;
+    gap:15px;
+    align-items:center;
+}
+
+.chart{
+    width:100%;
+    aspect-ratio:1;
+    max-width:440px;
+    margin:auto;
+    position:relative;
+    border:2px solid #8b6aa7;
+    background:
+        linear-gradient(45deg,transparent 49.7%,#8b6aa7 50%,transparent 50.3%),
+        linear-gradient(-45deg,transparent 49.7%,#8b6aa7 50%,transparent 50.3%);
+}
+
+.chart::before{
+    content:"";
+    position:absolute;
+    inset:14%;
+    border:1.5px solid #8b6aa7;
+    transform:rotate(45deg);
+}
+
+.chart::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    width:1px;
+    height:100%;
+    background:#8b6aa7;
+}
+
+.chart-center{
+    position:absolute;
+    inset:36%;
+    border:1px solid #8b6aa7;
+    background:#fff;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    z-index:2;
+}
+
+.chart-center strong{
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+}
+
+.chart-center span{
+    color:#888;
+    font-size:6px;
+    margin-top:2px;
+}
+
+.chart-label{
+    position:absolute;
+    z-index:3;
+    font-size:7px;
+    font-weight:700;
+    background:#fff;
+    padding:2px 4px;
+}
+
+.label-1{
+    top:5%;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.label-2{
+    top:18%;
+    right:12%;
+}
+
+.label-3{
+    top:50%;
+    right:4%;
+}
+
+.label-4{
+    bottom:18%;
+    right:12%;
+}
+
+.label-5{
+    bottom:5%;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.label-6{
+    bottom:18%;
+    left:12%;
+}
+
+.label-7{
+    top:50%;
+    left:4%;
+}
+
+.label-8{
+    top:18%;
+    left:12%;
+}
+
+
+/* SUMMARY */
+
+.summary{
+    display:grid;
+    gap:8px;
+}
+
+.summary-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:12px;
+}
+
+.summary-card span{
+    display:block;
+    color:#999;
+    font-size:7px;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:13px;
+    margin-top:4px;
+}
+
+
+/* PLANETS */
+
+.planet-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:17px;
+}
+
+.planet{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:11px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.planet-icon{
+    width:33px;
+    height:33px;
+    border-radius:50%;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+}
+
+.planet strong{
+    display:block;
+    font-size:8px;
+}
+
+.planet span{
+    display:block;
+    color:#888;
+    font-size:7px;
+    margin-top:2px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .chart-wrap{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .planet-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="calculators.html" class="active">Calculators</a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Birth Natal Chart Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Birth Natal Chart Calculator 🔮
+            </h1>
+
+            <p>
+                Generate a birth-chart overview from your date, exact
+                birth time and birthplace. Explore your Ascendant,
+                planetary positions and chart structure.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🔮 Natal Chart
+                </div>
+
+                <div class="hero-pill">
+                    ⬆️ Ascendant
+                </div>
+
+                <div class="hero-pill">
+                    🪐 Planets
+                </div>
+
+                <div class="hero-pill">
+                    ⭐ Birth Chart
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Generate Your Natal Chart
+                </h2>
+
+                <p class="section-sub">
+                    Accurate birth time and location are important for
+                    calculating the Ascendant and houses.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="natalForm"
+                        onsubmit="calculateNatal(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="tob">
+                                    Time of Birth
+                                </label>
+
+                                <input
+                                    id="tob"
+                                    type="time"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Birth Place
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="City / Place"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <input
+                                    id="country"
+                                    type="text"
+                                    value="India"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="zodiac">
+                                    Zodiac System
+                                </label>
+
+                                <select id="zodiac">
+
+                                    <option value="sidereal">
+                                        Sidereal / Vedic
+                                    </option>
+
+                                    <option value="tropical">
+                                        Tropical / Western
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🔮 Generate Natal Chart
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Natal Chart
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="chart-wrap">
+
+
+                            <div class="chart">
+
+                                <div class="chart-center">
+
+                                    <div>
+
+                                        <strong>
+                                            Birth
+                                        </strong>
+
+                                        <span>
+                                            Natal Chart
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="chart-label label-1">
+                                    1
+                                </div>
+
+                                <div class="chart-label label-2">
+                                    2
+                                </div>
+
+                                <div class="chart-label label-3">
+                                    3
+                                </div>
+
+                                <div class="chart-label label-4">
+                                    4
+                                </div>
+
+                                <div class="chart-label label-5">
+                                    5
+                                </div>
+
+                                <div class="chart-label label-6">
+                                    6
+                                </div>
+
+                                <div class="chart-label label-7">
+                                    7
+                                </div>
+
+                                <div class="chart-label label-8">
+                                    8
+                                </div>
+
+                            </div>
+
+
+                            <div class="summary">
+
+
+                                <div class="summary-card">
+
+                                    <span>
+                                        Ascendant
+                                    </span>
+
+                                    <strong id="ascendant">
+                                        —
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="summary-card">
+
+                                    <span>
+                                        Moon Sign
+                                    </span>
+
+                                    <strong id="moonSign">
+                                        —
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="summary-card">
+
+                                    <span>
+                                        Sun Sign
+                                    </span>
+
+                                    <strong id="sunSign">
+                                        —
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="summary-card">
+
+                                    <span>
+                                        System
+                                    </span>
+
+                                    <strong id="system">
+                                        —
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="planetGrid"
+                            class="planet-grid">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ABOUT -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    What Does a Natal Chart Show?
+                </h2>
+
+                <p class="section-sub">
+                    A natal chart maps the positions of celestial
+                    bodies for a particular birth moment and location.
+                </p>
+
+
+                <div class="planet-grid">
+
+
+                    <div class="planet">
+
+                        <div class="planet-icon">
+                            ⬆️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Ascendant
+                            </strong>
+
+                            <span>
+                                Rising sign and house framework
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet">
+
+                        <div class="planet-icon">
+                            🌙
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Moon
+                            </strong>
+
+                            <span>
+                                Emotions and mental themes
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet">
+
+                        <div class="planet-icon">
+                            ☀️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Sun
+                            </strong>
+
+                            <span>
+                                Identity and vitality themes
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet">
+
+                        <div class="planet-icon">
+                            🪐
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Planets
+                            </strong>
+
+                            <span>
+                                Planetary sign and house positions
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This page is a frontend demonstration. A
+                        production natal-chart engine should use exact
+                        birth coordinates, timezone conversion, an
+                        astronomical ephemeris, selected ayanamsa for
+                        sidereal calculations, planetary longitudes,
+                        house calculations and proper chart conventions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="transit-chart-calculator.html" class="side-link">
+
+                    <div class="side-icon">🛰️</div>
+
+                    <div class="side-content">
+                        <strong>Transit Chart</strong>
+                        <span>Current transits</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rising-sign-calculator.html" class="side-link">
+
+                    <div class="side-icon">⬆️</div>
+
+                    <div class="side-content">
+                        <strong>Rising Sign</strong>
+                        <span>Ascendant</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="rashi-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Rashi</strong>
+                        <span>Moon sign</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="nakshatra-calculator.html" class="side-link">
+
+                    <div class="side-icon">⭐</div>
+
+                    <div class="side-content">
+                        <strong>Nakshatra</strong>
+                        <span>Birth star</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">✨</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Complete reading</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Complete Kundli?
+                    </strong>
+
+                    <p>
+                        Generate a complete Kundli or connect with an
+                        astrologer for personalized interpretation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../KUNDLI/kundli.html'">
+
+                        Open Kundli →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="birth-natal-chart-calculator.html">Natal Chart</a>
+        <a href="transit-chart-calculator.html">Transit Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Birth Tools</h4>
+
+        <a href="rising-sign-calculator.html">Rising Sign</a>
+        <a href="rashi-calculator.html">Rashi</a>
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* SIGNS */
+
+const signs = [
+
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces"
+
+];
+
+
+const symbols = [
+
+    "♈",
+    "♉",
+    "♊",
+    "♋",
+    "♌",
+    "♍",
+    "♎",
+    "♏",
+    "♐",
+    "♑",
+    "♒",
+    "♓"
+
+];
+
+
+/* PLANETS */
+
+const planets = [
+
+    {
+        name:"Sun",
+        icon:"☀️"
+    },
+
+    {
+        name:"Moon",
+        icon:"🌙"
+    },
+
+    {
+        name:"Mars",
+        icon:"♂"
+    },
+
+    {
+        name:"Mercury",
+        icon:"☿"
+    },
+
+    {
+        name:"Jupiter",
+        icon:"♃"
+    },
+
+    {
+        name:"Venus",
+        icon:"♀"
+    },
+
+    {
+        name:"Saturn",
+        icon:"♄"
+    }
+
+];
+
+
+/* HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* DATE */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            weekday:"long",
+            day:"2-digit",
+            month:"long",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* CALCULATE */
+
+function calculateNatal(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const tob =
+        document.getElementById(
+            "tob"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const country =
+        document.getElementById(
+            "country"
+        ).value.trim();
+
+
+    const zodiac =
+        document.getElementById(
+            "zodiac"
+        ).value;
+
+
+    if(
+        !name ||
+        !dob ||
+        !tob ||
+        !place ||
+        !country
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        name.toLowerCase()
+        + "|"
+        + dob
+        + "|"
+        + tob
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + country.toLowerCase()
+        + "|"
+        + zodiac;
+
+
+    const hash =
+        stringHash(seed);
+
+
+    /*
+        FRONTEND DEMONSTRATION
+
+        These sign positions are generated
+        deterministically for UI testing.
+
+        They are NOT astronomical calculations.
+    */
+
+
+    const ascIndex =
+        hash % 12;
+
+
+    const moonIndex =
+        (
+            hash * 3
+            + 2
+        ) % 12;
+
+
+    const sunIndex =
+        (
+            hash * 5
+            + 7
+        ) % 12;
+
+
+    document.getElementById(
+        "ascendant"
+    ).innerText =
+        symbols[ascIndex]
+        + " "
+        + signs[ascIndex];
+
+
+    document.getElementById(
+        "moonSign"
+    ).innerText =
+        symbols[moonIndex]
+        + " "
+        + signs[moonIndex];
+
+
+    document.getElementById(
+        "sunSign"
+    ).innerText =
+        symbols[sunIndex]
+        + " "
+        + signs[sunIndex];
+
+
+    document.getElementById(
+        "system"
+    ).innerText =
+        zodiac === "sidereal"
+        ? "Sidereal"
+        : "Tropical";
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name
+        + " • "
+        + formatDate(
+            new Date(
+                dob +
+                "T" +
+                tob +
+                ":00"
+            )
+        )
+        + " • "
+        + place;
+
+
+    /* PLANETS */
+
+    const planetGrid =
+        document.getElementById(
+            "planetGrid"
+        );
+
+
+    planetGrid.innerHTML = "";
+
+
+    planets.forEach(
+        (planet,index)=>{
+
+
+            const signIndex =
+                (
+                    hash
+                    + index * 2
+                    + index
+                ) % 12;
+
+
+            const house =
+                (
+                    hash
+                    + index * 3
+                ) % 12 + 1;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "planet";
+
+
+            card.innerHTML = `
+
+                <div class="planet-icon">
+                    ${planet.icon}
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${planet.name}
+                    </strong>
+
+                    <span>
+                        ${symbols[signIndex]}
+                        ${signs[signIndex]}
+                        • House ${house}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            planetGrid.appendChild(card);
+
+        }
+    );
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_natal_chart_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            tob:tob,
+
+            place:place,
+
+            country:country,
+
+            zodiac:zodiac,
+
+            ascendant:
+                signs[ascIndex],
+
+            moonSign:
+                signs[moonIndex],
+
+            sunSign:
+                signs[sunIndex],
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Transit Chart Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Explore planetary transit positions with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --purple:#563d79;
+    --purple-dark:#402b5f;
+    --purple-bg:#f7f3fc;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 88% 10%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#302147,#634a89);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"♃";
+    position:absolute;
+    right:42px;
+    top:-70px;
+    font-size:225px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:780px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #e1d9ec;
+    background:linear-gradient(180deg,#fbf9fe,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#987eb9;
+    box-shadow:0 0 0 3px rgba(86,61,121,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--purple);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--purple-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* TRANSIT SUMMARY */
+
+.summary{
+    max-width:720px;
+    margin:18px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.summary-card{
+    padding:14px;
+    border-radius:11px;
+    background:var(--purple-bg);
+    border:1px solid #e2d9ed;
+    text-align:center;
+}
+
+.summary-card span{
+    display:block;
+    color:#888;
+    font-size:7px;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+    margin-top:5px;
+}
+
+
+/* PLANETS */
+
+.transit-list{
+    max-width:720px;
+    margin:18px auto 0;
+}
+
+.transit-row{
+    display:grid;
+    grid-template-columns:44px 100px 1fr 95px;
+    align-items:center;
+    gap:10px;
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:11px;
+    margin-top:8px;
+}
+
+.planet-icon{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:15px;
+}
+
+.transit-row strong{
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+}
+
+.transit-row small{
+    display:block;
+    color:#999;
+    font-size:6px;
+    margin-top:2px;
+}
+
+.sign{
+    font-size:8px;
+    font-weight:700;
+}
+
+.degree{
+    text-align:right;
+    color:var(--purple);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ASPECTS */
+
+.aspect-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:16px;
+}
+
+.aspect{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.aspect-icon{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:14px;
+}
+
+.aspect strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.aspect p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--purple-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .aspect-grid{
+        grid-template-columns:1fr;
+    }
+
+    .transit-row{
+        grid-template-columns:40px 1fr;
+    }
+
+    .transit-row .sign,
+    .transit-row .degree{
+        grid-column:2;
+        text-align:left;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+
+        <a href="calculators.html" class="active">Calculators</a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Transit Chart Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Transit Chart Calculator 🛰️
+            </h1>
+
+            <p>
+                Explore the planetary transit positions for a selected
+                date and time. Use transit analysis alongside your natal
+                chart for a deeper astrological interpretation.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ☀️ Sun Transit
+                </div>
+
+                <div class="hero-pill">
+                    🌙 Moon Transit
+                </div>
+
+                <div class="hero-pill">
+                    ♄ Saturn Transit
+                </div>
+
+                <div class="hero-pill">
+                    🪐 Planetary Positions
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Planetary Transits
+                </h2>
+
+                <p class="section-sub">
+                    Select a date and time to generate a transit-chart
+                    demonstration.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="transitForm"
+                        onsubmit="calculateTransit(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="transitDate">
+                                    Transit Date
+                                </label>
+
+                                <input
+                                    id="transitDate"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="transitTime">
+                                    Transit Time
+                                </label>
+
+                                <input
+                                    id="transitTime"
+                                    type="time"
+                                    value="12:00"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Location
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    value="New Delhi, India"
+                                    maxlength="100"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="zodiac">
+                                    Zodiac System
+                                </label>
+
+                                <select id="zodiac">
+
+                                    <option value="sidereal">
+                                        Sidereal
+                                    </option>
+
+                                    <option value="tropical">
+                                        Tropical
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🛰️ Calculate Transit Chart
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Planetary Transit Result
+                            </h3>
+
+                            <p id="resultDate">
+                                Selected transit time
+                            </p>
+
+                        </div>
+
+
+                        <div class="summary">
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Zodiac
+                                </span>
+
+                                <strong id="zodiacResult">
+                                    Sidereal
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Location
+                                </span>
+
+                                <strong id="locationResult">
+                                    India
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Planets
+                                </span>
+
+                                <strong>
+                                    7
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div
+                            id="transitList"
+                            class="transit-list">
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASPECTS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Transit Interpretation
+                </h2>
+
+                <p class="section-sub">
+                    Planetary transits are traditionally interpreted
+                    through sign, house, aspect, dignity and natal
+                    planetary relationships.
+                </p>
+
+
+                <div class="aspect-grid">
+
+
+                    <div class="aspect">
+
+                        <div class="aspect-icon">
+                            🪐
+                        </div>
+
+                        <strong>
+                            Slow Planets
+                        </strong>
+
+                        <p>
+                            Jupiter and Saturn transits can remain
+                            influential over longer periods.
+                        </p>
+
+                    </div>
+
+
+                    <div class="aspect">
+
+                        <div class="aspect-icon">
+                            ⚡
+                        </div>
+
+                        <strong>
+                            Fast Planets
+                        </strong>
+
+                        <p>
+                            The Sun, Moon, Mercury, Venus and Mars
+                            generally change signs more frequently.
+                        </p>
+
+                    </div>
+
+
+                    <div class="aspect">
+
+                        <div class="aspect-icon">
+                            🔭
+                        </div>
+
+                        <strong>
+                            Natal Comparison
+                        </strong>
+
+                        <p>
+                            Transit analysis becomes more useful when
+                            compared with the natal birth chart.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This page is a frontend demonstration. Production
+                        transit calculations should use a professional
+                        astronomical ephemeris, exact planetary
+                        longitudes, ayanamsa selection for sidereal
+                        calculations, timezone handling and geographic
+                        coordinates. The values displayed by this demo
+                        are not suitable for precise astrological
+                        predictions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="moon-phase-calculator.html" class="side-link">
+
+                    <div class="side-icon">🌙</div>
+
+                    <div class="side-content">
+                        <strong>Moon Phase</strong>
+                        <span>Lunar cycle</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="shani-sade-sati-calculator.html" class="side-link">
+
+                    <div class="side-icon">♄</div>
+
+                    <div class="side-content">
+                        <strong>Sade Sati</strong>
+                        <span>Saturn cycle</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="dasha-calculator.html" class="side-link">
+
+                    <div class="side-icon">🪐</div>
+
+                    <div class="side-content">
+                        <strong>Dasha</strong>
+                        <span>Planetary periods</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="birth-natal-chart-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Natal Chart</strong>
+                        <span>Birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">✨</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Complete chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Transit Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer to understand how
+                        current transits relate to your Kundli.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="transit-chart-calculator.html">Transit Chart</a>
+        <a href="moon-phase-calculator.html">Moon Phase</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="dasha-calculator.html">Dasha</a>
+        <a href="shani-sade-sati-calculator.html">Sade Sati</a>
+        <a href="nakshatra-calculator.html">Nakshatra</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="birth-natal-chart-calculator.html">Natal Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* DEFAULT DATE */
+
+const dateInput =
+    document.getElementById(
+        "transitDate"
+    );
+
+dateInput.value =
+    new Date()
+    .toISOString()
+    .split("T")[0];
+
+
+/* PLANETS */
+
+const planets = [
+
+    {
+        name:"Sun",
+        icon:"☀️",
+        speed:1
+    },
+
+    {
+        name:"Moon",
+        icon:"🌙",
+        speed:13
+    },
+
+    {
+        name:"Mars",
+        icon:"♂",
+        speed:.52
+    },
+
+    {
+        name:"Mercury",
+        icon:"☿",
+        speed:1.25
+    },
+
+    {
+        name:"Jupiter",
+        icon:"♃",
+        speed:.083
+    },
+
+    {
+        name:"Venus",
+        icon:"♀",
+        speed:1.18
+    },
+
+    {
+        name:"Saturn",
+        icon:"♄",
+        speed:.034
+    }
+
+];
+
+
+const signs = [
+
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces"
+
+];
+
+
+/* SIGN SYMBOLS */
+
+const signSymbols = [
+
+    "♈",
+    "♉",
+    "♊",
+    "♋",
+    "♌",
+    "♍",
+    "♎",
+    "♏",
+    "♐",
+    "♑",
+    "♒",
+    "♓"
+
+];
+
+
+/* HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* DATE FORMAT */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            weekday:"long",
+            day:"2-digit",
+            month:"long",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* CALCULATE */
+
+function calculateTransit(event){
+
+    event.preventDefault();
+
+
+    const date =
+        document.getElementById(
+            "transitDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "transitTime"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const zodiac =
+        document.getElementById(
+            "zodiac"
+        ).value;
+
+
+    if(
+        !date ||
+        !time ||
+        !place
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        date
+        + "|"
+        + time
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + zodiac;
+
+
+    const hash =
+        stringHash(seed);
+
+
+    const selectedDate =
+        new Date(
+            date +
+            "T" +
+            time +
+            ":00"
+        );
+
+
+    document.getElementById(
+        "resultDate"
+    ).innerText =
+        formatDate(selectedDate)
+        + " • "
+        + time;
+
+
+    document.getElementById(
+        "zodiacResult"
+    ).innerText =
+        zodiac === "sidereal"
+        ? "Sidereal"
+        : "Tropical";
+
+
+    document.getElementById(
+        "locationResult"
+    ).innerText =
+        place;
+
+
+    const list =
+        document.getElementById(
+            "transitList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    planets.forEach(
+        (planet,index)=>{
+
+
+            /*
+                Frontend demonstration.
+
+                These are deterministic UI values,
+                not real ephemeris calculations.
+            */
+
+            const signIndex =
+                (
+                    hash
+                    + Math.floor(
+                        index *
+                        3.17
+                    )
+                    + Math.floor(
+                        planet.speed *
+                        10
+                    )
+                ) % 12;
+
+
+            const degree =
+                (
+                    (
+                        hash *
+                        (index + 3)
+                    ) % 3000
+                ) / 100;
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "transit-row";
+
+
+            row.innerHTML = `
+
+                <div class="planet-icon">
+                    ${planet.icon}
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${planet.name}
+                    </strong>
+
+                    <small>
+                        Transit Position
+                    </small>
+
+                </div>
+
+                <div class="sign">
+
+                    ${signSymbols[signIndex]}
+                    ${signs[signIndex]}
+
+                </div>
+
+                <div class="degree">
+
+                    ${degree.toFixed(2)}°
+
+                </div>
+
+            `;
+
+
+            list.appendChild(row);
+
+        }
+    );
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_transit_result",
+        JSON.stringify({
+
+            date:date,
+
+            time:time,
+
+            place:place,
+
+            zodiac:zodiac,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

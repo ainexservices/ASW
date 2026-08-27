@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Friendship Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Check friendship compatibility between two names with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --border:#e5e5e5;
+    --gray:#777;
+
+    --blue:#315d87;
+    --blue-dark:#214462;
+    --blue-bg:#f2f7fc;
+
+    --gold-bg:#fff8e8;
+
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 90% 10%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#234b70,#4d7ea7);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"🤝";
+    position:absolute;
+    right:45px;
+    top:-5px;
+    font-size:150px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:780px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #dce6ef;
+    background:linear-gradient(180deg,#f9fcff,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#6287a7;
+    box-shadow:0 0 0 3px rgba(49,93,135,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--blue);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--blue-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* FRIENDSHIP CARD */
+
+.friendship-card{
+    max-width:650px;
+    margin:20px auto 0;
+    padding:27px;
+    text-align:center;
+    border-radius:15px;
+    background:var(--blue-bg);
+    border:1px solid #dce6ef;
+}
+
+.friends{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+}
+
+.person{
+    min-width:145px;
+    padding:15px;
+    background:#fff;
+    border:1px solid #dfe7ee;
+    border-radius:11px;
+}
+
+.person-icon{
+    width:48px;
+    height:48px;
+    margin:auto;
+    border-radius:50%;
+    background:var(--blue-bg);
+    display:grid;
+    place-items:center;
+    font-size:21px;
+}
+
+.person strong{
+    display:block;
+    margin-top:8px;
+    font-size:9px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.person span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:3px;
+}
+
+.friend-icon{
+    font-size:29px;
+    color:var(--blue);
+}
+
+.score{
+    width:125px;
+    height:125px;
+    margin:20px auto 0;
+    border-radius:50%;
+    background:#fff;
+    border:8px solid #d9e5ef;
+    display:grid;
+    place-items:center;
+    box-shadow:0 8px 20px rgba(35,75,110,.08);
+}
+
+.score strong{
+    font-family:"Playfair Display",serif;
+    color:var(--blue);
+    font-size:42px;
+}
+
+.friendship-card h4{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+    margin-top:13px;
+}
+
+.friendship-card p{
+    max-width:520px;
+    margin:5px auto 0;
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.score-bar{
+    max-width:520px;
+    margin:15px auto 0;
+    height:9px;
+    background:#e4e9ed;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.score-fill{
+    width:0;
+    height:100%;
+    background:var(--blue);
+    border-radius:20px;
+    transition:width .7s ease;
+}
+
+
+/* SUMMARY */
+
+.summary-grid{
+    max-width:650px;
+    margin:18px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.summary-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+    text-align:center;
+}
+
+.summary-card span{
+    display:block;
+    color:#999;
+    font-size:7px;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+    margin-top:4px;
+}
+
+
+/* DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:16px;
+}
+
+.detail{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--blue-bg);
+    display:grid;
+    place-items:center;
+}
+
+.detail strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.detail p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--blue-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .friends{
+        flex-direction:column;
+    }
+
+    .friend-icon{
+        transform:rotate(90deg);
+    }
+
+    .person{
+        width:100%;
+        max-width:260px;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators /
+        <span>Friendship Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Friendship Calculator 🤝
+            </h1>
+
+            <p>
+                Compare two names with a simple numerology-based
+                friendship calculation and discover a traditional
+                friendship compatibility score.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🤝 Friendship
+                </div>
+
+                <div class="hero-pill">
+                    🔤 Name Numerology
+                </div>
+
+                <div class="hero-pill">
+                    🔢 Root Numbers
+                </div>
+
+                <div class="hero-pill">
+                    ⭐ Compatibility
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Check Friendship Compatibility
+                </h2>
+
+                <p class="section-sub">
+                    Enter the names of two friends. The calculator
+                    converts letters into numerical values, reduces
+                    them to root numbers and compares the two results.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="friendshipForm"
+                        onsubmit="calculateFriendship(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="friendOne">
+                                    Friend 1 Name
+                                </label>
+
+                                <input
+                                    id="friendOne"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter first friend's name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="friendTwo">
+                                    Friend 2 Name
+                                </label>
+
+                                <input
+                                    id="friendTwo"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter second friend's name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="method">
+                                    Numerology System
+                                </label>
+
+                                <select id="method">
+
+                                    <option value="pythagorean">
+                                        Pythagorean
+                                    </option>
+
+                                    <option value="chaldean">
+                                        Chaldean
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🤝 Check Friendship
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Friendship Compatibility
+                            </h3>
+
+                            <p id="resultNames">
+                                —
+                            </p>
+
+                        </div>
+
+
+                        <div class="friendship-card">
+
+
+                            <div class="friends">
+
+
+                                <div class="person">
+
+                                    <div class="person-icon">
+                                        🧑
+                                    </div>
+
+                                    <strong id="personOne">
+                                        Friend 1
+                                    </strong>
+
+                                    <span id="personOneNumber">
+                                        Root Number —
+                                    </span>
+
+                                </div>
+
+
+                                <div class="friend-icon">
+                                    🤝
+                                </div>
+
+
+                                <div class="person">
+
+                                    <div class="person-icon">
+                                        🧑
+                                    </div>
+
+                                    <strong id="personTwo">
+                                        Friend 2
+                                    </strong>
+
+                                    <span id="personTwoNumber">
+                                        Root Number —
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="score">
+
+                                <strong id="scoreNumber">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <h4 id="friendshipTitle">
+                                Friendship Compatibility
+                            </h4>
+
+
+                            <p id="friendshipDescription">
+                                —
+                            </p>
+
+
+                            <div class="score-bar">
+
+                                <div
+                                    id="scoreFill"
+                                    class="score-fill">
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="summary-grid">
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Friend 1 Value
+                                </span>
+
+                                <strong id="valueOne">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Friend 2 Value
+                                </span>
+
+                                <strong id="valueTwo">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Method
+                                </span>
+
+                                <strong id="methodResult">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    How the Friendship Calculator Works
+                </h2>
+
+                <p class="section-sub">
+                    This tool uses name numerology as a lightweight
+                    compatibility exercise. Different numerology
+                    traditions may use different letter mappings.
+                </p>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🔤
+                        </div>
+
+                        <strong>
+                            Name Conversion
+                        </strong>
+
+                        <p>
+                            Alphabetic characters are converted into
+                            numerical values using the selected system.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🔢
+                        </div>
+
+                        <strong>
+                            Root Numbers
+                        </strong>
+
+                        <p>
+                            The name totals are reduced to single-digit
+                            root numbers for comparison.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🤝
+                        </div>
+
+                        <strong>
+                            Friendship Score
+                        </strong>
+
+                        <p>
+                            The two root numbers are compared to create
+                            a simple traditional compatibility score.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Note
+                    </strong>
+
+                    <p>
+                        Numerology-based friendship scores are
+                        traditional or entertainment-oriented
+                        interpretations, not scientifically validated
+                        measurements. A friendship cannot be accurately
+                        predicted by names or numbers alone.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lucky-number-calculator.html" class="side-link">
+
+                    <div class="side-icon">🍀</div>
+
+                    <div class="side-content">
+                        <strong>Lucky Number</strong>
+                        <span>Numerology number</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lo-shu-grid-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Lo Shu Grid</strong>
+                        <span>Numerology grid</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lucky-vehicle-number-calculator.html" class="side-link">
+
+                    <div class="side-icon">🚗</div>
+
+                    <div class="side-content">
+                        <strong>Vehicle Number</strong>
+                        <span>Vehicle numerology</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="name-compatibility-calculator.html" class="side-link">
+
+                    <div class="side-icon">❤️</div>
+
+                    <div class="side-content">
+                        <strong>Name Compatibility</strong>
+                        <span>Name analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="flames-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔥</div>
+
+                    <div class="side-content">
+                        <strong>FLAMES</strong>
+                        <span>Fun relationship tool</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want Personal Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for personalized
+                        relationship and friendship guidance.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">
+            All Calculators
+        </a>
+
+        <a href="friendship-calculator.html">
+            Friendship
+        </a>
+
+        <a href="name-compatibility-calculator.html">
+            Name Compatibility
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Numerology</h4>
+
+        <a href="lucky-number-calculator.html">
+            Lucky Number
+        </a>
+
+        <a href="lo-shu-grid-calculator.html">
+            Lo Shu Grid
+        </a>
+
+        <a href="lucky-vehicle-number-calculator.html">
+            Vehicle Number
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Relationship</h4>
+
+        <a href="name-compatibility-calculator.html">
+            Compatibility
+        </a>
+
+        <a href="friendship-calculator.html">
+            Friendship
+        </a>
+
+        <a href="flames-calculator.html">
+            FLAMES
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* PYTHAGOREAN */
+
+const pythagorean = {
+
+    A:1,B:2,C:3,
+    D:4,E:5,F:6,
+    G:7,H:8,I:9,
+
+    J:1,K:2,L:3,
+    M:4,N:5,O:6,
+    P:7,Q:8,R:9,
+
+    S:1,T:2,U:3,
+    V:4,W:5,X:6,
+    Y:7,Z:8
+
+};
+
+
+/* CHALDEAN */
+
+const chaldean = {
+
+    A:1,I:1,J:1,Q:1,Y:1,
+
+    B:2,K:2,R:2,
+
+    C:3,G:3,L:3,S:3,
+
+    D:4,M:4,T:4,
+
+    E:5,H:5,N:5,X:5,
+
+    U:6,V:6,W:6,
+
+    O:7,Z:7,
+
+    F:8,P:8
+
+};
+
+
+/* REDUCE */
+
+function reduceNumber(number){
+
+    while(
+        number > 9
+    ){
+
+        number =
+            String(number)
+            .split("")
+            .reduce(
+                (sum,digit)=>
+                    sum + Number(digit),
+                0
+            );
+
+    }
+
+    return number;
+
+}
+
+
+/* NAME VALUE */
+
+function getNameValue(
+    name,
+    table
+){
+
+    let total = 0;
+
+
+    name
+        .toUpperCase()
+        .split("")
+        .forEach(
+            character=>{
+
+                if(
+                    table[character]
+                ){
+
+                    total +=
+                        table[character];
+
+                }
+
+            }
+        );
+
+
+    return total;
+
+}
+
+
+/* SCORE */
+
+function getFriendshipScore(
+    one,
+    two
+){
+
+    const difference =
+        Math.abs(
+            one - two
+        );
+
+
+    const distance =
+        Math.min(
+            difference,
+            9 - difference
+        );
+
+
+    let score;
+
+
+    if(one === two){
+
+        score = 95;
+
+    }
+
+    else if(distance === 1){
+
+        score = 88;
+
+    }
+
+    else if(distance === 2){
+
+        score = 81;
+
+    }
+
+    else if(distance === 3){
+
+        score = 73;
+
+    }
+
+    else if(distance === 4){
+
+        score = 64;
+
+    }
+
+    else{
+
+        score = 55;
+
+    }
+
+
+    return score;
+
+}
+
+
+/* TITLE */
+
+function getFriendshipTitle(
+    score
+){
+
+    if(score >= 90){
+
+        return "Best Friend Energy";
+
+    }
+
+    if(score >= 80){
+
+        return "Strong Friendship";
+
+    }
+
+    if(score >= 70){
+
+        return "Good Friendship";
+
+    }
+
+    if(score >= 60){
+
+        return "Growing Friendship";
+
+    }
+
+    return "Different Energies";
+
+}
+
+
+/* DESCRIPTION */
+
+function getFriendshipDescription(
+    score
+){
+
+    if(score >= 90){
+
+        return "The numbers show a very strong traditional friendship resonance.";
+
+    }
+
+    if(score >= 80){
+
+        return "The two numbers form a traditionally favorable friendship combination.";
+
+    }
+
+    if(score >= 70){
+
+        return "The combination shows positive traditional friendship potential.";
+
+    }
+
+    if(score >= 60){
+
+        return "The numbers suggest a mixed combination that may benefit from patience and understanding.";
+
+    }
+
+    return "The numbers have different traditional patterns. Shared interests and communication matter more than the numerical result.";
+
+}
+
+
+/* CALCULATE */
+
+function calculateFriendship(event){
+
+    event.preventDefault();
+
+
+    const friendOne =
+        document.getElementById(
+            "friendOne"
+        ).value.trim();
+
+
+    const friendTwo =
+        document.getElementById(
+            "friendTwo"
+        ).value.trim();
+
+
+    const method =
+        document.getElementById(
+            "method"
+        ).value;
+
+
+    if(
+        !friendOne ||
+        !friendTwo
+    ){
+
+        return;
+
+    }
+
+
+    const table =
+        method === "chaldean"
+        ? chaldean
+        : pythagorean;
+
+
+    const rawOne =
+        getNameValue(
+            friendOne,
+            table
+        );
+
+
+    const rawTwo =
+        getNameValue(
+            friendTwo,
+            table
+        );
+
+
+    const rootOne =
+        reduceNumber(
+            rawOne
+        );
+
+
+    const rootTwo =
+        reduceNumber(
+            rawTwo
+        );
+
+
+    const score =
+        getFriendshipScore(
+            rootOne,
+            rootTwo
+        );
+
+
+    /* DISPLAY */
+
+    document.getElementById(
+        "personOne"
+    ).innerText =
+        friendOne;
+
+
+    document.getElementById(
+        "personTwo"
+    ).innerText =
+        friendTwo;
+
+
+    document.getElementById(
+        "personOneNumber"
+    ).innerText =
+        "Root Number "
+        + rootOne;
+
+
+    document.getElementById(
+        "personTwoNumber"
+    ).innerText =
+        "Root Number "
+        + rootTwo;
+
+
+    document.getElementById(
+        "scoreNumber"
+    ).innerText =
+        score
+        + "%";
+
+
+    document.getElementById(
+        "friendshipTitle"
+    ).innerText =
+        getFriendshipTitle(
+            score
+        );
+
+
+    document.getElementById(
+        "friendshipDescription"
+    ).innerText =
+        getFriendshipDescription(
+            score
+        );
+
+
+    document.getElementById(
+        "scoreFill"
+    ).style.width =
+        score + "%";
+
+
+    document.getElementById(
+        "valueOne"
+    ).innerText =
+        rawOne
+        + " → "
+        + rootOne;
+
+
+    document.getElementById(
+        "valueTwo"
+    ).innerText =
+        rawTwo
+        + " → "
+        + rootTwo;
+
+
+    document.getElementById(
+        "methodResult"
+    ).innerText =
+        method === "chaldean"
+        ? "Chaldean"
+        : "Pythagorean";
+
+
+    document.getElementById(
+        "resultNames"
+    ).innerText =
+        friendOne
+        + " 🤝 "
+        + friendTwo;
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    /* SAVE */
+
+    localStorage.setItem(
+        "awt_friendship_result",
+        JSON.stringify({
+
+            friendOne:friendOne,
+
+            friendTwo:friendTwo,
+
+            method:method,
+
+            rawOne:rawOne,
+
+            rawTwo:rawTwo,
+
+            rootOne:rootOne,
+
+            rootTwo:rootTwo,
+
+            score:score,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

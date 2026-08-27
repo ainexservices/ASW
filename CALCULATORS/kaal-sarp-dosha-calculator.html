@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kaal Sarp Dosha Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Check Kaal Sarp Dosha with birth details on Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#176b59;
+    --green-dark:#0f5245;
+    --green-bg:#f0faf7;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,input,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 87% 8%,rgba(255,255,255,.17),transparent 28%),
+        linear-gradient(125deg,#073f36,#176b59);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"☊";
+    position:absolute;
+    right:45px;
+    top:-65px;
+    font-size:220px;
+    opacity:.07;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:770px;
+    color:rgba(255,255,255,.88);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #d6e8e2;
+    background:linear-gradient(180deg,#f8fcfb,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus{
+    border-color:#72a99e;
+    box-shadow:0 0 0 3px rgba(23,107,89,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--green);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--green-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.result-card{
+    max-width:650px;
+    margin:18px auto 0;
+    padding:22px;
+    text-align:center;
+    border-radius:15px;
+    background:var(--green-bg);
+    border:1px solid #d5e9e2;
+}
+
+.node-symbol{
+    width:92px;
+    height:92px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff;
+    border:7px solid #d9ebe5;
+    display:grid;
+    place-items:center;
+    font-size:40px;
+}
+
+.result-card h4{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+    margin-top:10px;
+}
+
+.status{
+    display:inline-block;
+    margin-top:8px;
+    padding:7px 13px;
+    border-radius:20px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.status.yes{
+    background:#fbe1e1;
+    color:#9b2222;
+}
+
+.status.no{
+    background:#e1f3e9;
+    color:#247244;
+}
+
+.result-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.result-pill{
+    background:#fff;
+    border:1px solid #d9e8e2;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:7px;
+}
+
+
+/* PLANET CHART */
+
+.planet-row{
+    display:grid;
+    grid-template-columns:80px 1fr 70px;
+    gap:10px;
+    align-items:center;
+    border:1px solid #eee;
+    border-radius:9px;
+    padding:10px;
+    margin-top:7px;
+}
+
+.planet-row strong{
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+}
+
+.planet-row span{
+    color:#888;
+    font-size:7px;
+}
+
+.house{
+    text-align:right;
+    color:var(--green);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:16px;
+}
+
+.detail{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--green-bg);
+    display:grid;
+    place-items:center;
+}
+
+.detail strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.detail p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--green-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+
+        <a href="calculators.html" class="active">Calculators</a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Kaal Sarp Dosha Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Kaal Sarp Dosha Calculator 🐍
+            </h1>
+
+            <p>
+                Check the traditional Kaal Sarp Dosha indication from
+                your birth chart. Enter your accurate birth details
+                to generate a demonstration analysis of the planetary
+                node axis.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ☊ Rahu
+                </div>
+
+                <div class="hero-pill">
+                    ☋ Ketu
+                </div>
+
+                <div class="hero-pill">
+                    🪐 7 Planets
+                </div>
+
+                <div class="hero-pill">
+                    🔮 Birth Chart
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Check Kaal Sarp Dosha
+                </h2>
+
+                <p class="section-sub">
+                    Exact birth time and location are important for a
+                    proper planetary-position calculation.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="kaalForm"
+                        onsubmit="calculateKaalSarp(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="tob">
+                                    Time of Birth
+                                </label>
+
+                                <input
+                                    id="tob"
+                                    type="time"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="place">
+                                    Birth Place
+                                </label>
+
+                                <input
+                                    id="place"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="City / Place"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <input
+                                    id="country"
+                                    type="text"
+                                    value="India"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🐍 Check Kaal Sarp Dosha
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Kaal Sarp Analysis
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="result-card">
+
+                            <div class="node-symbol">
+                                ☊
+                            </div>
+
+
+                            <h4 id="resultTitle">
+                                Kaal Sarp Dosha Analysis
+                            </h4>
+
+
+                            <div
+                                id="status"
+                                class="status no">
+                                Analysis Available
+                            </div>
+
+
+                            <div class="result-pills">
+
+                                <div
+                                    class="result-pill"
+                                    id="rahuPill">
+                                    Rahu: —
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="ketuPill">
+                                    Ketu: —
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="axisPill">
+                                    Axis: —
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="details-grid">
+
+
+                            <div class="detail">
+
+                                <div class="detail-icon">
+                                    ☊
+                                </div>
+
+                                <strong>
+                                    Rahu Position
+                                </strong>
+
+                                <p id="rahuText">
+                                    Rahu placement will appear here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <div class="detail-icon">
+                                    ☋
+                                </div>
+
+                                <strong>
+                                    Ketu Position
+                                </strong>
+
+                                <p id="ketuText">
+                                    Ketu placement will appear here.
+                                </p>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <div class="detail-icon">
+                                    🪐
+                                </div>
+
+                                <strong>
+                                    Planetary Axis
+                                </strong>
+
+                                <p id="axisText">
+                                    Node-axis analysis will appear here.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div style="max-width:650px;margin:18px auto 0;">
+
+                            <h3
+                                style="font-family:'Playfair Display',serif;font-size:18px;">
+                                Demonstration Planetary Positions
+                            </h3>
+
+                            <div id="planetList"></div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ABOUT -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    What Is Kaal Sarp Dosha?
+                </h2>
+
+                <p class="section-sub">
+                    Kaal Sarp Dosha is a traditional Jyotish concept
+                    associated with the relationship between the lunar
+                    nodes Rahu and Ketu and the remaining planets.
+                </p>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            ☊
+                        </div>
+
+                        <strong>
+                            Rahu
+                        </strong>
+
+                        <p>
+                            The ascending lunar node, traditionally
+                            associated with desire, ambition and
+                            unconventional themes.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            ☋
+                        </div>
+
+                        <strong>
+                            Ketu
+                        </strong>
+
+                        <p>
+                            The descending lunar node, traditionally
+                            associated with detachment, introspection
+                            and spiritual themes.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🔮
+                        </div>
+
+                        <strong>
+                            Full Chart
+                        </strong>
+
+                        <p>
+                            A complete planetary chart is needed to
+                            evaluate node-axis conditions and other
+                            modifying factors.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        This page is a frontend demonstration. A production
+                        engine should calculate precise sidereal longitudes
+                        for the Sun, Moon, Mars, Mercury, Jupiter, Venus and
+                        Saturn, together with Rahu/Ketu, and apply the exact
+                        selected Jyotish tradition's definition. Different
+                        traditions can differ on whether and how this Dosha
+                        is recognized, so it should not be treated as a
+                        standalone prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="mangal-dosha-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔥</div>
+
+                    <div class="side-content">
+                        <strong>Mangal Dosha</strong>
+                        <span>Manglik check</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="shani-sade-sati-calculator.html" class="side-link">
+
+                    <div class="side-icon">♄</div>
+
+                    <div class="side-content">
+                        <strong>Sade Sati</strong>
+                        <span>Saturn transit</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="dasha-calculator.html" class="side-link">
+
+                    <div class="side-icon">🪐</div>
+
+                    <div class="side-content">
+                        <strong>Dasha</strong>
+                        <span>Planetary periods</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="transit-chart-calculator.html" class="side-link">
+
+                    <div class="side-icon">🛰️</div>
+
+                    <div class="side-content">
+                        <strong>Transit Chart</strong>
+                        <span>Planetary transits</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">🔮</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Birth chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Complete Analysis?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for a complete
+                        Kundli and Dosha interpretation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="mangal-dosha-calculator.html">Mangal Dosha</a>
+        <a href="kaal-sarp-dosha-calculator.html">Kaal Sarp Dosha</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Transit</h4>
+
+        <a href="shani-sade-sati-calculator.html">Sade Sati</a>
+        <a href="transit-chart-calculator.html">Transit Chart</a>
+        <a href="moon-phase-calculator.html">Moon Phase</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* PLANETS */
+
+const planets = [
+
+    {
+        name:"Sun",
+        icon:"☀️"
+    },
+
+    {
+        name:"Moon",
+        icon:"🌙"
+    },
+
+    {
+        name:"Mars",
+        icon:"♂"
+    },
+
+    {
+        name:"Mercury",
+        icon:"☿"
+    },
+
+    {
+        name:"Jupiter",
+        icon:"♃"
+    },
+
+    {
+        name:"Venus",
+        icon:"♀"
+    },
+
+    {
+        name:"Saturn",
+        icon:"♄"
+    }
+
+];
+
+
+const signs = [
+
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces"
+
+];
+
+
+/* HASH */
+
+function stringHash(text){
+
+    let hash = 0;
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        hash =
+            (
+                (hash << 5)
+                - hash
+                + text.charCodeAt(i)
+            );
+
+        hash |= 0;
+
+    }
+
+    return Math.abs(hash);
+
+}
+
+
+/* CALCULATE */
+
+function calculateKaalSarp(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const tob =
+        document.getElementById(
+            "tob"
+        ).value;
+
+
+    const place =
+        document.getElementById(
+            "place"
+        ).value.trim();
+
+
+    const country =
+        document.getElementById(
+            "country"
+        ).value.trim();
+
+
+    if(
+        !name ||
+        !dob ||
+        !tob ||
+        !place ||
+        !country
+    ){
+
+        return;
+
+    }
+
+
+    const seed =
+        name.toLowerCase()
+        + "|"
+        + dob
+        + "|"
+        + tob
+        + "|"
+        + place.toLowerCase()
+        + "|"
+        + country.toLowerCase();
+
+
+    const hash =
+        stringHash(seed);
+
+
+    /*
+        FRONTEND DEMO
+
+        Generate deterministic signs for
+        UI testing. This is NOT a real
+        astronomical calculation.
+    */
+
+    const rahuIndex =
+        hash % 12;
+
+
+    const ketuIndex =
+        (rahuIndex + 6) % 12;
+
+
+    /*
+        Demo condition.
+
+        In production, determine the exact
+        longitude of every planet and test
+        the chosen Kaal Sarp definition.
+    */
+
+    const indicated =
+        (hash % 3 === 0);
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    if(indicated){
+
+        status.innerText =
+            "Possible Indication";
+
+        status.className =
+            "status yes";
+
+
+        document.getElementById(
+            "resultTitle"
+        ).innerText =
+            "Kaal Sarp Dosha Indication";
+
+    }else{
+
+        status.innerText =
+            "No Demo Indication";
+
+        status.className =
+            "status no";
+
+
+        document.getElementById(
+            "resultTitle"
+        ).innerText =
+            "No Kaal Sarp Dosha Demo Indication";
+
+    }
+
+
+    document.getElementById(
+        "rahuPill"
+    ).innerText =
+        "Rahu: " +
+        signs[rahuIndex];
+
+
+    document.getElementById(
+        "ketuPill"
+    ).innerText =
+        "Ketu: " +
+        signs[ketuIndex];
+
+
+    document.getElementById(
+        "axisPill"
+    ).innerText =
+        "Axis: " +
+        signs[rahuIndex] +
+        " ↔ " +
+        signs[ketuIndex];
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name +
+        " • " +
+        dob +
+        " • " +
+        tob;
+
+
+    document.getElementById(
+        "rahuText"
+    ).innerText =
+        "Rahu is shown on the " +
+        signs[rahuIndex] +
+        " reference sign in this frontend demonstration.";
+
+
+    document.getElementById(
+        "ketuText"
+    ).innerText =
+        "Ketu is opposite Rahu, shown on the " +
+        signs[ketuIndex] +
+        " reference sign.";
+
+
+    document.getElementById(
+        "axisText"
+    ).innerText =
+        "The node axis is represented as " +
+        signs[rahuIndex] +
+        " ↔ " +
+        signs[ketuIndex] +
+        ". Exact planetary containment requires real longitudes.";
+
+
+    /* PLANET LIST */
+
+    const list =
+        document.getElementById(
+            "planetList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    planets.forEach(
+        (planet,index)=>{
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            const planetIndex =
+                (
+                    hash
+                    + index * 2
+                    + index
+                ) % 12;
+
+
+            row.className =
+                "planet-row";
+
+
+            row.innerHTML = `
+
+                <strong>
+                    ${planet.icon}
+                    ${planet.name}
+                </strong>
+
+                <span>
+                    Demonstration zodiac position
+                </span>
+
+                <div class="house">
+                    ${signs[planetIndex]}
+                </div>
+
+            `;
+
+
+            list.appendChild(row);
+
+        }
+    );
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_kaal_sarp_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            tob:tob,
+
+            place:place,
+
+            country:country,
+
+            rahuSign:
+                signs[rahuIndex],
+
+            ketuSign:
+                signs[ketuIndex],
+
+            indicated:indicated,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

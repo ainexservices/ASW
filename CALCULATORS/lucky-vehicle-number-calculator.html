@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lucky Vehicle Number Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate your vehicle number's numerology root number with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+
+    --orange:#a65c13;
+    --orange-dark:#7b4007;
+    --orange-bg:#fff7ed;
+
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 88% 10%,rgba(255,255,255,.2),transparent 28%),
+        linear-gradient(125deg,#743c08,#c27623);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"🚗";
+    position:absolute;
+    right:38px;
+    top:5px;
+    font-size:155px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:780px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #eedfcf;
+    background:linear-gradient(180deg,#fffcf8,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#c08037;
+    box-shadow:0 0 0 3px rgba(166,92,19,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--orange);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--orange-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* VEHICLE RESULT */
+
+.vehicle-card{
+    max-width:620px;
+    margin:20px auto 0;
+    padding:25px;
+    text-align:center;
+    border-radius:15px;
+    background:var(--orange-bg);
+    border:1px solid #efdfca;
+}
+
+.vehicle-plate{
+    width:min(410px,100%);
+    min-height:105px;
+    margin:auto;
+
+    border:4px solid #222;
+    border-radius:11px;
+
+    background:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.08);
+}
+
+.plate-country{
+    width:30px;
+    align-self:stretch;
+    background:#315d87;
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:7px;
+    writing-mode:vertical-rl;
+}
+
+.plate-number{
+    flex:1;
+
+    font-family:"DM Sans",sans-serif;
+    font-weight:700;
+
+    font-size:31px;
+    letter-spacing:3px;
+
+    color:#111;
+}
+
+.vehicle-card h4{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+    margin-top:14px;
+}
+
+.vehicle-card p{
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.number-circle{
+    width:86px;
+    height:86px;
+    margin:16px auto 0;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    border:6px solid #f0dfc8;
+
+    display:grid;
+    place-items:center;
+
+    box-shadow:0 6px 15px rgba(90,50,10,.07);
+}
+
+.number-circle strong{
+    font-family:"Playfair Display",serif;
+    color:var(--orange);
+    font-size:38px;
+}
+
+.result-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:13px;
+}
+
+.result-pill{
+    background:#fff;
+    border:1px solid #eadbc9;
+    border-radius:20px;
+    padding:7px 11px;
+    font-size:7px;
+}
+
+
+/* SUMMARY */
+
+.summary-grid{
+    max-width:620px;
+    margin:18px auto 0;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.summary-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+    text-align:center;
+}
+
+.summary-card span{
+    display:block;
+    color:#999;
+    font-size:7px;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+    margin-top:4px;
+}
+
+
+/* COMPATIBILITY */
+
+.compatibility{
+    max-width:620px;
+    margin:18px auto 0;
+
+    border:1px solid #eee;
+    border-radius:12px;
+    padding:15px;
+}
+
+.compatibility h4{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+}
+
+.compatibility p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+.compatibility-bar{
+    margin-top:11px;
+    height:9px;
+    border-radius:20px;
+    background:#eee;
+    overflow:hidden;
+}
+
+.compatibility-fill{
+    height:100%;
+    width:0%;
+    background:var(--orange);
+    border-radius:20px;
+    transition:width .6s ease;
+}
+
+.compatibility-score{
+    margin-top:7px;
+    font-size:8px;
+    font-weight:700;
+    text-align:right;
+}
+
+
+/* DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:16px;
+}
+
+.detail{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-icon{
+    width:33px;
+    height:33px;
+    border-radius:8px;
+    background:var(--orange-bg);
+    display:grid;
+    place-items:center;
+}
+
+.detail strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.detail p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--orange-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .plate-number{
+        font-size:24px;
+        letter-spacing:2px;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="calculators.html" class="active">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators /
+        <span>Lucky Vehicle Number</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Lucky Vehicle Number 🚗🍀
+            </h1>
+
+            <p>
+                Enter your vehicle registration number to calculate
+                its numerology root number and explore its traditional
+                number association.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🚗 Vehicle Number
+                </div>
+
+                <div class="hero-pill">
+                    🍀 Lucky Number
+                </div>
+
+                <div class="hero-pill">
+                    🔢 Numerology
+                </div>
+
+                <div class="hero-pill">
+                    ⭐ Root Number
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Check Your Vehicle Number
+                </h2>
+
+                <p class="section-sub">
+                    Enter the complete registration number. Letters
+                    are converted using the selected numerology system,
+                    while the numeric registration digits are also
+                    shown separately.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="vehicleForm"
+                        onsubmit="calculateVehicle(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="ownerName">
+                                    Owner Name
+                                </label>
+
+                                <input
+                                    id="ownerName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter owner name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="vehicleNumber">
+                                    Vehicle Registration Number
+                                </label>
+
+                                <input
+                                    id="vehicleNumber"
+                                    type="text"
+                                    maxlength="20"
+                                    placeholder="Example: UP32 AB 1234"
+                                    autocomplete="off"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="method">
+                                    Numerology System
+                                </label>
+
+                                <select id="method">
+
+                                    <option value="chaldean">
+                                        Chaldean
+                                    </option>
+
+                                    <option value="pythagorean">
+                                        Pythagorean
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dob">
+                                    Owner Date of Birth — Optional
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date">
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🚗 Check Vehicle Number
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Vehicle Number Analysis
+                            </h3>
+
+                            <p id="resultPerson">
+                                Vehicle profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="vehicle-card">
+
+
+                            <div class="vehicle-plate">
+
+                                <div class="plate-country">
+                                    IND
+                                </div>
+
+                                <div
+                                    class="plate-number"
+                                    id="plateNumber">
+                                    UP32 AB 1234
+                                </div>
+
+                            </div>
+
+
+                            <div class="number-circle">
+
+                                <strong id="rootNumber">
+                                    7
+                                </strong>
+
+                            </div>
+
+
+                            <h4 id="numberTitle">
+                                Vehicle Number 7
+                            </h4>
+
+
+                            <p id="numberDescription">
+                                Traditional numerology association.
+                            </p>
+
+
+                            <div class="result-pills">
+
+                                <div
+                                    class="result-pill"
+                                    id="sumPill">
+                                    Total: —
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="systemPill">
+                                    System: —
+                                </div>
+
+                                <div
+                                    class="result-pill"
+                                    id="digitPill">
+                                    Numeric Digits: —
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-grid">
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Letter Value
+                                </span>
+
+                                <strong id="letterValue">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Total Value
+                                </span>
+
+                                <strong id="totalValue">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Root Number
+                                </span>
+
+                                <strong id="rootValue">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="compatibility">
+
+                            <h4>
+                                Vehicle Number Strength
+                            </h4>
+
+                            <p>
+                                This visual score is a product
+                                demonstration based on the calculated
+                                root number. It is not a prediction of
+                                vehicle safety, performance or outcomes.
+                            </p>
+
+                            <div class="compatibility-bar">
+
+                                <div
+                                    id="compatibilityFill"
+                                    class="compatibility-fill">
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="compatibilityScore"
+                                class="compatibility-score">
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    How Vehicle Numerology Works
+                </h2>
+
+                <p class="section-sub">
+                    Numerology practitioners may assign numerical values
+                    to letters and combine them with the digits in a
+                    registration number before reducing the result.
+                </p>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🔤
+                        </div>
+
+                        <strong>
+                            Letters
+                        </strong>
+
+                        <p>
+                            Depending on the selected numerology system,
+                            letters in the registration can be assigned
+                            numerical values.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🔢
+                        </div>
+
+                        <strong>
+                            Digits
+                        </strong>
+
+                        <p>
+                            The numeric portion of the registration is
+                            included in the calculation and can be
+                            reduced to a root number.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <div class="detail-icon">
+                            🍀
+                        </div>
+
+                        <strong>
+                            Root Number
+                        </strong>
+
+                        <p>
+                            The final value is traditionally reduced
+                            to a single digit for numerological
+                            interpretation.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Note
+                    </strong>
+
+                    <p>
+                        Vehicle numerology is a traditional
+                        numerological practice and is not scientifically
+                        established. A lucky-number calculation cannot
+                        determine vehicle safety, accident risk,
+                        mechanical reliability or driving outcomes.
+                        Always follow road-safety laws and responsible
+                        driving practices.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lucky-number-calculator.html" class="side-link">
+
+                    <div class="side-icon">🍀</div>
+
+                    <div class="side-content">
+                        <strong>Lucky Number</strong>
+                        <span>Birth number</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lo-shu-grid-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Lo Shu Grid</strong>
+                        <span>Numerology grid</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="name-compatibility-calculator.html" class="side-link">
+
+                    <div class="side-icon">❤️</div>
+
+                    <div class="side-content">
+                        <strong>Name Compatibility</strong>
+                        <span>Name analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="friendship-calculator.html" class="side-link">
+
+                    <div class="side-icon">🤝</div>
+
+                    <div class="side-content">
+                        <strong>Friendship</strong>
+                        <span>Compatibility tool</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">✨</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Complete chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Personal Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for personalized
+                        astrology and numerology guidance.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">
+            All Calculators
+        </a>
+
+        <a href="lucky-vehicle-number-calculator.html">
+            Vehicle Number
+        </a>
+
+        <a href="lucky-number-calculator.html">
+            Lucky Number
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Numerology</h4>
+
+        <a href="lo-shu-grid-calculator.html">
+            Lo Shu Grid
+        </a>
+
+        <a href="name-compatibility-calculator.html">
+            Name Compatibility
+        </a>
+
+        <a href="friendship-calculator.html">
+            Friendship
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../KUNDLI/free-kundli.html">
+            Free Kundli
+        </a>
+
+        <a href="../KUNDLI/birth-chart.html">
+            Birth Chart
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/*
+    PYTHAGOREAN LETTER VALUES
+*/
+
+const pythagorean = {
+
+    A:1,B:2,C:3,
+    D:4,E:5,F:6,
+    G:7,H:8,I:9,
+
+    J:1,K:2,L:3,
+    M:4,N:5,O:6,
+    P:7,Q:8,R:9,
+
+    S:1,T:2,U:3,
+    V:4,W:5,X:6,
+    Y:7,Z:8
+
+};
+
+
+/*
+    CHALDEAN LETTER VALUES
+
+    Simplified traditional mapping
+    for this frontend demonstration.
+*/
+
+const chaldean = {
+
+    A:1,I:1,J:1,Q:1,Y:1,
+
+    B:2,K:2,R:2,
+
+    C:3,G:3,L:3,S:3,
+
+    D:4,M:4,T:4,
+
+    E:5,H:5,N:5,X:5,
+
+    U:6,V:6,W:6,
+
+    O:7,Z:7,
+
+    F:8,P:8
+
+};
+
+
+/* NUMBER MEANINGS */
+
+const meanings = {
+
+    1:{
+        title:"Leadership Energy",
+        text:"Traditionally associated with independence, initiative and individuality."
+    },
+
+    2:{
+        title:"Harmony Energy",
+        text:"Traditionally associated with cooperation, sensitivity and balance."
+    },
+
+    3:{
+        title:"Expression Energy",
+        text:"Traditionally associated with creativity, communication and optimism."
+    },
+
+    4:{
+        title:"Stability Energy",
+        text:"Traditionally associated with structure, discipline and practicality."
+    },
+
+    5:{
+        title:"Movement Energy",
+        text:"Traditionally associated with freedom, adaptability and change."
+    },
+
+    6:{
+        title:"Harmony & Care",
+        text:"Traditionally associated with responsibility, comfort and relationships."
+    },
+
+    7:{
+        title:"Introspection Energy",
+        text:"Traditionally associated with analysis, reflection and spiritual inquiry."
+    },
+
+    8:{
+        title:"Authority Energy",
+        text:"Traditionally associated with ambition, organization and material focus."
+    },
+
+    9:{
+        title:"Completion Energy",
+        text:"Traditionally associated with compassion, service and idealism."
+    }
+
+};
+
+
+/* REDUCE */
+
+function reduceNumber(number){
+
+    while(number > 9){
+
+        number =
+            String(number)
+            .split("")
+            .reduce(
+                (sum,digit)=>
+                    sum + Number(digit),
+                0
+            );
+
+    }
+
+    return number;
+
+}
+
+
+/* LETTER VALUE */
+
+function calculateLetterValue(
+    text,
+    table
+){
+
+    let total = 0;
+
+    let letterTotal = 0;
+
+    const clean =
+        text.toUpperCase();
+
+
+    for(
+        const character of clean
+    ){
+
+        if(
+            /[A-Z]/.test(character)
+        ){
+
+            const value =
+                table[character] || 0;
+
+            total += value;
+
+            letterTotal += value;
+
+        }
+
+        else if(
+            /[0-9]/.test(character)
+        ){
+
+            total +=
+                Number(character);
+
+        }
+
+    }
+
+
+    return {
+        total,
+        letterTotal
+    };
+
+}
+
+
+/* FORMAT */
+
+function formatVehicleNumber(
+    number
+){
+
+    return number
+        .toUpperCase()
+        .replace(
+            /\s+/g,
+            " "
+        )
+        .trim();
+
+}
+
+
+/* CALCULATE */
+
+function calculateVehicle(event){
+
+    event.preventDefault();
+
+
+    const owner =
+        document.getElementById(
+            "ownerName"
+        ).value.trim();
+
+
+    const vehicle =
+        formatVehicleNumber(
+            document.getElementById(
+                "vehicleNumber"
+            ).value
+        );
+
+
+    const method =
+        document.getElementById(
+            "method"
+        ).value;
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    if(
+        !owner ||
+        !vehicle
+    ){
+
+        return;
+
+    }
+
+
+    const table =
+        method === "chaldean"
+        ? chaldean
+        : pythagorean;
+
+
+    const calculation =
+        calculateLetterValue(
+            vehicle,
+            table
+        );
+
+
+    const root =
+        reduceNumber(
+            calculation.total
+        );
+
+
+    const numericDigits =
+        (
+            vehicle.match(
+                /\d/g
+            ) || []
+        ).join("");
+
+
+    const meaning =
+        meanings[root];
+
+
+    /*
+        DISPLAY
+    */
+
+    document.getElementById(
+        "plateNumber"
+    ).innerText =
+        vehicle;
+
+
+    document.getElementById(
+        "rootNumber"
+    ).innerText =
+        root;
+
+
+    document.getElementById(
+        "numberTitle"
+    ).innerText =
+        "Vehicle Number "
+        + root
+        + " — "
+        + meaning.title;
+
+
+    document.getElementById(
+        "numberDescription"
+    ).innerText =
+        meaning.text;
+
+
+    document.getElementById(
+        "letterValue"
+    ).innerText =
+        calculation.letterTotal;
+
+
+    document.getElementById(
+        "totalValue"
+    ).innerText =
+        calculation.total;
+
+
+    document.getElementById(
+        "rootValue"
+    ).innerText =
+        root;
+
+
+    document.getElementById(
+        "sumPill"
+    ).innerText =
+        "Total: "
+        + calculation.total;
+
+
+    document.getElementById(
+        "systemPill"
+    ).innerText =
+        "System: "
+        + (
+            method === "chaldean"
+            ? "Chaldean"
+            : "Pythagorean"
+        );
+
+
+    document.getElementById(
+        "digitPill"
+    ).innerText =
+        "Numeric Digits: "
+        + (
+            numericDigits ||
+            "None"
+        );
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        owner
+        + " • "
+        + vehicle;
+
+
+    /*
+        SIMPLE DEMO SCORE
+
+        This is only a visual numerology
+        score and not a safety prediction.
+    */
+
+    const score =
+        55 +
+        (
+            root * 4
+        );
+
+
+    const cappedScore =
+        Math.min(
+            score,
+            91
+        );
+
+
+    document.getElementById(
+        "compatibilityFill"
+    ).style.width =
+        cappedScore + "%";
+
+
+    document.getElementById(
+        "compatibilityScore"
+    ).innerText =
+        cappedScore
+        + "% numerology score";
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    /*
+        SAVE RESULT
+    */
+
+    localStorage.setItem(
+        "awt_vehicle_number_result",
+        JSON.stringify({
+
+            owner:owner,
+
+            vehicle:vehicle,
+
+            method:method,
+
+            dob:dob,
+
+            letterValue:
+                calculation.letterTotal,
+
+            totalValue:
+                calculation.total,
+
+            rootNumber:
+                root,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

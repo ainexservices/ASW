@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lucky Number Calculator - Astro With Talk</title>
+
+<meta name="description"
+content="Calculate your lucky number using your date of birth with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#3f754f;
+    --green-dark:#2d5839;
+    --green-bg:#f3faf4;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 88% 10%,rgba(255,255,255,.2),transparent 28%),
+        linear-gradient(125deg,#28583a,#4d8b60);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"7";
+    position:absolute;
+    right:55px;
+    top:-78px;
+    font-family:"Playfair Display",serif;
+    font-size:250px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:39px;
+}
+
+.hero p{
+    max-width:780px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* FORM */
+
+.form-box{
+    max-width:720px;
+    margin:18px auto 0;
+    border:1px solid #dce9df;
+    background:linear-gradient(180deg,#f9fdf9,#fff);
+    border-radius:15px;
+    padding:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:43px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:0 11px;
+    outline:none;
+    font-size:9px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#60906e;
+    box-shadow:0 0 0 3px rgba(63,117,79,.07);
+}
+
+.calculate-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--green);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.calculate-btn:hover{
+    background:var(--green-dark);
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    text-align:center;
+}
+
+.result-header h3{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.result-header p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* NUMBER CARD */
+
+.number-card{
+    max-width:600px;
+    margin:20px auto 0;
+    padding:28px;
+    border-radius:15px;
+    text-align:center;
+    background:var(--green-bg);
+    border:1px solid #dbe9de;
+}
+
+.number-circle{
+    width:120px;
+    height:120px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff;
+    border:8px solid #dceadf;
+    display:grid;
+    place-items:center;
+    box-shadow:0 8px 20px rgba(30,70,40,.08);
+}
+
+.number-circle strong{
+    font-family:"Playfair Display",serif;
+    font-size:58px;
+    color:var(--green);
+}
+
+.number-card h4{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+    margin-top:13px;
+}
+
+.number-card p{
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.number-pills{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:13px;
+}
+
+.number-pill{
+    background:#fff;
+    border:1px solid #dbe9de;
+    border-radius:20px;
+    padding:7px 11px;
+    font-size:7px;
+}
+
+
+/* SUMMARY */
+
+.summary-grid{
+    max-width:600px;
+    margin:18px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.summary-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+    text-align:center;
+}
+
+.summary-card span{
+    display:block;
+    color:#999;
+    font-size:7px;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+    margin-top:4px;
+}
+
+
+/* MEANING */
+
+.meaning-grid{
+    max-width:650px;
+    margin:18px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.meaning-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.meaning-number{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:var(--green-bg);
+    display:grid;
+    place-items:center;
+    color:var(--green);
+    font-family:"Playfair Display",serif;
+    font-size:15px;
+}
+
+.meaning-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.meaning-card p{
+    color:#888;
+    font-size:7px;
+    line-height:1.65;
+    margin-top:4px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--gold-bg);
+    border:1px solid #f0dfb7;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--green-bg);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--red);
+    color:#fff;
+    border-radius:10px;
+    padding:14px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#ffe8e8;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .summary-grid,
+    .meaning-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">ॐ</div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">Astrologers</a>
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="calculators.html" class="active">Calculators</a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Calculators / <span>Lucky Number Calculator</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Lucky Number Calculator 🍀
+            </h1>
+
+            <p>
+                Calculate a numerology-based lucky number from your
+                date of birth. Explore the resulting root number and
+                its traditional numerological meaning.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🍀 Lucky Number
+                </div>
+
+                <div class="hero-pill">
+                    🔢 Numerology
+                </div>
+
+                <div class="hero-pill">
+                    📅 Date of Birth
+                </div>
+
+                <div class="hero-pill">
+                    ⭐ Root Number
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Calculate Your Lucky Number
+                </h2>
+
+                <p class="section-sub">
+                    Enter your name and date of birth to calculate a
+                    single-digit numerology number by repeatedly
+                    reducing the birth-date digits.
+                </p>
+
+
+                <div class="form-box">
+
+
+                    <form
+                        id="luckyForm"
+                        onsubmit="calculateLucky(event)">
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group full">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    type="text"
+                                    maxlength="80"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="dob">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    id="dob"
+                                    type="date"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="method">
+                                    Calculation Method
+                                </label>
+
+                                <select id="method">
+
+                                    <option value="birth">
+                                        Birth Date Root Number
+                                    </option>
+
+                                    <option value="full">
+                                        Full Date Root Number
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            class="calculate-btn"
+                            type="submit">
+
+                            🍀 Calculate Lucky Number
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="result"
+                        class="result">
+
+
+                        <div class="result-header">
+
+                            <h3>
+                                Your Lucky Number
+                            </h3>
+
+                            <p id="resultPerson">
+                                Birth profile
+                            </p>
+
+                        </div>
+
+
+                        <div class="number-card">
+
+
+                            <div class="number-circle">
+
+                                <strong id="luckyNumber">
+                                    7
+                                </strong>
+
+                            </div>
+
+
+                            <h4 id="luckyTitle">
+                                Number 7
+                            </h4>
+
+
+                            <p id="luckyDescription">
+                                Your calculated numerology number.
+                            </p>
+
+
+                            <div class="number-pills">
+
+                                <div
+                                    class="number-pill"
+                                    id="sumPill">
+                                    Digit Sum: —
+                                </div>
+
+                                <div
+                                    class="number-pill"
+                                    id="methodPill">
+                                    Method: —
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-grid">
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Birth Digits
+                                </span>
+
+                                <strong id="birthDigits">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Digit Sum
+                                </span>
+
+                                <strong id="digitSum">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-card">
+
+                                <span>
+                                    Root Number
+                                </span>
+
+                                <strong id="rootNumber">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEANINGS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Traditional Number Meanings
+                </h2>
+
+                <p class="section-sub">
+                    These short descriptions are traditional
+                    numerological associations and are not scientific
+                    predictions.
+                </p>
+
+
+                <div class="meaning-grid">
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">1</div>
+
+                        <strong>
+                            Leadership
+                        </strong>
+
+                        <p>
+                            Independence, initiative and individuality.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">2</div>
+
+                        <strong>
+                            Harmony
+                        </strong>
+
+                        <p>
+                            Cooperation, sensitivity and partnership.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">3</div>
+
+                        <strong>
+                            Expression
+                        </strong>
+
+                        <p>
+                            Creativity, communication and optimism.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">4</div>
+
+                        <strong>
+                            Structure
+                        </strong>
+
+                        <p>
+                            Discipline, practicality and stability.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">5</div>
+
+                        <strong>
+                            Freedom
+                        </strong>
+
+                        <p>
+                            Change, adaptability and exploration.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">6</div>
+
+                        <strong>
+                            Care
+                        </strong>
+
+                        <p>
+                            Responsibility, harmony and nurturing.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">7</div>
+
+                        <strong>
+                            Introspection
+                        </strong>
+
+                        <p>
+                            Reflection, analysis and spiritual inquiry.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">8</div>
+
+                        <strong>
+                            Ambition
+                        </strong>
+
+                        <p>
+                            Organization, authority and material focus.
+                        </p>
+
+                    </div>
+
+
+                    <div class="meaning-card">
+
+                        <div class="meaning-number">9</div>
+
+                        <strong>
+                            Compassion
+                        </strong>
+
+                        <p>
+                            Service, idealism and broad humanitarian
+                            themes.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Calculation Note
+                    </strong>
+
+                    <p>
+                        “Lucky number” is a numerological concept rather
+                        than a scientifically established measure.
+                        Different numerology schools use different
+                        calculation methods, so the method used by this
+                        calculator is displayed with the result.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Calculators
+                </h3>
+
+
+                <a href="calculators.html" class="side-link">
+
+                    <div class="side-icon">🧮</div>
+
+                    <div class="side-content">
+                        <strong>All Calculators</strong>
+                        <span>Calculator home</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lo-shu-grid-calculator.html" class="side-link">
+
+                    <div class="side-icon">🔢</div>
+
+                    <div class="side-content">
+                        <strong>Lo Shu Grid</strong>
+                        <span>Numerology grid</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="lucky-vehicle-number-calculator.html" class="side-link">
+
+                    <div class="side-icon">🚗</div>
+
+                    <div class="side-content">
+                        <strong>Vehicle Number</strong>
+                        <span>Vehicle numerology</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="name-compatibility-calculator.html" class="side-link">
+
+                    <div class="side-icon">❤️</div>
+
+                    <div class="side-content">
+                        <strong>Name Compatibility</strong>
+                        <span>Name analysis</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="friendship-calculator.html" class="side-link">
+
+                    <div class="side-icon">🤝</div>
+
+                    <div class="side-content">
+                        <strong>Friendship</strong>
+                        <span>Compatibility tool</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html" class="side-link">
+
+                    <div class="side-icon">✨</div>
+
+                    <div class="side-content">
+                        <strong>Full Kundli</strong>
+                        <span>Complete chart</span>
+                    </div>
+
+                    <div class="side-arrow">→</div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Want a Personal Reading?
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for a personalized
+                        astrology and numerology consultation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">ॐ</div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Calculators</h4>
+
+        <a href="calculators.html">All Calculators</a>
+        <a href="lucky-number-calculator.html">Lucky Number</a>
+        <a href="lo-shu-grid-calculator.html">Lo Shu Grid</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Numerology</h4>
+
+        <a href="lucky-vehicle-number-calculator.html">
+            Vehicle Number
+        </a>
+
+        <a href="name-compatibility-calculator.html">
+            Name Compatibility
+        </a>
+
+        <a href="friendship-calculator.html">
+            Friendship
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../KUNDLI/free-kundli.html">Free Kundli</a>
+        <a href="../KUNDLI/birth-chart.html">Birth Chart</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* NUMBER MEANINGS */
+
+const meanings = {
+
+    1:{
+        title:"Leadership",
+        description:
+            "Traditionally associated with independence, initiative and individuality."
+    },
+
+    2:{
+        title:"Harmony",
+        description:
+            "Traditionally associated with cooperation, sensitivity and partnership."
+    },
+
+    3:{
+        title:"Expression",
+        description:
+            "Traditionally associated with creativity, communication and optimism."
+    },
+
+    4:{
+        title:"Structure",
+        description:
+            "Traditionally associated with discipline, practicality and stability."
+    },
+
+    5:{
+        title:"Freedom",
+        description:
+            "Traditionally associated with change, adaptability and exploration."
+    },
+
+    6:{
+        title:"Care",
+        description:
+            "Traditionally associated with responsibility, harmony and nurturing."
+    },
+
+    7:{
+        title:"Introspection",
+        description:
+            "Traditionally associated with reflection, analysis and spiritual inquiry."
+    },
+
+    8:{
+        title:"Ambition",
+        description:
+            "Traditionally associated with organization, authority and material focus."
+    },
+
+    9:{
+        title:"Compassion",
+        description:
+            "Traditionally associated with service, idealism and humanitarian themes."
+    }
+
+};
+
+
+/* REDUCE */
+
+function reduceToRoot(number){
+
+    while(
+        number > 9
+    ){
+
+        number =
+            String(number)
+                .split("")
+                .reduce(
+                    (sum,digit)=>
+                        sum + Number(digit),
+                    0
+                );
+
+    }
+
+    return number;
+
+}
+
+
+/* DATE */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            weekday:"long",
+            day:"2-digit",
+            month:"long",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* CALCULATE */
+
+function calculateLucky(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "dob"
+        ).value;
+
+
+    const method =
+        document.getElementById(
+            "method"
+        ).value;
+
+
+    if(
+        !name ||
+        !dob
+    ){
+
+        return;
+
+    }
+
+
+    const digits =
+        dob
+            .replace(
+                /-/g,
+                ""
+            )
+            .split("")
+            .map(Number);
+
+
+    let selectedDigits;
+
+
+    /*
+        Birth Date Root Number:
+        day only.
+
+        Full Date Root Number:
+        complete YYYYMMDD.
+    */
+
+    if(
+        method === "birth"
+    ){
+
+        const day =
+            dob.split("-")[2];
+
+        selectedDigits =
+            day
+                .split("")
+                .map(Number);
+
+    }else{
+
+        selectedDigits =
+            digits;
+
+    }
+
+
+    const digitSum =
+        selectedDigits.reduce(
+            (sum,digit)=>
+                sum + digit,
+            0
+        );
+
+
+    const root =
+        reduceToRoot(
+            digitSum
+        );
+
+
+    const meaning =
+        meanings[root];
+
+
+    document.getElementById(
+        "luckyNumber"
+    ).innerText =
+        root;
+
+
+    document.getElementById(
+        "luckyTitle"
+    ).innerText =
+        "Number " +
+        root +
+        " — " +
+        meaning.title;
+
+
+    document.getElementById(
+        "luckyDescription"
+    ).innerText =
+        meaning.description;
+
+
+    document.getElementById(
+        "birthDigits"
+    ).innerText =
+        selectedDigits.join(" • ");
+
+
+    document.getElementById(
+        "digitSum"
+    ).innerText =
+        digitSum;
+
+
+    document.getElementById(
+        "rootNumber"
+    ).innerText =
+        root;
+
+
+    document.getElementById(
+        "sumPill"
+    ).innerText =
+        "Digit Sum: " +
+        digitSum;
+
+
+    document.getElementById(
+        "methodPill"
+    ).innerText =
+        method === "birth"
+        ? "Method: Birth Date"
+        : "Method: Full Date";
+
+
+    document.getElementById(
+        "resultPerson"
+    ).innerText =
+        name
+        + " • "
+        + formatDate(
+            new Date(
+                dob +
+                "T00:00:00"
+            )
+        );
+
+
+    document
+        .getElementById("result")
+        .classList.add("show");
+
+
+    localStorage.setItem(
+        "awt_lucky_number_result",
+        JSON.stringify({
+
+            name:name,
+
+            dob:dob,
+
+            method:method,
+
+            digitSum:digitSum,
+
+            rootNumber:root,
+
+            createdAt:
+                new Date().toISOString()
+
+        })
+    );
+
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>
