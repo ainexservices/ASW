@@ -1,0 +1,2920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Checkout | Astro With Talk</title>
+
+<meta name="description"
+      content="Complete your Astro With Talk Shop order securely.">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --light:#f6f6f6;
+    --border:#e3e3e3;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#25a34a;
+    --gold:#b98417;
+    --gold-light:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+    border-radius:8px;
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.cart{
+    position:relative;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+    display:grid;
+    place-items:center;
+}
+
+.cart-count{
+    position:absolute;
+    right:-3px;
+    top:-4px;
+    min-width:15px;
+    height:15px;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:7px;
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:14px;
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:34px 38px;
+    border-radius:20px;
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 84% 20%,
+            rgba(255,255,255,.17),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #25112f,
+            #4d2561,
+            #754a8d
+        );
+}
+
+.hero::after{
+    content:"CHECKOUT";
+    position:absolute;
+    right:20px;
+    bottom:-55px;
+    font-size:110px;
+    font-weight:700;
+    opacity:.05;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    padding:7px 11px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:40px;
+}
+
+.hero p{
+    margin-top:8px;
+    max-width:700px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.7;
+}
+
+
+/* STEPS */
+
+.steps{
+    display:flex;
+    align-items:center;
+    margin-top:18px;
+    padding:15px 20px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+}
+
+.step{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:#aaa;
+    font-size:7px;
+    font-weight:700;
+}
+
+.step.active{
+    color:var(--purple);
+}
+
+.step-number{
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#eee;
+    color:#888;
+    font-size:7px;
+}
+
+.step.active .step-number{
+    background:var(--purple);
+    color:#fff;
+}
+
+.step.done .step-number{
+    background:var(--green);
+    color:#fff;
+}
+
+.step-line{
+    flex:1;
+    height:1px;
+    margin:0 10px;
+    background:#ddd;
+}
+
+
+/* LAYOUT */
+
+.checkout-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 340px;
+    gap:18px;
+    margin-top:18px;
+}
+
+
+/* CARD */
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+}
+
+
+/* SECTION */
+
+.checkout-section{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.checkout-section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:15px;
+}
+
+.section-number{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    background:var(--purple-light);
+    color:var(--purple);
+    display:grid;
+    place-items:center;
+    font-size:8px;
+    font-weight:700;
+}
+
+.section-title h2{
+    font-family:"Playfair Display",serif;
+    font-size:19px;
+}
+
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    color:#666;
+    font-size:7px;
+    font-weight:700;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    height:37px;
+    padding:0 10px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    outline:none;
+    color:#333;
+    background:#fff;
+    font-size:8px;
+}
+
+.field textarea{
+    height:70px;
+    padding-top:9px;
+    resize:none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:#bda8c8;
+}
+
+
+/* ADDRESS TYPE */
+
+.address-types{
+    display:flex;
+    gap:7px;
+    margin-bottom:12px;
+}
+
+.address-type{
+    padding:7px 12px;
+    border:1px solid #ddd;
+    border-radius:20px;
+    background:#fff;
+    color:#777;
+    font-size:7px;
+    font-weight:600;
+}
+
+.address-type.active{
+    border-color:var(--purple);
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+
+/* DELIVERY */
+
+.delivery-options{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.delivery-option{
+    position:relative;
+    padding:13px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid #ddd;
+    border-radius:9px;
+}
+
+.delivery-option.selected{
+    border-color:var(--purple);
+    background:#fbf8fd;
+}
+
+.delivery-radio{
+    width:15px;
+    height:15px;
+    accent-color:var(--purple);
+}
+
+.delivery-info{
+    flex:1;
+}
+
+.delivery-info strong{
+    display:block;
+    font-size:8px;
+}
+
+.delivery-info span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+.delivery-price{
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* PAYMENT */
+
+.payment-options{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.payment-option{
+    border:1px solid #ddd;
+    border-radius:9px;
+    overflow:hidden;
+}
+
+.payment-head{
+    min-height:50px;
+    padding:10px 12px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.payment-head input{
+    accent-color:var(--purple);
+}
+
+.payment-head strong{
+    flex:1;
+    font-size:8px;
+}
+
+.payment-icon{
+    width:35px;
+    height:27px;
+    border-radius:5px;
+    background:#f5f5f5;
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.payment-body{
+    display:none;
+    padding:0 12px 13px;
+}
+
+.payment-option.open .payment-body{
+    display:block;
+}
+
+.upi-row{
+    display:flex;
+    gap:6px;
+}
+
+.upi-row input{
+    flex:1;
+    height:34px;
+    padding:0 9px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    outline:none;
+    font-size:7px;
+}
+
+.verify-upi{
+    padding:0 11px;
+    border:1px solid var(--purple);
+    border-radius:6px;
+    background:#fff;
+    color:var(--purple);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* ORDER ITEMS */
+
+.order-items{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.order-item{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.order-img{
+    width:48px;
+    height:48px;
+    border-radius:8px;
+    background:linear-gradient(145deg,#f2e3d1,#d7b88f);
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.order-info{
+    flex:1;
+}
+
+.order-info strong{
+    display:block;
+    font-size:8px;
+}
+
+.order-info span{
+    color:#999;
+    font-size:6px;
+}
+
+.order-price{
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* SUMMARY */
+
+.summary{
+    padding:20px;
+    position:sticky;
+    top:15px;
+}
+
+.summary h2{
+    margin-bottom:15px;
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    color:#777;
+    font-size:8px;
+}
+
+.summary-row strong{
+    color:#333;
+}
+
+.summary-divider{
+    margin:6px 0;
+    border-top:1px dashed #ddd;
+}
+
+.total{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:9px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.total strong{
+    color:var(--red);
+    font-size:18px;
+}
+
+
+/* COUPON */
+
+.coupon{
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.coupon-label{
+    margin-bottom:6px;
+    color:#777;
+    font-size:7px;
+    font-weight:700;
+}
+
+.coupon-row{
+    display:flex;
+    gap:5px;
+}
+
+.coupon-row input{
+    flex:1;
+    height:32px;
+    padding:0 8px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    outline:none;
+    font-size:7px;
+}
+
+.apply{
+    padding:0 10px;
+    border:1px solid var(--purple);
+    border-radius:6px;
+    background:#fff;
+    color:var(--purple);
+    font-size:7px;
+    font-weight:700;
+}
+
+.coupon-message{
+    display:none;
+    margin-top:6px;
+    color:var(--green);
+    font-size:6px;
+}
+
+
+/* PLACE ORDER */
+
+.place-order{
+    width:100%;
+    height:43px;
+    margin-top:15px;
+    border:0;
+    border-radius:8px;
+    background:var(--red);
+    color:#fff;
+    font-size:9px;
+    font-weight:700;
+}
+
+.place-order:hover{
+    opacity:.93;
+}
+
+.terms{
+    margin-top:9px;
+    color:#999;
+    text-align:center;
+    font-size:6px;
+    line-height:1.5;
+}
+
+
+/* SECURITY */
+
+.security{
+    margin-top:13px;
+    padding:12px;
+    border-radius:9px;
+    background:var(--green-light);
+    border:1px solid #d5ead9;
+    color:#327441;
+    font-size:7px;
+    line-height:1.5;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:40px 0 18px;
+    background:#171717;
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+    color:#aaa;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+    margin:6px 0;
+    color:#aaa;
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+    padding-top:13px;
+    border-top:1px solid #333;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(0,0,0,.65);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(390px,100%);
+    padding:25px;
+    border-radius:17px;
+    background:#fff;
+    text-align:center;
+}
+
+.modal-icon{
+    width:55px;
+    height:55px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff7e5;
+    display:grid;
+    place-items:center;
+    font-size:23px;
+}
+
+.modal-box h2{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.modal-box p{
+    margin-top:6px;
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px;
+    margin-top:17px;
+}
+
+.modal-actions button{
+    flex:1;
+    height:38px;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.modal-cancel{
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+.modal-confirm{
+    border:0;
+    background:var(--red);
+    color:#fff;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .checkout-layout{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        position:static;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .steps{
+        overflow-x:auto;
+    }
+
+    .step{
+        flex-shrink:0;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="container nav">
+
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="shop.html" class="active">
+            Shop
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+
+        <div class="wallet">
+
+            💰 ₹<span id="wallet">
+                500
+            </span>
+
+        </div>
+
+
+        <button
+            class="cart"
+            onclick="location.href='cart.html'">
+
+            🛒
+
+            <span
+                id="cartCount"
+                class="cart-count">
+
+                2
+
+            </span>
+
+        </button>
+
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- PAGE -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+
+        Home / Shop /
+        <span>Checkout</span>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🔒 SECURE CHECKOUT
+            </div>
+
+            <h1>
+                Complete Your Order
+            </h1>
+
+            <p>
+                Enter your delivery details, choose a payment method
+                and place your Astro With Talk Shop order securely.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- STEPS -->
+
+    <div class="steps">
+
+
+        <div class="step done">
+
+            <div class="step-number">
+                ✓
+            </div>
+
+            Cart
+
+        </div>
+
+
+        <div class="step-line"></div>
+
+
+        <div class="step active">
+
+            <div class="step-number">
+                2
+            </div>
+
+            Checkout
+
+        </div>
+
+
+        <div class="step-line"></div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            Confirmation
+
+        </div>
+
+    </div>
+
+
+    <!-- CHECKOUT -->
+
+    <div class="checkout-layout">
+
+
+        <!-- LEFT -->
+
+        <section class="card">
+
+
+            <!-- ADDRESS -->
+
+            <div class="checkout-section">
+
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        1
+                    </div>
+
+                    <h2>
+                        Delivery Address
+                    </h2>
+
+                </div>
+
+
+                <div class="address-types">
+
+                    <button
+                        class="address-type active"
+                        onclick="selectAddressType(this)">
+
+                        🏠 Home
+
+                    </button>
+
+
+                    <button
+                        class="address-type"
+                        onclick="selectAddressType(this)">
+
+                        🏢 Office
+
+                    </button>
+
+
+                    <button
+                        class="address-type"
+                        onclick="selectAddressType(this)">
+
+                        📍 Other
+
+                    </button>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            FULL NAME *
+                        </label>
+
+                        <input
+                            id="fullName"
+                            type="text"
+                            placeholder="Enter full name">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            MOBILE NUMBER *
+                        </label>
+
+                        <input
+                            id="mobile"
+                            type="tel"
+                            maxlength="10"
+                            placeholder="10-digit mobile number">
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            ADDRESS *
+                        </label>
+
+                        <textarea
+                            id="address"
+                            placeholder="House / Flat / Street / Area"></textarea>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            CITY *
+                        </label>
+
+                        <input
+                            id="city"
+                            type="text"
+                            placeholder="City">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            STATE *
+                        </label>
+
+                        <select id="state">
+
+                            <option value="">
+                                Select State
+                            </option>
+
+                            <option>
+                                Uttar Pradesh
+                            </option>
+
+                            <option>
+                                Delhi
+                            </option>
+
+                            <option>
+                                Maharashtra
+                            </option>
+
+                            <option>
+                                Rajasthan
+                            </option>
+
+                            <option>
+                                Madhya Pradesh
+                            </option>
+
+                            <option>
+                                Bihar
+                            </option>
+
+                            <option>
+                                Gujarat
+                            </option>
+
+                            <option>
+                                West Bengal
+                            </option>
+
+                            <option>
+                                Karnataka
+                            </option>
+
+                            <option>
+                                Tamil Nadu
+                            </option>
+
+                            <option>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            PINCODE *
+                        </label>
+
+                        <input
+                            id="pincode"
+                            type="text"
+                            maxlength="6"
+                            placeholder="6-digit pincode">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            LANDMARK
+                        </label>
+
+                        <input
+                            id="landmark"
+                            type="text"
+                            placeholder="Nearby landmark">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DELIVERY -->
+
+            <div class="checkout-section">
+
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        2
+                    </div>
+
+                    <h2>
+                        Delivery Method
+                    </h2>
+
+                </div>
+
+
+                <div class="delivery-options">
+
+
+                    <label
+                        class="delivery-option selected">
+
+                        <input
+                            type="radio"
+                            name="delivery"
+                            class="delivery-radio"
+                            value="standard"
+                            checked
+                            onchange="selectDelivery(this)">
+
+                        <div class="delivery-info">
+
+                            <strong>
+                                Standard Delivery
+                            </strong>
+
+                            <span>
+                                Estimated delivery in 4–7 business days
+                            </span>
+
+                        </div>
+
+                        <div class="delivery-price">
+                            ₹49
+                        </div>
+
+                    </label>
+
+
+                    <label class="delivery-option">
+
+                        <input
+                            type="radio"
+                            name="delivery"
+                            class="delivery-radio"
+                            value="free"
+                            onchange="selectDelivery(this)">
+
+                        <div class="delivery-info">
+
+                            <strong>
+                                Free Delivery
+                            </strong>
+
+                            <span>
+                                Available on eligible orders above ₹999
+                            </span>
+
+                        </div>
+
+                        <div class="delivery-price">
+                            FREE
+                        </div>
+
+                    </label>
+
+
+                    <label class="delivery-option">
+
+                        <input
+                            type="radio"
+                            name="delivery"
+                            class="delivery-radio"
+                            value="express"
+                            onchange="selectDelivery(this)">
+
+                        <div class="delivery-info">
+
+                            <strong>
+                                Express Delivery
+                            </strong>
+
+                            <span>
+                                Estimated delivery in 1–3 business days
+                            </span>
+
+                        </div>
+
+                        <div class="delivery-price">
+                            ₹99
+                        </div>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="checkout-section">
+
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        3
+                    </div>
+
+                    <h2>
+                        Payment Method
+                    </h2>
+
+                </div>
+
+
+                <div class="payment-options">
+
+
+                    <!-- UPI -->
+
+                    <div
+                        class="payment-option open">
+
+                        <label class="payment-head">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="upi"
+                                checked
+                                onchange="selectPayment(this)">
+
+                            <strong>
+                                UPI
+                            </strong>
+
+                            <div class="payment-icon">
+                                📱
+                            </div>
+
+                        </label>
+
+
+                        <div class="payment-body">
+
+                            <div class="upi-row">
+
+                                <input
+                                    id="upiId"
+                                    type="text"
+                                    placeholder="yourname@upi">
+
+                                <button
+                                    class="verify-upi"
+                                    onclick="verifyUPI()">
+
+                                    Verify
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CARD -->
+
+                    <div class="payment-option">
+
+                        <label class="payment-head">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="card"
+                                onchange="selectPayment(this)">
+
+                            <strong>
+                                Credit / Debit Card
+                            </strong>
+
+                            <div class="payment-icon">
+                                💳
+                            </div>
+
+                        </label>
+
+
+                        <div class="payment-body">
+
+                            <div class="form-grid">
+
+                                <div class="field full">
+
+                                    <label>
+                                        CARD NUMBER
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        maxlength="19"
+                                        placeholder="XXXX XXXX XXXX XXXX">
+
+                                </div>
+
+
+                                <div class="field">
+
+                                    <label>
+                                        EXPIRY
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        placeholder="MM / YY">
+
+                                </div>
+
+
+                                <div class="field">
+
+                                    <label>
+                                        CVV
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        maxlength="3"
+                                        placeholder="CVV">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NET BANKING -->
+
+                    <div class="payment-option">
+
+                        <label class="payment-head">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="netbanking"
+                                onchange="selectPayment(this)">
+
+                            <strong>
+                                Net Banking
+                            </strong>
+
+                            <div class="payment-icon">
+                                🏦
+                            </div>
+
+                        </label>
+
+
+                        <div class="payment-body">
+
+                            <select
+                                style="
+                                    width:100%;
+                                    height:35px;
+                                    border:1px solid #ddd;
+                                    border-radius:6px;
+                                    padding:0 8px;
+                                    font-size:7px;
+                                ">
+
+                                <option>
+                                    Select your bank
+                                </option>
+
+                                <option>
+                                    State Bank of India
+                                </option>
+
+                                <option>
+                                    HDFC Bank
+                                </option>
+
+                                <option>
+                                    ICICI Bank
+                                </option>
+
+                                <option>
+                                    Axis Bank
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- COD -->
+
+                    <div class="payment-option">
+
+                        <label class="payment-head">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="cod"
+                                onchange="selectPayment(this)">
+
+                            <strong>
+                                Cash on Delivery
+                            </strong>
+
+                            <div class="payment-icon">
+                                💵
+                            </div>
+
+                        </label>
+
+
+                        <div class="payment-body">
+
+                            <div style="
+                                padding:8px;
+                                background:#fff8e8;
+                                border-radius:6px;
+                                color:#8b691b;
+                                font-size:6px;
+                                line-height:1.5;
+                            ">
+
+                                COD may be available only for eligible
+                                locations and products.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- RIGHT SUMMARY -->
+
+        <aside>
+
+
+            <div class="card summary">
+
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <!-- ITEMS -->
+
+                <div class="order-items">
+
+
+                    <div class="order-item">
+
+                        <div class="order-img">
+                            📿
+                        </div>
+
+                        <div class="order-info">
+
+                            <strong>
+                                5 Mukhi Rudraksha
+                            </strong>
+
+                            <span>
+                                Qty: 1
+                            </span>
+
+                        </div>
+
+                        <div class="order-price">
+                            ₹799
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-item">
+
+                        <div class="order-img">
+                            🔱
+                        </div>
+
+                        <div class="order-info">
+
+                            <strong>
+                                Shri Yantra
+                            </strong>
+
+                            <span>
+                                Qty: 1
+                            </span>
+
+                        </div>
+
+                        <div class="order-price">
+                            ₹499
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div
+                    class="summary-divider"
+                    style="margin-top:15px;">
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="subtotal">
+                        ₹1,298
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong id="delivery">
+                        ₹49
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="discountRow"
+                    class="summary-row"
+                    style="display:none;">
+
+                    <span>
+                        Discount
+                    </span>
+
+                    <strong
+                        id="discount"
+                        style="color:var(--green);">
+
+                        −₹0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="total">
+                        ₹1,347
+                    </strong>
+
+                </div>
+
+
+                <!-- COUPON -->
+
+                <div class="coupon">
+
+                    <div class="coupon-label">
+                        COUPON CODE
+                    </div>
+
+
+                    <div class="coupon-row">
+
+                        <input
+                            id="coupon"
+                            type="text"
+                            placeholder="Enter code">
+
+
+                        <button
+                            class="apply"
+                            onclick="applyCoupon()">
+
+                            Apply
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="couponMessage"
+                        class="coupon-message">
+
+                    </div>
+
+                </div>
+
+
+                <!-- PLACE ORDER -->
+
+                <button
+                    class="place-order"
+                    onclick="placeOrder()">
+
+                    🔒 Place Order
+
+                </button>
+
+
+                <div class="terms">
+
+                    By placing the order, you agree to our
+                    Terms & Conditions and applicable Shop policies.
+
+                </div>
+
+
+                <div class="security">
+
+                    🔒 <strong>Secure Payment</strong><br>
+
+                    Your payment information is processed through
+                    secure payment infrastructure.
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Shop
+        </h4>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- CONFIRMATION MODAL -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-icon">
+            🔒
+        </div>
+
+        <h2>
+            Confirm Your Order
+        </h2>
+
+        <p>
+            Please confirm that your delivery details and payment
+            method are correct before placing the order.
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="modal-cancel"
+                onclick="closeModal()">
+
+                Review
+
+            </button>
+
+
+            <button
+                class="modal-confirm"
+                onclick="confirmOrder()">
+
+                Confirm Order
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   WALLET
+========================================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+document
+    .getElementById(
+        "wallet"
+    )
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* =========================================
+   CART COUNT
+========================================= */
+
+const storedCartCount =
+    Number(
+        localStorage.getItem(
+            "awt_cart_count"
+        )
+    );
+
+
+if(
+    storedCartCount ||
+    storedCartCount === 0
+){
+
+    document
+        .getElementById(
+            "cartCount"
+        )
+        .innerText =
+            storedCartCount;
+
+}
+
+
+/* =========================================
+   ORDER DATA
+========================================= */
+
+const subtotal =
+    1298;
+
+let delivery =
+    49;
+
+let discount =
+    0;
+
+let selectedPayment =
+    "upi";
+
+
+/* =========================================
+   DELIVERY
+========================================= */
+
+function selectDelivery(
+    radio
+){
+
+    document
+        .querySelectorAll(
+            ".delivery-option"
+        )
+        .forEach(
+            option => {
+
+                option.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+
+    radio
+        .closest(
+            ".delivery-option"
+        )
+        .classList
+        .add("selected");
+
+
+    if(
+        radio.value === "standard"
+    ){
+
+        delivery = 49;
+
+    }
+
+
+    if(
+        radio.value === "free"
+    ){
+
+        if(
+            subtotal >= 999
+        ){
+
+            delivery = 0;
+
+        }else{
+
+            delivery = 49;
+
+            alert(
+                "Free delivery is available on eligible orders above ₹999."
+            );
+
+        }
+
+    }
+
+
+    if(
+        radio.value === "express"
+    ){
+
+        delivery = 99;
+
+    }
+
+
+    updateSummary();
+
+}
+
+
+/* =========================================
+   PAYMENT
+========================================= */
+
+function selectPayment(
+    radio
+){
+
+    selectedPayment =
+        radio.value;
+
+
+    document
+        .querySelectorAll(
+            ".payment-option"
+        )
+        .forEach(
+            option => {
+
+                option.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+
+    radio
+        .closest(
+            ".payment-option"
+        )
+        .classList
+        .add("open");
+
+}
+
+
+/* =========================================
+   COUPON
+========================================= */
+
+function applyCoupon(){
+
+    const input =
+        document.getElementById(
+            "coupon"
+        );
+
+
+    const code =
+        input.value
+        .trim()
+        .toUpperCase();
+
+
+    const message =
+        document.getElementById(
+            "couponMessage"
+        );
+
+
+    if(
+        code === "ASTRO10"
+    ){
+
+        discount = 100;
+
+        message.innerText =
+            "✓ ASTRO10 applied — ₹100 discount";
+
+        message.style.color =
+            "var(--green)";
+
+        message.style.display =
+            "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    if(
+        code === "WELCOME"
+    ){
+
+        discount = 75;
+
+        message.innerText =
+            "✓ WELCOME applied — ₹75 discount";
+
+        message.style.color =
+            "var(--green)";
+
+        message.style.display =
+            "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    discount = 0;
+
+    message.innerText =
+        "Invalid or expired coupon code.";
+
+    message.style.color =
+        "var(--red)";
+
+    message.style.display =
+        "block";
+
+    updateSummary();
+
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+function updateSummary(){
+
+    const total =
+        Math.max(
+            0,
+            subtotal +
+            delivery -
+            discount
+        );
+
+
+    document
+        .getElementById(
+            "subtotal"
+        )
+        .innerText =
+            "₹" +
+            subtotal.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById(
+            "delivery"
+        )
+        .innerText =
+            delivery === 0
+            ?
+            "FREE"
+            :
+            "₹" +
+            delivery;
+
+
+    document
+        .getElementById(
+            "discount"
+        )
+        .innerText =
+            "−₹" +
+            discount.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById(
+            "total"
+        )
+        .innerText =
+            "₹" +
+            total.toLocaleString(
+                "en-IN"
+            );
+
+
+    document
+        .getElementById(
+            "discountRow"
+        )
+        .style.display =
+            discount > 0
+            ?
+            "flex"
+            :
+            "none";
+
+
+    localStorage.setItem(
+        "awt_checkout_total",
+        total
+    );
+
+}
+
+
+updateSummary();
+
+
+/* =========================================
+   UPI VERIFY
+========================================= */
+
+function verifyUPI(){
+
+    const upi =
+        document
+        .getElementById(
+            "upiId"
+        )
+        .value
+        .trim();
+
+
+    if(
+        !upi.includes("@")
+    ){
+
+        alert(
+            "Please enter a valid UPI ID."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "UPI ID format verified. Final payment verification will be handled by the payment gateway."
+    );
+
+}
+
+
+/* =========================================
+   VALIDATE ADDRESS
+========================================= */
+
+function validateAddress(){
+
+    const fullName =
+        document
+        .getElementById(
+            "fullName"
+        )
+        .value
+        .trim();
+
+
+    const mobile =
+        document
+        .getElementById(
+            "mobile"
+        )
+        .value
+        .trim();
+
+
+    const address =
+        document
+        .getElementById(
+            "address"
+        )
+        .value
+        .trim();
+
+
+    const city =
+        document
+        .getElementById(
+            "city"
+        )
+        .value
+        .trim();
+
+
+    const state =
+        document
+        .getElementById(
+            "state"
+        )
+        .value;
+
+
+    const pincode =
+        document
+        .getElementById(
+            "pincode"
+        )
+        .value
+        .trim();
+
+
+    if(
+        !fullName ||
+        !mobile ||
+        !address ||
+        !city ||
+        !state ||
+        !pincode
+    ){
+
+        alert(
+            "Please complete all required delivery fields."
+        );
+
+        return false;
+
+    }
+
+
+    if(
+        !/^[0-9]{10}$/.test(
+            mobile
+        )
+    ){
+
+        alert(
+            "Please enter a valid 10-digit mobile number."
+        );
+
+        return false;
+
+    }
+
+
+    if(
+        !/^[0-9]{6}$/.test(
+            pincode
+        )
+    ){
+
+        alert(
+            "Please enter a valid 6-digit pincode."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================
+   PLACE ORDER
+========================================= */
+
+function placeOrder(){
+
+    if(
+        !validateAddress()
+    ){
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* =========================================
+   CONFIRM ORDER
+========================================= */
+
+function confirmOrder(){
+
+    const total =
+        Number(
+            localStorage.getItem(
+                "awt_checkout_total"
+            ) || 0
+        );
+
+
+    const orderId =
+        "AWT-" +
+        Date.now()
+        .toString()
+        .slice(-8);
+
+
+    const order = {
+
+        orderId:
+            orderId,
+
+        status:
+            "Confirmed",
+
+        items: [
+
+            {
+                name:
+                    "5 Mukhi Rudraksha",
+
+                quantity:
+                    1,
+
+                price:
+                    799
+
+            },
+
+            {
+                name:
+                    "Shri Yantra",
+
+                quantity:
+                    1,
+
+                price:
+                    499
+
+            }
+
+        ],
+
+        subtotal:
+            subtotal,
+
+        delivery:
+            delivery,
+
+        discount:
+            discount,
+
+        total:
+            total,
+
+        payment:
+            selectedPayment,
+
+        customer: {
+
+            name:
+                document
+                .getElementById(
+                    "fullName"
+                )
+                .value
+                .trim(),
+
+            mobile:
+                document
+                .getElementById(
+                    "mobile"
+                )
+                .value
+                .trim(),
+
+            address:
+                document
+                .getElementById(
+                    "address"
+                )
+                .value
+                .trim(),
+
+            city:
+                document
+                .getElementById(
+                    "city"
+                )
+                .value
+                .trim(),
+
+            state:
+                document
+                .getElementById(
+                    "state"
+                )
+                .value,
+
+            pincode:
+                document
+                .getElementById(
+                    "pincode"
+                )
+                .value
+                .trim(),
+
+            landmark:
+                document
+                .getElementById(
+                    "landmark"
+                )
+                .value
+                .trim()
+
+        },
+
+        createdAt:
+            new Date()
+            .toISOString()
+
+    };
+
+
+    /*
+        Demo/local persistence.
+
+        Production:
+        create the order and payment
+        server-side after gateway confirmation.
+    */
+
+    localStorage.setItem(
+        "awt_last_order",
+        JSON.stringify(
+            order
+        )
+    );
+
+
+    localStorage.setItem(
+        "awt_order_id",
+        orderId
+    );
+
+
+    localStorage.setItem(
+        "awt_order_total",
+        total
+    );
+
+
+    localStorage.setItem(
+        "awt_order_status",
+        "Confirmed"
+    );
+
+
+    /*
+        Clear cart count after successful
+        order creation.
+    */
+
+    localStorage.setItem(
+        "awt_cart_count",
+        "0"
+    );
+
+
+    closeModal();
+
+
+    location.href =
+        "order-success.html";
+
+}
+
+
+/* =========================================
+   ADDRESS TYPE
+========================================= */
+
+function selectAddressType(
+    button
+){
+
+    document
+        .querySelectorAll(
+            ".address-type"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+}
+
+
+/* =========================================
+   MOBILE INPUT
+========================================= */
+
+document
+    .getElementById(
+        "mobile"
+    )
+    .addEventListener(
+        "input",
+        function(){
+
+            this.value =
+                this.value.replace(
+                    /\D/g,
+                    ""
+                );
+
+        }
+    );
+
+
+/* =========================================
+   PINCODE INPUT
+========================================= */
+
+document
+    .getElementById(
+        "pincode"
+    )
+    .addEventListener(
+        "input",
+        function(){
+
+            this.value =
+                this.value.replace(
+                    /\D/g,
+                    ""
+                );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

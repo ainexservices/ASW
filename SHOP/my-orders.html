@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>My Orders | Astro With Talk</title>
+
+<meta name="description"
+      content="View and manage your Astro With Talk Shop orders.">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --light:#f6f6f6;
+    --border:#e3e3e3;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#25a34a;
+    --green-light:#edf8f0;
+    --gold:#b98417;
+    --gold-light:#fff8e8;
+    --orange:#c66b13;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+    border-radius:8px;
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.cart{
+    position:relative;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+    display:grid;
+    place-items:center;
+}
+
+.cart-count{
+    position:absolute;
+    right:-3px;
+    top:-4px;
+    min-width:15px;
+    height:15px;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:7px;
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:14px;
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:34px 38px;
+    border-radius:20px;
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 84% 20%,
+            rgba(255,255,255,.17),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #25112f,
+            #4d2561,
+            #754a8d
+        );
+}
+
+.hero::after{
+    content:"ORDERS";
+    position:absolute;
+    right:20px;
+    bottom:-52px;
+    font-size:120px;
+    font-weight:700;
+    opacity:.05;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    padding:7px 11px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:40px;
+}
+
+.hero p{
+    max-width:700px;
+    margin-top:8px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.7;
+}
+
+
+/* =========================
+   SUMMARY STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+    margin-top:18px;
+}
+
+.stat{
+    padding:15px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+.stat-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--purple-light);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.stat strong{
+    display:block;
+    margin-top:8px;
+    font-size:16px;
+}
+
+.stat span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:7px;
+}
+
+
+/* =========================
+   FILTER BAR
+========================= */
+
+.filter-card{
+    margin-top:18px;
+    padding:14px 16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.filter{
+    padding:8px 12px;
+    border:1px solid #ddd;
+    border-radius:20px;
+    background:#fff;
+    color:#777;
+    font-size:7px;
+    font-weight:700;
+}
+
+.filter.active{
+    border-color:var(--purple);
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+.search{
+    width:190px;
+    height:32px;
+    padding:0 10px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    outline:none;
+    font-size:7px;
+}
+
+
+/* =========================
+   ORDERS
+========================= */
+
+.orders{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.order-card{
+    overflow:hidden;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+
+/* ORDER HEADER */
+
+.order-header{
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+}
+
+.order-meta{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.meta-label{
+    display:block;
+    color:#999;
+    font-size:6px;
+}
+
+.meta-value{
+    display:block;
+    margin-top:3px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.status{
+    padding:7px 10px;
+    border-radius:20px;
+    font-size:6px;
+    font-weight:700;
+}
+
+.status.processing{
+    background:#fff8e8;
+    color:#a26a0b;
+}
+
+.status.shipped{
+    background:#eef5ff;
+    color:#3473ba;
+}
+
+.status.delivered{
+    background:var(--green-light);
+    color:var(--green);
+}
+
+.status.cancelled{
+    background:#fff0f0;
+    color:var(--red);
+}
+
+
+/* ORDER BODY */
+
+.order-body{
+    padding:17px 18px;
+}
+
+.order-content{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 220px;
+    gap:20px;
+}
+
+.items{
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+}
+
+.item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.item-image{
+    width:60px;
+    height:60px;
+    border-radius:9px;
+    background:linear-gradient(145deg,#f2e3d1,#d7b88f);
+    display:grid;
+    place-items:center;
+    font-size:25px;
+}
+
+.item-info{
+    flex:1;
+}
+
+.item-info h3{
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+}
+
+.item-info p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.item-price{
+    font-size:9px;
+    font-weight:700;
+}
+
+
+/* ORDER SUMMARY */
+
+.order-summary{
+    padding:13px;
+    border-radius:10px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:5px 0;
+    color:#777;
+    font-size:7px;
+}
+
+.summary-row strong{
+    color:#333;
+}
+
+.summary-total{
+    margin-top:4px;
+    padding-top:8px;
+    border-top:1px dashed #ddd;
+    display:flex;
+    justify-content:space-between;
+    font-size:8px;
+    font-weight:700;
+}
+
+.summary-total strong{
+    color:var(--red);
+    font-size:12px;
+}
+
+
+/* DELIVERY */
+
+.delivery-box{
+    margin-top:14px;
+    padding:12px;
+    border-radius:9px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.delivery-box strong{
+    display:block;
+    font-size:7px;
+}
+
+.delivery-box p{
+    margin-top:4px;
+    color:#777;
+    font-size:6px;
+    line-height:1.6;
+}
+
+
+/* TRACKING */
+
+.tracking{
+    margin-top:16px;
+    padding:16px;
+    border-radius:11px;
+    background:#fbfafc;
+    border:1px solid #eee;
+}
+
+.tracking-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.tracking-title strong{
+    font-size:8px;
+}
+
+.tracking-title span{
+    color:#999;
+    font-size:6px;
+}
+
+.timeline{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    margin-top:16px;
+}
+
+.timeline-step{
+    position:relative;
+    text-align:center;
+}
+
+.timeline-step:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    top:9px;
+    left:50%;
+    width:100%;
+    height:2px;
+    background:#ddd;
+    z-index:0;
+}
+
+.timeline-step.completed:not(:last-child)::after{
+    background:var(--green);
+}
+
+.timeline-dot{
+    position:relative;
+    z-index:2;
+    width:19px;
+    height:19px;
+    margin:auto;
+    border-radius:50%;
+    background:#ddd;
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:6px;
+    font-weight:700;
+}
+
+.timeline-step.completed .timeline-dot{
+    background:var(--green);
+}
+
+.timeline-step.current .timeline-dot{
+    background:var(--purple);
+    box-shadow:0 0 0 4px #eee5f3;
+}
+
+.timeline-label{
+    margin-top:7px;
+    color:#999;
+    font-size:6px;
+}
+
+.timeline-step.completed .timeline-label,
+.timeline-step.current .timeline-label{
+    color:#444;
+    font-weight:700;
+}
+
+
+/* ACTIONS */
+
+.order-actions{
+    margin-top:15px;
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+}
+
+.action{
+    height:34px;
+    padding:0 12px;
+    border-radius:7px;
+    font-size:7px;
+    font-weight:700;
+}
+
+.action.primary{
+    border:0;
+    background:var(--red);
+    color:#fff;
+}
+
+.action.secondary{
+    border:1px solid #ddd;
+    background:#fff;
+    color:#555;
+}
+
+.action.purple{
+    border:0;
+    background:var(--purple);
+    color:#fff;
+}
+
+
+/* EMPTY */
+
+.empty{
+    display:none;
+    padding:70px 20px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    text-align:center;
+}
+
+.empty-icon{
+    width:70px;
+    height:70px;
+    margin:auto;
+    border-radius:50%;
+    background:var(--purple-light);
+    display:grid;
+    place-items:center;
+    font-size:30px;
+}
+
+.empty h2{
+    margin-top:13px;
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.empty p{
+    margin-top:5px;
+    color:#999;
+    font-size:8px;
+}
+
+.shop-btn{
+    margin-top:15px;
+    padding:11px 18px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(0,0,0,.65);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(410px,100%);
+    padding:25px;
+    border-radius:17px;
+    background:#fff;
+    text-align:center;
+}
+
+.modal-icon{
+    width:55px;
+    height:55px;
+    margin:auto;
+    border-radius:50%;
+    background:#fff0f0;
+    display:grid;
+    place-items:center;
+    font-size:23px;
+}
+
+.modal-box h2{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.modal-box p{
+    margin-top:7px;
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px;
+    margin-top:17px;
+}
+
+.modal-actions button{
+    flex:1;
+    height:38px;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.modal-close{
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+.modal-confirm{
+    border:0;
+    background:var(--red);
+    color:#fff;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:40px 0 18px;
+    background:#171717;
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+    color:#aaa;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+    margin:6px 0;
+    color:#aaa;
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+    padding-top:13px;
+    border-top:1px solid #333;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .order-content{
+        grid-template-columns:1fr;
+    }
+
+    .filter-card{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .search{
+        width:100%;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .order-meta{
+        gap:8px;
+        flex-wrap:wrap;
+    }
+
+    .timeline{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .timeline-step{
+        display:flex;
+        align-items:center;
+        text-align:left;
+        gap:8px;
+    }
+
+    .timeline-step:not(:last-child)::after{
+        top:19px;
+        left:9px;
+        width:2px;
+        height:100%;
+    }
+
+    .timeline-label{
+        margin-top:0;
+    }
+
+    .order-actions{
+        justify-content:stretch;
+        flex-direction:column;
+    }
+
+    .action{
+        width:100%;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+
+        <div class="wallet">
+
+            💰 ₹<span id="wallet">
+                500
+            </span>
+
+        </div>
+
+
+        <button
+            class="cart"
+            onclick="location.href='cart.html'">
+
+            🛒
+
+            <span
+                id="cartCount"
+                class="cart-count">
+
+                0
+
+            </span>
+
+        </button>
+
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     PAGE
+========================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+
+        Home / Shop /
+        <span>
+            My Orders
+        </span>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                📦 ORDER MANAGEMENT
+            </div>
+
+
+            <h1>
+                My Orders
+            </h1>
+
+
+            <p>
+                Track your Astro With Talk Shop orders,
+                view order details and manage your purchases
+                from one place.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <strong id="totalOrders">
+                3
+            </strong>
+
+            <span>
+                Total Orders
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🚚
+            </div>
+
+            <strong id="activeOrders">
+                2
+            </strong>
+
+            <span>
+                Active Orders
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ✓
+            </div>
+
+            <strong id="deliveredOrders">
+                1
+            </strong>
+
+            <span>
+                Delivered
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ₹
+            </div>
+
+            <strong id="totalSpent">
+                ₹2,845
+            </strong>
+
+            <span>
+                Total Spent
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- FILTER -->
+
+    <section class="filter-card">
+
+
+        <div class="filters">
+
+
+            <button
+                class="filter active"
+                data-filter="all"
+                onclick="filterOrders(this,'all')">
+
+                All Orders
+
+            </button>
+
+
+            <button
+                class="filter"
+                data-filter="processing"
+                onclick="filterOrders(this,'processing')">
+
+                Processing
+
+            </button>
+
+
+            <button
+                class="filter"
+                data-filter="shipped"
+                onclick="filterOrders(this,'shipped')">
+
+                Shipped
+
+            </button>
+
+
+            <button
+                class="filter"
+                data-filter="delivered"
+                onclick="filterOrders(this,'delivered')">
+
+                Delivered
+
+            </button>
+
+
+            <button
+                class="filter"
+                data-filter="cancelled"
+                onclick="filterOrders(this,'cancelled')">
+
+                Cancelled
+
+            </button>
+
+        </div>
+
+
+        <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Search order or product..."
+            oninput="searchOrders()">
+
+    </section>
+
+
+    <!-- ORDERS -->
+
+    <section
+        id="orders"
+        class="orders">
+
+
+        <!-- ORDER 1 -->
+
+        <article
+            class="order-card"
+            data-status="shipped"
+            data-search="AWT-20260821 rudraksha shri yantra">
+
+
+            <div class="order-header">
+
+
+                <div class="order-meta">
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            ORDER ID
+                        </span>
+
+                        <span class="meta-value">
+                            AWT-20260821
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            ORDER DATE
+                        </span>
+
+                        <span class="meta-value">
+                            21 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            PAYMENT
+                        </span>
+
+                        <span class="meta-value">
+                            UPI • Paid
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="status shipped">
+                    🚚 Shipped
+                </div>
+
+            </div>
+
+
+            <div class="order-body">
+
+
+                <div class="order-content">
+
+
+                    <div class="items">
+
+
+                        <div class="item">
+
+                            <div class="item-image">
+                                📿
+                            </div>
+
+
+                            <div class="item-info">
+
+                                <h3>
+                                    5 Mukhi Rudraksha
+                                </h3>
+
+                                <p>
+                                    Quantity: 1 • Astrology Shop
+                                </p>
+
+                            </div>
+
+
+                            <div class="item-price">
+                                ₹799
+                            </div>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            <div class="item-image">
+                                🔱
+                            </div>
+
+
+                            <div class="item-info">
+
+                                <h3>
+                                    Shri Yantra
+                                </h3>
+
+                                <p>
+                                    Quantity: 1 • Astrology Shop
+                                </p>
+
+                            </div>
+
+
+                            <div class="item-price">
+                                ₹499
+                            </div>
+
+                        </div>
+
+
+                        <div class="delivery-box">
+
+                            <strong>
+                                📍 Delivering To
+                            </strong>
+
+                            <p>
+                                Customer Address • New Delhi,
+                                India • Expected delivery:
+                                28–30 Aug 2026
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-summary">
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                ₹1,298
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <strong>
+                                ₹49
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Discount
+                            </span>
+
+                            <strong>
+                                −₹100
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ₹1,247
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRACKING -->
+
+                <div class="tracking">
+
+
+                    <div class="tracking-title">
+
+                        <strong>
+                            Delivery Tracking
+                        </strong>
+
+                        <span>
+                            AWB: AWTEXP784213
+                        </span>
+
+                    </div>
+
+
+                    <div class="timeline">
+
+
+                        <div class="timeline-step completed">
+
+                            <div class="timeline-dot">
+                                ✓
+                            </div>
+
+                            <div class="timeline-label">
+                                Order Placed
+                            </div>
+
+                        </div>
+
+
+                        <div class="timeline-step completed">
+
+                            <div class="timeline-dot">
+                                ✓
+                            </div>
+
+                            <div class="timeline-label">
+                                Packed
+                            </div>
+
+                        </div>
+
+
+                        <div class="timeline-step current">
+
+                            <div class="timeline-dot">
+                                3
+                            </div>
+
+                            <div class="timeline-label">
+                                Shipped
+                            </div>
+
+                        </div>
+
+
+                        <div class="timeline-step">
+
+                            <div class="timeline-dot">
+                                4
+                            </div>
+
+                            <div class="timeline-label">
+                                Delivered
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-actions">
+
+
+                    <button
+                        class="action primary"
+                        onclick="viewOrder('AWT-20260821')">
+
+                        View Order
+
+                    </button>
+
+
+                    <button
+                        class="action secondary"
+                        onclick="trackOrder('AWT-20260821')">
+
+                        Track Order
+
+                    </button>
+
+
+                    <button
+                        class="action secondary"
+                        onclick="cancelOrder('AWT-20260821')">
+
+                        Cancel Order
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- ORDER 2 -->
+
+        <article
+            class="order-card"
+            data-status="delivered"
+            data-search="AWT-20260810 crystal healing set meditation mala">
+
+
+            <div class="order-header">
+
+
+                <div class="order-meta">
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            ORDER ID
+                        </span>
+
+                        <span class="meta-value">
+                            AWT-20260810
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            ORDER DATE
+                        </span>
+
+                        <span class="meta-value">
+                            10 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            PAYMENT
+                        </span>
+
+                        <span class="meta-value">
+                            Card • Paid
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status delivered">
+                    ✓ Delivered
+                </div>
+
+            </div>
+
+
+            <div class="order-body">
+
+
+                <div class="order-content">
+
+
+                    <div class="items">
+
+
+                        <div class="item">
+
+                            <div class="item-image">
+                                💎
+                            </div>
+
+
+                            <div class="item-info">
+
+                                <h3>
+                                    Crystal Healing Set
+                                </h3>
+
+                                <p>
+                                    Quantity: 1 • Astrology Shop
+                                </p>
+
+                            </div>
+
+
+                            <div class="item-price">
+                                ₹899
+                            </div>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            <div class="item-image">
+                                🕉️
+                            </div>
+
+
+                            <div class="item-info">
+
+                                <h3>
+                                    Meditation Mala
+                                </h3>
+
+                                <p>
+                                    Quantity: 1 • Astrology Shop
+                                </p>
+
+                            </div>
+
+
+                            <div class="item-price">
+                                ₹599
+                            </div>
+
+                        </div>
+
+
+                        <div class="delivery-box">
+
+                            <strong>
+                                ✓ Delivered
+                            </strong>
+
+                            <p>
+                                Delivered on 15 Aug 2026.
+                                Your order was successfully delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-summary">
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                ₹1,498
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <strong>
+                                FREE
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Discount
+                            </span>
+
+                            <strong>
+                                −₹50
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ₹1,448
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-actions">
+
+
+                    <button
+                        class="action primary"
+                        onclick="viewOrder('AWT-20260810')">
+
+                        View Order
+
+                    </button>
+
+
+                    <button
+                        class="action purple"
+                        onclick="reorder('AWT-20260810')">
+
+                        ↻ Reorder
+
+                    </button>
+
+
+                    <button
+                        class="action secondary"
+                        onclick="returnOrder('AWT-20260810')">
+
+                        Return / Replace
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- ORDER 3 -->
+
+        <article
+            class="order-card"
+            data-status="processing"
+            data-search="AWT-20260826 puja essentials kit">
+
+
+            <div class="order-header">
+
+
+                <div class="order-meta">
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            ORDER ID
+                        </span>
+
+                        <span class="meta-value">
+                            AWT-20260826
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            ORDER DATE
+                        </span>
+
+                        <span class="meta-value">
+                            26 Aug 2026
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="meta-label">
+                            PAYMENT
+                        </span>
+
+                        <span class="meta-value">
+                            UPI • Paid
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status processing">
+                    ⏳ Processing
+                </div>
+
+            </div>
+
+
+            <div class="order-body">
+
+
+                <div class="order-content">
+
+
+                    <div class="items">
+
+
+                        <div class="item">
+
+                            <div class="item-image">
+                                🪔
+                            </div>
+
+
+                            <div class="item-info">
+
+                                <h3>
+                                    Puja Essentials Kit
+                                </h3>
+
+                                <p>
+                                    Quantity: 1 • Astrology Shop
+                                </p>
+
+                            </div>
+
+
+                            <div class="item-price">
+                                ₹749
+                            </div>
+
+                        </div>
+
+
+                        <div class="delivery-box">
+
+                            <strong>
+                                📦 Preparing Your Order
+                            </strong>
+
+                            <p>
+                                Your order has been received and
+                                is currently being prepared for dispatch.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-summary">
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                ₹749
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <strong>
+                                ₹49
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Discount
+                            </span>
+
+                            <strong>
+                                ₹0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ₹798
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-actions">
+
+
+                    <button
+                        class="action primary"
+                        onclick="viewOrder('AWT-20260826')">
+
+                        View Order
+
+                    </button>
+
+
+                    <button
+                        class="action secondary"
+                        onclick="cancelOrder('AWT-20260826')">
+
+                        Cancel Order
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+    </section>
+
+
+    <!-- EMPTY -->
+
+    <section
+        id="empty"
+        class="empty">
+
+        <div class="empty-icon">
+            📦
+        </div>
+
+        <h2>
+            No Orders Found
+        </h2>
+
+        <p>
+            We couldn't find any orders matching your search.
+        </p>
+
+        <button
+            class="shop-btn"
+            onclick="location.href='products.html'">
+
+            Explore Shop
+
+        </button>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+    id="modal"
+    class="modal">
+
+
+    <div class="modal-box">
+
+
+        <div
+            id="modalIcon"
+            class="modal-icon">
+
+            ⚠️
+
+        </div>
+
+
+        <h2 id="modalTitle">
+            Confirm Action
+        </h2>
+
+
+        <p id="modalText">
+            Please confirm this action.
+        </p>
+
+
+        <div class="modal-actions">
+
+
+            <button
+                class="modal-close"
+                onclick="closeModal()">
+
+                Go Back
+
+            </button>
+
+
+            <button
+                id="modalConfirm"
+                class="modal-confirm"
+                onclick="confirmAction()">
+
+                Confirm
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and
+            personalized guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Shop
+        </h4>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   WALLET
+========================================== */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+document
+    .getElementById(
+        "wallet"
+    )
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* ==========================================
+   CART COUNT
+========================================== */
+
+const cartCount =
+    Number(
+        localStorage.getItem(
+            "awt_cart_count"
+        ) || 0
+    );
+
+
+document
+    .getElementById(
+        "cartCount"
+    )
+    .innerText =
+        cartCount;
+
+
+/* ==========================================
+   ORDER DATA
+========================================== */
+
+const orders =
+    document.querySelectorAll(
+        ".order-card"
+    );
+
+
+/* ==========================================
+   FILTER ORDERS
+========================================== */
+
+function filterOrders(
+    button,
+    filter
+){
+
+    document
+        .querySelectorAll(
+            ".filter"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document
+        .getElementById(
+            "search"
+        )
+        .value = "";
+
+
+    orders.forEach(
+        order => {
+
+            if(
+                filter === "all"
+            ){
+
+                order.style.display =
+                    "block";
+
+            }else{
+
+                order.style.display =
+                    order.dataset.status === filter
+                    ?
+                    "block"
+                    :
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    checkEmpty();
+
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+function searchOrders(){
+
+    const query =
+        document
+        .getElementById(
+            "search"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    document
+        .querySelectorAll(
+            ".filter"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    document
+        .querySelector(
+            '[data-filter="all"]'
+        )
+        .classList
+        .add("active");
+
+
+    orders.forEach(
+        order => {
+
+            const data =
+                order.dataset.search
+                .toLowerCase();
+
+
+            order.style.display =
+                data.includes(query)
+                ?
+                "block"
+                :
+                "none";
+
+        }
+    );
+
+
+    checkEmpty();
+
+}
+
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+function checkEmpty(){
+
+    let visible =
+        0;
+
+
+    orders.forEach(
+        order => {
+
+            if(
+                order.style.display !==
+                "none"
+            ){
+
+                visible++;
+
+            }
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "empty"
+        )
+        .style.display =
+            visible === 0
+            ?
+            "block"
+            :
+            "none";
+
+}
+
+
+/* ==========================================
+   VIEW ORDER
+========================================== */
+
+function viewOrder(
+    orderId
+){
+
+    localStorage.setItem(
+        "awt_selected_order",
+        orderId
+    );
+
+
+    /*
+       Connect this to a dedicated
+       order detail route later.
+    */
+
+    alert(
+        "Opening order " +
+        orderId +
+        "."
+    );
+
+}
+
+
+/* ==========================================
+   TRACK ORDER
+========================================== */
+
+function trackOrder(
+    orderId
+){
+
+    localStorage.setItem(
+        "awt_tracking_order",
+        orderId
+    );
+
+
+    alert(
+        "Tracking details for " +
+        orderId +
+        " will open here."
+    );
+
+}
+
+
+/* ==========================================
+   ACTION STATE
+========================================== */
+
+let pendingAction =
+    null;
+
+let pendingOrder =
+    null;
+
+
+/* ==========================================
+   CANCEL ORDER
+========================================== */
+
+function cancelOrder(
+    orderId
+){
+
+    pendingAction =
+        "cancel";
+
+    pendingOrder =
+        orderId;
+
+
+    document
+        .getElementById(
+            "modalIcon"
+        )
+        .innerText =
+            "⚠️";
+
+
+    document
+        .getElementById(
+            "modalTitle"
+        )
+        .innerText =
+            "Cancel Order?";
+
+
+    document
+        .getElementById(
+            "modalText"
+        )
+        .innerText =
+            "Are you sure you want to cancel order " +
+            orderId +
+            "? Cancellation eligibility depends on the order status.";
+
+
+    document
+        .getElementById(
+            "modalConfirm"
+        )
+        .innerText =
+            "Cancel Order";
+
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+/* ==========================================
+   RETURN
+========================================== */
+
+function returnOrder(
+    orderId
+){
+
+    pendingAction =
+        "return";
+
+    pendingOrder =
+        orderId;
+
+
+    document
+        .getElementById(
+            "modalIcon"
+        )
+        .innerText =
+            "↩️";
+
+
+    document
+        .getElementById(
+            "modalTitle"
+        )
+        .innerText =
+            "Start Return Request?";
+
+
+    document
+        .getElementById(
+            "modalText"
+        )
+        .innerText =
+            "You can continue to select a return or replacement reason for " +
+            orderId +
+            ".";
+
+
+    document
+        .getElementById(
+            "modalConfirm"
+        )
+        .innerText =
+            "Continue";
+
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+/* ==========================================
+   REORDER
+========================================== */
+
+function reorder(
+    orderId
+){
+
+    localStorage.setItem(
+        "awt_reorder_id",
+        orderId
+    );
+
+
+    alert(
+        "Items from " +
+        orderId +
+        " have been selected for reorder."
+    );
+
+
+    location.href =
+        "cart.html";
+
+}
+
+
+/* ==========================================
+   CONFIRM ACTION
+========================================== */
+
+function confirmAction(){
+
+    if(
+        pendingAction ===
+        "cancel"
+    ){
+
+        localStorage.setItem(
+            "awt_cancelled_order",
+            pendingOrder
+        );
+
+
+        closeModal();
+
+
+        alert(
+            "Cancellation request submitted for " +
+            pendingOrder +
+            "."
+        );
+
+
+        return;
+
+    }
+
+
+    if(
+        pendingAction ===
+        "return"
+    ){
+
+        localStorage.setItem(
+            "awt_return_order",
+            pendingOrder
+        );
+
+
+        closeModal();
+
+
+        alert(
+            "Return request started for " +
+            pendingOrder +
+            "."
+        );
+
+
+        return;
+
+    }
+
+}
+
+
+/* ==========================================
+   CLOSE MODAL
+========================================== */
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "modal"
+        )
+        .classList
+        .remove("show");
+
+
+    pendingAction =
+        null;
+
+    pendingOrder =
+        null;
+
+}
+
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+document
+    .getElementById(
+        "totalOrders"
+    )
+    .innerText =
+        orders.length;
+
+
+let active =
+    0;
+
+let delivered =
+    0;
+
+let spent =
+    0;
+
+
+orders.forEach(
+    order => {
+
+        const status =
+            order.dataset.status;
+
+
+        if(
+            status !== "delivered" &&
+            status !== "cancelled"
+        ){
+
+            active++;
+
+        }
+
+
+        if(
+            status === "delivered"
+        ){
+
+            delivered++;
+
+        }
+
+
+        /*
+           Read visible total from card.
+        */
+
+        const totalText =
+            order
+            .querySelector(
+                ".summary-total strong"
+            )
+            .innerText
+            .replace(
+                /[^0-9]/g,
+                ""
+            );
+
+
+        spent +=
+            Number(
+                totalText
+            );
+
+    }
+);
+
+
+document
+    .getElementById(
+        "activeOrders"
+    )
+    .innerText =
+        active;
+
+
+document
+    .getElementById(
+        "deliveredOrders"
+    )
+    .innerText =
+        delivered;
+
+
+document
+    .getElementById(
+        "totalSpent"
+    )
+    .innerText =
+        "₹" +
+        spent.toLocaleString(
+            "en-IN"
+        );
+
+
+/* ==========================================
+   INIT
+========================================== */
+
+checkEmpty();
+
+</script>
+
+</body>
+</html>

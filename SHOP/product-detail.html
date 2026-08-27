@@ -1,0 +1,2716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Product Detail | Astro With Talk</title>
+
+<meta name="description"
+      content="Explore detailed astrology and spiritual products at Astro With Talk.">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --light:#f6f6f6;
+    --border:#e3e3e3;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#25a34a;
+    --green-light:#edf8f0;
+    --gold:#b98417;
+    --gold-light:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+    border-radius:8px;
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.cart{
+    position:relative;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+    display:grid;
+    place-items:center;
+}
+
+.cart-count{
+    position:absolute;
+    right:-3px;
+    top:-4px;
+    min-width:15px;
+    height:15px;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:7px;
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:15px;
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* =========================
+   PRODUCT TOP
+========================= */
+
+.product-layout{
+    display:grid;
+    grid-template-columns:510px minmax(0,1fr);
+    gap:25px;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+}
+
+.main-image{
+    position:relative;
+    height:455px;
+    border-radius:13px;
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 38%,
+            rgba(255,255,255,.8),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            #f4e7d5,
+            #dfc19b
+        );
+
+    display:grid;
+    place-items:center;
+}
+
+.main-symbol{
+    font-size:150px;
+    filter:drop-shadow(0 15px 15px rgba(0,0,0,.12));
+    transition:.25s;
+}
+
+.zoom-label{
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    padding:7px 10px;
+    border-radius:20px;
+    background:rgba(255,255,255,.85);
+    color:#666;
+    font-size:6px;
+    font-weight:700;
+}
+
+.discount-badge{
+    position:absolute;
+    left:12px;
+    top:12px;
+    padding:8px 11px;
+    border-radius:20px;
+    background:var(--red);
+    color:#fff;
+    font-size:7px;
+    font-weight:700;
+}
+
+.thumbnails{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:10px;
+}
+
+.thumbnail{
+    height:72px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:linear-gradient(145deg,#f4e7d5,#dfc19b);
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.thumbnail.active{
+    border:2px solid var(--purple);
+}
+
+
+/* =========================
+   PRODUCT INFO
+========================= */
+
+.product-info{
+    padding:4px 0;
+}
+
+.category{
+    display:inline-flex;
+    padding:7px 10px;
+    border-radius:20px;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:7px;
+    font-weight:700;
+}
+
+.product-info h1{
+    margin-top:11px;
+    font-family:"Playfair Display",serif;
+    font-size:36px;
+    line-height:1.15;
+}
+
+.subtitle{
+    margin-top:7px;
+    color:#777;
+    font-size:9px;
+    line-height:1.6;
+}
+
+
+/* RATING */
+
+.rating-row{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.stars{
+    color:#e3a517;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.rating-score{
+    font-size:8px;
+    font-weight:700;
+}
+
+.review-count{
+    color:#999;
+    font-size:7px;
+}
+
+
+/* PRICE */
+
+.price-box{
+    margin-top:17px;
+    padding-bottom:15px;
+    border-bottom:1px solid #eee;
+}
+
+.price{
+    color:var(--red);
+    font-size:27px;
+    font-weight:700;
+}
+
+.old-price{
+    margin-left:7px;
+    color:#aaa;
+    text-decoration:line-through;
+    font-size:10px;
+}
+
+.save{
+    margin-left:7px;
+    color:var(--green);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* OFFER */
+
+.offer{
+    margin-top:14px;
+    padding:13px;
+    border-radius:10px;
+    background:var(--gold-light);
+    border:1px solid #ead9ad;
+}
+
+.offer-title{
+    color:#8b691b;
+    font-size:8px;
+    font-weight:700;
+}
+
+.offer p{
+    margin-top:4px;
+    color:#8c7846;
+    font-size:7px;
+    line-height:1.5;
+}
+
+
+/* STOCK */
+
+.stock{
+    margin-top:13px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:var(--green);
+    font-size:7px;
+    font-weight:700;
+}
+
+.stock-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+}
+
+
+/* QUANTITY */
+
+.purchase-row{
+    margin-top:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    border:1px solid #ddd;
+    border-radius:8px;
+    overflow:hidden;
+}
+
+.qty-btn{
+    width:34px;
+    height:38px;
+    border:0;
+    background:#fff;
+    font-size:14px;
+}
+
+.qty-value{
+    width:32px;
+    text-align:center;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* BUTTONS */
+
+.buy-buttons{
+    margin-top:11px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.add-cart,
+.buy-now{
+    height:44px;
+    border-radius:8px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.add-cart{
+    border:1px solid var(--purple);
+    background:#fff;
+    color:var(--purple);
+}
+
+.buy-now{
+    border:0;
+    background:var(--red);
+    color:#fff;
+}
+
+.add-cart:hover,
+.buy-now:hover{
+    opacity:.92;
+}
+
+
+/* BENEFITS */
+
+.quick-benefits{
+    margin-top:17px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.quick-benefit{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:9px;
+    border-radius:8px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.quick-icon{
+    width:27px;
+    height:27px;
+    border-radius:7px;
+    background:var(--purple-light);
+    display:grid;
+    place-items:center;
+    font-size:11px;
+}
+
+.quick-benefit span{
+    color:#777;
+    font-size:6px;
+}
+
+
+/* =========================
+   DETAIL CARDS
+========================= */
+
+.details{
+    margin-top:22px;
+}
+
+.detail-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.tabs{
+    display:flex;
+    overflow-x:auto;
+    border-bottom:1px solid #eee;
+}
+
+.tab{
+    flex:1;
+    min-width:120px;
+    height:48px;
+    border:0;
+    background:#fff;
+    color:#999;
+    font-size:8px;
+    font-weight:700;
+    border-bottom:2px solid transparent;
+}
+
+.tab.active{
+    color:var(--purple);
+    border-bottom-color:var(--purple);
+}
+
+.tab-content{
+    display:none;
+    padding:22px;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+.tab-content h2{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.tab-content p{
+    margin-top:8px;
+    color:#666;
+    font-size:8px;
+    line-height:1.8;
+}
+
+
+/* BENEFITS GRID */
+
+.benefit-grid{
+    margin-top:16px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.benefit-card{
+    padding:14px;
+    border-radius:10px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.benefit-card-icon{
+    font-size:20px;
+}
+
+.benefit-card h3{
+    margin-top:7px;
+    font-size:9px;
+}
+
+.benefit-card p{
+    margin-top:4px;
+    font-size:6px;
+}
+
+
+/* SPECIFICATIONS */
+
+.spec-table{
+    margin-top:14px;
+    border:1px solid #eee;
+    border-radius:9px;
+    overflow:hidden;
+}
+
+.spec-row{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    border-bottom:1px solid #eee;
+}
+
+.spec-row:last-child{
+    border-bottom:0;
+}
+
+.spec-label,
+.spec-value{
+    padding:10px 12px;
+    font-size:7px;
+}
+
+.spec-label{
+    background:#fafafa;
+    color:#777;
+    font-weight:700;
+}
+
+.spec-value{
+    color:#555;
+}
+
+
+/* =========================
+   REVIEWS
+========================= */
+
+.review-summary{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:20px;
+    align-items:center;
+}
+
+.rating-big{
+    text-align:center;
+}
+
+.rating-big strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+}
+
+.rating-big .stars{
+    font-size:13px;
+}
+
+.rating-big span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.rating-bars{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.rating-bar{
+    display:grid;
+    grid-template-columns:20px 1fr 30px;
+    align-items:center;
+    gap:6px;
+    font-size:6px;
+}
+
+.bar{
+    height:6px;
+    border-radius:5px;
+    background:#eee;
+    overflow:hidden;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    background:#e3a517;
+}
+
+.review-list{
+    margin-top:20px;
+}
+
+.review{
+    padding:15px 0;
+    border-top:1px solid #eee;
+}
+
+.reviewer{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.avatar{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:var(--purple-light);
+    display:grid;
+    place-items:center;
+    font-size:11px;
+}
+
+.reviewer strong{
+    font-size:8px;
+}
+
+.reviewer span{
+    display:block;
+    color:#999;
+    font-size:6px;
+}
+
+.review .stars{
+    margin-top:7px;
+    font-size:9px;
+}
+
+.review p{
+    margin-top:5px;
+}
+
+
+/* =========================
+   RELATED PRODUCTS
+========================= */
+
+.related{
+    margin-top:23px;
+}
+
+.related-title{
+    margin-bottom:13px;
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.related-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.related-card{
+    padding:11px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+.related-image{
+    height:150px;
+    border-radius:9px;
+    background:linear-gradient(145deg,#f4e7d5,#dfc19b);
+    display:grid;
+    place-items:center;
+    font-size:52px;
+}
+
+.related-card h3{
+    margin-top:9px;
+    font-family:"Playfair Display",serif;
+    font-size:13px;
+}
+
+.related-card p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.related-bottom{
+    margin-top:9px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.related-price{
+    color:var(--red);
+    font-size:9px;
+    font-weight:700;
+}
+
+.related-add{
+    padding:7px 9px;
+    border:0;
+    border-radius:6px;
+    background:var(--purple);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:100;
+    min-width:230px;
+    padding:13px 15px;
+    border-radius:9px;
+    background:#171717;
+    color:#fff;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    font-size:7px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    margin-top:25px;
+    padding:40px 0 18px;
+    background:#171717;
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+    color:#aaa;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+    margin:6px 0;
+    color:#aaa;
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+    padding-top:13px;
+    border-top:1px solid #333;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .product-layout{
+        grid-template-columns:1fr;
+    }
+
+    .main-image{
+        height:420px;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .product-info h1{
+        font-size:29px;
+    }
+
+    .main-image{
+        height:330px;
+    }
+
+    .main-symbol{
+        font-size:110px;
+    }
+
+    .buy-buttons{
+        grid-template-columns:1fr;
+    }
+
+    .quick-benefits{
+        grid-template-columns:1fr;
+    }
+
+    .benefit-grid{
+        grid-template-columns:1fr;
+    }
+
+    .review-summary{
+        grid-template-columns:1fr;
+    }
+
+    .related-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .related-image{
+        height:120px;
+    }
+
+    .spec-row{
+        grid-template-columns:120px 1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .related-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="shop.html" class="active">
+            Shop
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+
+        <div class="wallet">
+
+            💰 ₹<span id="wallet">
+                500
+            </span>
+
+        </div>
+
+
+        <button
+            class="cart"
+            onclick="location.href='cart.html'">
+
+            🛒
+
+            <span
+                id="cartCount"
+                class="cart-count">
+
+                0
+
+            </span>
+
+        </button>
+
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+
+        Home / Shop /
+        Spiritual Products /
+        <span>
+            5 Mukhi Rudraksha
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         PRODUCT
+    ========================= -->
+
+    <section class="product-layout">
+
+
+        <!-- GALLERY -->
+
+        <div class="gallery">
+
+
+            <div class="main-image">
+
+
+                <div
+                    id="mainSymbol"
+                    class="main-symbol">
+
+                    📿
+
+                </div>
+
+
+                <div class="discount-badge">
+                    20% OFF
+                </div>
+
+
+                <div class="zoom-label">
+                    🔍 Product Preview
+                </div>
+
+            </div>
+
+
+            <div class="thumbnails">
+
+
+                <div
+                    class="thumbnail active"
+                    onclick="changeImage(this,'📿')">
+
+                    📿
+
+                </div>
+
+
+                <div
+                    class="thumbnail"
+                    onclick="changeImage(this,'🕉️')">
+
+                    🕉️
+
+                </div>
+
+
+                <div
+                    class="thumbnail"
+                    onclick="changeImage(this,'🔱')">
+
+                    🔱
+
+                </div>
+
+
+                <div
+                    class="thumbnail"
+                    onclick="changeImage(this,'✨')">
+
+                    ✨
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT INFO -->
+
+        <div class="product-info">
+
+
+            <div class="category">
+                RUDRAKSHA
+            </div>
+
+
+            <h1>
+                5 Mukhi Rudraksha
+            </h1>
+
+
+            <p class="subtitle">
+                Energized 5 Mukhi Rudraksha designed for
+                spiritual practice, meditation and daily use.
+            </p>
+
+
+            <div class="rating-row">
+
+                <div class="stars">
+                    ★★★★★
+                </div>
+
+                <div class="rating-score">
+                    4.8
+                </div>
+
+                <div class="review-count">
+                    126 Reviews
+                </div>
+
+            </div>
+
+
+            <div class="price-box">
+
+                <span class="price">
+                    ₹799
+                </span>
+
+                <span class="old-price">
+                    ₹999
+                </span>
+
+                <span class="save">
+                    Save ₹200
+                </span>
+
+            </div>
+
+
+            <div class="offer">
+
+                <div class="offer-title">
+                    🎁 SPECIAL OFFER
+                </div>
+
+                <p>
+                    Use coupon <strong>ASTRO10</strong> at checkout
+                    to receive an additional eligible discount.
+                </p>
+
+            </div>
+
+
+            <div class="stock">
+
+                <span class="stock-dot"></span>
+
+                In Stock • Ready to dispatch
+
+            </div>
+
+
+            <div class="purchase-row">
+
+
+                <strong style="font-size:8px;">
+                    Quantity
+                </strong>
+
+
+                <div class="quantity">
+
+
+                    <button
+                        class="qty-btn"
+                        onclick="changeQty(-1)">
+
+                        −
+
+                    </button>
+
+
+                    <span
+                        id="quantity"
+                        class="qty-value">
+
+                        1
+
+                    </span>
+
+
+                    <button
+                        class="qty-btn"
+                        onclick="changeQty(1)">
+
+                        +
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="buy-buttons">
+
+
+                <button
+                    class="add-cart"
+                    onclick="addToCart()">
+
+                    🛒 Add to Cart
+
+                </button>
+
+
+                <button
+                    class="buy-now"
+                    onclick="buyNow()">
+
+                    ⚡ Buy Now
+
+                </button>
+
+            </div>
+
+
+            <div class="quick-benefits">
+
+
+                <div class="quick-benefit">
+
+                    <div class="quick-icon">
+                        🚚
+                    </div>
+
+                    <span>
+                        Reliable delivery
+                    </span>
+
+                </div>
+
+
+                <div class="quick-benefit">
+
+                    <div class="quick-icon">
+                        🔒
+                    </div>
+
+                    <span>
+                        Secure payment
+                    </span>
+
+                </div>
+
+
+                <div class="quick-benefit">
+
+                    <div class="quick-icon">
+                        ✨
+                    </div>
+
+                    <span>
+                        Quality checked
+                    </span>
+
+                </div>
+
+
+                <div class="quick-benefit">
+
+                    <div class="quick-icon">
+                        💬
+                    </div>
+
+                    <span>
+                        Customer support
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DETAILS
+    ========================= -->
+
+    <section class="details">
+
+
+        <div class="detail-card">
+
+
+            <div class="tabs">
+
+
+                <button
+                    class="tab active"
+                    onclick="openTab(this,'description')">
+
+                    Description
+
+                </button>
+
+
+                <button
+                    class="tab"
+                    onclick="openTab(this,'benefits')">
+
+                    Benefits
+
+                </button>
+
+
+                <button
+                    class="tab"
+                    onclick="openTab(this,'specifications')">
+
+                    Specifications
+
+                </button>
+
+
+                <button
+                    class="tab"
+                    onclick="openTab(this,'reviews')">
+
+                    Reviews
+
+                </button>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div
+                id="description"
+                class="tab-content active">
+
+                <h2>
+                    About 5 Mukhi Rudraksha
+                </h2>
+
+
+                <p>
+                    The 5 Mukhi Rudraksha is traditionally associated
+                    with spiritual discipline, meditation and regular
+                    devotional practice. This product is presented as
+                    a spiritual accessory for personal use.
+                </p>
+
+
+                <p>
+                    Every product should be used according to the
+                    buyer's personal spiritual practice and beliefs.
+                    Astrological or spiritual products should not be
+                    considered a substitute for professional medical,
+                    financial or legal advice.
+                </p>
+
+
+                <div class="benefit-grid">
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            🧘
+                        </div>
+
+                        <h3>
+                            Meditation
+                        </h3>
+
+                        <p>
+                            Suitable for meditation and personal
+                            spiritual routines.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            🕉️
+                        </div>
+
+                        <h3>
+                            Spiritual Practice
+                        </h3>
+
+                        <p>
+                            Designed for traditional devotional
+                            practices.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            📿
+                        </div>
+
+                        <h3>
+                            Daily Wear
+                        </h3>
+
+                        <p>
+                            Convenient format for regular personal use.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BENEFITS -->
+
+            <div
+                id="benefits"
+                class="tab-content">
+
+                <h2>
+                    Product Highlights
+                </h2>
+
+
+                <div class="benefit-grid">
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            ✨
+                        </div>
+
+                        <h3>
+                            Traditional Product
+                        </h3>
+
+                        <p>
+                            Inspired by traditional spiritual practices.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            🧘
+                        </div>
+
+                        <h3>
+                            Meditation Friendly
+                        </h3>
+
+                        <p>
+                            Can be incorporated into a meditation routine.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            🎁
+                        </div>
+
+                        <h3>
+                            Gift Option
+                        </h3>
+
+                        <p>
+                            Suitable as a spiritual gift for occasions
+                            and personal milestones.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            🛡️
+                        </div>
+
+                        <h3>
+                            Quality Checked
+                        </h3>
+
+                        <p>
+                            Product quality checks can be integrated
+                            into the production fulfilment process.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            📦
+                        </div>
+
+                        <h3>
+                            Secure Packaging
+                        </h3>
+
+                        <p>
+                            Designed for safe packaging and dispatch.
+                        </p>
+
+                    </div>
+
+
+                    <div class="benefit-card">
+
+                        <div class="benefit-card-icon">
+                            💬
+                        </div>
+
+                        <h3>
+                            Support
+                        </h3>
+
+                        <p>
+                            Customer assistance available for
+                            order-related queries.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SPECIFICATIONS -->
+
+            <div
+                id="specifications"
+                class="tab-content">
+
+                <h2>
+                    Specifications
+                </h2>
+
+
+                <div class="spec-table">
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Product
+                        </div>
+
+                        <div class="spec-value">
+                            5 Mukhi Rudraksha
+                        </div>
+
+                    </div>
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Category
+                        </div>
+
+                        <div class="spec-value">
+                            Rudraksha
+                        </div>
+
+                    </div>
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Price
+                        </div>
+
+                        <div class="spec-value">
+                            ₹799
+                        </div>
+
+                    </div>
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Mukhis
+                        </div>
+
+                        <div class="spec-value">
+                            5
+                        </div>
+
+                    </div>
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Usage
+                        </div>
+
+                        <div class="spec-value">
+                            Meditation / Spiritual Practice
+                        </div>
+
+                    </div>
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Availability
+                        </div>
+
+                        <div class="spec-value">
+                            In Stock
+                        </div>
+
+                    </div>
+
+
+                    <div class="spec-row">
+
+                        <div class="spec-label">
+                            Shipping
+                        </div>
+
+                        <div class="spec-value">
+                            Standard / Express options
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REVIEWS -->
+
+            <div
+                id="reviews"
+                class="tab-content">
+
+                <h2>
+                    Customer Reviews
+                </h2>
+
+
+                <div class="review-summary">
+
+
+                    <div class="rating-big">
+
+                        <strong>
+                            4.8
+                        </strong>
+
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+
+                        <span>
+                            Based on 126 reviews
+                        </span>
+
+                    </div>
+
+
+                    <div class="rating-bars">
+
+
+                        <div class="rating-bar">
+
+                            <span>
+                                5
+                            </span>
+
+                            <div class="bar">
+                                <span style="width:86%;"></span>
+                            </div>
+
+                            <span>
+                                86%
+                            </span>
+
+                        </div>
+
+
+                        <div class="rating-bar">
+
+                            <span>
+                                4
+                            </span>
+
+                            <div class="bar">
+                                <span style="width:10%;"></span>
+                            </div>
+
+                            <span>
+                                10%
+                            </span>
+
+                        </div>
+
+
+                        <div class="rating-bar">
+
+                            <span>
+                                3
+                            </span>
+
+                            <div class="bar">
+                                <span style="width:3%;"></span>
+                            </div>
+
+                            <span>
+                                3%
+                            </span>
+
+                        </div>
+
+
+                        <div class="rating-bar">
+
+                            <span>
+                                2
+                            </span>
+
+                            <div class="bar">
+                                <span style="width:1%;"></span>
+                            </div>
+
+                            <span>
+                                1%
+                            </span>
+
+                        </div>
+
+
+                        <div class="rating-bar">
+
+                            <span>
+                                1
+                            </span>
+
+                            <div class="bar">
+                                <span style="width:0%;"></span>
+                            </div>
+
+                            <span>
+                                0%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-list">
+
+
+                    <div class="review">
+
+                        <div class="reviewer">
+
+                            <div class="avatar">
+                                R
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Verified Customer
+                                </strong>
+
+                                <span>
+                                    Verified Purchase
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+
+
+                        <p>
+                            Product arrived securely packaged and
+                            the overall shopping experience was smooth.
+                        </p>
+
+                    </div>
+
+
+                    <div class="review">
+
+                        <div class="reviewer">
+
+                            <div class="avatar">
+                                A
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Verified Customer
+                                </strong>
+
+                                <span>
+                                    Verified Purchase
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+
+
+                        <p>
+                            Good packaging and quick delivery.
+                            The product matched the listing.
+                        </p>
+
+                    </div>
+
+
+                    <div class="review">
+
+                        <div class="reviewer">
+
+                            <div class="avatar">
+                                S
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Verified Customer
+                                </strong>
+
+                                <span>
+                                    Verified Purchase
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="stars">
+                            ★★★★☆
+                        </div>
+
+
+                        <p>
+                            Nice product and simple ordering process.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RELATED
+    ========================= -->
+
+    <section class="related">
+
+
+        <h2 class="related-title">
+            Related Products
+        </h2>
+
+
+        <div class="related-grid">
+
+
+            <div class="related-card">
+
+                <div class="related-image">
+                    🔱
+                </div>
+
+                <h3>
+                    Shri Yantra
+                </h3>
+
+                <p>
+                    Traditional spiritual yantra
+                </p>
+
+                <div class="related-bottom">
+
+                    <span class="related-price">
+                        ₹499
+                    </span>
+
+                    <button
+                        class="related-add"
+                        onclick="addRelated('Shri Yantra',499,'🔱')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="related-card">
+
+                <div class="related-image">
+                    💎
+                </div>
+
+                <h3>
+                    Crystal Healing Set
+                </h3>
+
+                <p>
+                    Curated crystal collection
+                </p>
+
+                <div class="related-bottom">
+
+                    <span class="related-price">
+                        ₹899
+                    </span>
+
+                    <button
+                        class="related-add"
+                        onclick="addRelated('Crystal Healing Set',899,'💎')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="related-card">
+
+                <div class="related-image">
+                    🕉️
+                </div>
+
+                <h3>
+                    Meditation Mala
+                </h3>
+
+                <p>
+                    Mala for meditation practice
+                </p>
+
+                <div class="related-bottom">
+
+                    <span class="related-price">
+                        ₹599
+                    </span>
+
+                    <button
+                        class="related-add"
+                        onclick="addRelated('Meditation Mala',599,'🕉️')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="related-card">
+
+                <div class="related-image">
+                    🪔
+                </div>
+
+                <h3>
+                    Puja Essentials Kit
+                </h3>
+
+                <p>
+                    Everyday puja essentials
+                </p>
+
+                <div class="related-bottom">
+
+                    <span class="related-price">
+                        ₹749
+                    </span>
+
+                    <button
+                        class="related-add"
+                        onclick="addRelated('Puja Essentials Kit',749,'🪔')">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+</main>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    id="toast"
+    class="toast">
+
+    Product added to cart.
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and
+            personalized guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Shop
+        </h4>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   WALLET
+========================================== */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+document
+    .getElementById(
+        "wallet"
+    )
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* ==========================================
+   CART
+========================================== */
+
+let cartCount =
+    Number(
+        localStorage.getItem(
+            "awt_cart_count"
+        ) || 0
+    );
+
+
+document
+    .getElementById(
+        "cartCount"
+    )
+    .innerText =
+        cartCount;
+
+
+/* ==========================================
+   QUANTITY
+========================================== */
+
+let quantity =
+    1;
+
+
+function changeQty(
+    amount
+){
+
+    quantity +=
+        amount;
+
+
+    if(
+        quantity < 1
+    ){
+
+        quantity = 1;
+
+    }
+
+
+    if(
+        quantity > 10
+    ){
+
+        quantity = 10;
+
+    }
+
+
+    document
+        .getElementById(
+            "quantity"
+        )
+        .innerText =
+            quantity;
+
+}
+
+
+/* ==========================================
+   CHANGE IMAGE
+========================================== */
+
+function changeImage(
+    thumbnail,
+    symbol
+){
+
+    document
+        .querySelectorAll(
+            ".thumbnail"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    thumbnail.classList.add(
+        "active"
+    );
+
+
+    document
+        .getElementById(
+            "mainSymbol"
+        )
+        .innerText =
+            symbol;
+
+}
+
+
+/* ==========================================
+   ADD TO CART
+========================================== */
+
+function addToCart(){
+
+    cartCount +=
+        quantity;
+
+
+    localStorage.setItem(
+        "awt_cart_count",
+        cartCount
+    );
+
+
+    localStorage.setItem(
+        "awt_cart_subtotal",
+        799 * quantity
+    );
+
+
+    document
+        .getElementById(
+            "cartCount"
+        )
+        .innerText =
+            cartCount;
+
+
+    showToast(
+        quantity +
+        " × 5 Mukhi Rudraksha added to cart."
+    );
+
+}
+
+
+/* ==========================================
+   BUY NOW
+========================================== */
+
+function buyNow(){
+
+    cartCount +=
+        quantity;
+
+
+    localStorage.setItem(
+        "awt_cart_count",
+        cartCount
+    );
+
+
+    localStorage.setItem(
+        "awt_cart_subtotal",
+        799 * quantity
+    );
+
+
+    localStorage.setItem(
+        "awt_buy_now_product",
+        JSON.stringify({
+
+            name:
+                "5 Mukhi Rudraksha",
+
+            price:
+                799,
+
+            quantity:
+                quantity,
+
+            icon:
+                "📿"
+
+        })
+    );
+
+
+    location.href =
+        "checkout.html";
+
+}
+
+
+/* ==========================================
+   RELATED PRODUCT
+========================================== */
+
+function addRelated(
+    name,
+    price,
+    icon
+){
+
+    cartCount +=
+        1;
+
+
+    localStorage.setItem(
+        "awt_cart_count",
+        cartCount
+    );
+
+
+    localStorage.setItem(
+        "awt_last_added_product",
+        JSON.stringify({
+
+            name:
+                name,
+
+            price:
+                price,
+
+            quantity:
+                1,
+
+            icon:
+                icon
+
+        })
+    );
+
+
+    document
+        .getElementById(
+            "cartCount"
+        )
+        .innerText =
+            cartCount;
+
+
+    showToast(
+        name +
+        " added to cart."
+    );
+
+}
+
+
+/* ==========================================
+   TABS
+========================================== */
+
+function openTab(
+    button,
+    tabId
+){
+
+    document
+        .querySelectorAll(
+            ".tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            ".tab-content"
+        )
+        .forEach(
+            content => {
+
+                content.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document
+        .getElementById(
+            tabId
+        )
+        .classList
+        .add("active");
+
+}
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        "✓ " +
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+</script>
+
+</body>
+</html>

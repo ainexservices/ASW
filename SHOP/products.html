@@ -1,0 +1,3243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Shop Products | Astro With Talk</title>
+
+<meta name="description"
+      content="Explore astrology, spiritual and wellness products at Astro With Talk.">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --light:#f6f6f6;
+    --border:#e3e3e3;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#25a34a;
+    --green-light:#edf8f0;
+    --gold:#b98417;
+    --gold-light:#fff8e8;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+    border-radius:8px;
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.cart{
+    position:relative;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+    display:grid;
+    place-items:center;
+}
+
+.cart-count{
+    position:absolute;
+    right:-3px;
+    top:-4px;
+    min-width:15px;
+    height:15px;
+    border-radius:10px;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:7px;
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:#fff;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:15px;
+    color:#999;
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:37px 35px;
+    border-radius:20px;
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,.16),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #25112f,
+            #4d2561,
+            #754a8d
+        );
+}
+
+.hero::after{
+    content:"SHOP";
+    position:absolute;
+    right:15px;
+    bottom:-50px;
+    font-size:130px;
+    font-weight:700;
+    opacity:.05;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero-badge{
+    display:inline-flex;
+    padding:7px 11px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+    font-family:"Playfair Display",serif;
+    font-size:40px;
+}
+
+.hero p{
+    max-width:650px;
+    margin-top:8px;
+    color:rgba(255,255,255,.9);
+    font-size:9px;
+    line-height:1.7;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+.categories{
+    margin-top:17px;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:9px;
+}
+
+.category{
+    padding:13px 7px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:#fff;
+    text-align:center;
+    transition:.2s;
+}
+
+.category:hover,
+.category.active{
+    border-color:var(--purple);
+    background:var(--purple-light);
+}
+
+.category-icon{
+    font-size:21px;
+}
+
+.category-name{
+    display:block;
+    margin-top:6px;
+    color:#555;
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    margin-top:18px;
+    padding:13px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.search-box{
+    position:relative;
+    flex:1;
+}
+
+.search-box input{
+    width:100%;
+    height:38px;
+    padding:0 13px 0 34px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    outline:none;
+    font-size:8px;
+}
+
+.search-icon{
+    position:absolute;
+    left:12px;
+    top:12px;
+    color:#999;
+    font-size:9px;
+}
+
+.toolbar-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.result-count{
+    color:#888;
+    font-size:7px;
+}
+
+.sort{
+    height:38px;
+    padding:0 10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:#fff;
+    color:#555;
+    font-size:7px;
+}
+
+
+/* =========================
+   SHOP BODY
+========================= */
+
+.shop-layout{
+    margin-top:17px;
+    display:grid;
+    grid-template-columns:220px minmax(0,1fr);
+    gap:17px;
+}
+
+
+/* =========================
+   FILTER SIDEBAR
+========================= */
+
+.filters{
+    align-self:start;
+    padding:17px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.filter-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.filter-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+}
+
+.clear{
+    border:0;
+    background:none;
+    color:var(--red);
+    font-size:6px;
+    font-weight:700;
+}
+
+.filter-section{
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.filter-section:last-child{
+    border-bottom:0;
+}
+
+.filter-section h3{
+    margin-bottom:10px;
+    font-size:8px;
+}
+
+.check-row{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin:8px 0;
+    color:#666;
+    font-size:7px;
+}
+
+.check-row input{
+    accent-color:var(--purple);
+}
+
+.price-values{
+    display:flex;
+    justify-content:space-between;
+    color:#777;
+    font-size:7px;
+}
+
+.price-range{
+    width:100%;
+    margin-top:10px;
+    accent-color:var(--purple);
+}
+
+.rating-filter{
+    display:flex;
+    gap:4px;
+    align-items:center;
+    color:#e3a517;
+    font-size:10px;
+}
+
+.rating-filter span{
+    color:#777;
+    font-size:7px;
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products-area{
+    min-width:0;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+}
+
+.product-card{
+    position:relative;
+    overflow:hidden;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    transition:.2s;
+}
+
+.product-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(0,0,0,.07);
+}
+
+.product-image{
+    position:relative;
+    height:205px;
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(255,255,255,.8),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #f4e7d5,
+            #dfc19b
+        );
+
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+}
+
+.product-symbol{
+    font-size:72px;
+    filter:drop-shadow(0 10px 8px rgba(0,0,0,.1));
+}
+
+.product-badge{
+    position:absolute;
+    left:9px;
+    top:9px;
+    padding:6px 8px;
+    border-radius:15px;
+    background:var(--red);
+    color:#fff;
+    font-size:6px;
+    font-weight:700;
+}
+
+.wishlist{
+    position:absolute;
+    right:9px;
+    top:9px;
+    width:29px;
+    height:29px;
+    border:0;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    font-size:12px;
+}
+
+.product-body{
+    padding:12px;
+}
+
+.product-category{
+    color:var(--purple);
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:.5px;
+}
+
+.product-card h3{
+    margin-top:5px;
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.product-description{
+    height:25px;
+    margin-top:4px;
+    overflow:hidden;
+    color:#999;
+    font-size:6px;
+    line-height:1.5;
+}
+
+.product-rating{
+    margin-top:8px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.stars{
+    color:#e3a517;
+    font-size:9px;
+    letter-spacing:.5px;
+}
+
+.product-rating span{
+    color:#999;
+    font-size:6px;
+}
+
+.price-row{
+    margin-top:9px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.price{
+    color:var(--red);
+    font-size:14px;
+    font-weight:700;
+}
+
+.old-price{
+    color:#aaa;
+    text-decoration:line-through;
+    font-size:7px;
+}
+
+.save{
+    color:var(--green);
+    font-size:6px;
+    font-weight:700;
+}
+
+.product-actions{
+    margin-top:10px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+}
+
+.product-btn{
+    height:32px;
+    border-radius:6px;
+    font-size:6px;
+    font-weight:700;
+}
+
+.product-btn.cart-btn{
+    border:1px solid var(--purple);
+    background:#fff;
+    color:var(--purple);
+}
+
+.product-btn.buy-btn{
+    border:0;
+    background:var(--red);
+    color:#fff;
+}
+
+
+/* =========================
+   NO RESULTS
+========================= */
+
+.no-results{
+    display:none;
+    padding:60px 20px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    text-align:center;
+}
+
+.no-results-icon{
+    font-size:35px;
+}
+
+.no-results h2{
+    margin-top:10px;
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.no-results p{
+    margin-top:5px;
+    color:#999;
+    font-size:7px;
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination{
+    margin-top:18px;
+    display:flex;
+    justify-content:center;
+    gap:5px;
+}
+
+.page-btn{
+    width:31px;
+    height:31px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    color:#777;
+    font-size:7px;
+    font-weight:700;
+}
+
+.page-btn.active{
+    background:var(--purple);
+    border-color:var(--purple);
+    color:#fff;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:100;
+    min-width:240px;
+    padding:13px 15px;
+    border-radius:9px;
+    background:#171717;
+    color:#fff;
+    font-size:7px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    margin-top:30px;
+    padding:40px 0 18px;
+    background:#171717;
+    color:#fff;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+    color:#aaa;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+    margin:6px 0;
+    color:#aaa;
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+    padding-top:13px;
+    border-top:1px solid #333;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .shop-layout{
+        grid-template-columns:190px minmax(0,1fr);
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .categories{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:30px 21px;
+    }
+
+    .hero h1{
+        font-size:31px;
+    }
+
+    .categories{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .toolbar-right{
+        justify-content:space-between;
+    }
+
+    .shop-layout{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        display:none;
+    }
+
+    .product-grid{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .product-image{
+        height:165px;
+    }
+
+    .product-symbol{
+        font-size:58px;
+    }
+
+    .product-body{
+        padding:9px;
+    }
+
+    .product-card h3{
+        font-size:13px;
+    }
+
+    .product-actions{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .categories{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .product-grid{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        height:210px;
+    }
+
+    .product-actions{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="shop.html" class="active">
+            Shop
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+
+        <div class="wallet">
+
+            💰 ₹<span id="wallet">
+                500
+            </span>
+
+        </div>
+
+
+        <button
+            class="cart"
+            onclick="location.href='cart.html'">
+
+            🛒
+
+            <span
+                id="cartCount"
+                class="cart-count">
+
+                0
+
+            </span>
+
+        </button>
+
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+
+        Home / Shop /
+        <span>
+            Products
+        </span>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                ✨ ASTRO WITH TALK SHOP
+            </div>
+
+            <h1>
+                Explore Our Products
+            </h1>
+
+            <p>
+                Discover Rudraksha, Yantra, Mala, crystals,
+                puja essentials and other spiritual products
+                selected for your personal practice.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================= -->
+
+    <section class="categories">
+
+
+        <button
+            class="category active"
+            data-category="all"
+            onclick="selectCategory(this,'all')">
+
+            <div class="category-icon">
+                ✨
+            </div>
+
+            <span class="category-name">
+                All Products
+            </span>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="rudraksha"
+            onclick="selectCategory(this,'rudraksha')">
+
+            <div class="category-icon">
+                📿
+            </div>
+
+            <span class="category-name">
+                Rudraksha
+            </span>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="yantra"
+            onclick="selectCategory(this,'yantra')">
+
+            <div class="category-icon">
+                🔱
+            </div>
+
+            <span class="category-name">
+                Yantra
+            </span>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="mala"
+            onclick="selectCategory(this,'mala')">
+
+            <div class="category-icon">
+                🕉️
+            </div>
+
+            <span class="category-name">
+                Mala
+            </span>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="crystals"
+            onclick="selectCategory(this,'crystals')">
+
+            <div class="category-icon">
+                💎
+            </div>
+
+            <span class="category-name">
+                Crystals
+            </span>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="puja"
+            onclick="selectCategory(this,'puja')">
+
+            <div class="category-icon">
+                🪔
+            </div>
+
+            <span class="category-name">
+                Puja
+            </span>
+
+        </button>
+
+    </section>
+
+
+    <!-- =========================
+         TOOLBAR
+    ========================= -->
+
+    <section class="toolbar">
+
+
+        <div class="search-box">
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search products..."
+                oninput="applyFilters()">
+
+        </div>
+
+
+        <div class="toolbar-right">
+
+            <span
+                id="resultCount"
+                class="result-count">
+
+                8 Products
+
+            </span>
+
+
+            <select
+                id="sort"
+                class="sort"
+                onchange="applyFilters()">
+
+                <option value="featured">
+                    Sort: Featured
+                </option>
+
+                <option value="low">
+                    Price: Low to High
+                </option>
+
+                <option value="high">
+                    Price: High to Low
+                </option>
+
+                <option value="rating">
+                    Highest Rated
+                </option>
+
+                <option value="name">
+                    Name A–Z
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SHOP BODY
+    ========================= -->
+
+    <section class="shop-layout">
+
+
+        <!-- FILTERS -->
+
+        <aside class="filters">
+
+
+            <div class="filter-header">
+
+                <h2>
+                    Filters
+                </h2>
+
+                <button
+                    class="clear"
+                    onclick="clearFilters()">
+
+                    Clear All
+
+                </button>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="filter-section">
+
+                <h3>
+                    Price Range
+                </h3>
+
+
+                <div class="price-values">
+
+                    <span>
+                        ₹0
+                    </span>
+
+                    <span id="maxPriceText">
+                        ₹2,000
+                    </span>
+
+                </div>
+
+
+                <input
+                    id="priceRange"
+                    class="price-range"
+                    type="range"
+                    min="100"
+                    max="2000"
+                    value="2000"
+                    step="50"
+                    oninput="updatePrice();applyFilters()">
+
+            </div>
+
+
+            <!-- PRODUCT TYPE -->
+
+            <div class="filter-section">
+
+                <h3>
+                    Product Type
+                </h3>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        value="rudraksha"
+                        class="type-filter"
+                        onchange="applyFilters()">
+
+                    Rudraksha
+
+                </label>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        value="yantra"
+                        class="type-filter"
+                        onchange="applyFilters()">
+
+                    Yantra
+
+                </label>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        value="mala"
+                        class="type-filter"
+                        onchange="applyFilters()">
+
+                    Mala
+
+                </label>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        value="crystals"
+                        class="type-filter"
+                        onchange="applyFilters()">
+
+                    Crystals
+
+                </label>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        value="puja"
+                        class="type-filter"
+                        onchange="applyFilters()">
+
+                    Puja
+
+                </label>
+
+            </div>
+
+
+            <!-- RATING -->
+
+            <div class="filter-section">
+
+                <h3>
+                    Rating
+                </h3>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="4"
+                        onchange="applyFilters()">
+
+                    <span class="rating-filter">
+                        ★★★★☆ <span>& Up</span>
+                    </span>
+
+                </label>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="3"
+                        onchange="applyFilters()">
+
+                    <span class="rating-filter">
+                        ★★★☆☆ <span>& Up</span>
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- AVAILABILITY -->
+
+            <div class="filter-section">
+
+                <h3>
+                    Availability
+                </h3>
+
+
+                <label class="check-row">
+
+                    <input
+                        id="stockFilter"
+                        type="checkbox"
+                        onchange="applyFilters()">
+
+                    In Stock Only
+
+                </label>
+
+            </div>
+
+        </aside>
+
+
+        <!-- PRODUCT AREA -->
+
+        <div class="products-area">
+
+
+            <div
+                id="productGrid"
+                class="product-grid">
+
+
+                <!-- PRODUCT 1 -->
+
+                <article
+                    class="product-card"
+                    data-name="5 Mukhi Rudraksha"
+                    data-category="rudraksha"
+                    data-price="799"
+                    data-rating="4.8"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('5 Mukhi Rudraksha')">
+
+                        <span class="product-symbol">
+                            📿
+                        </span>
+
+                        <span class="product-badge">
+                            20% OFF
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            RUDRAKSHA
+                        </div>
+
+                        <h3
+                            onclick="openProduct('5 Mukhi Rudraksha')">
+
+                            5 Mukhi Rudraksha
+
+                        </h3>
+
+                        <p class="product-description">
+                            Traditional spiritual accessory for
+                            meditation and daily practice.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.8 (126)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹799
+                            </span>
+
+                            <span class="old-price">
+                                ₹999
+                            </span>
+
+                            <span class="save">
+                                20% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('5 Mukhi Rudraksha',799,'📿')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('5 Mukhi Rudraksha',799,'📿')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 2 -->
+
+                <article
+                    class="product-card"
+                    data-name="Shri Yantra"
+                    data-category="yantra"
+                    data-price="499"
+                    data-rating="4.7"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('Shri Yantra')">
+
+                        <span class="product-symbol">
+                            🔱
+                        </span>
+
+                        <span class="product-badge">
+                            BESTSELLER
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            YANTRA
+                        </div>
+
+                        <h3
+                            onclick="openProduct('Shri Yantra')">
+
+                            Shri Yantra
+
+                        </h3>
+
+                        <p class="product-description">
+                            Traditional yantra designed for
+                            devotional and spiritual practice.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.7 (94)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹499
+                            </span>
+
+                            <span class="old-price">
+                                ₹599
+                            </span>
+
+                            <span class="save">
+                                17% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('Shri Yantra',499,'🔱')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('Shri Yantra',499,'🔱')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 3 -->
+
+                <article
+                    class="product-card"
+                    data-name="Meditation Mala"
+                    data-category="mala"
+                    data-price="599"
+                    data-rating="4.6"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('Meditation Mala')">
+
+                        <span class="product-symbol">
+                            🕉️
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            MALA
+                        </div>
+
+                        <h3>
+                            Meditation Mala
+                        </h3>
+
+                        <p class="product-description">
+                            Mala designed for meditation and
+                            traditional chanting practice.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.6 (82)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹599
+                            </span>
+
+                            <span class="old-price">
+                                ₹699
+                            </span>
+
+                            <span class="save">
+                                14% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('Meditation Mala',599,'🕉️')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('Meditation Mala',599,'🕉️')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 4 -->
+
+                <article
+                    class="product-card"
+                    data-name="Crystal Healing Set"
+                    data-category="crystals"
+                    data-price="899"
+                    data-rating="4.8"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('Crystal Healing Set')">
+
+                        <span class="product-symbol">
+                            💎
+                        </span>
+
+                        <span class="product-badge">
+                            POPULAR
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            CRYSTALS
+                        </div>
+
+                        <h3>
+                            Crystal Healing Set
+                        </h3>
+
+                        <p class="product-description">
+                            Curated crystal collection for
+                            meditation and personal practice.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.8 (118)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹899
+                            </span>
+
+                            <span class="old-price">
+                                ₹1,099
+                            </span>
+
+                            <span class="save">
+                                18% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('Crystal Healing Set',899,'💎')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('Crystal Healing Set',899,'💎')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 5 -->
+
+                <article
+                    class="product-card"
+                    data-name="Puja Essentials Kit"
+                    data-category="puja"
+                    data-price="749"
+                    data-rating="4.5"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('Puja Essentials Kit')">
+
+                        <span class="product-symbol">
+                            🪔
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            PUJA
+                        </div>
+
+                        <h3>
+                            Puja Essentials Kit
+                        </h3>
+
+                        <p class="product-description">
+                            Everyday essentials for traditional
+                            puja and devotional routines.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.5 (61)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹749
+                            </span>
+
+                            <span class="old-price">
+                                ₹899
+                            </span>
+
+                            <span class="save">
+                                17% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('Puja Essentials Kit',749,'🪔')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('Puja Essentials Kit',749,'🪔')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 6 -->
+
+                <article
+                    class="product-card"
+                    data-name="7 Mukhi Rudraksha"
+                    data-category="rudraksha"
+                    data-price="1299"
+                    data-rating="4.7"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('7 Mukhi Rudraksha')">
+
+                        <span class="product-symbol">
+                            📿
+                        </span>
+
+                        <span class="product-badge">
+                            NEW
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            RUDRAKSHA
+                        </div>
+
+                        <h3>
+                            7 Mukhi Rudraksha
+                        </h3>
+
+                        <p class="product-description">
+                            Traditional Rudraksha suitable for
+                            personal spiritual routines.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.7 (43)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹1,299
+                            </span>
+
+                            <span class="old-price">
+                                ₹1,499
+                            </span>
+
+                            <span class="save">
+                                13% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('7 Mukhi Rudraksha',1299,'📿')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('7 Mukhi Rudraksha',1299,'📿')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 7 -->
+
+                <article
+                    class="product-card"
+                    data-name="Navgraha Yantra"
+                    data-category="yantra"
+                    data-price="999"
+                    data-rating="4.4"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('Navgraha Yantra')">
+
+                        <span class="product-symbol">
+                            🔱
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            YANTRA
+                        </div>
+
+                        <h3>
+                            Navgraha Yantra
+                        </h3>
+
+                        <p class="product-description">
+                            Traditional yantra associated with
+                            Navgraha devotional practice.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★☆
+                            </span>
+
+                            <span>
+                                4.4 (38)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹999
+                            </span>
+
+                            <span class="old-price">
+                                ₹1,199
+                            </span>
+
+                            <span class="save">
+                                17% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('Navgraha Yantra',999,'🔱')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('Navgraha Yantra',999,'🔱')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 8 -->
+
+                <article
+                    class="product-card"
+                    data-name="Gemstone Bracelet"
+                    data-category="crystals"
+                    data-price="1499"
+                    data-rating="4.6"
+                    data-stock="true">
+
+
+                    <div
+                        class="product-image"
+                        onclick="openProduct('Gemstone Bracelet')">
+
+                        <span class="product-symbol">
+                            💎
+                        </span>
+
+                        <span class="product-badge">
+                            TRENDING
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            onclick="event.stopPropagation();toggleWishlist(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-body">
+
+                        <div class="product-category">
+                            CRYSTALS
+                        </div>
+
+                        <h3>
+                            Gemstone Bracelet
+                        </h3>
+
+                        <p class="product-description">
+                            Gemstone bracelet designed as a
+                            spiritual lifestyle accessory.
+                        </p>
+
+
+                        <div class="product-rating">
+
+                            <span class="stars">
+                                ★★★★★
+                            </span>
+
+                            <span>
+                                4.6 (52)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span class="price">
+                                ₹1,499
+                            </span>
+
+                            <span class="old-price">
+                                ₹1,799
+                            </span>
+
+                            <span class="save">
+                                17% OFF
+                            </span>
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+                            <button
+                                class="product-btn cart-btn"
+                                onclick="addToCart('Gemstone Bracelet',1499,'💎')">
+
+                                🛒 Add
+
+                            </button>
+
+                            <button
+                                class="product-btn buy-btn"
+                                onclick="buyNow('Gemstone Bracelet',1499,'💎')">
+
+                                ⚡ Buy Now
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <!-- NO RESULTS -->
+
+            <div
+                id="noResults"
+                class="no-results">
+
+                <div class="no-results-icon">
+                    🔍
+                </div>
+
+                <h2>
+                    No Products Found
+                </h2>
+
+                <p>
+                    Try another search or change your filters.
+                </p>
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+                <button
+                    class="page-btn active">
+
+                    1
+
+                </button>
+
+                <button
+                    class="page-btn">
+
+                    2
+
+                </button>
+
+                <button
+                    class="page-btn">
+
+                    3
+
+                </button>
+
+                <button
+                    class="page-btn">
+
+                    →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    id="toast"
+    class="toast">
+
+    ✓ Product added to cart.
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and
+            personalized guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Shop
+        </h4>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Account
+        </h4>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+        <a href="../wallet/recharge.html">
+            Wallet
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   WALLET
+========================================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+
+document
+    .getElementById(
+        "wallet"
+    )
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* =========================================
+   CART
+========================================= */
+
+let cartCount =
+    Number(
+        localStorage.getItem(
+            "awt_cart_count"
+        ) || 0
+    );
+
+
+document
+    .getElementById(
+        "cartCount"
+    )
+    .innerText =
+        cartCount;
+
+
+/* =========================================
+   CURRENT CATEGORY
+========================================= */
+
+let currentCategory =
+    "all";
+
+
+/* =========================================
+   CATEGORY SELECT
+========================================= */
+
+function selectCategory(
+    button,
+    category
+){
+
+    document
+        .querySelectorAll(
+            ".category"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    currentCategory =
+        category;
+
+
+    /*
+       Keep sidebar product-type
+       checkboxes synchronized.
+    */
+
+    document
+        .querySelectorAll(
+            ".type-filter"
+        )
+        .forEach(
+            checkbox => {
+
+                checkbox.checked =
+                    category !== "all" &&
+                    checkbox.value === category;
+
+            }
+        );
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+function updatePrice(){
+
+    const value =
+        document
+        .getElementById(
+            "priceRange"
+        )
+        .value;
+
+
+    document
+        .getElementById(
+            "maxPriceText"
+        )
+        .innerText =
+            "₹" +
+            Number(
+                value
+            ).toLocaleString(
+                "en-IN"
+            );
+
+}
+
+
+/* =========================================
+   FILTER + SEARCH + SORT
+========================================= */
+
+function applyFilters(){
+
+    const query =
+        document
+        .getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const maxPrice =
+        Number(
+            document
+            .getElementById(
+                "priceRange"
+            )
+            .value
+        );
+
+
+    const selectedTypes =
+        Array.from(
+            document.querySelectorAll(
+                ".type-filter:checked"
+            )
+        )
+        .map(
+            checkbox =>
+                checkbox.value
+        );
+
+
+    const ratingInput =
+        document.querySelector(
+            'input[name="rating"]:checked'
+        );
+
+
+    const minimumRating =
+        ratingInput
+        ?
+        Number(
+            ratingInput.value
+        )
+        :
+        0;
+
+
+    const stockOnly =
+        document
+        .getElementById(
+            "stockFilter"
+        )
+        .checked;
+
+
+    const sort =
+        document
+        .getElementById(
+            "sort"
+        )
+        .value;
+
+
+    const grid =
+        document
+        .getElementById(
+            "productGrid"
+        );
+
+
+    const cards =
+        Array.from(
+            grid.querySelectorAll(
+                ".product-card"
+            )
+        );
+
+
+    let visible =
+        [];
+
+
+    cards.forEach(
+        card => {
+
+            const name =
+                card.dataset.name
+                .toLowerCase();
+
+
+            const category =
+                card.dataset.category;
+
+
+            const price =
+                Number(
+                    card.dataset.price
+                );
+
+
+            const rating =
+                Number(
+                    card.dataset.rating
+                );
+
+
+            const stock =
+                card.dataset.stock ===
+                "true";
+
+
+            const searchMatch =
+                !query ||
+                name.includes(query);
+
+
+            const categoryMatch =
+                currentCategory ===
+                "all"
+                ||
+                category ===
+                currentCategory;
+
+
+            const typeMatch =
+                selectedTypes.length === 0
+                ||
+                selectedTypes.includes(
+                    category
+                );
+
+
+            const priceMatch =
+                price <= maxPrice;
+
+
+            const ratingMatch =
+                rating >= minimumRating;
+
+
+            const stockMatch =
+                !stockOnly ||
+                stock;
+
+
+            const show =
+                searchMatch &&
+                categoryMatch &&
+                typeMatch &&
+                priceMatch &&
+                ratingMatch &&
+                stockMatch;
+
+
+            card.style.display =
+                show
+                ?
+                "block"
+                :
+                "none";
+
+
+            if(show){
+
+                visible.push(
+                    card
+                );
+
+            }
+
+        }
+    );
+
+
+    /* SORT */
+
+    visible.sort(
+        function(a,b){
+
+            if(
+                sort === "low"
+            ){
+
+                return Number(
+                    a.dataset.price
+                )
+                -
+                Number(
+                    b.dataset.price
+                );
+
+            }
+
+
+            if(
+                sort === "high"
+            ){
+
+                return Number(
+                    b.dataset.price
+                )
+                -
+                Number(
+                    a.dataset.price
+                );
+
+            }
+
+
+            if(
+                sort === "rating"
+            ){
+
+                return Number(
+                    b.dataset.rating
+                )
+                -
+                Number(
+                    a.dataset.rating
+                );
+
+            }
+
+
+            if(
+                sort === "name"
+            ){
+
+                return a.dataset.name
+                    .localeCompare(
+                        b.dataset.name
+                    );
+
+            }
+
+
+            return 0;
+
+        }
+    );
+
+
+    visible.forEach(
+        card => {
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "resultCount"
+        )
+        .innerText =
+            visible.length +
+            (
+                visible.length === 1
+                ?
+                " Product"
+                :
+                " Products"
+            );
+
+
+    document
+        .getElementById(
+            "noResults"
+        )
+        .style.display =
+            visible.length === 0
+            ?
+            "block"
+            :
+            "none";
+
+}
+
+
+/* =========================================
+   CLEAR FILTERS
+========================================= */
+
+function clearFilters(){
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "priceRange"
+        )
+        .value =
+            "2000";
+
+
+    document
+        .getElementById(
+            "stockFilter"
+        )
+        .checked =
+            false;
+
+
+    document
+        .querySelectorAll(
+            ".type-filter"
+        )
+        .forEach(
+            item => {
+
+                item.checked =
+                    false;
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            'input[name="rating"]'
+        )
+        .forEach(
+            item => {
+
+                item.checked =
+                    false;
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "sort"
+        )
+        .value =
+            "featured";
+
+
+    currentCategory =
+        "all";
+
+
+    document
+        .querySelectorAll(
+            ".category"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    document
+        .querySelector(
+            '[data-category="all"]'
+        )
+        .classList
+        .add("active");
+
+
+    updatePrice();
+
+    applyFilters();
+
+}
+
+
+/* =========================================
+   PRODUCT DETAIL
+========================================= */
+
+function openProduct(
+    name
+){
+
+    /*
+       Product name is stored so
+       product-detail.html can later
+       load the selected product.
+    */
+
+    localStorage.setItem(
+        "awt_selected_product",
+        name
+    );
+
+
+    location.href =
+        "product-detail.html";
+
+}
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+function addToCart(
+    name,
+    price,
+    icon
+){
+
+    cartCount +=
+        1;
+
+
+    localStorage.setItem(
+        "awt_cart_count",
+        cartCount
+    );
+
+
+    localStorage.setItem(
+        "awt_last_added_product",
+        JSON.stringify({
+
+            name:
+                name,
+
+            price:
+                price,
+
+            quantity:
+                1,
+
+            icon:
+                icon
+
+        })
+    );
+
+
+    document
+        .getElementById(
+            "cartCount"
+        )
+        .innerText =
+            cartCount;
+
+
+    showToast(
+        name +
+        " added to cart."
+    );
+
+}
+
+
+/* =========================================
+   BUY NOW
+========================================= */
+
+function buyNow(
+    name,
+    price,
+    icon
+){
+
+    localStorage.setItem(
+        "awt_buy_now_product",
+        JSON.stringify({
+
+            name:
+                name,
+
+            price:
+                price,
+
+            quantity:
+                1,
+
+            icon:
+                icon
+
+        })
+    );
+
+
+    cartCount +=
+        1;
+
+
+    localStorage.setItem(
+        "awt_cart_count",
+        cartCount
+    );
+
+
+    location.href =
+        "checkout.html";
+
+}
+
+
+/* =========================================
+   WISHLIST
+========================================= */
+
+function toggleWishlist(
+    button
+){
+
+    if(
+        button.innerText ===
+        "♡"
+    ){
+
+        button.innerText =
+            "♥";
+
+
+        showToast(
+            "Added to wishlist."
+        );
+
+    }else{
+
+        button.innerText =
+            "♡";
+
+
+        showToast(
+            "Removed from wishlist."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document
+        .getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        "✓ " +
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2400
+        );
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+updatePrice();
+
+applyFilters();
+
+</script>
+
+</body>
+</html>
