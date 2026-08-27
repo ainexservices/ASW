@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mantra - Free Mantra Library | Astro With Talk</title>
+
+<meta name="description"
+content="Explore traditional Hindu mantras, planetary mantras, deity mantras and daily chanting guidance with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f7f7f7;
+    --border:#e5e5e5;
+
+    --saffron:#a65b0b;
+    --saffron-dark:#773d05;
+    --saffron-bg:#fff6e8;
+
+    --purple:#5d3479;
+    --purple-bg:#f7f2fb;
+
+    --gold:#b98417;
+    --gold-bg:#fff8e8;
+
+    --green:#39734e;
+    --green-bg:#f1f8f3;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border-radius:50%;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:12px;
+
+    color:#999;
+
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    padding:40px 38px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(255,255,255,.18),
+            transparent 28%
+        ),
+        linear-gradient(
+            125deg,
+            #703a05,
+            #aa6417,
+            #d29a36
+        );
+}
+
+.hero::after{
+    content:"ॐ";
+
+    position:absolute;
+
+    right:35px;
+    top:-80px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:260px;
+
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:42px;
+}
+
+.hero p{
+    max-width:750px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.hero-actions{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.hero-btn{
+    padding:10px 14px;
+
+    border:0;
+    border-radius:8px;
+
+    background:#fff;
+
+    color:var(--saffron);
+
+    font-size:8px;
+    font-weight:700;
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.3);
+}
+
+
+/* MAIN */
+
+.main-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        285px;
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+
+    font-size:24px;
+}
+
+.section-sub{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+
+/* DAILY MANTRA */
+
+.daily{
+    margin-top:17px;
+
+    padding:21px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffaf0,
+            #fff
+        );
+
+    border:1px solid #f0dfb7;
+}
+
+.daily-top{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.daily-icon{
+    width:50px;
+    height:50px;
+
+    border-radius:12px;
+
+    background:var(--gold-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:24px;
+}
+
+.daily-info{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.daily-info strong{
+    display:block;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:19px;
+}
+
+.daily-info span{
+    display:block;
+
+    margin-top:3px;
+
+    color:#999;
+
+    font-size:7px;
+}
+
+.day-badge{
+    padding:7px 9px;
+
+    border-radius:7px;
+
+    background:#fff1ce;
+
+    color:#8b681d;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.mantra-name{
+    margin-top:17px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:22px;
+}
+
+.mantra-sanskrit{
+    margin-top:9px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    border:1px solid #eadfc9;
+
+    text-align:center;
+
+    color:#7c4d11;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:18px;
+
+    line-height:1.7;
+}
+
+.mantra-meaning{
+    margin-top:9px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.8;
+}
+
+
+/* PLAYER */
+
+.player{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:14px;
+
+    padding:11px;
+
+    border-radius:9px;
+
+    background:#fff;
+
+    border:1px solid #e5e5e5;
+}
+
+.play-btn{
+    width:38px;
+    height:38px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:var(--saffron);
+
+    color:#fff;
+
+    font-size:13px;
+}
+
+.player-info{
+    flex:1;
+}
+
+.player-info strong{
+    display:block;
+
+    font-size:8px;
+}
+
+.player-info span{
+    display:block;
+
+    margin-top:3px;
+
+    color:#999;
+
+    font-size:7px;
+}
+
+.progress{
+    width:100%;
+
+    height:4px;
+
+    margin-top:6px;
+
+    border-radius:10px;
+
+    background:#eee;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+
+    height:100%;
+
+    background:var(--saffron);
+
+    transition:.3s;
+}
+
+
+/* MANTRA GRID */
+
+.mantra-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-top:16px;
+}
+
+.mantra-card{
+    padding:15px;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    background:#fff;
+
+    transition:.2s;
+}
+
+.mantra-card:hover{
+    transform:translateY(-2px);
+
+    border-color:#dbcab2;
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.05);
+}
+
+.mantra-icon{
+    width:38px;
+    height:38px;
+
+    border-radius:9px;
+
+    background:var(--saffron-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:17px;
+}
+
+.mantra-card h3{
+    margin-top:8px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:13px;
+}
+
+.mantra-card .sanskrit{
+    margin-top:5px;
+
+    color:#865616;
+
+    font-size:8px;
+
+    line-height:1.6;
+}
+
+.mantra-card p{
+    margin-top:5px;
+
+    color:#888;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+.mantra-card button{
+    margin-top:8px;
+
+    padding:7px 9px;
+
+    border:1px solid #e3d6c4;
+
+    border-radius:6px;
+
+    background:#fffaf2;
+
+    color:#87520c;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+
+/* JAAP */
+
+.jaap{
+    margin-top:16px;
+
+    padding:20px;
+
+    border-radius:13px;
+
+    background:var(--purple-bg);
+
+    border:1px solid #e3d8ea;
+
+    text-align:center;
+}
+
+.jaap-label{
+    color:#888;
+
+    font-size:8px;
+}
+
+.count{
+    margin-top:5px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:44px;
+
+    color:var(--purple);
+}
+
+.jaap-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:7px;
+
+    margin-top:9px;
+}
+
+.jaap-btn{
+    min-width:70px;
+
+    padding:9px 11px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--purple);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.jaap-btn.reset{
+    background:#fff;
+
+    color:#777;
+
+    border:1px solid #ddd;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:13px;
+}
+
+.side-card{
+    padding:16px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+}
+
+.side-card h3{
+    margin-bottom:10px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:17px;
+}
+
+.side-link{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+
+    border-radius:8px;
+
+    background:var(--saffron-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:7px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+
+/* CTA */
+
+.cta{
+    padding:15px;
+
+    border-radius:10px;
+
+    background:var(--red);
+
+    color:#fff;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    margin-top:5px;
+
+    color:#ffe7e7;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+.cta button{
+    width:100%;
+
+    height:35px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:#fff;
+
+    color:var(--red);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* NOTE */
+
+.note{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-bg);
+
+    border:1px solid #f0dfb7;
+}
+
+.note strong{
+    font-size:9px;
+}
+
+.note p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+
+    color:#fff;
+
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .mantra-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .mantra-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .daily-top{
+        align-items:flex-start;
+    }
+
+    .mantra-sanskrit{
+        font-size:15px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a
+            href="free-services.html"
+            class="active">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Free Services /
+        <span>Mantra</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🕉️ FREE MANTRA LIBRARY
+            </div>
+
+            <h1>
+                Mantra & Jaap
+            </h1>
+
+            <p>
+                Explore traditional mantras associated with deities,
+                planets and spiritual practices. Read the mantra,
+                understand its traditional purpose and use the digital
+                Jaap counter for your personal practice.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <button
+                    class="hero-btn"
+                    onclick="document.getElementById('mantraLibrary').scrollIntoView({behavior:'smooth'})">
+
+                    📿 Explore Mantras
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="document.getElementById('jaap').scrollIntoView({behavior:'smooth'})">
+
+                    🔢 Start Jaap
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="main-grid">
+
+
+        <!-- MAIN -->
+
+        <section class="card">
+
+
+            <!-- DAILY -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Today's Mantra 🕉️
+                </h2>
+
+                <p class="section-sub">
+                    A traditional mantra suggestion based on today's
+                    weekday.
+                </p>
+
+
+                <div class="daily">
+
+
+                    <div class="daily-top">
+
+                        <div class="daily-info">
+
+                            <div
+                                class="daily-icon"
+                                id="dailyIcon">
+
+                                ☀️
+
+                            </div>
+
+                            <div>
+
+                                <strong id="dailyDay">
+                                    Sunday
+                                </strong>
+
+                                <span id="dailyPlanet">
+                                    Traditional association: Sun
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="day-badge">
+                            TODAY
+                        </div>
+
+                    </div>
+
+
+                    <h3
+                        class="mantra-name"
+                        id="dailyName">
+
+                        Surya Mantra
+
+                    </h3>
+
+
+                    <div
+                        class="mantra-sanskrit"
+                        id="dailySanskrit">
+
+                        ॐ सूर्याय नमः
+
+                    </div>
+
+
+                    <p
+                        class="mantra-meaning"
+                        id="dailyMeaning">
+
+                        A traditional Sun mantra associated with
+                        reverence for solar energy, discipline and
+                        vitality.
+
+                    </p>
+
+
+                    <div class="player">
+
+                        <button
+                            id="playButton"
+                            class="play-btn"
+                            onclick="toggleAudio()">
+
+                            ▶
+
+                        </button>
+
+
+                        <div class="player-info">
+
+                            <strong id="playerTitle">
+                                Mantra Practice
+                            </strong>
+
+                            <span id="playerStatus">
+                                Audio interface — add production audio
+                                file later
+                            </span>
+
+                            <div class="progress">
+
+                                <div
+                                    id="progressBar"
+                                    class="progress-bar">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- LIBRARY -->
+
+            <div
+                class="section"
+                id="mantraLibrary">
+
+                <h2 class="section-title">
+                    Mantra Library
+                </h2>
+
+                <p class="section-sub">
+                    Explore popular traditional mantras.
+                </p>
+
+
+                <div class="mantra-grid">
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            ☀️
+                        </div>
+
+                        <h3>
+                            Surya Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ सूर्याय नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with the Sun.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Surya Mantra','ॐ सूर्याय नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🌙
+                        </div>
+
+                        <h3>
+                            Chandra Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ सोमाय नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with the Moon.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Chandra Mantra','ॐ सोमाय नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🔥
+                        </div>
+
+                        <h3>
+                            Mangal Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ अंगारकाय नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Mars.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Mangal Mantra','ॐ अंगारकाय नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🌿
+                        </div>
+
+                        <h3>
+                            Budha Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ बुधाय नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Mercury.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Budha Mantra','ॐ बुधाय नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            📿
+                        </div>
+
+                        <h3>
+                            Guru Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ गुरवे नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Jupiter.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Guru Mantra','ॐ गुरवे नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            💎
+                        </div>
+
+                        <h3>
+                            Shukra Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ शुक्राय नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Venus.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Shukra Mantra','ॐ शुक्राय नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🪐
+                        </div>
+
+                        <h3>
+                            Shani Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ शनैश्चराय नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Saturn.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Shani Mantra','ॐ शनैश्चराय नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🐘
+                        </div>
+
+                        <h3>
+                            Ganesh Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ गं गणपतये नमः
+                        </div>
+
+                        <p>
+                            Traditionally used in Ganesha devotion.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Ganesh Mantra','ॐ गं गणपतये नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🔱
+                        </div>
+
+                        <h3>
+                            Shiva Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ नमः शिवाय
+                        </div>
+
+                        <p>
+                            A widely used traditional Shiva mantra.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Shiva Mantra','ॐ नमः शिवाय')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🚩
+                        </div>
+
+                        <h3>
+                            Hanuman Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ हनुमते नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Hanuman devotion.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Hanuman Mantra','ॐ हनुमते नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🌺
+                        </div>
+
+                        <h3>
+                            Durga Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ दुं दुर्गायै नमः
+                        </div>
+
+                        <p>
+                            Traditionally used in Durga devotion.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Durga Mantra','ॐ दुं दुर्गायै नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="mantra-card">
+
+                        <div class="mantra-icon">
+                            🪷
+                        </div>
+
+                        <h3>
+                            Lakshmi Mantra
+                        </h3>
+
+                        <div class="sanskrit">
+                            ॐ श्रीं महालक्ष्म्यै नमः
+                        </div>
+
+                        <p>
+                            Traditionally associated with Lakshmi devotion.
+                        </p>
+
+                        <button
+                            onclick="selectMantra('Lakshmi Mantra','ॐ श्रीं महालक्ष्म्यै नमः')">
+
+                            Use Mantra
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- JAAP COUNTER -->
+
+            <div
+                class="section"
+                id="jaap">
+
+                <h2 class="section-title">
+                    Digital Jaap Counter 📿
+                </h2>
+
+                <p class="section-sub">
+                    Use this simple counter to keep track of repetitions
+                    during your personal chanting practice.
+                </p>
+
+
+                <div class="jaap">
+
+                    <div class="jaap-label">
+                        Current Repetitions
+                    </div>
+
+                    <div
+                        class="count"
+                        id="count">
+
+                        0
+
+                    </div>
+
+
+                    <div class="jaap-buttons">
+
+                        <button
+                            class="jaap-btn"
+                            onclick="incrementJaap()">
+
+                            + 1 Jaap
+
+                        </button>
+
+                        <button
+                            class="jaap-btn"
+                            onclick="incrementJaap(11)">
+
+                            + 11
+
+                        </button>
+
+                        <button
+                            class="jaap-btn"
+                            onclick="incrementJaap(108)">
+
+                            + 108
+
+                        </button>
+
+                        <button
+                            class="jaap-btn reset"
+                            onclick="resetJaap()">
+
+                            Reset
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="section">
+
+                <div class="note">
+
+                    <strong>
+                        ℹ️ Traditional Practice
+                    </strong>
+
+                    <p>
+                        Mantras are presented here as traditional
+                        spiritual and cultural practices. Different
+                        traditions may prescribe specific pronunciation,
+                        initiation, timing and methods. These pages do
+                        not constitute medical, financial or other
+                        professional advice.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Free Services
+                </h3>
+
+
+                <a
+                    href="free-services.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🆓
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            All Free Services
+                        </strong>
+
+                        <span>
+                            Services home
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="ai-astrologer.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🤖
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            AI Astrologer
+                        </strong>
+
+                        <span>
+                            AI astrology chat
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="daily-remedies.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Daily Remedies
+                        </strong>
+
+                        <span>
+                            Traditional remedies
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="dream-meaning.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Dream Meaning
+                        </strong>
+
+                        <span>
+                            Dream interpretation
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="mantra.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Mantra
+                        </strong>
+
+                        <span>
+                            Mantra library
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="numerology.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🔢
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Numerology
+                        </strong>
+
+                        <span>
+                            Number guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="palm-reading.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        ✋
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Palm Reading
+                        </strong>
+
+                        <span>
+                            Palmistry guide
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="tarot-reading.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🃏
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Tarot Reading
+                        </strong>
+
+                        <span>
+                            Tarot guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Personalized Guidance?
+                    </strong>
+
+                    <p>
+                        Connect with a verified astrologer for a
+                        personalized interpretation of your Kundli.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Free Services
+        </h4>
+
+        <a href="free-services.html">
+            All Services
+        </a>
+
+        <a href="ai-astrologer.html">
+            AI Astrologer
+        </a>
+
+        <a href="daily-remedies.html">
+            Daily Remedies
+        </a>
+
+        <a href="dream-meaning.html">
+            Dream Meaning
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Spiritual
+        </h4>
+
+        <a href="mantra.html">
+            Mantra
+        </a>
+
+        <a href="daily-remedies.html">
+            Remedies
+        </a>
+
+        <a href="palm-reading.html">
+            Palm Reading
+        </a>
+
+        <a href="tarot-reading.html">
+            Tarot Reading
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+document
+    .getElementById("wallet")
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* DAILY MANTRA DATA */
+
+const dailyMantras = {
+
+    0:{
+        day:"Sunday",
+        planet:"Sun",
+        icon:"☀️",
+        name:"Surya Mantra",
+        sanskrit:"ॐ सूर्याय नमः",
+        meaning:
+        "A traditional Sun mantra associated with reverence for solar energy, discipline and vitality."
+    },
+
+    1:{
+        day:"Monday",
+        planet:"Moon",
+        icon:"🌙",
+        name:"Chandra Mantra",
+        sanskrit:"ॐ सोमाय नमः",
+        meaning:
+        "A traditional Moon mantra associated with calmness, reflection and devotional practice."
+    },
+
+    2:{
+        day:"Tuesday",
+        planet:"Mars",
+        icon:"🔥",
+        name:"Mangal Mantra",
+        sanskrit:"ॐ अंगारकाय नमः",
+        meaning:
+        "A traditional Mars mantra associated with courage, discipline and constructive energy."
+    },
+
+    3:{
+        day:"Wednesday",
+        planet:"Mercury",
+        icon:"🌿",
+        name:"Budha Mantra",
+        sanskrit:"ॐ बुधाय नमः",
+        meaning:
+        "A traditional Mercury mantra associated with learning, communication and intellect."
+    },
+
+    4:{
+        day:"Thursday",
+        planet:"Jupiter",
+        icon:"📿",
+        name:"Guru Mantra",
+        sanskrit:"ॐ गुरवे नमः",
+        meaning:
+        "A traditional Jupiter mantra associated with wisdom, teachers and spiritual learning."
+    },
+
+    5:{
+        day:"Friday",
+        planet:"Venus",
+        icon:"💎",
+        name:"Shukra Mantra",
+        sanskrit:"ॐ शुक्राय नमः",
+        meaning:
+        "A traditional Venus mantra associated with harmony, beauty and relationships."
+    },
+
+    6:{
+        day:"Saturday",
+        planet:"Saturn",
+        icon:"🪐",
+        name:"Shani Mantra",
+        sanskrit:"ॐ शनैश्चराय नमः",
+        meaning:
+        "A traditional Saturn mantra associated with patience, responsibility and service."
+    }
+
+};
+
+
+const today =
+    new Date();
+
+
+const daily =
+    dailyMantras[
+        today.getDay()
+    ];
+
+
+/* DISPLAY DAILY */
+
+document
+    .getElementById("dailyDay")
+    .innerText =
+        daily.day;
+
+
+document
+    .getElementById("dailyPlanet")
+    .innerText =
+        "Traditional association: "
+        + daily.planet;
+
+
+document
+    .getElementById("dailyIcon")
+    .innerText =
+        daily.icon;
+
+
+document
+    .getElementById("dailyName")
+    .innerText =
+        daily.name;
+
+
+document
+    .getElementById("dailySanskrit")
+    .innerText =
+        daily.sanskrit;
+
+
+document
+    .getElementById("dailyMeaning")
+    .innerText =
+        daily.meaning;
+
+
+document
+    .getElementById("playerTitle")
+    .innerText =
+        daily.name;
+
+
+/* JAAP */
+
+let jaapCount =
+    Number(
+        localStorage.getItem(
+            "awt_jaap_count"
+        )
+    ) || 0;
+
+
+function renderJaap(){
+
+    document
+        .getElementById("count")
+        .innerText =
+            jaapCount.toLocaleString(
+                "en-IN"
+            );
+
+}
+
+
+function incrementJaap(
+    amount = 1
+){
+
+    jaapCount += amount;
+
+
+    localStorage.setItem(
+        "awt_jaap_count",
+        jaapCount
+    );
+
+
+    renderJaap();
+
+}
+
+
+function resetJaap(){
+
+    jaapCount = 0;
+
+
+    localStorage.setItem(
+        "awt_jaap_count",
+        jaapCount
+    );
+
+
+    renderJaap();
+
+}
+
+
+renderJaap();
+
+
+/* MANTRA SELECT */
+
+function selectMantra(
+    name,
+    mantra
+){
+
+    document
+        .getElementById("dailyName")
+        .innerText =
+            name;
+
+
+    document
+        .getElementById("dailySanskrit")
+        .innerText =
+            mantra;
+
+
+    document
+        .getElementById("playerTitle")
+        .innerText =
+            name;
+
+
+    document
+        .getElementById("playerStatus")
+        .innerText =
+            "Selected mantra for your practice";
+
+
+    document
+        .getElementById("jaap")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+
+    localStorage.setItem(
+        "awt_selected_mantra",
+        JSON.stringify({
+            name:name,
+            mantra:mantra
+        })
+    );
+
+}
+
+
+/* AUDIO-STYLE DEMO PLAYER */
+
+let playing = false;
+
+let timer = null;
+
+let progress = 0;
+
+
+function toggleAudio(){
+
+    const button =
+        document
+        .getElementById("playButton");
+
+    const status =
+        document
+        .getElementById("playerStatus");
+
+    const bar =
+        document
+        .getElementById("progressBar");
+
+
+    if(playing){
+
+        playing = false;
+
+        clearInterval(timer);
+
+        button.innerText = "▶";
+
+        status.innerText =
+            "Practice paused";
+
+        return;
+
+    }
+
+
+    playing = true;
+
+    button.innerText = "Ⅱ";
+
+    status.innerText =
+        "Practice interface running...";
+
+
+    progress = 0;
+
+
+    timer =
+        setInterval(
+            ()=>{
+
+                progress += 2;
+
+                bar.style.width =
+                    progress + "%";
+
+
+                if(progress >= 100){
+
+                    clearInterval(timer);
+
+                    playing = false;
+
+                    button.innerText =
+                        "▶";
+
+                    status.innerText =
+                        "Practice complete";
+
+                }
+
+            },
+            150
+        );
+
+}
+
+
+/* LAST VISIT */
+
+localStorage.setItem(
+    "awt_mantra_last_visit",
+    new Date().toISOString()
+);
+
+</script>
+
+</body>
+</html>

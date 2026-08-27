@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Tarot Reading - Tarot Card Reading | Astro With Talk</title>
+
+<meta name="description"
+content="Explore a free interactive tarot reading with one-card and three-card spreads, tarot card meanings and traditional symbolism with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f7f7f7;
+    --border:#e5e5e5;
+
+    --purple:#43205f;
+    --purple2:#6d3d8d;
+    --purple-bg:#f7f2fb;
+
+    --gold:#b98417;
+    --gold-bg:#fff8e8;
+
+    --green:#39734e;
+    --green-bg:#f1f8f3;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border-radius:50%;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:12px;
+
+    color:#999;
+
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    padding:40px 38px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 18%,
+            rgba(255,255,255,.18),
+            transparent 28%
+        ),
+        linear-gradient(
+            125deg,
+            #29133b,
+            #4c2568,
+            #79509a
+        );
+}
+
+.hero::after{
+    content:"✦";
+
+    position:absolute;
+
+    right:55px;
+    top:-80px;
+
+    font-size:280px;
+
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:42px;
+}
+
+.hero p{
+    max-width:770px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.hero-buttons{
+    display:flex;
+
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.hero-btn{
+    padding:10px 14px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:#fff;
+
+    color:var(--purple);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.3);
+}
+
+
+/* MAIN */
+
+.main-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        285px;
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+
+    font-size:24px;
+}
+
+.section-sub{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+
+/* READING */
+
+.reading{
+    margin-top:17px;
+
+    padding:20px;
+
+    border-radius:14px;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255,255,255,.16),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #321746,
+            #593075
+        );
+
+    color:#fff;
+
+    text-align:center;
+}
+
+.reading-label{
+    font-size:8px;
+
+    color:#d9c9e4;
+
+    font-weight:700;
+}
+
+.question{
+    width:100%;
+
+    height:42px;
+
+    margin-top:13px;
+
+    padding:0 12px;
+
+    border:0;
+
+    outline:none;
+
+    border-radius:8px;
+
+    background:#fff;
+
+    color:#333;
+
+    font-size:8px;
+}
+
+.spread-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-top:11px;
+}
+
+.spread-btn{
+    padding:9px 13px;
+
+    border-radius:7px;
+
+    border:1px solid rgba(255,255,255,.28);
+
+    background:rgba(255,255,255,.1);
+
+    color:#fff;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.spread-btn.active{
+    background:#fff;
+
+    color:var(--purple);
+}
+
+
+/* CARDS */
+
+.cards-area{
+    display:flex;
+
+    justify-content:center;
+
+    gap:14px;
+
+    margin-top:20px;
+
+    min-height:235px;
+}
+
+.tarot-card{
+    width:135px;
+    height:210px;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #20102d,
+            #5d3277
+        );
+
+    border:3px solid #c59d58;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.22);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.tarot-card::before{
+    content:"✦";
+
+    position:absolute;
+
+    font-size:105px;
+
+    color:#d2ad68;
+
+    opacity:.13;
+}
+
+.card-back{
+    font-size:46px;
+
+    color:#d8b86f;
+
+    z-index:2;
+}
+
+.tarot-front{
+    width:100%;
+    height:100%;
+
+    padding:12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffaf0,
+            #eee1c4
+        );
+
+    color:#392348;
+
+    display:none;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    text-align:center;
+}
+
+.tarot-front.show{
+    display:flex;
+}
+
+.tarot-front .number{
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.tarot-symbol{
+    font-size:52px;
+}
+
+.tarot-front h3{
+    font-family:"Playfair Display",serif;
+
+    font-size:15px;
+}
+
+.tarot-front span{
+    color:#886d4a;
+
+    font-size:6px;
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+
+    margin-top:18px;
+
+    padding:17px;
+
+    border-radius:11px;
+
+    background:#fff;
+
+    border:1px solid #e2d8e8;
+
+    text-align:left;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-position{
+    color:#8d6b9e;
+
+    font-size:7px;
+
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+.result h3{
+    margin-top:4px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:19px;
+}
+
+.result p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.8;
+}
+
+
+/* MAJOR ARCANA */
+
+.arcana-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:9px;
+
+    margin-top:16px;
+}
+
+.arcana{
+    padding:12px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#fff;
+
+    text-align:center;
+}
+
+.arcana-symbol{
+    width:42px;
+    height:42px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:var(--purple-bg);
+
+    display:grid;
+    place-items:center;
+
+    color:var(--purple);
+
+    font-size:18px;
+}
+
+.arcana strong{
+    display:block;
+
+    margin-top:7px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:10px;
+}
+
+.arcana span{
+    display:block;
+
+    margin-top:3px;
+
+    color:#999;
+
+    font-size:6px;
+
+    line-height:1.5;
+}
+
+
+/* CTA */
+
+.reading-box{
+    padding:19px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f6f0fa,
+            #fff
+        );
+
+    border:1px solid #e2d8e8;
+}
+
+.reading-box h3{
+    font-family:"Playfair Display",serif;
+
+    font-size:20px;
+}
+
+.reading-box p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.8;
+}
+
+.reading-box button{
+    margin-top:11px;
+
+    padding:10px 14px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:13px;
+}
+
+.side-card{
+    padding:16px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+}
+
+.side-card h3{
+    margin-bottom:10px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:17px;
+}
+
+.side-link{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+
+    border-radius:8px;
+
+    background:var(--purple-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:7px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+
+/* CTA */
+
+.cta{
+    padding:15px;
+
+    border-radius:10px;
+
+    background:var(--red);
+
+    color:#fff;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    margin-top:5px;
+
+    color:#ffe7e7;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+.cta button{
+    width:100%;
+
+    height:35px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:#fff;
+
+    color:var(--red);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* NOTE */
+
+.note{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-bg);
+
+    border:1px solid #f0dfb7;
+}
+
+.note strong{
+    font-size:9px;
+}
+
+.note p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+
+    color:#fff;
+
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .arcana-grid{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .cards-area{
+        flex-wrap:wrap;
+    }
+
+    .arcana-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .hero-btn{
+        width:100%;
+    }
+
+    .cards-area{
+        gap:8px;
+    }
+
+    .tarot-card{
+        width:105px;
+        height:165px;
+    }
+
+    .card-back{
+        font-size:35px;
+    }
+
+    .tarot-symbol{
+        font-size:38px;
+    }
+
+    .tarot-front h3{
+        font-size:11px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a
+            href="free-services.html"
+            class="active">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Free Services /
+        <span>Tarot Reading</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🃏 FREE TAROT READING
+            </div>
+
+            <h1>
+                Tarot Card Reading
+            </h1>
+
+            <p>
+                Ask a question, choose a spread and draw tarot cards
+                for a traditional symbolic reading. Explore card
+                meanings and use the reading as a tool for reflection.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <button
+                    class="hero-btn"
+                    onclick="document.getElementById('reading').scrollIntoView({behavior:'smooth'})">
+
+                    🃏 Start Free Reading
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="document.getElementById('arcana').scrollIntoView({behavior:'smooth'})">
+
+                    ✦ Explore Tarot Cards
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="main-grid">
+
+
+        <!-- MAIN -->
+
+        <section class="card">
+
+
+            <!-- READING -->
+
+            <div
+                class="section"
+                id="reading">
+
+                <h2 class="section-title">
+                    Free Tarot Reading
+                </h2>
+
+                <p class="section-sub">
+                    Focus on one question and select a one-card or
+                    three-card spread.
+                </p>
+
+
+                <div class="reading">
+
+                    <div class="reading-label">
+                        THINK OF YOUR QUESTION
+                    </div>
+
+
+                    <input
+                        id="question"
+                        class="question"
+                        type="text"
+                        placeholder="Example: What should I focus on right now?">
+
+
+                    <div class="spread-buttons">
+
+                        <button
+                            id="oneBtn"
+                            class="spread-btn active"
+                            onclick="setSpread(1)">
+
+                            1 Card — Quick Insight
+
+                        </button>
+
+
+                        <button
+                            id="threeBtn"
+                            class="spread-btn"
+                            onclick="setSpread(3)">
+
+                            3 Cards — Past • Present • Future
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="cardsArea"
+                        class="cards-area">
+
+                    </div>
+
+
+                    <button
+                        class="hero-btn"
+                        style="margin-top:10px;"
+                        onclick="drawCards()">
+
+                        ✨ Shuffle & Draw Cards
+
+                    </button>
+
+
+                    <div
+                        id="result"
+                        class="result">
+
+                        <div
+                            id="resultPosition"
+                            class="result-position">
+                        </div>
+
+                        <h3
+                            id="resultTitle">
+                        </h3>
+
+                        <p
+                            id="resultText">
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- MAJOR ARCANA -->
+
+            <div
+                class="section"
+                id="arcana">
+
+                <h2 class="section-title">
+                    Major Arcana
+                </h2>
+
+                <p class="section-sub">
+                    Some of the best-known cards in traditional tarot
+                    symbolism.
+                </p>
+
+
+                <div class="arcana-grid">
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            🃏
+                        </div>
+
+                        <strong>
+                            The Fool
+                        </strong>
+
+                        <span>
+                            Beginnings • Freedom • Adventure
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            ✨
+                        </div>
+
+                        <strong>
+                            The Magician
+                        </strong>
+
+                        <span>
+                            Skill • Action • Potential
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            🌙
+                        </div>
+
+                        <strong>
+                            The High Priestess
+                        </strong>
+
+                        <span>
+                            Intuition • Mystery • Inner knowledge
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            👑
+                        </div>
+
+                        <strong>
+                            The Empress
+                        </strong>
+
+                        <span>
+                            Nurturing • Growth • Creativity
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            👑
+                        </div>
+
+                        <strong>
+                            The Emperor
+                        </strong>
+
+                        <span>
+                            Structure • Authority • Stability
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            📜
+                        </div>
+
+                        <strong>
+                            The Hierophant
+                        </strong>
+
+                        <span>
+                            Tradition • Teaching • Values
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            ❤️
+                        </div>
+
+                        <strong>
+                            The Lovers
+                        </strong>
+
+                        <span>
+                            Choice • Connection • Values
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            🛡️
+                        </div>
+
+                        <strong>
+                            The Chariot
+                        </strong>
+
+                        <span>
+                            Drive • Direction • Determination
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            🦁
+                        </div>
+
+                        <strong>
+                            Strength
+                        </strong>
+
+                        <span>
+                            Courage • Patience • Inner power
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            🕯️
+                        </div>
+
+                        <strong>
+                            The Hermit
+                        </strong>
+
+                        <span>
+                            Reflection • Wisdom • Solitude
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            ☸️
+                        </div>
+
+                        <strong>
+                            Wheel of Fortune
+                        </strong>
+
+                        <span>
+                            Cycles • Change • Turning points
+                        </span>
+
+                    </div>
+
+
+                    <div class="arcana">
+
+                        <div class="arcana-symbol">
+                            ⚖️
+                        </div>
+
+                        <strong>
+                            Justice
+                        </strong>
+
+                        <span>
+                            Balance • Truth • Accountability
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- PERSONAL READING -->
+
+            <div class="section">
+
+                <div class="reading-box">
+
+                    <h3>
+                        Want a Personalized Tarot Reading? 🔮
+                    </h3>
+
+                    <p>
+                        A professional reading can explore your question
+                        in greater depth and consider the relationship
+                        between multiple cards and their positions.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to an Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="section">
+
+                <div class="note">
+
+                    <strong>
+                        ℹ️ Important Note
+                    </strong>
+
+                    <p>
+                        Tarot is a traditional symbolic and divination
+                        practice. Tarot readings are not scientifically
+                        established predictions and should not be treated
+                        as guaranteed statements about future events.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Free Services
+                </h3>
+
+
+                <a
+                    href="free-services.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🆓
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            All Free Services
+                        </strong>
+
+                        <span>
+                            Services home
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="ai-astrologer.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🤖
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            AI Astrologer
+                        </strong>
+
+                        <span>
+                            AI astrology chat
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="daily-remedies.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Daily Remedies
+                        </strong>
+
+                        <span>
+                            Traditional remedies
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="dream-meaning.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Dream Meaning
+                        </strong>
+
+                        <span>
+                            Dream interpretation
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="mantra.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Mantra
+                        </strong>
+
+                        <span>
+                            Mantra library
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="numerology.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🔢
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Numerology
+                        </strong>
+
+                        <span>
+                            Number guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="palm-reading.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        ✋
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Palm Reading
+                        </strong>
+
+                        <span>
+                            Palmistry guide
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="tarot-reading.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🃏
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Tarot Reading
+                        </strong>
+
+                        <span>
+                            Tarot guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Personal Guidance
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for a personalized
+                        consultation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Free Services
+        </h4>
+
+        <a href="free-services.html">
+            All Services
+        </a>
+
+        <a href="ai-astrologer.html">
+            AI Astrologer
+        </a>
+
+        <a href="daily-remedies.html">
+            Daily Remedies
+        </a>
+
+        <a href="dream-meaning.html">
+            Dream Meaning
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Spiritual
+        </h4>
+
+        <a href="mantra.html">
+            Mantra
+        </a>
+
+        <a href="daily-remedies.html">
+            Remedies
+        </a>
+
+        <a href="palm-reading.html">
+            Palm Reading
+        </a>
+
+        <a href="tarot-reading.html">
+            Tarot Reading
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+document
+    .getElementById("wallet")
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* SPREAD */
+
+let spread = 1;
+
+
+/* TAROT DATA */
+
+const tarotCards = [
+
+    {
+        name:"The Fool",
+        symbol:"🃏",
+        meaning:
+        "Traditionally associated with new beginnings, openness, adventure and stepping into the unknown."
+    },
+
+    {
+        name:"The Magician",
+        symbol:"✨",
+        meaning:
+        "Traditionally associated with skill, initiative, focused action and using available resources."
+    },
+
+    {
+        name:"The High Priestess",
+        symbol:"🌙",
+        meaning:
+        "Traditionally associated with intuition, mystery, reflection and inner knowledge."
+    },
+
+    {
+        name:"The Empress",
+        symbol:"👑",
+        meaning:
+        "Traditionally associated with creativity, nurturing, growth and abundance."
+    },
+
+    {
+        name:"The Emperor",
+        symbol:"🏛️",
+        meaning:
+        "Traditionally associated with structure, authority, organization and stability."
+    },
+
+    {
+        name:"The Lovers",
+        symbol:"❤️",
+        meaning:
+        "Traditionally associated with connection, choice, values and important relationships."
+    },
+
+    {
+        name:"The Chariot",
+        symbol:"🛡️",
+        meaning:
+        "Traditionally associated with determination, direction, discipline and forward movement."
+    },
+
+    {
+        name:"Strength",
+        symbol:"🦁",
+        meaning:
+        "Traditionally associated with courage, patience, compassion and inner strength."
+    },
+
+    {
+        name:"The Hermit",
+        symbol:"🕯️",
+        meaning:
+        "Traditionally associated with introspection, solitude, wisdom and searching within."
+    },
+
+    {
+        name:"Wheel of Fortune",
+        symbol:"☸️",
+        meaning:
+        "Traditionally associated with cycles, change, turning points and changing circumstances."
+    },
+
+    {
+        name:"Justice",
+        symbol:"⚖️",
+        meaning:
+        "Traditionally associated with balance, truth, responsibility and consequences."
+    },
+
+    {
+        name:"The Star",
+        symbol:"⭐",
+        meaning:
+        "Traditionally associated with hope, inspiration, renewal and optimism."
+    },
+
+    {
+        name:"The Moon",
+        symbol:"🌙",
+        meaning:
+        "Traditionally associated with uncertainty, imagination, intuition and hidden factors."
+    },
+
+    {
+        name:"The Sun",
+        symbol:"☀️",
+        meaning:
+        "Traditionally associated with clarity, vitality, optimism and positive expression."
+    },
+
+    {
+        name:"The World",
+        symbol:"🌍",
+        meaning:
+        "Traditionally associated with completion, integration, achievement and a finished cycle."
+    }
+
+];
+
+
+/* SET SPREAD */
+
+function setSpread(
+    value
+){
+
+    spread = value;
+
+
+    document
+        .getElementById("oneBtn")
+        .classList
+        .toggle(
+            "active",
+            value === 1
+        );
+
+
+    document
+        .getElementById("threeBtn")
+        .classList
+        .toggle(
+            "active",
+            value === 3
+        );
+
+
+    createCardBacks();
+
+}
+
+
+/* CARD BACKS */
+
+function createCardBacks(){
+
+    const area =
+        document
+        .getElementById("cardsArea");
+
+
+    area.innerHTML = "";
+
+
+    for(
+        let i = 0;
+        i < spread;
+        i++
+    ){
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "tarot-card";
+
+
+        card.innerHTML = `
+            <div class="card-back">
+                ✦
+            </div>
+
+            <div class="tarot-front">
+                <div class="number"></div>
+                <div class="tarot-symbol"></div>
+                <h3></h3>
+                <span></span>
+            </div>
+        `;
+
+
+        area.appendChild(card);
+
+    }
+
+}
+
+
+createCardBacks();
+
+
+/* SHUFFLE */
+
+function shuffleCards(){
+
+    const array =
+        [...tarotCards];
+
+
+    for(
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+
+    return array;
+
+}
+
+
+/* DRAW */
+
+function drawCards(){
+
+    const question =
+        document
+        .getElementById("question")
+        .value
+        .trim();
+
+
+    if(!question){
+
+        alert(
+            "Please enter a question before drawing your cards."
+        );
+
+        document
+            .getElementById("question")
+            .focus();
+
+        return;
+
+    }
+
+
+    const selected =
+        shuffleCards()
+        .slice(
+            0,
+            spread
+        );
+
+
+    const cards =
+        document
+        .querySelectorAll(
+            ".tarot-card"
+        );
+
+
+    const positions =
+        spread === 1
+        ?
+        [
+            "Your Card"
+        ]
+        :
+        [
+            "Past",
+            "Present",
+            "Future"
+        ];
+
+
+    cards.forEach(
+        (
+            card,
+            index
+        )=>{
+
+            const back =
+                card.querySelector(
+                    ".card-back"
+                );
+
+            const front =
+                card.querySelector(
+                    ".tarot-front"
+                );
+
+            const data =
+                selected[index];
+
+
+            setTimeout(
+                ()=>{
+
+                    back.style.display =
+                        "none";
+
+
+                    front.classList
+                        .add("show");
+
+
+                    front.querySelector(
+                        ".number"
+                    ).innerText =
+                        positions[index];
+
+
+                    front.querySelector(
+                        ".tarot-symbol"
+                    ).innerText =
+                        data.symbol;
+
+
+                    front.querySelector(
+                        "h3"
+                    ).innerText =
+                        data.name;
+
+
+                    front.querySelector(
+                        "span"
+                    ).innerText =
+                        "Traditional symbolism";
+
+
+                },
+                index * 450
+            );
+
+        }
+    );
+
+
+    showResults(
+        selected,
+        positions,
+        question
+    );
+
+
+    localStorage.setItem(
+        "awt_last_tarot_reading",
+        JSON.stringify({
+            question:question,
+            cards:selected.map(
+                card=>card.name
+            ),
+            date:new Date().toISOString()
+        })
+    );
+
+}
+
+
+/* RESULTS */
+
+function showResults(
+    selected,
+    positions,
+    question
+){
+
+    const result =
+        document
+        .getElementById("result");
+
+
+    /*
+        For the free interface,
+        show the first drawn card
+        in the main result panel.
+    */
+
+    const first =
+        selected[0];
+
+
+    document
+        .getElementById("resultPosition")
+        .innerText =
+            spread === 1
+            ?
+            "Your Tarot Card"
+            :
+            "Three-Card Spread";
+
+
+    document
+        .getElementById("resultTitle")
+        .innerText =
+            spread === 1
+            ?
+            first.name
+            :
+            selected
+                .map(
+                    (
+                        card,
+                        index
+                    ) =>
+                        positions[index]
+                        +
+                        ": "
+                        +
+                        card.name
+                )
+                .join(
+                    " • "
+                );
+
+
+    let text =
+        first.meaning;
+
+
+    if(
+        spread === 3
+    ){
+
+        text +=
+            " In a three-card reading, the cards can be considered together rather than as fixed predictions. The question you asked was: “"
+            +
+            question
+            +
+            "”.";
+
+    }else{
+
+        text +=
+            " Consider this symbolism alongside your own circumstances and intuition regarding the question you asked.";
+
+    }
+
+
+    document
+        .getElementById("resultText")
+        .innerText =
+            text;
+
+
+    result.classList
+        .add("show");
+
+
+    result.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+}
+
+</script>
+
+</body>
+</html>

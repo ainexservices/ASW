@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Palm Reading Guide - Palmistry | Astro With Talk</title>
+
+<meta name="description"
+content="Explore traditional palmistry meanings including Life Line, Head Line, Heart Line, Fate Line and palm mounts with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark:#171717;
+    --gray:#777;
+    --light:#f7f7f7;
+    --border:#e5e5e5;
+
+    --brown:#70432a;
+    --brown-dark:#4c2a19;
+    --brown-bg:#fbf5f0;
+
+    --gold:#b98417;
+    --gold-bg:#fff8e8;
+
+    --purple:#5d3479;
+    --purple-bg:#f7f2fb;
+
+    --green:#39734e;
+    --green-bg:#f1f8f3;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:21px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile{
+    width:35px;
+    height:35px;
+
+    border-radius:50%;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:28px 0 65px;
+}
+
+.breadcrumb{
+    margin-bottom:12px;
+
+    color:#999;
+
+    font-size:8px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    padding:40px 38px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 87% 15%,
+            rgba(255,255,255,.18),
+            transparent 28%
+        ),
+        linear-gradient(
+            125deg,
+            #422417,
+            #70432a,
+            #a06c4b
+        );
+}
+
+.hero::after{
+    content:"✋";
+
+    position:absolute;
+
+    right:35px;
+    top:-65px;
+
+    font-size:260px;
+
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.hero h1{
+    margin-top:12px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:42px;
+}
+
+.hero p{
+    max-width:760px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.9);
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.hero-buttons{
+    display:flex;
+
+    gap:8px;
+
+    margin-top:17px;
+}
+
+.hero-btn{
+    padding:10px 14px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:#fff;
+
+    color:var(--brown);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.3);
+}
+
+
+/* MAIN */
+
+.main-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        285px;
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    overflow:hidden;
+}
+
+.section{
+    padding:23px;
+
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+
+    font-size:24px;
+}
+
+.section-sub{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+
+/* PALM GUIDE */
+
+.palm-guide{
+    display:grid;
+
+    grid-template-columns:
+        230px
+        minmax(0,1fr);
+
+    gap:20px;
+
+    margin-top:17px;
+
+    padding:20px;
+
+    border-radius:14px;
+
+    background:var(--brown-bg);
+
+    border:1px solid #eadbd0;
+}
+
+.palm-illustration{
+    min-height:270px;
+
+    border-radius:13px;
+
+    background:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:1px solid #eadbd0;
+
+    font-size:120px;
+}
+
+.line-list{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+}
+
+.line-item{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:9px;
+
+    padding:10px;
+
+    border-radius:9px;
+
+    background:#fff;
+
+    border:1px solid #eee;
+}
+
+.line-number{
+    width:29px;
+    height:29px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    background:var(--brown-bg);
+
+    color:var(--brown);
+
+    display:grid;
+    place-items:center;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.line-content{
+    flex:1;
+}
+
+.line-content strong{
+    display:block;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:12px;
+}
+
+.line-content p{
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:7px;
+
+    line-height:1.6;
+}
+
+
+/* FEATURED LINES */
+
+.line-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+
+    margin-top:16px;
+}
+
+.palm-card{
+    padding:16px;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    background:#fff;
+
+    transition:.2s;
+}
+
+.palm-card:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.05);
+}
+
+.palm-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:9px;
+
+    background:var(--brown-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:18px;
+}
+
+.palm-card h3{
+    margin-top:9px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:15px;
+}
+
+.palm-card p{
+    margin-top:5px;
+
+    color:#888;
+
+    font-size:7px;
+
+    line-height:1.8;
+}
+
+.palm-card button{
+    margin-top:9px;
+
+    padding:7px 9px;
+
+    border:1px solid #e1d4ca;
+
+    border-radius:6px;
+
+    background:#fffaf7;
+
+    color:var(--brown);
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+
+/* SYMBOLS */
+
+.symbol-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:9px;
+
+    margin-top:16px;
+}
+
+.symbol{
+    padding:13px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#fff;
+
+    text-align:center;
+}
+
+.symbol-icon{
+    width:36px;
+    height:36px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:var(--gold-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:16px;
+}
+
+.symbol strong{
+    display:block;
+
+    margin-top:7px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:10px;
+}
+
+.symbol span{
+    display:block;
+
+    margin-top:3px;
+
+    color:#999;
+
+    font-size:6px;
+
+    line-height:1.5;
+}
+
+
+/* MOUNTS */
+
+.mount-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:9px;
+
+    margin-top:16px;
+}
+
+.mount{
+    padding:14px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#fff;
+}
+
+.mount-top{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.mount-icon{
+    width:34px;
+    height:34px;
+
+    border-radius:8px;
+
+    background:var(--purple-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:14px;
+}
+
+.mount strong{
+    font-family:"Playfair Display",serif;
+
+    font-size:11px;
+}
+
+.mount p{
+    margin-top:5px;
+
+    color:#888;
+
+    font-size:7px;
+
+    line-height:1.6;
+}
+
+
+/* CTA */
+
+.reading-box{
+    padding:19px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8f1ec,
+            #fff
+        );
+
+    border:1px solid #eadbd0;
+}
+
+.reading-box h3{
+    font-family:"Playfair Display",serif;
+
+    font-size:20px;
+}
+
+.reading-box p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:8px;
+
+    line-height:1.8;
+}
+
+.reading-box button{
+    margin-top:11px;
+
+    padding:10px 14px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--red);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:13px;
+}
+
+.side-card{
+    padding:16px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+}
+
+.side-card h3{
+    margin-bottom:10px;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:17px;
+}
+
+.side-link{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+
+    border-radius:8px;
+
+    background:var(--brown-bg);
+
+    display:grid;
+    place-items:center;
+
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+
+    margin-top:2px;
+
+    color:#999;
+
+    font-size:7px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+
+/* SIDEBAR CTA */
+
+.cta{
+    padding:15px;
+
+    border-radius:10px;
+
+    background:var(--red);
+
+    color:#fff;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    margin-top:5px;
+
+    color:#ffe7e7;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+.cta button{
+    width:100%;
+
+    height:35px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:#fff;
+
+    color:var(--red);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* NOTE */
+
+.note{
+    padding:14px;
+
+    border-radius:10px;
+
+    background:var(--gold-bg);
+
+    border:1px solid #f0dfb7;
+}
+
+.note strong{
+    font-size:9px;
+}
+
+.note p{
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:7px;
+
+    line-height:1.7;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+
+    color:#fff;
+
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        repeat(4,1fr);
+
+    gap:25px;
+}
+
+.footer-brand p{
+    margin-top:9px;
+
+    color:#aaa;
+
+    font-size:8px;
+
+    line-height:1.7;
+}
+
+.footer-col h4{
+    margin-bottom:9px;
+
+    font-size:10px;
+}
+
+.footer-col a{
+    display:block;
+
+    margin:6px 0;
+
+    color:#aaa;
+
+    font-size:8px;
+}
+
+.copyright{
+    margin-top:25px;
+
+    padding-top:13px;
+
+    border-top:1px solid #333;
+
+    color:#777;
+
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .symbol-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:750px){
+
+    .palm-guide{
+        grid-template-columns:1fr;
+    }
+
+    .palm-illustration{
+        min-height:190px;
+    }
+
+    .line-grid,
+    .mount-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:28px 21px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .hero-btn{
+        width:100%;
+    }
+
+    .symbol-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+
+    <a
+        href="../index.html"
+        class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a
+            href="free-services.html"
+            class="active">
+            Free Services
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Free Services /
+        <span>Palm Reading</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                ✋ FREE PALMISTRY GUIDE
+            </div>
+
+            <h1>
+                Palm Reading & Palmistry
+            </h1>
+
+            <p>
+                Learn about the major lines, mounts and traditional
+                symbols used in palmistry. Explore their traditional
+                interpretations and understand the basics of palm
+                reading.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <button
+                    class="hero-btn"
+                    onclick="document.getElementById('lines').scrollIntoView({behavior:'smooth'})">
+
+                    ✋ Explore Palm Lines
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="location.href='../astrologers.html'">
+
+                    🔮 Personal Reading
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="main-grid">
+
+
+        <!-- MAIN -->
+
+        <section class="card">
+
+
+            <!-- PALM GUIDE -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Understanding the Palm
+                </h2>
+
+                <p class="section-sub">
+                    Traditional palmistry studies the lines, mounts,
+                    shapes and markings of the hand.
+                </p>
+
+
+                <div class="palm-guide">
+
+
+                    <div class="palm-illustration">
+                        ✋
+                    </div>
+
+
+                    <div class="line-list">
+
+
+                        <div class="line-item">
+
+                            <div class="line-number">
+                                1
+                            </div>
+
+                            <div class="line-content">
+
+                                <strong>
+                                    Heart Line
+                                </strong>
+
+                                <p>
+                                    Traditionally associated with
+                                    emotions, affection and relationships.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="line-item">
+
+                            <div class="line-number">
+                                2
+                            </div>
+
+                            <div class="line-content">
+
+                                <strong>
+                                    Head Line
+                                </strong>
+
+                                <p>
+                                    Traditionally associated with
+                                    thinking, intellect and mental style.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="line-item">
+
+                            <div class="line-number">
+                                3
+                            </div>
+
+                            <div class="line-content">
+
+                                <strong>
+                                    Life Line
+                                </strong>
+
+                                <p>
+                                    Traditionally interpreted in relation
+                                    to vitality, major transitions and
+                                    life patterns.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="line-item">
+
+                            <div class="line-number">
+                                4
+                            </div>
+
+                            <div class="line-content">
+
+                                <strong>
+                                    Fate Line
+                                </strong>
+
+                                <p>
+                                    Traditionally associated with career,
+                                    direction and life circumstances.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LINES -->
+
+            <div
+                class="section"
+                id="lines">
+
+                <h2 class="section-title">
+                    Major Palm Lines
+                </h2>
+
+                <p class="section-sub">
+                    Explore the traditional meaning associated with each
+                    major palm line.
+                </p>
+
+
+                <div class="line-grid">
+
+
+                    <div class="palm-card">
+
+                        <div class="palm-icon">
+                            ❤️
+                        </div>
+
+                        <h3>
+                            Heart Line
+                        </h3>
+
+                        <p>
+                            Usually examined near the upper portion of
+                            the palm. Traditional palmistry associates
+                            it with emotional expression, affection and
+                            relationships.
+                        </p>
+
+                        <button
+                            onclick="showInfo('Heart Line')">
+
+                            Read Interpretation →
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="palm-card">
+
+                        <div class="palm-icon">
+                            🧠
+                        </div>
+
+                        <h3>
+                            Head Line
+                        </h3>
+
+                        <p>
+                            Traditionally associated with thinking style,
+                            reasoning, communication and intellectual
+                            tendencies.
+                        </p>
+
+                        <button
+                            onclick="showInfo('Head Line')">
+
+                            Read Interpretation →
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="palm-card">
+
+                        <div class="palm-icon">
+                            🌿
+                        </div>
+
+                        <h3>
+                            Life Line
+                        </h3>
+
+                        <p>
+                            Traditionally interpreted in relation to
+                            vitality, major life changes and personal
+                            development. It is not a literal lifespan
+                            indicator.
+                        </p>
+
+                        <button
+                            onclick="showInfo('Life Line')">
+
+                            Read Interpretation →
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="palm-card">
+
+                        <div class="palm-icon">
+                            🧭
+                        </div>
+
+                        <h3>
+                            Fate Line
+                        </h3>
+
+                        <p>
+                            Traditionally associated with career,
+                            direction, responsibilities and changing
+                            circumstances.
+                        </p>
+
+                        <button
+                            onclick="showInfo('Fate Line')">
+
+                            Read Interpretation →
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="palm-card">
+
+                        <div class="palm-icon">
+                            🌞
+                        </div>
+
+                        <h3>
+                            Sun Line
+                        </h3>
+
+                        <p>
+                            Traditionally associated with recognition,
+                            creativity, achievement and visibility.
+                        </p>
+
+                        <button
+                            onclick="showInfo('Sun Line')">
+
+                            Read Interpretation →
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="palm-card">
+
+                        <div class="palm-icon">
+                            🌙
+                        </div>
+
+                        <h3>
+                            Mercury Line
+                        </h3>
+
+                        <p>
+                            Sometimes called the Health Line in
+                            traditional palmistry and associated with
+                            communication and practical abilities.
+                        </p>
+
+                        <button
+                            onclick="showInfo('Mercury Line')">
+
+                            Read Interpretation →
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+                <div
+                    id="infoBox"
+                    style="
+                    display:none;
+                    margin-top:14px;
+                    padding:15px;
+                    border-radius:10px;
+                    background:#fbf5f0;
+                    border:1px solid #eadbd0;
+                    ">
+
+                    <strong
+                        id="infoTitle"
+                        style="
+                        font-family:'Playfair Display',serif;
+                        font-size:15px;
+                        ">
+                    </strong>
+
+                    <p
+                        id="infoText"
+                        style="
+                        margin-top:5px;
+                        color:#777;
+                        font-size:8px;
+                        line-height:1.8;
+                        ">
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYMBOLS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Common Palm Symbols
+                </h2>
+
+                <p class="section-sub">
+                    Traditional palmistry gives symbolic significance
+                    to various markings.
+                </p>
+
+
+                <div class="symbol-grid">
+
+
+                    <div class="symbol">
+
+                        <div class="symbol-icon">
+                            ★
+                        </div>
+
+                        <strong>
+                            Star
+                        </strong>
+
+                        <span>
+                            Traditionally linked with notable energy or
+                            significant events.
+                        </span>
+
+                    </div>
+
+
+                    <div class="symbol">
+
+                        <div class="symbol-icon">
+                            △
+                        </div>
+
+                        <strong>
+                            Triangle
+                        </strong>
+
+                        <span>
+                            Traditionally associated with focused energy
+                            or ability.
+                        </span>
+
+                    </div>
+
+
+                    <div class="symbol">
+
+                        <div class="symbol-icon">
+                            ○
+                        </div>
+
+                        <strong>
+                            Circle
+                        </strong>
+
+                        <span>
+                            A comparatively uncommon marking with
+                            interpretations varying by location.
+                        </span>
+
+                    </div>
+
+
+                    <div class="symbol">
+
+                        <div class="symbol-icon">
+                            ✚
+                        </div>
+
+                        <strong>
+                            Cross
+                        </strong>
+
+                        <span>
+                            Traditionally interpreted differently
+                            depending on the line and mount.
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- MOUNTS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Mounts of the Palm
+                </h2>
+
+                <p class="section-sub">
+                    Mounts are raised areas of the palm traditionally
+                    associated with planetary symbolism.
+                </p>
+
+
+                <div class="mount-grid">
+
+
+                    <div class="mount">
+
+                        <div class="mount-top">
+
+                            <div class="mount-icon">
+                                ☀️
+                            </div>
+
+                            <strong>
+                                Mount of Sun
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally associated with creativity,
+                            confidence and recognition.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mount">
+
+                        <div class="mount-top">
+
+                            <div class="mount-icon">
+                                🌙
+                            </div>
+
+                            <strong>
+                                Mount of Moon
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally associated with imagination,
+                            intuition and sensitivity.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mount">
+
+                        <div class="mount-top">
+
+                            <div class="mount-icon">
+                                ☿
+                            </div>
+
+                            <strong>
+                                Mount of Mercury
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally associated with communication,
+                            wit and practical intelligence.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mount">
+
+                        <div class="mount-top">
+
+                            <div class="mount-icon">
+                                ♀
+                            </div>
+
+                            <strong>
+                                Mount of Venus
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally associated with affection,
+                            vitality and social warmth.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mount">
+
+                        <div class="mount-top">
+
+                            <div class="mount-icon">
+                                ♂
+                            </div>
+
+                            <strong>
+                                Mount of Mars
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally associated with courage,
+                            resilience and assertiveness.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mount">
+
+                        <div class="mount-top">
+
+                            <div class="mount-icon">
+                                ♃
+                            </div>
+
+                            <strong>
+                                Mount of Jupiter
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally associated with ambition,
+                            leadership and confidence.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- PERSONAL READING -->
+
+            <div class="section">
+
+                <div class="reading-box">
+
+                    <h3>
+                        Want a Personal Palm Reading? ✋
+                    </h3>
+
+                    <p>
+                        A traditional palm reading can consider multiple
+                        lines, mounts and markings together rather than
+                        interpreting one line in isolation.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to an Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="section">
+
+                <div class="note">
+
+                    <strong>
+                        ℹ️ Important Note
+                    </strong>
+
+                    <p>
+                        Palmistry is a traditional divination practice
+                        and its interpretations are not scientifically
+                        established predictions. A palm line should not
+                        be treated as a guaranteed prediction of health,
+                        lifespan, wealth or future events.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Free Services
+                </h3>
+
+
+                <a
+                    href="free-services.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🆓
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            All Free Services
+                        </strong>
+
+                        <span>
+                            Services home
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="ai-astrologer.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🤖
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            AI Astrologer
+                        </strong>
+
+                        <span>
+                            AI astrology chat
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="daily-remedies.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Daily Remedies
+                        </strong>
+
+                        <span>
+                            Traditional remedies
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="dream-meaning.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Dream Meaning
+                        </strong>
+
+                        <span>
+                            Dream interpretation
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="mantra.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Mantra
+                        </strong>
+
+                        <span>
+                            Mantra library
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="numerology.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🔢
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Numerology
+                        </strong>
+
+                        <span>
+                            Number guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="palm-reading.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        ✋
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Palm Reading
+                        </strong>
+
+                        <span>
+                            Palmistry guide
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="tarot-reading.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🃏
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Tarot Reading
+                        </strong>
+
+                        <span>
+                            Tarot guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Personal Guidance
+                    </strong>
+
+                    <p>
+                        Connect with an astrologer for a personalized
+                        discussion.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Astrology, Kundli, Panchang, numerology and personalized
+            guidance in one connected platform.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Free Services
+        </h4>
+
+        <a href="free-services.html">
+            All Services
+        </a>
+
+        <a href="ai-astrologer.html">
+            AI Astrologer
+        </a>
+
+        <a href="daily-remedies.html">
+            Daily Remedies
+        </a>
+
+        <a href="dream-meaning.html">
+            Dream Meaning
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Spiritual
+        </h4>
+
+        <a href="mantra.html">
+            Mantra
+        </a>
+
+        <a href="daily-remedies.html">
+            Remedies
+        </a>
+
+        <a href="palm-reading.html">
+            Palm Reading
+        </a>
+
+        <a href="tarot-reading.html">
+            Tarot Reading
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Astrology
+        </h4>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>
+            Support
+        </h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+        <a href="../profile.html">
+            My Profile
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(
+    !wallet &&
+    wallet !== 0
+){
+
+    wallet = 500;
+
+}
+
+document
+    .getElementById("wallet")
+    .innerText =
+        wallet.toLocaleString(
+            "en-IN"
+        );
+
+
+/* PALM LINE INFORMATION */
+
+const palmInfo = {
+
+    "Heart Line":
+        "Traditionally associated with emotional expression, affection, relationships and the way a person is believed to process matters of the heart.",
+
+    "Head Line":
+        "Traditionally associated with thinking style, reasoning, learning, communication and intellectual tendencies.",
+
+    "Life Line":
+        "Traditionally interpreted in relation to vitality, major transitions and personal development. It is not considered a literal measurement of lifespan.",
+
+    "Fate Line":
+        "Traditionally associated with career direction, responsibilities, life circumstances and perceived sense of purpose.",
+
+    "Sun Line":
+        "Traditionally associated with creativity, recognition, achievement and public visibility.",
+
+    "Mercury Line":
+        "Traditionally associated with communication, business ability and practical intelligence. Traditional interpretations vary considerably."
+};
+
+
+/* SHOW LINE */
+
+function showInfo(
+    line
+){
+
+    document
+        .getElementById("infoTitle")
+        .innerText =
+            line;
+
+
+    document
+        .getElementById("infoText")
+        .innerText =
+            palmInfo[line];
+
+
+    document
+        .getElementById("infoBox")
+        .style
+        .display =
+            "block";
+
+
+    document
+        .getElementById("infoBox")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+}
+
+
+/* SAVE VISIT */
+
+localStorage.setItem(
+    "awt_palm_last_visit",
+    new Date().toISOString()
+);
+
+</script>
+
+</body>
+</html>
