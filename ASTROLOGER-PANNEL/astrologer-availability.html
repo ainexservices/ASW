@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Availability | Astrologer Panel | Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --purple:#4d2764;
+    --purple-light:#f7f2fb;
+    --green:#249847;
+    --green-light:#eef9f1;
+    --gold:#c99527;
+    --border:#e3e3e3;
+    --muted:#888;
+    --bg:#f5f5f7;
+    --dark:#171717;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.app{
+    min-height:100vh;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:235px;
+    background:#fff;
+    border-right:1px solid var(--border);
+    z-index:50;
+}
+
+.brand{
+    height:72px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border-bottom:1px solid #eee;
+}
+
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--red);
+    color:#fff;
+    font-size:19px;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.brand-name span{
+    color:var(--red);
+}
+
+.label{
+    padding:18px 20px 8px;
+    color:#aaa;
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:.8px;
+}
+
+.nav{
+    padding:0 10px;
+}
+
+.nav-item{
+    width:100%;
+    min-height:40px;
+    padding:0 11px;
+    margin-bottom:3px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:0;
+    border-radius:7px;
+    background:transparent;
+    color:#666;
+    font-size:8px;
+    font-weight:600;
+    text-align:left;
+}
+
+.nav-item:hover{
+    background:#f7f7f7;
+    color:var(--purple);
+}
+
+.nav-item.active{
+    background:var(--purple-light);
+    color:var(--purple);
+}
+
+.icon{
+    width:23px;
+    text-align:center;
+    font-size:13px;
+}
+
+.bottom{
+    margin:18px 10px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+}
+
+.logout{
+    color:#b51b21;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    width:calc(100% - 235px);
+    margin-left:235px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:72px;
+    padding:0 27px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+}
+
+.mobile-menu{
+    display:none;
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    background:#fff;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.bell{
+    width:35px;
+    height:35px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+.avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--purple-light);
+    color:var(--purple);
+    font-size:9px;
+    font-weight:700;
+}
+
+.top-name{
+    padding-left:10px;
+    border-left:1px solid #eee;
+}
+
+.top-name strong{
+    display:block;
+    font-size:7px;
+}
+
+.top-name span{
+    display:block;
+    margin-top:2px;
+    color:#999;
+    font-size:6px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:25px 27px 50px;
+    max-width:1100px;
+}
+
+.page-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:15px;
+}
+
+.page-title h1{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.page-title p{
+    margin-top:5px;
+    color:#888;
+    font-size:7px;
+}
+
+.status-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:12px 14px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:9px;
+}
+
+.status-info strong{
+    display:block;
+    font-size:8px;
+}
+
+.status-info span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.toggle{
+    width:48px;
+    height:26px;
+    padding:3px;
+    border:0;
+    border-radius:20px;
+    background:#ccc;
+}
+
+.toggle span{
+    display:block;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+}
+
+.toggle.online{
+    background:var(--green);
+}
+
+.toggle.online span{
+    transform:translateX(22px);
+}
+
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+    margin-top:18px;
+    padding:13px 15px;
+    display:flex;
+    gap:10px;
+    border:1px solid #d9c9e1;
+    border-radius:9px;
+    background:var(--purple-light);
+    color:#634b6d;
+}
+
+.notice-icon{
+    font-size:16px;
+}
+
+.notice strong{
+    display:block;
+    font-size:8px;
+}
+
+.notice p{
+    margin-top:3px;
+    font-size:6px;
+    line-height:1.6;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+    margin-top:16px;
+    display:grid;
+    grid-template-columns:1.4fr .8fr;
+    gap:15px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.card-header{
+    padding:16px;
+    border-bottom:1px solid #eee;
+}
+
+.card-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+}
+
+.card-header p{
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.card-body{
+    padding:16px;
+}
+
+
+/* =========================
+   DAYS
+========================= */
+
+.day-row{
+    display:grid;
+    grid-template-columns:100px 1fr auto;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.day-row:last-child{
+    border-bottom:0;
+}
+
+.day-name{
+    font-size:8px;
+    font-weight:700;
+}
+
+.day-sub{
+    margin-top:3px;
+    color:#aaa;
+    font-size:5px;
+}
+
+.day-toggle{
+    width:40px;
+    height:22px;
+    padding:2px;
+    border:0;
+    border-radius:20px;
+    background:#ccc;
+}
+
+.day-toggle span{
+    display:block;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+}
+
+.day-toggle.active{
+    background:var(--green);
+}
+
+.day-toggle.active span{
+    transform:translateX(18px);
+}
+
+.time-range{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.time{
+    height:34px;
+    padding:0 7px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    font-size:7px;
+    outline:none;
+}
+
+.time:focus{
+    border-color:var(--purple);
+}
+
+.to{
+    color:#aaa;
+    font-size:6px;
+}
+
+
+/* =========================
+   SERVICE
+========================= */
+
+.service{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid #eee;
+}
+
+.service:last-child{
+    border-bottom:0;
+}
+
+.service-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.service-icon{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    display:grid;
+    place-items:center;
+    background:var(--purple-light);
+    font-size:15px;
+}
+
+.service-left strong{
+    display:block;
+    font-size:8px;
+}
+
+.service-left span{
+    display:block;
+    margin-top:3px;
+    color:#999;
+    font-size:6px;
+}
+
+.service-toggle{
+    width:42px;
+    height:23px;
+    padding:2px;
+    border:0;
+    border-radius:20px;
+    background:#ccc;
+}
+
+.service-toggle span{
+    display:block;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+}
+
+.service-toggle.active{
+    background:var(--green);
+}
+
+.service-toggle.active span{
+    transform:translateX(19px);
+}
+
+
+/* =========================
+   BREAK
+========================= */
+
+.break-box{
+    padding:13px;
+    border:1px solid #eee;
+    border-radius:8px;
+    background:#fafafa;
+}
+
+.break-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:9px;
+}
+
+.break-row:last-child{
+    margin-bottom:0;
+}
+
+.break-row label{
+    margin:0;
+    font-size:7px;
+    font-weight:600;
+}
+
+.break-row input{
+    height:34px;
+    width:95px;
+    padding:0 7px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    font-size:7px;
+    outline:none;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary{
+    display:grid;
+    gap:0;
+}
+
+.summary-row{
+    padding:11px 0;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    border-bottom:1px solid #eee;
+}
+
+.summary-row:last-child{
+    border-bottom:0;
+}
+
+.summary-row span{
+    color:#999;
+    font-size:6px;
+}
+
+.summary-row strong{
+    font-size:7px;
+    text-align:right;
+}
+
+.green{
+    color:var(--green);
+}
+
+
+/* =========================
+   ACTION
+========================= */
+
+.save-area{
+    margin-top:16px;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+.save-area p{
+    color:#999;
+    font-size:6px;
+    line-height:1.6;
+}
+
+.save-btn{
+    min-width:190px;
+    height:42px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:7px;
+    font-weight:700;
+}
+
+.save-btn:disabled{
+    opacity:.65;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:11px;
+    border-radius:7px;
+    font-size:7px;
+}
+
+.message.success{
+    display:block;
+    background:#eef9f1;
+    border:1px solid #cce7d3;
+    color:#23753b;
+}
+
+.message.error{
+    display:block;
+    background:#fff0f0;
+    border:1px solid #efc9cc;
+    color:#a71c22;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:25px;
+    color:#aaa;
+    text-align:center;
+    font-size:6px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .content{
+        padding:20px 15px 40px;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .page-title{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .status-card{
+        justify-content:space-between;
+    }
+
+    .day-row{
+        grid-template-columns:1fr auto;
+    }
+
+    .time-range{
+        grid-column:1 / -1;
+    }
+
+    .save-area{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .save-btn{
+        width:100%;
+    }
+
+}
+
+@media(max-width:430px){
+
+    .top-name{
+        display:none;
+    }
+
+    .time-range{
+        width:100%;
+    }
+
+    .time{
+        flex:1;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside id="sidebar" class="sidebar">
+
+    <a href="../index.html" class="brand">
+
+        <div class="brand-icon">ॐ</div>
+
+        <div class="brand-name">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <div class="label">
+        ASTROLOGER PANEL
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="astrologer-dashboard.html" class="nav-item">
+            <span class="icon">🏠</span>
+            Dashboard
+        </a>
+
+        <a href="astrologer-availability.html" class="nav-item active">
+            <span class="icon">🟢</span>
+            Availability
+        </a>
+
+        <a href="astrologer-chat.html" class="nav-item">
+            <span class="icon">💬</span>
+            Chat
+        </a>
+
+        <a href="astrologer-call.html" class="nav-item">
+            <span class="icon">📞</span>
+            Audio / Video
+        </a>
+
+        <a href="astrologer-earnings.html" class="nav-item">
+            <span class="icon">💰</span>
+            Earnings
+        </a>
+
+        <a href="astrologer-reviews.html" class="nav-item">
+            <span class="icon">⭐</span>
+            Reviews
+        </a>
+
+        <a href="astrologer-profile-edit.html" class="nav-item">
+            <span class="icon">👤</span>
+            My Profile
+        </a>
+
+        <a href="astrologer-withdraw.html" class="nav-item">
+            <span class="icon">🏦</span>
+            Withdraw
+        </a>
+
+    </nav>
+
+
+    <div class="bottom">
+
+        <a href="../SUPPORT/help.html" class="nav-item">
+            <span class="icon">❓</span>
+            Help & Support
+        </a>
+
+        <button
+            class="nav-item logout"
+            onclick="logout()">
+
+            <span class="icon">↪</span>
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+<header class="topbar">
+
+    <button
+        class="mobile-menu"
+        onclick="toggleSidebar()">
+
+        ☰
+
+    </button>
+
+
+    <div></div>
+
+
+    <div class="top-right">
+
+        <button
+            class="bell"
+            onclick="showMessage('No new notifications.','success')">
+
+            🔔
+
+        </button>
+
+
+        <div
+            id="avatar"
+            class="avatar">
+
+            A
+
+        </div>
+
+
+        <div class="top-name">
+
+            <strong id="topName">
+                Astro Partner
+            </strong>
+
+            <span>
+                Astrologer
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<section class="page-title">
+
+    <div>
+
+        <h1>
+            Availability
+        </h1>
+
+        <p>
+            Set when customers can connect with you for consultations.
+        </p>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-info">
+
+            <strong id="statusText">
+                You're Offline
+            </strong>
+
+            <span id="statusSubtext">
+                Customers cannot request consultations
+            </span>
+
+        </div>
+
+
+        <button
+            id="mainToggle"
+            class="toggle"
+            onclick="toggleOnline()">
+
+            <span></span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- NOTICE -->
+
+<div class="notice">
+
+    <div class="notice-icon">
+        💡
+    </div>
+
+    <div>
+
+        <strong>
+            How availability works
+        </strong>
+
+        <p>
+            When you are online and within your working hours,
+            customers can send consultation requests for the
+            services you have enabled.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div
+    id="message"
+    class="message">
+</div>
+
+
+<!-- GRID -->
+
+<div class="grid">
+
+
+<!-- LEFT -->
+
+<div>
+
+
+<!-- WEEKLY HOURS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Weekly Working Hours
+        </h2>
+
+        <p>
+            Set your regular consultation schedule.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <!-- MONDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Monday
+                </div>
+
+                <div class="day-sub">
+                    Working day
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle active"
+                data-day="Monday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00">
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00">
+
+            </div>
+
+        </div>
+
+
+        <!-- TUESDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Tuesday
+                </div>
+
+                <div class="day-sub">
+                    Working day
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle active"
+                data-day="Tuesday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00">
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00">
+
+            </div>
+
+        </div>
+
+
+        <!-- WEDNESDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Wednesday
+                </div>
+
+                <div class="day-sub">
+                    Working day
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle active"
+                data-day="Wednesday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00">
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00">
+
+            </div>
+
+        </div>
+
+
+        <!-- THURSDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Thursday
+                </div>
+
+                <div class="day-sub">
+                    Working day
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle active"
+                data-day="Thursday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00">
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00">
+
+            </div>
+
+        </div>
+
+
+        <!-- FRIDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Friday
+                </div>
+
+                <div class="day-sub">
+                    Working day
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle active"
+                data-day="Friday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00">
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00">
+
+            </div>
+
+        </div>
+
+
+        <!-- SATURDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Saturday
+                </div>
+
+                <div class="day-sub">
+                    Working day
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle active"
+                data-day="Saturday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00">
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00">
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00">
+
+            </div>
+
+        </div>
+
+
+        <!-- SUNDAY -->
+
+        <div class="day-row">
+
+            <div>
+
+                <div class="day-name">
+                    Sunday
+                </div>
+
+                <div class="day-sub">
+                    Weekly off
+                </div>
+
+            </div>
+
+
+            <button
+                class="day-toggle"
+                data-day="Sunday"
+                onclick="toggleDay(this)">
+
+                <span></span>
+
+            </button>
+
+
+            <div class="time-range">
+
+                <input
+                    class="time"
+                    type="time"
+                    value="10:00"
+                    disabled>
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="13:00"
+                    disabled>
+
+                <span class="to">
+                    /
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="17:00"
+                    disabled>
+
+                <span class="to">
+                    to
+                </span>
+
+                <input
+                    class="time"
+                    type="time"
+                    value="21:00"
+                    disabled>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- BREAKS -->
+
+<section class="card" style="margin-top:15px;">
+
+    <div class="card-header">
+
+        <h2>
+            Daily Break
+        </h2>
+
+        <p>
+            Prevent new requests during your break period.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="break-box">
+
+            <div class="break-row">
+
+                <label>
+                    Break Start
+                </label>
+
+                <input
+                    type="time"
+                    id="breakStart"
+                    value="13:00">
+
+            </div>
+
+
+            <div class="break-row">
+
+                <label>
+                    Break End
+                </label>
+
+                <input
+                    type="time"
+                    id="breakEnd"
+                    value="17:00">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- RIGHT -->
+
+<aside>
+
+
+<!-- SERVICES -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Consultation Services
+        </h2>
+
+        <p>
+            Choose which services you accept.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="service">
+
+            <div class="service-left">
+
+                <div class="service-icon">
+                    💬
+                </div>
+
+                <div>
+
+                    <strong>
+                        Live Chat
+                    </strong>
+
+                    <span>
+                        ₹<span id="chatRate">20</span>/minute
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="service-toggle active"
+                data-service="chat"
+                onclick="toggleService(this)">
+
+                <span></span>
+
+            </button>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-left">
+
+                <div class="service-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <strong>
+                        Audio Call
+                    </strong>
+
+                    <span>
+                        ₹<span id="callRate">30</span>/minute
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="service-toggle active"
+                data-service="call"
+                onclick="toggleService(this)">
+
+                <span></span>
+
+            </button>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-left">
+
+                <div class="service-icon">
+                    🎥
+                </div>
+
+                <div>
+
+                    <strong>
+                        Video Call
+                    </strong>
+
+                    <span>
+                        ₹<span id="videoRate">40</span>/minute
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="service-toggle active"
+                data-service="video"
+                onclick="toggleService(this)">
+
+                <span></span>
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section class="card" style="margin-top:15px;">
+
+    <div class="card-header">
+
+        <h2>
+            Availability Summary
+        </h2>
+
+    </div>
+
+
+    <div class="card-body summary">
+
+
+        <div class="summary-row">
+
+            <span>
+                Weekly Working Days
+            </span>
+
+            <strong id="workingDays">
+                6 Days
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Daily Hours
+            </span>
+
+            <strong>
+                7 Hours
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Services Enabled
+            </span>
+
+            <strong
+                id="enabledServices">
+
+                3
+
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Current Status
+            </span>
+
+            <strong
+                id="summaryStatus"
+                class="green">
+
+                Offline
+
+            </strong>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- CUSTOMER VISIBILITY -->
+
+<section class="card" style="margin-top:15px;">
+
+    <div class="card-header">
+
+        <h2>
+            Customer Visibility
+        </h2>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <p style="
+            color:#888;
+            font-size:6px;
+            line-height:1.7;
+        ">
+
+            Your profile can receive requests only when your
+            account is approved, the selected service is enabled,
+            and you are online within your availability schedule.
+
+        </p>
+
+
+        <div style="
+            margin-top:11px;
+            padding:9px;
+            border-radius:7px;
+            background:var(--green-light);
+            color:#24743a;
+            font-size:6px;
+            font-weight:700;
+        ">
+
+            ✓ Availability settings are ready
+
+        </div>
+
+    </div>
+
+</section>
+
+</aside>
+
+
+</div>
+
+
+<!-- SAVE -->
+
+<div class="save-area">
+
+    <p>
+        Save your schedule after making changes.
+        Production version will sync availability with the backend
+        so customer-side astrologer status updates in real time.
+    </p>
+
+
+    <button
+        id="saveBtn"
+        class="save-btn"
+        onclick="saveAvailability()">
+
+        SAVE AVAILABILITY
+
+    </button>
+
+</div>
+
+
+<div class="footer">
+
+    © 2026 Astro With Talk · Astrologer Partner Portal
+
+</div>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   PROFILE
+========================================= */
+
+let profile =
+    JSON.parse(
+        localStorage.getItem(
+            "awt_astrologer"
+        ) || "null"
+    );
+
+
+if(!profile){
+
+    profile = {
+
+        name:"Astro Partner",
+
+        status:"offline",
+
+        chatRate:20,
+
+        callRate:30,
+
+        videoRate:40
+
+    };
+
+}
+
+
+document
+    .getElementById("topName")
+    .innerText =
+        profile.name ||
+        "Astro Partner";
+
+
+document
+    .getElementById("avatar")
+    .innerText =
+        initials(
+            profile.name ||
+            "Astro Partner"
+        );
+
+
+document
+    .getElementById("chatRate")
+    .innerText =
+        profile.chatRate ||
+        20;
+
+
+document
+    .getElementById("callRate")
+    .innerText =
+        profile.callRate ||
+        30;
+
+
+document
+    .getElementById("videoRate")
+    .innerText =
+        profile.videoRate ||
+        40;
+
+
+/* =========================================
+   ONLINE STATUS
+========================================= */
+
+let isOnline =
+    profile.status === "online";
+
+
+updateOnline();
+
+
+function toggleOnline(){
+
+    isOnline =
+        !isOnline;
+
+
+    profile.status =
+        isOnline
+        ? "online"
+        : "offline";
+
+
+    localStorage.setItem(
+        "awt_astrologer",
+        JSON.stringify(
+            profile
+        )
+    );
+
+
+    updateOnline();
+
+
+    showMessage(
+        isOnline
+        ? "You are now ONLINE."
+        : "You are now OFFLINE.",
+        "success"
+    );
+
+
+    /*
+       PRODUCTION:
+       PATCH /api/astrologers/me/status
+    */
+
+}
+
+
+function updateOnline(){
+
+    const toggle =
+        document
+        .getElementById(
+            "mainToggle"
+        );
+
+
+    const text =
+        document
+        .getElementById(
+            "statusText"
+        );
+
+
+    const subtext =
+        document
+        .getElementById(
+            "statusSubtext"
+        );
+
+
+    const summary =
+        document
+        .getElementById(
+            "summaryStatus"
+        );
+
+
+    if(isOnline){
+
+        toggle.classList.add(
+            "online"
+        );
+
+        text.innerText =
+            "You're Online";
+
+        subtext.innerText =
+            "Customers can request consultations";
+
+        summary.innerText =
+            "Online";
+
+        summary.className =
+            "green";
+
+    }else{
+
+        toggle.classList.remove(
+            "online"
+        );
+
+        text.innerText =
+            "You're Offline";
+
+        subtext.innerText =
+            "Customers cannot request consultations";
+
+        summary.innerText =
+            "Offline";
+
+        summary.className =
+            "";
+
+    }
+
+}
+
+
+/* =========================================
+   DAY TOGGLE
+========================================= */
+
+function toggleDay(
+    button
+){
+
+    button.classList.toggle(
+        "active"
+    );
+
+
+    const row =
+        button.closest(
+            ".day-row"
+        );
+
+
+    const inputs =
+        row.querySelectorAll(
+            ".time"
+        );
+
+
+    const active =
+        button.classList.contains(
+            "active"
+        );
+
+
+    inputs.forEach(
+        input => {
+
+            input.disabled =
+                !active;
+
+        }
+    );
+
+
+    updateWorkingDays();
+
+}
+
+
+function updateWorkingDays(){
+
+    const activeDays =
+        document.querySelectorAll(
+            ".day-toggle.active"
+        ).length;
+
+
+    document
+        .getElementById(
+            "workingDays"
+        )
+        .innerText =
+            activeDays +
+            (
+                activeDays === 1
+                ? " Day"
+                : " Days"
+            );
+
+}
+
+
+/* =========================================
+   SERVICE TOGGLE
+========================================= */
+
+function toggleService(
+    button
+){
+
+    button.classList.toggle(
+        "active"
+    );
+
+
+    updateServices();
+
+}
+
+
+function updateServices(){
+
+    const count =
+        document.querySelectorAll(
+            ".service-toggle.active"
+        ).length;
+
+
+    document
+        .getElementById(
+            "enabledServices"
+        )
+        .innerText =
+            count;
+
+}
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+function saveAvailability(){
+
+    const days = [];
+
+
+    document
+        .querySelectorAll(
+            ".day-row"
+        )
+        .forEach(
+            row => {
+
+                const toggle =
+                    row.querySelector(
+                        ".day-toggle"
+                    );
+
+
+                const times =
+                    Array.from(
+                        row.querySelectorAll(
+                            ".time"
+                        )
+                    )
+                    .map(
+                        input =>
+                            input.value
+                    );
+
+
+                days.push({
+
+                    day:
+                        toggle.dataset.day,
+
+                    enabled:
+                        toggle.classList.contains(
+                            "active"
+                        ),
+
+                    times:
+                        times
+
+                });
+
+            }
+        );
+
+
+    const services = {
+
+        chat:
+            document
+            .querySelector(
+                '[data-service="chat"]'
+            )
+            .classList
+            .contains("active"),
+
+        call:
+            document
+            .querySelector(
+                '[data-service="call"]'
+            )
+            .classList
+            .contains("active"),
+
+        video:
+            document
+            .querySelector(
+                '[data-service="video"]'
+            )
+            .classList
+            .contains("active")
+
+    };
+
+
+    const breakStart =
+        document
+        .getElementById(
+            "breakStart"
+        )
+        .value;
+
+
+    const breakEnd =
+        document
+        .getElementById(
+            "breakEnd"
+        )
+        .value;
+
+
+    if(
+        breakStart &&
+        breakEnd &&
+        breakStart >= breakEnd
+    ){
+
+        showMessage(
+            "Break end time must be later than break start time.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const availability = {
+
+        online:
+            isOnline,
+
+        days:
+            days,
+
+        break:
+            {
+
+                start:
+                    breakStart,
+
+                end:
+                    breakEnd
+
+            },
+
+        services:
+            services,
+
+        updatedAt:
+            new Date()
+            .toISOString()
+
+    };
+
+
+    profile.availability =
+        availability;
+
+
+    localStorage.setItem(
+        "awt_astrologer",
+        JSON.stringify(
+            profile
+        )
+    );
+
+
+    const saveBtn =
+        document
+        .getElementById(
+            "saveBtn"
+        );
+
+
+    saveBtn.disabled =
+        true;
+
+    saveBtn.innerText =
+        "SAVING...";
+
+
+    setTimeout(
+        function(){
+
+            saveBtn.disabled =
+                false;
+
+            saveBtn.innerText =
+                "SAVE AVAILABILITY";
+
+
+            showMessage(
+                "Availability settings saved successfully.",
+                "success"
+            );
+
+
+        },
+        500
+    );
+
+
+    /*
+       PRODUCTION:
+
+       PUT /api/astrologers/me/availability
+
+       Backend stores:
+       - online status
+       - weekly schedule
+       - breaks
+       - service availability
+
+       Customer side reads the same backend.
+    */
+
+}
+
+
+/* =========================================
+   INITIALISE
+========================================= */
+
+updateWorkingDays();
+updateServices();
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "awt_astrologer_logged_in"
+    );
+
+
+    location.href =
+        "astrologer-login.html";
+
+}
+
+
+/* =========================================
+   INITIALS
+========================================= */
+
+function initials(
+    name
+){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            word =>
+                word[0]
+                .toUpperCase()
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+    text,
+    type
+){
+
+    const message =
+        document
+        .getElementById(
+            "message"
+        );
+
+
+    message.className =
+        "message " +
+        type;
+
+
+    message.innerText =
+        text;
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+</script>
+
+</body>
+</html>
