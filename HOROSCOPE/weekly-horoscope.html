@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Weekly Horoscope - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --muted:#999;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-light:#fff8e5;
+    --green:#15945a;
+    --blue:#2878b8;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:11px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* ================= TOP ================= */
+
+.page-top{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.page-top h1{
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+}
+
+.page-top p{
+    color:#888;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.sign-select{
+    height:38px;
+    min-width:175px;
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:8px;
+    padding:0 11px;
+    color:#555;
+    font-size:9px;
+}
+
+
+/* ================= LAYOUT ================= */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+}
+
+
+/* ================= MAIN CARD ================= */
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.sign-header{
+    background:
+        radial-gradient(circle at 90% 15%,rgba(255,255,255,.18),transparent 25%),
+        linear-gradient(125deg,#b51218,#d71920);
+    color:#fff;
+    padding:22px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.symbol{
+    width:68px;
+    height:68px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.28);
+    display:grid;
+    place-items:center;
+    font-size:34px;
+}
+
+.sign-info h2{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+}
+
+.sign-info p{
+    color:rgba(255,255,255,.78);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.week-label{
+    display:inline-block;
+    margin-top:7px;
+    padding:4px 7px;
+    border-radius:20px;
+    background:rgba(255,255,255,.13);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* ================= SCORES ================= */
+
+.scores{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid #eee;
+}
+
+.score{
+    padding:13px;
+    text-align:center;
+    border-right:1px solid #eee;
+}
+
+.score:last-child{
+    border-right:0;
+}
+
+.score small{
+    display:block;
+    color:#aaa;
+    font-size:7px;
+}
+
+.score strong{
+    display:block;
+    font-size:17px;
+    margin-top:4px;
+}
+
+.stars{
+    color:var(--gold);
+    font-size:8px;
+    margin-top:2px;
+}
+
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:21px;
+}
+
+.content-title{
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.overview{
+    color:#666;
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+
+/* ================= DAYS ================= */
+
+.days-title{
+    font-size:10px;
+    font-weight:700;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+.days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:7px;
+}
+
+.day{
+    border:1px solid #eee;
+    border-radius:9px;
+    padding:10px 5px;
+    text-align:center;
+}
+
+.day.active{
+    background:var(--light-red);
+    border-color:#efb4b4;
+}
+
+.day-name{
+    color:#999;
+    font-size:7px;
+}
+
+.day-date{
+    font-size:10px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.day-icon{
+    font-size:17px;
+    margin-top:7px;
+}
+
+.day-score{
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+
+/* ================= CATEGORY ================= */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:18px;
+}
+
+.category{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+}
+
+.category-head{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.category-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:14px;
+}
+
+.category h4{
+    font-size:9px;
+}
+
+.category p{
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:7px;
+}
+
+
+/* ================= WEEK HIGHLIGHTS ================= */
+
+.highlights{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:17px;
+}
+
+.highlight{
+    border-radius:11px;
+    padding:13px;
+}
+
+.highlight.best{
+    background:#edfaf3;
+    border:1px solid #ccebdc;
+}
+
+.highlight.challenge{
+    background:#fff5f0;
+    border:1px solid #f0d7c9;
+}
+
+.highlight-label{
+    font-size:8px;
+    font-weight:700;
+}
+
+.highlight strong{
+    display:block;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.highlight p{
+    color:#777;
+    font-size:8px;
+    margin-top:3px;
+}
+
+
+/* ================= LUCK ================= */
+
+.luck{
+    margin-top:17px;
+    background:#fffaf0;
+    border:1px solid #eee0b8;
+    border-radius:11px;
+    padding:14px;
+}
+
+.luck-title{
+    font-size:10px;
+    font-weight:700;
+}
+
+.luck-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:10px;
+}
+
+.luck-item{
+    background:#fff;
+    border:1px solid #eee3c8;
+    border-radius:8px;
+    padding:10px;
+}
+
+.luck-item small{
+    display:block;
+    color:#aaa;
+    font-size:7px;
+}
+
+.luck-item strong{
+    display:block;
+    font-size:9px;
+    margin-top:3px;
+}
+
+
+/* ================= CTA ================= */
+
+.cta{
+    margin-top:17px;
+    padding:15px;
+    background:var(--light-red);
+    border:1px solid #f0caca;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.cta h3{
+    font-size:10px;
+}
+
+.cta p{
+    color:#888;
+    font-size:8px;
+    margin-top:3px;
+}
+
+.cta button{
+    flex:none;
+    height:36px;
+    padding:0 12px;
+    border:0;
+    background:var(--red);
+    color:#fff;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-link-content{
+    flex:1;
+}
+
+.side-link strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-link span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+    font-size:10px;
+}
+
+.zodiac-mini{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.mini{
+    border:1px solid #eee;
+    border-radius:8px;
+    padding:7px 3px;
+    text-align:center;
+    font-size:7px;
+}
+
+.mini:hover{
+    color:var(--red);
+    border-color:#efb4b4;
+}
+
+.mini-symbol{
+    display:block;
+    font-size:16px;
+    margin-bottom:3px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .page-top{
+        display:block;
+    }
+
+    .sign-select{
+        width:100%;
+        margin-top:11px;
+    }
+
+    .scores{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .score:nth-child(2){
+        border-right:0;
+    }
+
+    .score:nth-child(3),
+    .score:nth-child(4){
+        border-top:1px solid #eee;
+    }
+
+    .days{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .category-grid,
+    .highlights{
+        grid-template-columns:1fr;
+    }
+
+    .luck-grid{
+        grid-template-columns:1fr 1fr 1fr;
+    }
+
+    .cta{
+        display:block;
+    }
+
+    .cta button{
+        width:100%;
+        margin-top:9px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="horoscope.html" class="active">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+
+            👤
+
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Horoscope / <span>Weekly Horoscope</span>
+    </div>
+
+
+    <div class="page-top">
+
+        <div>
+
+            <h1>
+                Weekly Horoscope
+            </h1>
+
+            <p>
+                Your seven-day astrological forecast and guidance.
+            </p>
+
+        </div>
+
+
+        <select
+            class="sign-select"
+            id="signSelect"
+            onchange="changeSign(this.value)">
+
+            <option value="aries">♈ Aries</option>
+            <option value="taurus">♉ Taurus</option>
+            <option value="gemini">♊ Gemini</option>
+            <option value="cancer">♋ Cancer</option>
+            <option value="leo">♌ Leo</option>
+            <option value="virgo">♍ Virgo</option>
+            <option value="libra">♎ Libra</option>
+            <option value="scorpio">♏ Scorpio</option>
+            <option value="sagittarius">♐ Sagittarius</option>
+            <option value="capricorn">♑ Capricorn</option>
+            <option value="aquarius">♒ Aquarius</option>
+            <option value="pisces">♓ Pisces</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- ================= MAIN ================= -->
+
+        <section class="main-card">
+
+
+            <div class="sign-header">
+
+                <div
+                    class="symbol"
+                    id="symbol">
+                    ♈
+                </div>
+
+                <div class="sign-info">
+
+                    <h2 id="name">
+                        Aries
+                    </h2>
+
+                    <p id="date">
+                        March 21 – April 19
+                    </p>
+
+                    <span class="week-label">
+                        📅 This Week
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORES -->
+
+            <div class="scores">
+
+                <div class="score">
+
+                    <small>OVERALL</small>
+
+                    <strong id="overall">
+                        8.6/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+
+                <div class="score">
+
+                    <small>LOVE</small>
+
+                    <strong id="loveScore">
+                        8/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+
+                <div class="score">
+
+                    <small>CAREER</small>
+
+                    <strong id="careerScore">
+                        9/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+
+                <div class="score">
+
+                    <small>FINANCE</small>
+
+                    <strong id="financeScore">
+                        8/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="content">
+
+
+                <h3 class="content-title">
+                    Your Week Ahead
+                </h3>
+
+
+                <p
+                    class="overview"
+                    id="overview">
+
+                    This week brings a strong combination of initiative and
+                    thoughtful planning. You may find yourself taking the lead
+                    in an important matter. Keep communication clear and give
+                    yourself enough time before making major commitments.
+
+                </p>
+
+
+                <!-- DAYS -->
+
+                <div class="days-title">
+                    7-Day Energy Forecast
+                </div>
+
+
+                <div class="days">
+
+                    <div class="day active">
+
+                        <div class="day-name">
+                            MON
+                        </div>
+
+                        <div class="day-date">
+                            24
+                        </div>
+
+                        <div class="day-icon">
+                            ☀️
+                        </div>
+
+                        <div class="day-score">
+                            8.5
+                        </div>
+
+                    </div>
+
+
+                    <div class="day">
+
+                        <div class="day-name">
+                            TUE
+                        </div>
+
+                        <div class="day-date">
+                            25
+                        </div>
+
+                        <div class="day-icon">
+                            ✨
+                        </div>
+
+                        <div class="day-score">
+                            9.0
+                        </div>
+
+                    </div>
+
+
+                    <div class="day">
+
+                        <div class="day-name">
+                            WED
+                        </div>
+
+                        <div class="day-date">
+                            26
+                        </div>
+
+                        <div class="day-icon">
+                            🌤️
+                        </div>
+
+                        <div class="day-score">
+                            8.0
+                        </div>
+
+                    </div>
+
+
+                    <div class="day">
+
+                        <div class="day-name">
+                            THU
+                        </div>
+
+                        <div class="day-date">
+                            27
+                        </div>
+
+                        <div class="day-icon">
+                            🌟
+                        </div>
+
+                        <div class="day-score">
+                            9.2
+                        </div>
+
+                    </div>
+
+
+                    <div class="day">
+
+                        <div class="day-name">
+                            FRI
+                        </div>
+
+                        <div class="day-date">
+                            28
+                        </div>
+
+                        <div class="day-icon">
+                            💫
+                        </div>
+
+                        <div class="day-score">
+                            8.8
+                        </div>
+
+                    </div>
+
+
+                    <div class="day">
+
+                        <div class="day-name">
+                            SAT
+                        </div>
+
+                        <div class="day-date">
+                            29
+                        </div>
+
+                        <div class="day-icon">
+                            🌙
+                        </div>
+
+                        <div class="day-score">
+                            7.8
+                        </div>
+
+                    </div>
+
+
+                    <div class="day">
+
+                        <div class="day-name">
+                            SUN
+                        </div>
+
+                        <div class="day-date">
+                            30
+                        </div>
+
+                        <div class="day-icon">
+                            ☀️
+                        </div>
+
+                        <div class="day-score">
+                            8.7
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="category-grid">
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                ❤️
+                            </div>
+
+                            <h4>
+                                Love & Relationship
+                            </h4>
+
+                        </div>
+
+                        <p id="loveText">
+
+                            This week encourages honest conversations.
+                            Couples can strengthen their bond by sharing
+                            expectations openly. Singles may notice a
+                            promising connection.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                💼
+                            </div>
+
+                            <h4>
+                                Career
+                            </h4>
+
+                        </div>
+
+                        <p id="careerText">
+
+                            Professional momentum increases when you focus
+                            on priorities. A leadership opportunity may
+                            develop through consistent effort.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                💰
+                            </div>
+
+                            <h4>
+                                Finance
+                            </h4>
+
+                        </div>
+
+                        <p id="financeText">
+
+                            A practical financial plan will serve you well.
+                            Review expenses and avoid taking unnecessary
+                            financial risks.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                🧘
+                            </div>
+
+                            <h4>
+                                Health & Wellness
+                            </h4>
+
+                        </div>
+
+                        <p id="healthText">
+
+                            Maintain a balanced schedule throughout the week.
+                            Rest is just as important as productivity.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- HIGHLIGHTS -->
+
+                <div class="highlights">
+
+
+                    <div class="highlight best">
+
+                        <div class="highlight-label">
+                            ⭐ BEST DAY
+                        </div>
+
+                        <strong id="bestDay">
+                            Thursday
+                        </strong>
+
+                        <p id="bestText">
+                            Strong energy for important decisions and progress.
+                        </p>
+
+                    </div>
+
+
+                    <div class="highlight challenge">
+
+                        <div class="highlight-label">
+                            ⚠️ CHALLENGING DAY
+                        </div>
+
+                        <strong id="challengeDay">
+                            Saturday
+                        </strong>
+
+                        <p id="challengeText">
+                            Slow down and avoid unnecessary arguments or rushed decisions.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- LUCK -->
+
+                <div class="luck">
+
+                    <div class="luck-title">
+                        ✨ Weekly Lucky Elements
+                    </div>
+
+
+                    <div class="luck-grid">
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY NUMBER
+                            </small>
+
+                            <strong id="luckyNumber">
+                                9
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY COLOR
+                            </small>
+
+                            <strong id="luckyColor">
+                                Red
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY DAY
+                            </small>
+
+                            <strong id="luckyDay">
+                                Thursday
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- CTA -->
+
+                <div class="cta">
+
+                    <div>
+
+                        <h3>
+                            Need guidance specific to your Kundli?
+                        </h3>
+
+                        <p>
+                            Connect with an experienced Astro With Talk astrologer.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Consult an Astrologer →
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Horoscope
+                </h3>
+
+
+                <a
+                    href="daily-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        ☀️
+                    </div>
+
+                    <div class="side-link-content">
+
+                        <strong>
+                            Daily Horoscope
+                        </strong>
+
+                        <span>
+                            Today's guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="weekly-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div class="side-link-content">
+
+                        <strong>
+                            Weekly Horoscope
+                        </strong>
+
+                        <span>
+                            Seven-day forecast
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="monthly-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-link-content">
+
+                        <strong>
+                            Monthly Horoscope
+                        </strong>
+
+                        <span>
+                            Month ahead
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="yearly-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🔭
+                    </div>
+
+                    <div class="side-link-content">
+
+                        <strong>
+                            Yearly Horoscope
+                        </strong>
+
+                        <span>
+                            Year forecast
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <h3>
+                    Zodiac Signs
+                </h3>
+
+
+                <div class="zodiac-mini">
+
+                    <a class="mini" href="aries-horoscope.html">
+                        <span class="mini-symbol">♈</span>Aries
+                    </a>
+
+                    <a class="mini" href="taurus-horoscope.html">
+                        <span class="mini-symbol">♉</span>Taurus
+                    </a>
+
+                    <a class="mini" href="gemini-horoscope.html">
+                        <span class="mini-symbol">♊</span>Gemini
+                    </a>
+
+                    <a class="mini" href="cancer-horoscope.html">
+                        <span class="mini-symbol">♋</span>Cancer
+                    </a>
+
+                    <a class="mini" href="leo-horoscope.html">
+                        <span class="mini-symbol">♌</span>Leo
+                    </a>
+
+                    <a class="mini" href="virgo-horoscope.html">
+                        <span class="mini-symbol">♍</span>Virgo
+                    </a>
+
+                    <a class="mini" href="libra-horoscope.html">
+                        <span class="mini-symbol">♎</span>Libra
+                    </a>
+
+                    <a class="mini" href="scorpio-horoscope.html">
+                        <span class="mini-symbol">♏</span>Scorpio
+                    </a>
+
+                    <a class="mini" href="sagittarius-horoscope.html">
+                        <span class="mini-symbol">♐</span>Sagittarius
+                    </a>
+
+                    <a class="mini" href="capricorn-horoscope.html">
+                        <span class="mini-symbol">♑</span>Capricorn
+                    </a>
+
+                    <a class="mini" href="aquarius-horoscope.html">
+                        <span class="mini-symbol">♒</span>Aquarius
+                    </a>
+
+                    <a class="mini" href="pisces-horoscope.html">
+                        <span class="mini-symbol">♓</span>Pisces
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Horoscope</h4>
+
+        <a href="daily-horoscope.html">Daily</a>
+        <a href="weekly-horoscope.html">Weekly</a>
+        <a href="monthly-horoscope.html">Monthly</a>
+        <a href="yearly-horoscope.html">Yearly</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../astrologers.html">Astrologers</a>
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">Chat</a>
+        <a href="../call.html">Call</a>
+        <a href="../live-astrology.html">Live Astrology</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* ================= DATA ================= */
+
+const weeklyData = {
+
+    aries:{
+        name:"Aries",
+        symbol:"♈",
+        date:"March 21 – April 19",
+        overall:"8.6/10",
+        love:"8/10",
+        career:"9/10",
+        finance:"8/10",
+        overview:"This week brings a strong combination of initiative and thoughtful planning. You may find yourself taking the lead in an important matter. Keep communication clear and give yourself enough time before making major commitments.",
+        loveText:"This week encourages honest conversations. Couples can strengthen their bond by sharing expectations openly. Singles may notice a promising connection.",
+        careerText:"Professional momentum increases when you focus on priorities. A leadership opportunity may develop through consistent effort.",
+        financeText:"A practical financial plan will serve you well. Review expenses and avoid taking unnecessary financial risks.",
+        healthText:"Maintain a balanced schedule throughout the week. Rest is just as important as productivity.",
+        bestDay:"Thursday",
+        bestText:"Strong energy for important decisions and progress.",
+        challengeDay:"Saturday",
+        challengeText:"Slow down and avoid unnecessary arguments or rushed decisions.",
+        number:"9",
+        color:"Red",
+        luckyDay:"Thursday"
+    },
+
+    taurus:{
+        name:"Taurus",
+        symbol:"♉",
+        date:"April 20 – May 20",
+        overall:"8.4/10",
+        love:"8.7/10",
+        career:"8.2/10",
+        finance:"9/10",
+        overview:"Steady progress defines your week. Patience and consistency can help you strengthen both professional and personal foundations.",
+        loveText:"Emotional stability grows through small but meaningful gestures. Avoid holding back important feelings.",
+        careerText:"Your reliability may attract additional responsibility. Focus on completing important tasks before expanding your workload.",
+        financeText:"A favorable week for budgeting, savings and reviewing long-term financial plans.",
+        healthText:"Keep meals, sleep and activity consistent. Avoid letting work disturb your routine.",
+        bestDay:"Friday",
+        bestText:"A favorable day for financial and relationship decisions.",
+        challengeDay:"Wednesday",
+        challengeText:"Avoid stubborn reactions and give others room to explain themselves.",
+        number:"6",
+        color:"Green",
+        luckyDay:"Friday"
+    },
+
+    gemini:{
+        name:"Gemini",
+        symbol:"♊",
+        date:"May 21 – June 20",
+        overall:"8.8/10",
+        love:"9/10",
+        career:"8.8/10",
+        finance:"7.8/10",
+        overview:"Communication becomes your biggest advantage this week. New information may help you rethink a decision and choose a more effective path.",
+        loveText:"Conversations can bring emotional clarity. Stay honest and avoid sending mixed signals.",
+        careerText:"Networking and collaboration are strongly favored. Your ideas can receive useful attention.",
+        financeText:"Keep an eye on unnecessary spending. Review details before committing to a new expense.",
+        healthText:"Your mind may stay busy. Schedule breaks to prevent mental fatigue.",
+        bestDay:"Tuesday",
+        bestText:"Excellent energy for communication, networking and new ideas.",
+        challengeDay:"Sunday",
+        challengeText:"Avoid overthinking personal matters.",
+        number:"5",
+        color:"Yellow",
+        luckyDay:"Tuesday"
+    },
+
+    cancer:{
+        name:"Cancer",
+        symbol:"♋",
+        date:"June 21 – July 22",
+        overall:"8.1/10",
+        love:"9/10",
+        career:"7.8/10",
+        finance:"8.2/10",
+        overview:"This week encourages emotional balance and thoughtful decision-making. Home and family matters may receive extra attention.",
+        loveText:"Emotional openness can deepen close relationships. Do not assume others know what you need.",
+        careerText:"Handle sensitive workplace situations with patience. Avoid reacting immediately to criticism.",
+        financeText:"A conservative approach will keep finances comfortable this week.",
+        healthText:"Rest and emotional recovery deserve priority. Create time for quiet activities.",
+        bestDay:"Monday",
+        bestText:"Good energy for family, relationships and personal planning.",
+        challengeDay:"Thursday",
+        challengeText:"Avoid carrying other people's stress as your own.",
+        number:"2",
+        color:"Silver",
+        luckyDay:"Monday"
+    },
+
+    leo:{
+        name:"Leo",
+        symbol:"♌",
+        date:"July 23 – August 22",
+        overall:"9.1/10",
+        love:"8.8/10",
+        career:"9.5/10",
+        finance:"8.7/10",
+        overview:"Leadership and confidence are highlighted this week. Your ability to take responsibility can create visible progress.",
+        loveText:"Romantic energy is warm and expressive. Be generous with appreciation instead of expecting recognition.",
+        careerText:"A strong week for presentations, leadership and taking ownership of key responsibilities.",
+        financeText:"Financial conditions improve with organization. Keep major purchases planned rather than impulsive.",
+        healthText:"Energy is high, but avoid overextending yourself. Recovery will keep performance strong.",
+        bestDay:"Thursday",
+        bestText:"Excellent energy for career growth and important conversations.",
+        challengeDay:"Saturday",
+        challengeText:"Avoid ego-driven disagreements.",
+        number:"1",
+        color:"Gold",
+        luckyDay:"Thursday"
+    },
+
+    virgo:{
+        name:"Virgo",
+        symbol:"♍",
+        date:"August 23 – September 22",
+        overall:"8.7/10",
+        love:"8.2/10",
+        career:"9.3/10",
+        finance:"8.8/10",
+        overview:"Organization and attention to detail can produce excellent results this week. Focus on one priority at a time.",
+        loveText:"Do not analyze every small detail of a relationship. Simple honesty can create more closeness.",
+        careerText:"Excellent energy for planning, analysis, deadlines and completing complicated work.",
+        financeText:"Good week for reviewing budgets, subscriptions and long-term goals.",
+        healthText:"A structured routine will help you maintain energy and reduce unnecessary stress.",
+        bestDay:"Wednesday",
+        bestText:"Ideal for planning, analysis and completing important work.",
+        challengeDay:"Friday",
+        challengeText:"Avoid perfectionism when a practical solution is enough.",
+        number:"4",
+        color:"Navy Blue",
+        luckyDay:"Wednesday"
+    },
+
+    libra:{
+        name:"Libra",
+        symbol:"♎",
+        date:"September 23 – October 22",
+        overall:"8.5/10",
+        love:"9.2/10",
+        career:"8.2/10",
+        finance:"8/10",
+        overview:"Balance and diplomacy guide you through the week. Cooperation can help you resolve a matter that has been difficult to settle.",
+        loveText:"Romantic energy is favorable. Give relationships enough space for honest two-way communication.",
+        careerText:"Collaboration can produce stronger results than working alone.",
+        financeText:"Keep spending balanced and review shared financial responsibilities carefully.",
+        healthText:"Relaxation is important. Avoid allowing social commitments to consume all your downtime.",
+        bestDay:"Friday",
+        bestText:"Strong energy for relationships and important social interactions.",
+        challengeDay:"Tuesday",
+        challengeText:"Avoid delaying a decision simply to keep everyone happy.",
+        number:"7",
+        color:"Pink",
+        luckyDay:"Friday"
+    },
+
+    scorpio:{
+        name:"Scorpio",
+        symbol:"♏",
+        date:"October 23 – November 21",
+        overall:"8.9/10",
+        love:"8.6/10",
+        career:"9.2/10",
+        finance:"8.7/10",
+        overview:"Focus and determination help you make substantial progress. Keep your goals clear and avoid unnecessary distractions.",
+        loveText:"Emotional honesty can deepen trust. Say what you need instead of expecting others to guess.",
+        careerText:"A determined approach can help you overcome a professional obstacle.",
+        financeText:"Research carefully before major financial commitments.",
+        healthText:"Release built-up tension through rest, movement and personal space.",
+        bestDay:"Tuesday",
+        bestText:"Excellent energy for focused work and decisive action.",
+        challengeDay:"Sunday",
+        challengeText:"Avoid becoming overly suspicious or withdrawn.",
+        number:"8",
+        color:"Maroon",
+        luckyDay:"Tuesday"
+    },
+
+    sagittarius:{
+        name:"Sagittarius",
+        symbol:"♐",
+        date:"November 22 – December 21",
+        overall:"8.5/10",
+        love:"8.7/10",
+        career:"8.8/10",
+        finance:"7.7/10",
+        overview:"Fresh ideas and optimism create momentum this week. Keep your enthusiasm connected to realistic planning.",
+        loveText:"Spontaneous moments can bring joy. Give new connections time to develop naturally.",
+        careerText:"Learning, travel and exploration may introduce valuable professional opportunities.",
+        financeText:"Avoid overconfidence in quick opportunities. Verify the details before spending.",
+        healthText:"A change of environment can refresh your mind and motivation.",
+        bestDay:"Thursday",
+        bestText:"Excellent for learning, networking and new opportunities.",
+        challengeDay:"Wednesday",
+        challengeText:"Avoid promising more than you can realistically deliver.",
+        number:"3",
+        color:"Purple",
+        luckyDay:"Thursday"
+    },
+
+    capricorn:{
+        name:"Capricorn",
+        symbol:"♑",
+        date:"December 22 – January 19",
+        overall:"9/10",
+        love:"8.1/10",
+        career:"9.6/10",
+        finance:"9.2/10",
+        overview:"Discipline and long-term thinking work strongly in your favor. This is a productive week for serious goals.",
+        loveText:"Consistency matters more than dramatic gestures. Show care through dependable actions.",
+        careerText:"Strong potential for progress, leadership and completion of major responsibilities.",
+        financeText:"Excellent week for budgeting, savings and reviewing financial goals.",
+        healthText:"Avoid allowing professional ambition to eliminate rest and recovery.",
+        bestDay:"Saturday",
+        bestText:"Excellent for long-term planning and professional decisions.",
+        challengeDay:"Monday",
+        challengeText:"Do not become overly serious about minor delays.",
+        number:"10",
+        color:"Brown",
+        luckyDay:"Saturday"
+    },
+
+    aquarius:{
+        name:"Aquarius",
+        symbol:"♒",
+        date:"January 20 – February 18",
+        overall:"8.3/10",
+        love:"8/10",
+        career:"9.1/10",
+        finance:"8.1/10",
+        overview:"Innovation and fresh perspectives are highlighted. A different approach may solve a problem that has resisted conventional methods.",
+        loveText:"Give relationships room to breathe. Honest communication can clear old confusion.",
+        careerText:"Excellent week for innovative ideas, technology and process improvements.",
+        financeText:"Keep financial choices based on facts rather than excitement.",
+        healthText:"Balance mental stimulation with physical activity and adequate sleep.",
+        bestDay:"Wednesday",
+        bestText:"Strong energy for creative and professional breakthroughs.",
+        challengeDay:"Friday",
+        challengeText:"Avoid becoming detached during important conversations.",
+        number:"11",
+        color:"Blue",
+        luckyDay:"Wednesday"
+    },
+
+    pisces:{
+        name:"Pisces",
+        symbol:"♓",
+        date:"February 19 – March 20",
+        overall:"8.8/10",
+        love:"9.3/10",
+        career:"8.2/10",
+        finance:"8/10",
+        overview:"Intuition and creativity are especially strong this week. Use your instincts while checking practical details before important decisions.",
+        loveText:"Emotional openness can deepen intimacy. Let your needs be known clearly.",
+        careerText:"Creative projects can progress well when you protect your focus.",
+        financeText:"A calm review of finances can bring greater confidence and clarity.",
+        healthText:"Peaceful surroundings and enough sleep can help maintain emotional balance.",
+        bestDay:"Friday",
+        bestText:"Excellent energy for relationships, creativity and personal expression.",
+        challengeDay:"Tuesday",
+        challengeText:"Avoid escaping difficult conversations instead of addressing them.",
+        number:"7",
+        color:"Sea Green",
+        luckyDay:"Friday"
+    }
+
+};
+
+
+/* ================= CHANGE SIGN ================= */
+
+function changeSign(sign){
+
+    const data =
+        weeklyData[sign];
+
+    if(!data) return;
+
+
+    document.getElementById("symbol")
+        .innerText =
+        data.symbol;
+
+    document.getElementById("name")
+        .innerText =
+        data.name;
+
+    document.getElementById("date")
+        .innerText =
+        data.date;
+
+    document.getElementById("overall")
+        .innerText =
+        data.overall;
+
+    document.getElementById("loveScore")
+        .innerText =
+        data.love;
+
+    document.getElementById("careerScore")
+        .innerText =
+        data.career;
+
+    document.getElementById("financeScore")
+        .innerText =
+        data.finance;
+
+    document.getElementById("overview")
+        .innerText =
+        data.overview;
+
+    document.getElementById("loveText")
+        .innerText =
+        data.loveText;
+
+    document.getElementById("careerText")
+        .innerText =
+        data.careerText;
+
+    document.getElementById("financeText")
+        .innerText =
+        data.financeText;
+
+    document.getElementById("healthText")
+        .innerText =
+        data.healthText;
+
+    document.getElementById("bestDay")
+        .innerText =
+        data.bestDay;
+
+    document.getElementById("bestText")
+        .innerText =
+        data.bestText;
+
+    document.getElementById("challengeDay")
+        .innerText =
+        data.challengeDay;
+
+    document.getElementById("challengeText")
+        .innerText =
+        data.challengeText;
+
+    document.getElementById("luckyNumber")
+        .innerText =
+        data.number;
+
+    document.getElementById("luckyColor")
+        .innerText =
+        data.color;
+
+    document.getElementById("luckyDay")
+        .innerText =
+        data.luckyDay;
+
+}
+
+
+/* ================= URL SIGN ================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const selectedSign =
+    params.get("sign");
+
+if(
+    selectedSign &&
+    weeklyData[selectedSign]
+){
+
+    document.getElementById("signSelect")
+        .value =
+        selectedSign;
+
+    changeSign(selectedSign);
+
+}
+
+</script>
+
+</body>
+</html>

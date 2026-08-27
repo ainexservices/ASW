@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zodiac Signs - Astro With Talk</title>
+
+<meta name="description"
+      content="Explore all 12 zodiac signs, personality traits, horoscope and astrology guidance with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --bg:#f7f7f7;
+    --green:#15945a;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* ================= HERO ================= */
+
+.hero{
+    background:
+        radial-gradient(circle at 85% 20%,rgba(255,255,255,.16),transparent 28%),
+        linear-gradient(125deg,#b51218,#d71920);
+    border-radius:18px;
+    padding:32px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"✦  ✧  ✦  ✧  ✦";
+    position:absolute;
+    right:28px;
+    top:25px;
+    font-size:22px;
+    opacity:.15;
+    letter-spacing:12px;
+}
+
+.hero-content{
+    max-width:680px;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+}
+
+.hero p{
+    color:rgba(255,255,255,.82);
+    font-size:10px;
+    line-height:1.8;
+    margin-top:8px;
+}
+
+.hero-actions{
+    display:flex;
+    gap:9px;
+    margin-top:18px;
+}
+
+.hero-btn{
+    height:37px;
+    padding:0 15px;
+    border-radius:7px;
+    border:1px solid rgba(255,255,255,.3);
+    background:#fff;
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.1);
+    color:#fff;
+}
+
+
+/* ================= SECTION ================= */
+
+.section{
+    margin-top:22px;
+}
+
+.section-heading{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    margin-bottom:13px;
+}
+
+.section-heading h2{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.section-heading p{
+    color:#999;
+    font-size:8px;
+    margin-top:3px;
+}
+
+
+/* ================= ZODIAC GRID ================= */
+
+.zodiac-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+}
+
+.zodiac-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    transition:.2s ease;
+}
+
+.zodiac-card:hover{
+    transform:translateY(-3px);
+    border-color:#e7a7a7;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.zodiac-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.zodiac-symbol{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--light-red);
+    color:var(--red);
+    font-size:29px;
+}
+
+.zodiac-arrow{
+    width:29px;
+    height:29px;
+    border:1px solid #eee;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:#aaa;
+    font-size:11px;
+}
+
+.zodiac-card:hover .zodiac-arrow{
+    color:var(--red);
+    border-color:#e8aaaa;
+}
+
+.zodiac-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+    margin-top:13px;
+}
+
+.date{
+    color:#999;
+    font-size:7px;
+    margin-top:3px;
+}
+
+.element{
+    display:inline-block;
+    margin-top:9px;
+    padding:4px 7px;
+    border-radius:20px;
+    background:#f6f6f6;
+    color:#777;
+    font-size:7px;
+    font-weight:600;
+}
+
+.description{
+    color:#777;
+    font-size:8px;
+    line-height:1.65;
+    margin-top:10px;
+}
+
+.card-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:13px;
+    padding-top:11px;
+    border-top:1px solid #eee;
+}
+
+.horoscope-link{
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+.trait{
+    color:#999;
+    font-size:7px;
+}
+
+
+/* ================= QUICK LINKS ================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.quick-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+    transition:.2s;
+}
+
+.quick-card:hover{
+    border-color:#e8aaaa;
+    transform:translateY(-2px);
+}
+
+.quick-icon{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:15px;
+}
+
+.quick-card h3{
+    font-size:10px;
+    margin-top:9px;
+}
+
+.quick-card p{
+    color:#999;
+    font-size:7px;
+    line-height:1.5;
+    margin-top:4px;
+}
+
+
+/* ================= CTA ================= */
+
+.cta{
+    margin-top:22px;
+    border-radius:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    padding:22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.cta h2{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+}
+
+.cta p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.cta button{
+    flex:none;
+    height:38px;
+    padding:0 16px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:24px 20px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .hero-actions{
+        display:block;
+    }
+
+    .hero-btn{
+        width:100%;
+        margin-top:7px;
+    }
+
+    .zodiac-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .zodiac-card{
+        padding:13px;
+    }
+
+    .zodiac-symbol{
+        width:48px;
+        height:48px;
+        font-size:24px;
+    }
+
+    .zodiac-card h3{
+        font-size:15px;
+    }
+
+    .cta{
+        display:block;
+    }
+
+    .cta button{
+        width:100%;
+        margin-top:12px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="horoscope.html" class="active">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Horoscope / <span>Zodiac Signs</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Explore Your Zodiac Sign ✨
+            </h1>
+
+            <p>
+                Discover your zodiac sign, personality traits, elemental
+                nature and horoscope. Select your राशि to explore
+                personalized astrology guidance.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <button
+                    class="hero-btn"
+                    onclick="location.href='horoscope.html'">
+
+                    🔮 View Horoscope
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="location.href='../KUNDLI/kundli.html'">
+
+                    🪐 Create Your Kundli
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ZODIAC -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    12 Zodiac Signs
+                </h2>
+
+                <p>
+                    Choose your sun sign to explore your horoscope.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="zodiac-grid">
+
+
+            <!-- ARIES -->
+
+            <a
+                href="aries-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♈
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Aries
+                </h3>
+
+                <div class="date">
+                    March 21 – April 19
+                </div>
+
+                <span class="element">
+                    🔥 Fire
+                </span>
+
+                <p class="description">
+                    Bold, energetic and naturally driven toward action
+                    and leadership.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Leader
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- TAURUS -->
+
+            <a
+                href="taurus-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♉
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Taurus
+                </h3>
+
+                <div class="date">
+                    April 20 – May 20
+                </div>
+
+                <span class="element">
+                    🌍 Earth
+                </span>
+
+                <p class="description">
+                    Practical, patient and dependable with a strong
+                    appreciation for stability.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Stable
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- GEMINI -->
+
+            <a
+                href="gemini-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♊
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Gemini
+                </h3>
+
+                <div class="date">
+                    May 21 – June 20
+                </div>
+
+                <span class="element">
+                    🌬️ Air
+                </span>
+
+                <p class="description">
+                    Curious, adaptable and communicative with a love
+                    for ideas and learning.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Curious
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- CANCER -->
+
+            <a
+                href="cancer-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♋
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Cancer
+                </h3>
+
+                <div class="date">
+                    June 21 – July 22
+                </div>
+
+                <span class="element">
+                    💧 Water
+                </span>
+
+                <p class="description">
+                    Caring, intuitive and emotionally connected to
+                    family and close relationships.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Caring
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- LEO -->
+
+            <a
+                href="leo-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♌
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Leo
+                </h3>
+
+                <div class="date">
+                    July 23 – August 22
+                </div>
+
+                <span class="element">
+                    🔥 Fire
+                </span>
+
+                <p class="description">
+                    Confident, expressive and generous with a natural
+                    desire to inspire others.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Confident
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- VIRGO -->
+
+            <a
+                href="virgo-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♍
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Virgo
+                </h3>
+
+                <div class="date">
+                    August 23 – September 22
+                </div>
+
+                <span class="element">
+                    🌍 Earth
+                </span>
+
+                <p class="description">
+                    Analytical, organized and practical with strong
+                    attention to detail.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Analytical
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- LIBRA -->
+
+            <a
+                href="libra-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♎
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Libra
+                </h3>
+
+                <div class="date">
+                    September 23 – October 22
+                </div>
+
+                <span class="element">
+                    🌬️ Air
+                </span>
+
+                <p class="description">
+                    Diplomatic, balanced and relationship-oriented with
+                    a love for harmony.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Balanced
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- SCORPIO -->
+
+            <a
+                href="scorpio-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♏
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Scorpio
+                </h3>
+
+                <div class="date">
+                    October 23 – November 21
+                </div>
+
+                <span class="element">
+                    💧 Water
+                </span>
+
+                <p class="description">
+                    Intense, focused and determined with strong emotional
+                    depth and intuition.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Focused
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- SAGITTARIUS -->
+
+            <a
+                href="sagittarius-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♐
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Sagittarius
+                </h3>
+
+                <div class="date">
+                    November 22 – December 21
+                </div>
+
+                <span class="element">
+                    🔥 Fire
+                </span>
+
+                <p class="description">
+                    Adventurous, optimistic and curious with a strong
+                    desire for freedom and discovery.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Adventurous
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- CAPRICORN -->
+
+            <a
+                href="capricorn-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♑
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Capricorn
+                </h3>
+
+                <div class="date">
+                    December 22 – January 19
+                </div>
+
+                <span class="element">
+                    🌍 Earth
+                </span>
+
+                <p class="description">
+                    Disciplined, ambitious and responsible with a strong
+                    focus on long-term achievement.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Ambitious
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- AQUARIUS -->
+
+            <a
+                href="aquarius-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♒
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Aquarius
+                </h3>
+
+                <div class="date">
+                    January 20 – February 18
+                </div>
+
+                <span class="element">
+                    🌬️ Air
+                </span>
+
+                <p class="description">
+                    Independent, innovative and forward-thinking with
+                    a unique perspective.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Innovative
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- PISCES -->
+
+            <a
+                href="pisces-horoscope.html"
+                class="zodiac-card">
+
+                <div class="zodiac-top">
+
+                    <div class="zodiac-symbol">
+                        ♓
+                    </div>
+
+                    <div class="zodiac-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <h3>
+                    Pisces
+                </h3>
+
+                <div class="date">
+                    February 19 – March 20
+                </div>
+
+                <span class="element">
+                    💧 Water
+                </span>
+
+                <p class="description">
+                    Compassionate, intuitive and creative with a rich
+                    emotional and imaginative nature.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span class="horoscope-link">
+                        View Horoscope →
+                    </span>
+
+                    <span class="trait">
+                        Intuitive
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK HOROSCOPE -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Horoscope Categories
+                </h2>
+
+                <p>
+                    Choose the forecast you want to explore.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+
+            <a
+                href="daily-horoscope.html"
+                class="quick-card">
+
+                <div class="quick-icon">
+                    ☀️
+                </div>
+
+                <h3>
+                    Daily Horoscope
+                </h3>
+
+                <p>
+                    Today's zodiac guidance and predictions.
+                </p>
+
+            </a>
+
+
+            <a
+                href="weekly-horoscope.html"
+                class="quick-card">
+
+                <div class="quick-icon">
+                    📅
+                </div>
+
+                <h3>
+                    Weekly Horoscope
+                </h3>
+
+                <p>
+                    Understand the energy of your week ahead.
+                </p>
+
+            </a>
+
+
+            <a
+                href="monthly-horoscope.html"
+                class="quick-card">
+
+                <div class="quick-icon">
+                    🌙
+                </div>
+
+                <h3>
+                    Monthly Horoscope
+                </h3>
+
+                <p>
+                    Plan your month with astrology guidance.
+                </p>
+
+            </a>
+
+
+            <a
+                href="yearly-horoscope.html"
+                class="quick-card">
+
+                <div class="quick-icon">
+                    🔭
+                </div>
+
+                <h3>
+                    Yearly Horoscope
+                </h3>
+
+                <p>
+                    Explore your complete yearly forecast.
+                </p>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="cta">
+
+        <div>
+
+            <h2>
+                Want more than your Sun Sign?
+            </h2>
+
+            <p>
+                Generate your Kundli and discover personalized
+                insights based on your birth details.
+            </p>
+
+        </div>
+
+
+        <button
+            onclick="location.href='../KUNDLI/kundli.html'">
+
+            Create Free Kundli →
+
+        </button>
+
+    </section>
+
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Horoscope</h4>
+
+        <a href="daily-horoscope.html">
+            Daily
+        </a>
+
+        <a href="weekly-horoscope.html">
+            Weekly
+        </a>
+
+        <a href="monthly-horoscope.html">
+            Monthly
+        </a>
+
+        <a href="yearly-horoscope.html">
+            Yearly
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">
+            Chat
+        </a>
+
+        <a href="../call.html">
+            Call
+        </a>
+
+        <a href="../live-astrology.html">
+            Live Astrology
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* ================= URL SIGN SUPPORT ================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const sign =
+    params.get("sign");
+
+if(sign){
+
+    const signPages = {
+
+        aries:"aries-horoscope.html",
+        taurus:"taurus-horoscope.html",
+        gemini:"gemini-horoscope.html",
+        cancer:"cancer-horoscope.html",
+        leo:"leo-horoscope.html",
+        virgo:"virgo-horoscope.html",
+        libra:"libra-horoscope.html",
+        scorpio:"scorpio-horoscope.html",
+        sagittarius:"sagittarius-horoscope.html",
+        capricorn:"capricorn-horoscope.html",
+        aquarius:"aquarius-horoscope.html",
+        pisces:"pisces-horoscope.html"
+
+    };
+
+    if(signPages[sign]){
+
+        window.location.href =
+            signPages[sign];
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

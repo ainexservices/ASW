@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Daily Horoscope - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --muted:#999;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-light:#fff8e5;
+    --green:#15945a;
+    --blue:#2878b8;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* ================= TOP ================= */
+
+.page-top{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.page-top h1{
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+}
+
+.page-top p{
+    color:#888;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.date-box{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.date-select{
+    height:37px;
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:8px;
+    padding:0 11px;
+    font-size:9px;
+    color:#555;
+}
+
+
+/* ================= LAYOUT ================= */
+
+.main-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+}
+
+
+/* ================= HOROSCOPE CARD ================= */
+
+.horoscope-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.sign-header{
+    background:
+        radial-gradient(circle at 88% 10%,rgba(255,255,255,.18),transparent 25%),
+        linear-gradient(125deg,#b51218,#d71920);
+    color:#fff;
+    padding:23px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.sign-symbol{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.3);
+    display:grid;
+    place-items:center;
+    font-size:36px;
+}
+
+.sign-info h2{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+}
+
+.sign-info p{
+    color:rgba(255,255,255,.8);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.sign-info .today{
+    display:inline-block;
+    margin-top:7px;
+    padding:4px 7px;
+    border-radius:20px;
+    background:rgba(255,255,255,.14);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* ================= SCORE ================= */
+
+.score-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid #eee;
+}
+
+.score-item{
+    padding:14px;
+    text-align:center;
+    border-right:1px solid #eee;
+}
+
+.score-item:last-child{
+    border-right:0;
+}
+
+.score-item small{
+    display:block;
+    color:#aaa;
+    font-size:7px;
+}
+
+.score-number{
+    font-size:17px;
+    font-weight:700;
+    margin-top:4px;
+}
+
+.stars{
+    color:var(--gold);
+    font-size:8px;
+    margin-top:2px;
+}
+
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:21px;
+}
+
+.content h3{
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+}
+
+.overview{
+    color:#666;
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+
+/* ================= CATEGORY GRID ================= */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+    margin-top:18px;
+}
+
+.category{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+}
+
+.category-head{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.category-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:14px;
+}
+
+.category h4{
+    font-size:9px;
+}
+
+.category p{
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:7px;
+}
+
+
+/* ================= LUCK ================= */
+
+.luck{
+    margin-top:18px;
+    background:#fffaf0;
+    border:1px solid #eee0b8;
+    border-radius:12px;
+    padding:15px;
+}
+
+.luck h3{
+    font-size:10px;
+    font-family:"DM Sans",sans-serif;
+    font-weight:700;
+}
+
+.luck-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:11px;
+}
+
+.luck-item{
+    background:#fff;
+    border:1px solid #eee4cc;
+    border-radius:8px;
+    padding:10px;
+}
+
+.luck-item small{
+    display:block;
+    color:#aaa;
+    font-size:7px;
+}
+
+.luck-item strong{
+    display:block;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.luck-color{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.dot{
+    width:8px;
+    height:8px;
+    background:#d71920;
+    border-radius:50%;
+}
+
+
+/* ================= CTA ================= */
+
+.consult-cta{
+    margin-top:18px;
+    border-radius:13px;
+    background:var(--light-red);
+    border:1px solid #f0caca;
+    padding:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.consult-cta h3{
+    font-size:11px;
+    font-family:"DM Sans",sans-serif;
+    font-weight:700;
+}
+
+.consult-cta p{
+    color:#888;
+    font-size:8px;
+    margin-top:3px;
+}
+
+.cta-btn{
+    flex:none;
+    height:36px;
+    padding:0 13px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:11px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-link div:nth-child(2){
+    flex:1;
+}
+
+.side-link strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-link span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+    font-size:11px;
+}
+
+.zodiac-mini{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.mini{
+    border:1px solid #eee;
+    border-radius:8px;
+    text-align:center;
+    padding:8px 3px;
+    font-size:8px;
+}
+
+.mini:hover{
+    color:var(--red);
+    border-color:#efb4b4;
+}
+
+.mini-symbol{
+    display:block;
+    font-size:16px;
+    margin-bottom:3px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .main-layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .page-top{
+        display:block;
+    }
+
+    .date-box{
+        margin-top:12px;
+    }
+
+    .date-select{
+        width:100%;
+    }
+
+    .score-row{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .score-item:nth-child(2){
+        border-right:0;
+    }
+
+    .score-item:nth-child(3),
+    .score-item:nth-child(4){
+        border-top:1px solid #eee;
+    }
+
+    .category-grid{
+        grid-template-columns:1fr;
+    }
+
+    .luck-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .consult-cta{
+        display:block;
+    }
+
+    .cta-btn{
+        width:100%;
+        margin-top:10px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="horoscope.html" class="active">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Horoscope / <span>Daily Horoscope</span>
+    </div>
+
+
+    <div class="page-top">
+
+        <div>
+
+            <h1>
+                Daily Horoscope
+            </h1>
+
+            <p>
+                Your zodiac guidance for today.
+            </p>
+
+        </div>
+
+
+        <div class="date-box">
+
+            <select
+                class="date-select"
+                id="signSelect"
+                onchange="changeSign(this.value)">
+
+                <option value="aries">
+                    ♈ Aries
+                </option>
+
+                <option value="taurus">
+                    ♉ Taurus
+                </option>
+
+                <option value="gemini">
+                    ♊ Gemini
+                </option>
+
+                <option value="cancer">
+                    ♋ Cancer
+                </option>
+
+                <option value="leo">
+                    ♌ Leo
+                </option>
+
+                <option value="virgo">
+                    ♍ Virgo
+                </option>
+
+                <option value="libra">
+                    ♎ Libra
+                </option>
+
+                <option value="scorpio">
+                    ♏ Scorpio
+                </option>
+
+                <option value="sagittarius">
+                    ♐ Sagittarius
+                </option>
+
+                <option value="capricorn">
+                    ♑ Capricorn
+                </option>
+
+                <option value="aquarius">
+                    ♒ Aquarius
+                </option>
+
+                <option value="pisces">
+                    ♓ Pisces
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= LAYOUT ================= -->
+
+    <div class="main-layout">
+
+
+        <!-- ================= MAIN HOROSCOPE ================= -->
+
+        <section class="horoscope-card">
+
+
+            <div class="sign-header">
+
+                <div
+                    class="sign-symbol"
+                    id="signSymbol">
+                    ♈
+                </div>
+
+                <div class="sign-info">
+
+                    <h2 id="signName">
+                        Aries
+                    </h2>
+
+                    <p id="signDate">
+                        March 21 – April 19
+                    </p>
+
+                    <span class="today">
+                        ☀️ Today's Horoscope
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORE -->
+
+            <div class="score-row">
+
+                <div class="score-item">
+
+                    <small>
+                        OVERALL
+                    </small>
+
+                    <div
+                        class="score-number"
+                        id="overall">
+                        8.5/10
+                    </div>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+
+                <div class="score-item">
+
+                    <small>
+                        LOVE
+                    </small>
+
+                    <div
+                        class="score-number"
+                        id="loveScore">
+                        8/10
+                    </div>
+
+                    <div class="stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+
+                <div class="score-item">
+
+                    <small>
+                        CAREER
+                    </small>
+
+                    <div
+                        class="score-number"
+                        id="careerScore">
+                        9/10
+                    </div>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+
+                <div class="score-item">
+
+                    <small>
+                        FINANCE
+                    </small>
+
+                    <div
+                        class="score-number"
+                        id="financeScore">
+                        8/10
+                    </div>
+
+                    <div class="stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div class="content">
+
+                <h3>
+                    Today's Prediction
+                </h3>
+
+                <p
+                    class="overview"
+                    id="overview">
+
+                    Today brings a strong sense of momentum.
+                    Take initiative in matters that require confidence,
+                    but avoid rushing important decisions. Your communication
+                    can create positive opportunities if you remain patient
+                    and clear.
+
+                </p>
+
+
+                <!-- CATEGORY -->
+
+                <div class="category-grid">
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                ❤️
+                            </div>
+
+                            <h4>
+                                Love & Relationship
+                            </h4>
+
+                        </div>
+
+                        <p id="loveText">
+
+                            Open communication can strengthen an existing
+                            relationship. Singles may receive an encouraging
+                            signal from someone interesting.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                💼
+                            </div>
+
+                            <h4>
+                                Career
+                            </h4>
+
+                        </div>
+
+                        <p id="careerText">
+
+                            Your ability to take responsibility can attract
+                            attention today. Focus on completing important
+                            tasks instead of starting too many things.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                💰
+                            </div>
+
+                            <h4>
+                                Finance
+                            </h4>
+
+                        </div>
+
+                        <p id="financeText">
+
+                            Financial stability improves through disciplined
+                            planning. Avoid impulsive purchases and review
+                            commitments carefully.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                🧘
+                            </div>
+
+                            <h4>
+                                Health & Wellness
+                            </h4>
+
+                        </div>
+
+                        <p id="healthText">
+
+                            Maintain a balanced routine today. Adequate rest,
+                            hydration and a short break from screens can help
+                            you maintain your energy.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- LUCK -->
+
+                <div class="luck">
+
+                    <h3>
+                        ✨ Your Lucky Elements
+                    </h3>
+
+
+                    <div class="luck-grid">
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY NUMBER
+                            </small>
+
+                            <strong id="luckyNumber">
+                                9
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY COLOR
+                            </small>
+
+                            <strong class="luck-color">
+
+                                <span
+                                    class="dot"
+                                    id="colorDot">
+                                </span>
+
+                                <span id="luckyColor">
+                                    Red
+                                </span>
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY TIME
+                            </small>
+
+                            <strong id="luckyTime">
+                                10:00 AM – 12:00 PM
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- CTA -->
+
+                <div class="consult-cta">
+
+                    <div>
+
+                        <h3>
+                            Want a more personalized prediction?
+                        </h3>
+
+                        <p>
+                            Talk privately with an experienced astrologer.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="cta-btn"
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to an Astrologer →
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+
+            <!-- HOROSCOPE TYPES -->
+
+            <div class="side-card">
+
+                <h3>
+                    Horoscope
+                </h3>
+
+
+                <a
+                    href="daily-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        ☀️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Daily Horoscope
+                        </strong>
+
+                        <span>
+                            Today's guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="weekly-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Weekly Horoscope
+                        </strong>
+
+                        <span>
+                            Week ahead
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="monthly-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Monthly Horoscope
+                        </strong>
+
+                        <span>
+                            Month ahead
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="yearly-horoscope.html"
+                    class="side-link">
+
+                    <div class="side-icon">
+                        🔭
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Yearly Horoscope
+                        </strong>
+
+                        <span>
+                            Year forecast
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- ALL SIGNS -->
+
+            <div class="side-card">
+
+                <h3>
+                    All Zodiac Signs
+                </h3>
+
+
+                <div class="zodiac-mini">
+
+
+                    <a class="mini" href="aries-horoscope.html">
+                        <span class="mini-symbol">♈</span>
+                        Aries
+                    </a>
+
+                    <a class="mini" href="taurus-horoscope.html">
+                        <span class="mini-symbol">♉</span>
+                        Taurus
+                    </a>
+
+                    <a class="mini" href="gemini-horoscope.html">
+                        <span class="mini-symbol">♊</span>
+                        Gemini
+                    </a>
+
+                    <a class="mini" href="cancer-horoscope.html">
+                        <span class="mini-symbol">♋</span>
+                        Cancer
+                    </a>
+
+                    <a class="mini" href="leo-horoscope.html">
+                        <span class="mini-symbol">♌</span>
+                        Leo
+                    </a>
+
+                    <a class="mini" href="virgo-horoscope.html">
+                        <span class="mini-symbol">♍</span>
+                        Virgo
+                    </a>
+
+                    <a class="mini" href="libra-horoscope.html">
+                        <span class="mini-symbol">♎</span>
+                        Libra
+                    </a>
+
+                    <a class="mini" href="scorpio-horoscope.html">
+                        <span class="mini-symbol">♏</span>
+                        Scorpio
+                    </a>
+
+                    <a class="mini" href="sagittarius-horoscope.html">
+                        <span class="mini-symbol">♐</span>
+                        Sagittarius
+                    </a>
+
+                    <a class="mini" href="capricorn-horoscope.html">
+                        <span class="mini-symbol">♑</span>
+                        Capricorn
+                    </a>
+
+                    <a class="mini" href="aquarius-horoscope.html">
+                        <span class="mini-symbol">♒</span>
+                        Aquarius
+                    </a>
+
+                    <a class="mini" href="pisces-horoscope.html">
+                        <span class="mini-symbol">♓</span>
+                        Pisces
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Horoscope</h4>
+
+        <a href="daily-horoscope.html">
+            Daily
+        </a>
+
+        <a href="weekly-horoscope.html">
+            Weekly
+        </a>
+
+        <a href="monthly-horoscope.html">
+            Monthly
+        </a>
+
+        <a href="yearly-horoscope.html">
+            Yearly
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Zodiac</h4>
+
+        <a href="aries-horoscope.html">
+            Aries
+        </a>
+
+        <a href="taurus-horoscope.html">
+            Taurus
+        </a>
+
+        <a href="gemini-horoscope.html">
+            Gemini
+        </a>
+
+        <a href="leo-horoscope.html">
+            Leo
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* ================= DATA ================= */
+
+const horoscopeData = {
+
+    aries:{
+        name:"Aries",
+        symbol:"♈",
+        date:"March 21 – April 19",
+        overall:"8.5/10",
+        love:"8/10",
+        career:"9/10",
+        finance:"8/10",
+        overview:"Today brings a strong sense of momentum. Take initiative in matters that require confidence, but avoid rushing important decisions. Your communication can create positive opportunities if you remain patient and clear.",
+        loveText:"Open communication can strengthen an existing relationship. Singles may receive an encouraging signal from someone interesting.",
+        careerText:"Your ability to take responsibility can attract attention today. Focus on completing important tasks instead of starting too many things.",
+        financeText:"Financial stability improves through disciplined planning. Avoid impulsive purchases and review commitments carefully.",
+        healthText:"Maintain a balanced routine today. Adequate rest, hydration and a short break from screens can help you maintain your energy.",
+        number:"9",
+        color:"Red",
+        time:"10:00 AM – 12:00 PM"
+    },
+
+    taurus:{
+        name:"Taurus",
+        symbol:"♉",
+        date:"April 20 – May 20",
+        overall:"8/10",
+        love:"8.5/10",
+        career:"8/10",
+        finance:"9/10",
+        overview:"Patience becomes your strongest advantage today. A practical approach can help you handle an important personal or professional matter with greater confidence.",
+        loveText:"A calm conversation can bring emotional clarity. Couples may feel more secure, while singles should allow connections to develop naturally.",
+        careerText:"Steady progress is possible when you focus on quality rather than speed. Someone may appreciate your reliability.",
+        financeText:"A good day to review savings and long-term financial plans. Avoid unnecessary spending.",
+        healthText:"Keep your routine simple and consistent. Light movement and proper rest will support your energy.",
+        number:"6",
+        color:"Green",
+        time:"11:00 AM – 1:00 PM"
+    },
+
+    gemini:{
+        name:"Gemini",
+        symbol:"♊",
+        date:"May 21 – June 20",
+        overall:"8.7/10",
+        love:"9/10",
+        career:"8.5/10",
+        finance:"7.5/10",
+        overview:"Communication is your key strength today. New information can change your perspective and help you make a smarter choice.",
+        loveText:"Your words carry extra warmth today. Express what you genuinely feel instead of relying on assumptions.",
+        careerText:"Networking and collaboration can open useful opportunities. Keep important conversations focused.",
+        financeText:"Be careful with quick purchases. Compare options before making a financial commitment.",
+        healthText:"Mental rest is important. Give yourself a few quiet moments between busy tasks.",
+        number:"5",
+        color:"Yellow",
+        time:"9:30 AM – 11:30 AM"
+    },
+
+    cancer:{
+        name:"Cancer",
+        symbol:"♋",
+        date:"June 21 – July 22",
+        overall:"7.9/10",
+        love:"9/10",
+        career:"7.5/10",
+        finance:"8/10",
+        overview:"Emotional clarity improves as the day progresses. Trust thoughtful reflection, but do not let temporary emotions decide long-term matters.",
+        loveText:"Family and relationship matters receive supportive energy. A sincere conversation can bring people closer.",
+        careerText:"Do not underestimate your ability to handle a sensitive situation. Work patiently and avoid unnecessary conflict.",
+        financeText:"Keep spending practical. A review of recurring expenses could reveal useful savings.",
+        healthText:"Prioritize sleep and emotional balance. A peaceful environment can restore your energy.",
+        number:"2",
+        color:"Silver",
+        time:"7:00 PM – 9:00 PM"
+    },
+
+    leo:{
+        name:"Leo",
+        symbol:"♌",
+        date:"July 23 – August 22",
+        overall:"9/10",
+        love:"8.5/10",
+        career:"9.5/10",
+        finance:"8.5/10",
+        overview:"Confidence opens new doors today. Your natural leadership can help you move an important matter forward, provided you remain open to other viewpoints.",
+        loveText:"Warmth and confidence make relationships more enjoyable. Avoid turning small disagreements into competitions.",
+        careerText:"A strong day for leadership, presentations and taking ownership of important responsibilities.",
+        financeText:"Good potential for organized financial decisions. Keep a clear limit for discretionary spending.",
+        healthText:"Your energy is strong, but remember to take breaks. Balance activity with recovery.",
+        number:"1",
+        color:"Gold",
+        time:"10:30 AM – 12:30 PM"
+    },
+
+    virgo:{
+        name:"Virgo",
+        symbol:"♍",
+        date:"August 23 – September 22",
+        overall:"8.3/10",
+        love:"8/10",
+        career:"9/10",
+        finance:"8.5/10",
+        overview:"Attention to detail works strongly in your favor. A task that looked complicated can become manageable once you organize it step by step.",
+        loveText:"Honesty and practical support can strengthen your bond. Avoid overanalyzing every small message.",
+        careerText:"Excellent energy for planning, analysis and completing pending work.",
+        financeText:"Review details before signing or paying for anything important.",
+        healthText:"A structured routine will help reduce mental clutter and improve your overall balance.",
+        number:"4",
+        color:"Navy Blue",
+        time:"8:30 AM – 10:30 AM"
+    },
+
+    libra:{
+        name:"Libra",
+        symbol:"♎",
+        date:"September 23 – October 22",
+        overall:"8.6/10",
+        love:"9/10",
+        career:"8/10",
+        finance:"8/10",
+        overview:"Balance and diplomacy help you navigate today's situations. A fair approach can turn a difficult conversation into a productive one.",
+        loveText:"Romantic energy is favorable. Give your partner or potential partner enough space to express their side.",
+        careerText:"Collaboration is favored. Your ability to find common ground may become your biggest advantage.",
+        financeText:"Maintain balance between enjoyment and savings. Avoid buying simply to impress others.",
+        healthText:"Take time to relax and reset. Gentle movement can improve your mood.",
+        number:"7",
+        color:"Pink",
+        time:"4:00 PM – 6:00 PM"
+    },
+
+    scorpio:{
+        name:"Scorpio",
+        symbol:"♏",
+        date:"October 23 – November 21",
+        overall:"8.8/10",
+        love:"8.5/10",
+        career:"9/10",
+        finance:"8.5/10",
+        overview:"Your focus is powerful today. Use it to move toward one meaningful goal rather than spreading your energy across too many directions.",
+        loveText:"Emotional honesty can deepen trust. Avoid testing people when a direct conversation would be clearer.",
+        careerText:"A determined approach can help you overcome a professional obstacle.",
+        financeText:"Research before making major financial decisions. Patience can protect your resources.",
+        healthText:"Release built-up tension through rest, movement or quiet time.",
+        number:"8",
+        color:"Maroon",
+        time:"6:00 PM – 8:00 PM"
+    },
+
+    sagittarius:{
+        name:"Sagittarius",
+        symbol:"♐",
+        date:"November 22 – December 21",
+        overall:"8.4/10",
+        love:"8.5/10",
+        career:"8.5/10",
+        finance:"7.5/10",
+        overview:"Fresh ideas and optimism can bring new momentum. Stay enthusiastic, but make sure your plans remain realistic.",
+        loveText:"A spontaneous conversation can create a pleasant romantic moment. Keep expectations flexible.",
+        careerText:"Learning and exploration are especially useful. A new idea may deserve further development.",
+        financeText:"Avoid overconfidence in quick financial opportunities. Verify details first.",
+        healthText:"Outdoor movement or a change of environment can refresh your energy.",
+        number:"3",
+        color:"Purple",
+        time:"2:00 PM – 4:00 PM"
+    },
+
+    capricorn:{
+        name:"Capricorn",
+        symbol:"♑",
+        date:"December 22 – January 19",
+        overall:"8.9/10",
+        love:"8/10",
+        career:"9.5/10",
+        finance:"9/10",
+        overview:"Discipline produces visible results today. Stay focused on priorities and do not allow minor distractions to change your direction.",
+        loveText:"Reliability speaks louder than dramatic gestures. Show your care through consistent actions.",
+        careerText:"A productive day for deadlines, leadership and long-term planning.",
+        financeText:"Strong energy for budgeting and reviewing long-term financial goals.",
+        healthText:"Do not let work consume the entire day. Schedule proper breaks and recovery.",
+        number:"10",
+        color:"Brown",
+        time:"9:00 AM – 11:00 AM"
+    },
+
+    aquarius:{
+        name:"Aquarius",
+        symbol:"♒",
+        date:"January 20 – February 18",
+        overall:"8.2/10",
+        love:"7.8/10",
+        career:"9/10",
+        finance:"8/10",
+        overview:"A different perspective can solve a problem that has been frustrating you. Trust your creativity while remaining practical.",
+        loveText:"Give relationships room to breathe. Honest but gentle communication can clear confusion.",
+        careerText:"Innovative thinking is favored. Share ideas, especially if they can improve an existing process.",
+        financeText:"Keep financial decisions grounded in facts rather than excitement.",
+        healthText:"Mental stimulation is high. Make time for physical activity to restore balance.",
+        number:"11",
+        color:"Blue",
+        time:"3:30 PM – 5:30 PM"
+    },
+
+    pisces:{
+        name:"Pisces",
+        symbol:"♓",
+        date:"February 19 – March 20",
+        overall:"8.7/10",
+        love:"9.2/10",
+        career:"8/10",
+        finance:"8/10",
+        overview:"Intuition and sensitivity are heightened today. Listen to your instincts while checking important facts before making major choices.",
+        loveText:"A gentle and emotionally open approach can deepen intimacy. Express your needs clearly.",
+        careerText:"Creative work can flow well today. Protect your focus from unnecessary distractions.",
+        financeText:"A calm review of your financial position can bring reassurance and clarity.",
+        healthText:"Quiet time, adequate sleep and a peaceful routine will support your wellbeing.",
+        number:"7",
+        color:"Sea Green",
+        time:"5:00 PM – 7:00 PM"
+    }
+
+};
+
+
+/* ================= CHANGE SIGN ================= */
+
+function changeSign(sign){
+
+    const data =
+        horoscopeData[sign];
+
+    if(!data) return;
+
+
+    document.getElementById("signSymbol")
+        .innerText =
+        data.symbol;
+
+    document.getElementById("signName")
+        .innerText =
+        data.name;
+
+    document.getElementById("signDate")
+        .innerText =
+        data.date;
+
+    document.getElementById("overall")
+        .innerText =
+        data.overall;
+
+    document.getElementById("loveScore")
+        .innerText =
+        data.love;
+
+    document.getElementById("careerScore")
+        .innerText =
+        data.career;
+
+    document.getElementById("financeScore")
+        .innerText =
+        data.finance;
+
+    document.getElementById("overview")
+        .innerText =
+        data.overview;
+
+    document.getElementById("loveText")
+        .innerText =
+        data.loveText;
+
+    document.getElementById("careerText")
+        .innerText =
+        data.careerText;
+
+    document.getElementById("financeText")
+        .innerText =
+        data.financeText;
+
+    document.getElementById("healthText")
+        .innerText =
+        data.healthText;
+
+    document.getElementById("luckyNumber")
+        .innerText =
+        data.number;
+
+    document.getElementById("luckyColor")
+        .innerText =
+        data.color;
+
+    document.getElementById("luckyTime")
+        .innerText =
+        data.time;
+
+}
+
+
+/* ================= URL SIGN ================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const selectedSign =
+    params.get("sign");
+
+if(
+    selectedSign &&
+    horoscopeData[selectedSign]
+){
+
+    document.getElementById("signSelect")
+        .value =
+        selectedSign;
+
+    changeSign(selectedSign);
+
+}
+
+</script>
+
+</body>
+</html>

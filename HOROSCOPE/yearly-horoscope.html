@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Yearly Horoscope - Astro With Talk</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --muted:#999;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:11px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* ================= TOP ================= */
+
+.page-top{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.page-top h1{
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+}
+
+.page-top p{
+    color:#888;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.sign-select{
+    height:38px;
+    min-width:175px;
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:8px;
+    padding:0 11px;
+    color:#555;
+    font-size:9px;
+}
+
+
+/* ================= LAYOUT ================= */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+}
+
+
+/* ================= MAIN CARD ================= */
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.sign-header{
+    background:
+        radial-gradient(circle at 90% 15%,rgba(255,255,255,.18),transparent 25%),
+        linear-gradient(125deg,#b51218,#d71920);
+    color:#fff;
+    padding:23px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.symbol{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.28);
+    display:grid;
+    place-items:center;
+    font-size:35px;
+}
+
+.sign-info h2{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+}
+
+.sign-info p{
+    color:rgba(255,255,255,.78);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.year-label{
+    display:inline-block;
+    margin-top:7px;
+    padding:4px 8px;
+    border-radius:20px;
+    background:rgba(255,255,255,.14);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* ================= SCORES ================= */
+
+.scores{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid #eee;
+}
+
+.score{
+    padding:14px;
+    text-align:center;
+    border-right:1px solid #eee;
+}
+
+.score:last-child{
+    border-right:0;
+}
+
+.score small{
+    display:block;
+    color:#aaa;
+    font-size:7px;
+}
+
+.score strong{
+    display:block;
+    font-size:18px;
+    margin-top:4px;
+}
+
+.stars{
+    color:var(--gold);
+    font-size:8px;
+    margin-top:2px;
+}
+
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:21px;
+}
+
+.title{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.overview{
+    color:#666;
+    font-size:9px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+
+/* ================= QUARTERS ================= */
+
+.section-label{
+    font-size:10px;
+    font-weight:700;
+    margin-top:21px;
+    margin-bottom:10px;
+}
+
+.quarters{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+}
+
+.quarter{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+}
+
+.quarter:hover{
+    border-color:#efb4b4;
+}
+
+.quarter-label{
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+.quarter h3{
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+    margin-top:5px;
+}
+
+.quarter p{
+    color:#777;
+    font-size:8px;
+    line-height:1.65;
+    margin-top:6px;
+}
+
+.quarter-score{
+    margin-top:9px;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ================= MONTH GRID ================= */
+
+.months{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.month{
+    border:1px solid #eee;
+    border-radius:9px;
+    padding:11px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.month:hover{
+    border-color:#efb4b4;
+}
+
+.month-number{
+    width:29px;
+    height:29px;
+    border-radius:8px;
+    background:var(--light-red);
+    color:var(--red);
+    display:grid;
+    place-items:center;
+    font-size:8px;
+    font-weight:700;
+}
+
+.month-content{
+    flex:1;
+}
+
+.month-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.month-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.month-score{
+    color:var(--red);
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ================= CATEGORIES ================= */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:17px;
+}
+
+.category{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+}
+
+.category-head{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.category-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:14px;
+}
+
+.category h4{
+    font-size:9px;
+}
+
+.category p{
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:7px;
+}
+
+
+/* ================= INSIGHTS ================= */
+
+.insight-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:17px;
+}
+
+.insight{
+    padding:15px;
+    border-radius:11px;
+}
+
+.best{
+    background:#edfaf3;
+    border:1px solid #ccebdc;
+}
+
+.challenge{
+    background:#fff5f0;
+    border:1px solid #efd7ca;
+}
+
+.insight-label{
+    font-size:8px;
+    font-weight:700;
+}
+
+.insight h3{
+    font-size:11px;
+    margin-top:5px;
+}
+
+.insight p{
+    color:#777;
+    font-size:8px;
+    line-height:1.6;
+    margin-top:4px;
+}
+
+
+/* ================= LUCK ================= */
+
+.luck{
+    margin-top:17px;
+    background:#fffaf0;
+    border:1px solid #eee0b8;
+    border-radius:11px;
+    padding:14px;
+}
+
+.luck-title{
+    font-size:10px;
+    font-weight:700;
+}
+
+.luck-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:10px;
+}
+
+.luck-item{
+    background:#fff;
+    border:1px solid #eee3c8;
+    border-radius:8px;
+    padding:10px;
+}
+
+.luck-item small{
+    display:block;
+    color:#aaa;
+    font-size:7px;
+}
+
+.luck-item strong{
+    display:block;
+    font-size:9px;
+    margin-top:4px;
+}
+
+
+/* ================= CTA ================= */
+
+.cta{
+    margin-top:17px;
+    padding:16px;
+    background:var(--light-red);
+    border:1px solid #f0caca;
+    border-radius:11px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.cta h3{
+    font-size:10px;
+}
+
+.cta p{
+    color:#888;
+    font-size:8px;
+    margin-top:3px;
+}
+
+.cta button{
+    flex:none;
+    height:36px;
+    padding:0 13px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+    font-size:10px;
+}
+
+.zodiac-mini{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.mini{
+    border:1px solid #eee;
+    border-radius:8px;
+    padding:7px 3px;
+    text-align:center;
+    font-size:7px;
+}
+
+.mini:hover{
+    color:var(--red);
+    border-color:#efb4b4;
+}
+
+.mini-symbol{
+    display:block;
+    font-size:16px;
+    margin-bottom:3px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .page-top{
+        display:block;
+    }
+
+    .sign-select{
+        width:100%;
+        margin-top:11px;
+    }
+
+    .scores{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .score:nth-child(2){
+        border-right:0;
+    }
+
+    .score:nth-child(3),
+    .score:nth-child(4){
+        border-top:1px solid #eee;
+    }
+
+    .quarters{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .months{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .category-grid,
+    .insight-grid{
+        grid-template-columns:1fr;
+    }
+
+    .luck-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .cta{
+        display:block;
+    }
+
+    .cta button{
+        width:100%;
+        margin-top:10px;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="horoscope.html" class="active">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Horoscope / <span>Yearly Horoscope</span>
+    </div>
+
+
+    <div class="page-top">
+
+        <div>
+
+            <h1>
+                Yearly Horoscope
+            </h1>
+
+            <p>
+                Your complete yearly astrological forecast and guidance.
+            </p>
+
+        </div>
+
+
+        <select
+            class="sign-select"
+            id="signSelect"
+            onchange="changeSign(this.value)">
+
+            <option value="aries">♈ Aries</option>
+            <option value="taurus">♉ Taurus</option>
+            <option value="gemini">♊ Gemini</option>
+            <option value="cancer">♋ Cancer</option>
+            <option value="leo">♌ Leo</option>
+            <option value="virgo">♍ Virgo</option>
+            <option value="libra">♎ Libra</option>
+            <option value="scorpio">♏ Scorpio</option>
+            <option value="sagittarius">♐ Sagittarius</option>
+            <option value="capricorn">♑ Capricorn</option>
+            <option value="aquarius">♒ Aquarius</option>
+            <option value="pisces">♓ Pisces</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- ================= MAIN ================= -->
+
+        <section class="main-card">
+
+
+            <div class="sign-header">
+
+                <div
+                    class="symbol"
+                    id="symbol">
+                    ♈
+                </div>
+
+                <div class="sign-info">
+
+                    <h2 id="name">
+                        Aries
+                    </h2>
+
+                    <p id="date">
+                        March 21 – April 19
+                    </p>
+
+                    <span class="year-label">
+                        🔭 2026 Yearly Horoscope
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORES -->
+
+            <div class="scores">
+
+                <div class="score">
+
+                    <small>OVERALL</small>
+
+                    <strong id="overall">
+                        8.8/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+
+                <div class="score">
+
+                    <small>LOVE</small>
+
+                    <strong id="loveScore">
+                        8.6/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+
+                <div class="score">
+
+                    <small>CAREER</small>
+
+                    <strong id="careerScore">
+                        9.1/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+
+                <div class="score">
+
+                    <small>FINANCE</small>
+
+                    <strong id="financeScore">
+                        8.3/10
+                    </strong>
+
+                    <div class="stars">
+                        ★★★★☆
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="content">
+
+
+                <h3 class="title">
+                    Your Year Ahead
+                </h3>
+
+
+                <p
+                    class="overview"
+                    id="overview">
+
+                    2026 is a year of momentum, personal growth and
+                    important decisions. The first quarter encourages
+                    preparation, the middle of the year brings stronger
+                    opportunities and the final months focus on consolidation
+                    and long-term planning.
+
+                </p>
+
+
+                <!-- QUARTERS -->
+
+                <div class="section-label">
+                    🗓️ Year at a Glance
+                </div>
+
+
+                <div class="quarters">
+
+
+                    <div class="quarter">
+
+                        <div class="quarter-label">
+                            JAN – MAR
+                        </div>
+
+                        <h3>
+                            Foundation
+                        </h3>
+
+                        <p id="q1">
+                            Organize your priorities and prepare for bigger opportunities.
+                        </p>
+
+                        <div class="quarter-score">
+                            ⭐ 8.3/10
+                        </div>
+
+                    </div>
+
+
+                    <div class="quarter">
+
+                        <div class="quarter-label">
+                            APR – JUN
+                        </div>
+
+                        <h3>
+                            Expansion
+                        </h3>
+
+                        <p id="q2">
+                            New opportunities can develop through action and networking.
+                        </p>
+
+                        <div class="quarter-score">
+                            ⭐ 9.0/10
+                        </div>
+
+                    </div>
+
+
+                    <div class="quarter">
+
+                        <div class="quarter-label">
+                            JUL – SEP
+                        </div>
+
+                        <h3>
+                            Momentum
+                        </h3>
+
+                        <p id="q3">
+                            Consistent effort can produce visible progress.
+                        </p>
+
+                        <div class="quarter-score">
+                            ⭐ 9.2/10
+                        </div>
+
+                    </div>
+
+
+                    <div class="quarter">
+
+                        <div class="quarter-label">
+                            OCT – DEC
+                        </div>
+
+                        <h3>
+                            Consolidation
+                        </h3>
+
+                        <p id="q4">
+                            Review achievements and prepare your next long-term move.
+                        </p>
+
+                        <div class="quarter-score">
+                            ⭐ 8.8/10
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- MONTHS -->
+
+                <div class="section-label">
+                    📅 12-Month Forecast
+                </div>
+
+
+                <div class="months">
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            JAN
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Planning</strong>
+                            <span>Set priorities</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.1
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            FEB
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Connections</strong>
+                            <span>Build relationships</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.4
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            MAR
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Action</strong>
+                            <span>Take initiative</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.8
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            APR
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Growth</strong>
+                            <span>New opportunities</span>
+                        </div>
+
+                        <div class="month-score">
+                            9.0
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            MAY
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Momentum</strong>
+                            <span>Keep moving</span>
+                        </div>
+
+                        <div class="month-score">
+                            9.1
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            JUN
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Visibility</strong>
+                            <span>Show your skills</span>
+                        </div>
+
+                        <div class="month-score">
+                            9.2
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            JUL
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Balance</strong>
+                            <span>Review priorities</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.7
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            AUG
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Leadership</strong>
+                            <span>Take responsibility</span>
+                        </div>
+
+                        <div class="month-score">
+                            9.3
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            SEP
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Progress</strong>
+                            <span>Complete goals</span>
+                        </div>
+
+                        <div class="month-score">
+                            9.0
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            OCT
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Review</strong>
+                            <span>Refine plans</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.5
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            NOV
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Opportunity</strong>
+                            <span>Act wisely</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.9
+                        </div>
+
+                    </div>
+
+
+                    <div class="month">
+
+                        <div class="month-number">
+                            DEC
+                        </div>
+
+                        <div class="month-content">
+                            <strong>Completion</strong>
+                            <span>Prepare ahead</span>
+                        </div>
+
+                        <div class="month-score">
+                            8.8
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="category-grid">
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                ❤️
+                            </div>
+
+                            <h4>
+                                Love & Relationship
+                            </h4>
+
+                        </div>
+
+                        <p id="loveText">
+
+                            Relationships can become more mature and stable
+                            throughout the year. Honest communication will
+                            be especially important during periods of change.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                💼
+                            </div>
+
+                            <h4>
+                                Career & Business
+                            </h4>
+
+                        </div>
+
+                        <p id="careerText">
+
+                            Career growth is one of the stronger themes of
+                            the year. Leadership, new responsibilities and
+                            strategic decisions can create long-term progress.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                💰
+                            </div>
+
+                            <h4>
+                                Finance
+                            </h4>
+
+                        </div>
+
+                        <p id="financeText">
+
+                            Financial progress improves through planning,
+                            savings and disciplined decisions. Avoid
+                            unnecessary risks during uncertain periods.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-head">
+
+                            <div class="category-icon">
+                                🧘
+                            </div>
+
+                            <h4>
+                                Health & Wellness
+                            </h4>
+
+                        </div>
+
+                        <p id="healthText">
+
+                            A balanced routine will support you throughout
+                            the year. Consistent rest and recovery should
+                            remain a priority during busy periods.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- INSIGHTS -->
+
+                <div class="insight-grid">
+
+
+                    <div class="insight best">
+
+                        <div class="insight-label">
+                            ⭐ BEST PERIOD
+                        </div>
+
+                        <h3 id="bestPeriod">
+                            May – June
+                        </h3>
+
+                        <p id="bestText">
+                            Strong period for career progress, important
+                            decisions and new opportunities.
+                        </p>
+
+                    </div>
+
+
+                    <div class="insight challenge">
+
+                        <div class="insight-label">
+                            ⚠️ CHALLENGING PERIOD
+                        </div>
+
+                        <h3 id="challengePeriod">
+                            October
+                        </h3>
+
+                        <p id="challengeText">
+                            Slow down, review your plans and avoid emotional
+                            or rushed decisions.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- LUCK -->
+
+                <div class="luck">
+
+                    <div class="luck-title">
+                        ✨ Yearly Lucky Elements
+                    </div>
+
+
+                    <div class="luck-grid">
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY NUMBER
+                            </small>
+
+                            <strong id="luckyNumber">
+                                9
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY COLOR
+                            </small>
+
+                            <strong id="luckyColor">
+                                Red
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY MONTH
+                            </small>
+
+                            <strong id="luckyMonth">
+                                June
+                            </strong>
+
+                        </div>
+
+
+                        <div class="luck-item">
+
+                            <small>
+                                LUCKY DAY
+                            </small>
+
+                            <strong id="luckyDay">
+                                Thursday
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- CTA -->
+
+                <div class="cta">
+
+                    <div>
+
+                        <h3>
+                            Want your personal 2026 prediction?
+                        </h3>
+
+                        <p>
+                            Get guidance based on your complete Kundli.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Consult an Astrologer →
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Horoscope
+                </h3>
+
+
+                <a href="daily-horoscope.html" class="side-link">
+
+                    <div class="side-icon">
+                        ☀️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Daily Horoscope
+                        </strong>
+
+                        <span>
+                            Today's guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="weekly-horoscope.html" class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Weekly Horoscope
+                        </strong>
+
+                        <span>
+                            Seven-day forecast
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="monthly-horoscope.html" class="side-link">
+
+                    <div class="side-icon">
+                        🌙
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Monthly Horoscope
+                        </strong>
+
+                        <span>
+                            Month ahead
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="yearly-horoscope.html" class="side-link">
+
+                    <div class="side-icon">
+                        🔭
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Yearly Horoscope
+                        </strong>
+
+                        <span>
+                            Year forecast
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <h3>
+                    Zodiac Signs
+                </h3>
+
+
+                <div class="zodiac-mini">
+
+                    <a class="mini" href="aries-horoscope.html">
+                        <span class="mini-symbol">♈</span>Aries
+                    </a>
+
+                    <a class="mini" href="taurus-horoscope.html">
+                        <span class="mini-symbol">♉</span>Taurus
+                    </a>
+
+                    <a class="mini" href="gemini-horoscope.html">
+                        <span class="mini-symbol">♊</span>Gemini
+                    </a>
+
+                    <a class="mini" href="cancer-horoscope.html">
+                        <span class="mini-symbol">♋</span>Cancer
+                    </a>
+
+                    <a class="mini" href="leo-horoscope.html">
+                        <span class="mini-symbol">♌</span>Leo
+                    </a>
+
+                    <a class="mini" href="virgo-horoscope.html">
+                        <span class="mini-symbol">♍</span>Virgo
+                    </a>
+
+                    <a class="mini" href="libra-horoscope.html">
+                        <span class="mini-symbol">♎</span>Libra
+                    </a>
+
+                    <a class="mini" href="scorpio-horoscope.html">
+                        <span class="mini-symbol">♏</span>Scorpio
+                    </a>
+
+                    <a class="mini" href="sagittarius-horoscope.html">
+                        <span class="mini-symbol">♐</span>Sagittarius
+                    </a>
+
+                    <a class="mini" href="capricorn-horoscope.html">
+                        <span class="mini-symbol">♑</span>Capricorn
+                    </a>
+
+                    <a class="mini" href="aquarius-horoscope.html">
+                        <span class="mini-symbol">♒</span>Aquarius
+                    </a>
+
+                    <a class="mini" href="pisces-horoscope.html">
+                        <span class="mini-symbol">♓</span>Pisces
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Horoscope</h4>
+
+        <a href="daily-horoscope.html">Daily</a>
+        <a href="weekly-horoscope.html">Weekly</a>
+        <a href="monthly-horoscope.html">Monthly</a>
+        <a href="yearly-horoscope.html">Yearly</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../astrologers.html">Astrologers</a>
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../PANCHANG/panchang.html">Panchang</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">Chat</a>
+        <a href="../call.html">Call</a>
+        <a href="../live-astrology.html">Live Astrology</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 Astro With Talk. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ================= WALLET ================= */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* ================= YEARLY DATA ================= */
+
+const yearlyData = {
+
+    aries:{
+        name:"Aries",
+        symbol:"♈",
+        date:"March 21 – April 19",
+        overall:"8.8/10",
+        love:"8.6/10",
+        career:"9.1/10",
+        finance:"8.3/10",
+
+        overview:"2026 is a year of momentum, personal growth and important decisions. The first quarter encourages preparation, the middle of the year brings stronger opportunities and the final months focus on consolidation and long-term planning.",
+
+        q1:"Organize your priorities and prepare for bigger opportunities.",
+        q2:"New opportunities can develop through action and networking.",
+        q3:"Consistent effort can produce visible progress.",
+        q4:"Review achievements and prepare your next long-term move.",
+
+        loveText:"Relationships can become more mature and stable throughout the year. Honest communication will be especially important during periods of change.",
+
+        careerText:"Career growth is one of the stronger themes of the year. Leadership, new responsibilities and strategic decisions can create long-term progress.",
+
+        financeText:"Financial progress improves through planning, savings and disciplined decisions. Avoid unnecessary risks during uncertain periods.",
+
+        healthText:"A balanced routine will support you throughout the year. Consistent rest and recovery should remain a priority during busy periods.",
+
+        bestPeriod:"May – June",
+        bestText:"Strong period for career progress, important decisions and new opportunities.",
+
+        challengePeriod:"October",
+        challengeText:"Slow down, review your plans and avoid emotional or rushed decisions.",
+
+        number:"9",
+        color:"Red",
+        luckyMonth:"June",
+        luckyDay:"Thursday"
+    },
+
+    taurus:{
+        name:"Taurus",
+        symbol:"♉",
+        date:"April 20 – May 20",
+        overall:"8.6/10",
+        love:"8.8/10",
+        career:"8.5/10",
+        finance:"9.2/10",
+
+        overview:"2026 emphasizes stability, financial organization and gradual personal growth. Your strongest results will come from patience rather than shortcuts.",
+
+        q1:"Build a stable foundation and organize financial priorities.",
+        q2:"Professional and financial opportunities begin increasing.",
+        q3:"Steady progress strengthens your position.",
+        q4:"Consolidate gains and prepare for the next year.",
+
+        loveText:"Relationships benefit from stability and emotional reliability. Serious conversations may strengthen long-term bonds.",
+
+        careerText:"Consistent effort can lead to greater responsibility and professional recognition.",
+
+        financeText:"One of the strongest themes of the year. Savings, budgeting and long-term planning are favored.",
+
+        healthText:"Consistency is your greatest advantage. Maintain regular sleep, nutrition and physical activity.",
+
+        bestPeriod:"April – August",
+        bestText:"Strong period for financial stability and professional development.",
+
+        challengePeriod:"November",
+        challengeText:"Avoid stubborn financial or relationship decisions.",
+
+        number:"6",
+        color:"Green",
+        luckyMonth:"May",
+        luckyDay:"Friday"
+    },
+
+    gemini:{
+        name:"Gemini",
+        symbol:"♊",
+        date:"May 21 – June 20",
+        overall:"8.9/10",
+        love:"9.0/10",
+        career:"9.0/10",
+        finance:"7.9/10",
+
+        overview:"2026 is driven by communication, learning and new connections. Your ability to adapt can become a major advantage throughout the year.",
+
+        q1:"Gather information and explore new possibilities.",
+        q2:"Networking and communication create strong opportunities.",
+        q3:"Creative and professional momentum increases.",
+        q4:"Simplify commitments and focus on the most valuable goals.",
+
+        loveText:"Communication becomes central to relationship growth. New connections may develop through social and professional circles.",
+
+        careerText:"Excellent year for networking, presentations, learning and new projects.",
+
+        financeText:"Income opportunities can improve, but spending discipline remains important.",
+
+        healthText:"Protect your mental energy. Regular breaks will help you maintain focus.",
+
+        bestPeriod:"April – June",
+        bestText:"Excellent period for communication, networking and professional growth.",
+
+        challengePeriod:"September",
+        challengeText:"Avoid taking on too many commitments simultaneously.",
+
+        number:"5",
+        color:"Yellow",
+        luckyMonth:"June",
+        luckyDay:"Tuesday"
+    },
+
+    cancer:{
+        name:"Cancer",
+        symbol:"♋",
+        date:"June 21 – July 22",
+        overall:"8.3/10",
+        love:"9.1/10",
+        career:"8.0/10",
+        finance:"8.4/10",
+
+        overview:"2026 emphasizes emotional stability, family foundations and gradual professional progress. Your patience will be rewarded.",
+
+        q1:"Focus on personal priorities and family foundations.",
+        q2:"Professional responsibilities begin increasing.",
+        q3:"Relationships and personal growth become stronger.",
+        q4:"Create greater stability for the coming year.",
+
+        loveText:"Love and family relationships receive supportive energy. Emotional honesty can deepen important bonds.",
+
+        careerText:"Progress may be gradual, but consistent effort can create lasting professional stability.",
+
+        financeText:"A conservative approach can help strengthen your financial position.",
+
+        healthText:"Emotional wellbeing should remain a priority. Build time for recovery into your routine.",
+
+        bestPeriod:"July – September",
+        bestText:"Strong period for relationships, personal growth and emotional clarity.",
+
+        challengePeriod:"March",
+        challengeText:"Avoid allowing temporary emotions to influence major decisions.",
+
+        number:"2",
+        color:"Silver",
+        luckyMonth:"August",
+        luckyDay:"Monday"
+    },
+
+    leo:{
+        name:"Leo",
+        symbol:"♌",
+        date:"July 23 – August 22",
+        overall:"9.2/10",
+        love:"8.9/10",
+        career:"9.6/10",
+        finance:"8.8/10",
+
+        overview:"2026 is a powerful year for visibility, leadership and professional growth. Confidence combined with discipline can create major progress.",
+
+        q1:"Clarify ambitions and prepare for greater visibility.",
+        q2:"Leadership and professional opportunities increase.",
+        q3:"Peak momentum supports major achievements.",
+        q4:"Consolidate gains and plan your next chapter.",
+
+        loveText:"Romantic energy is warm and expressive. Strong relationships can become more committed.",
+
+        careerText:"One of the strongest career years. Leadership, visibility and major projects are highlighted.",
+
+        financeText:"Financial progress improves with organized planning and controlled spending.",
+
+        healthText:"High ambition can create fatigue. Recovery should remain part of your success strategy.",
+
+        bestPeriod:"June – September",
+        bestText:"Peak period for leadership, career growth and important achievements.",
+
+        challengePeriod:"December",
+        challengeText:"Avoid taking on more responsibility than your energy allows.",
+
+        number:"1",
+        color:"Gold",
+        luckyMonth:"August",
+        luckyDay:"Thursday"
+    },
+
+    virgo:{
+        name:"Virgo",
+        symbol:"♍",
+        date:"August 23 – September 22",
+        overall:"8.9/10",
+        love:"8.4/10",
+        career:"9.4/10",
+        finance:"9.0/10",
+
+        overview:"2026 rewards organization, analysis and practical decision-making. A structured approach can turn long-term plans into visible results.",
+
+        q1:"Organize unfinished matters and establish clear goals.",
+        q2:"Career productivity and financial planning increase.",
+        q3:"Strong progress through disciplined effort.",
+        q4:"Review achievements and refine long-term strategies.",
+
+        loveText:"Avoid overanalyzing emotional matters. Honest communication can create stronger connections.",
+
+        careerText:"Excellent year for detailed work, planning, management and professional development.",
+
+        financeText:"Strong year for budgeting, savings and long-term financial organization.",
+
+        healthText:"A structured lifestyle will support both energy and mental clarity.",
+
+        bestPeriod:"May – September",
+        bestText:"Strong period for career development and financial organization.",
+
+        challengePeriod:"February",
+        challengeText:"Avoid perfectionism and unnecessary worry.",
+
+        number:"4",
+        color:"Navy Blue",
+        luckyMonth:"September",
+        luckyDay:"Wednesday"
+    },
+
+    libra:{
+        name:"Libra",
+        symbol:"♎",
+        date:"September 23 – October 22",
+        overall:"8.7/10",
+        love:"9.3/10",
+        career:"8.4/10",
+        finance:"8.2/10",
+
+        overview:"2026 highlights partnerships, relationships and balance. Cooperation will often create better results than trying to manage everything independently.",
+
+        q1:"Restore balance and clarify important relationships.",
+        q2:"Partnerships and networking become stronger.",
+        q3:"Collaboration produces meaningful progress.",
+        q4:"Review shared commitments and long-term plans.",
+
+        loveText:"One of the strongest themes of the year. Important relationships can become more mature and stable.",
+
+        careerText:"Partnerships, teamwork and collaboration can create professional opportunities.",
+
+        financeText:"Maintain balance between lifestyle spending and long-term savings.",
+
+        healthText:"Social commitments may increase, so protect enough personal recovery time.",
+
+        bestPeriod:"April – July",
+        bestText:"Excellent period for relationships, partnerships and social growth.",
+
+        challengePeriod:"October",
+        challengeText:"Avoid delaying important decisions to keep everyone satisfied.",
+
+        number:"7",
+        color:"Pink",
+        luckyMonth:"May",
+        luckyDay:"Friday"
+    },
+
+    scorpio:{
+        name:"Scorpio",
+        symbol:"♏",
+        date:"October 23 – November 21",
+        overall:"9.0/10",
+        love:"8.7/10",
+        career:"9.3/10",
+        finance:"8.8/10",
+
+        overview:"2026 rewards focus, strategy and persistence. Long-term goals can move forward significantly when you stay disciplined.",
+
+        q1:"Identify your most important long-term goal.",
+        q2:"Professional obstacles begin to clear.",
+        q3:"Strong momentum produces visible progress.",
+        q4:"Consolidate gains and protect your energy.",
+
+        loveText:"Emotional honesty can deepen trust. Avoid testing people when direct communication is available.",
+
+        careerText:"A strong year for strategy, focused work and overcoming professional obstacles.",
+
+        financeText:"Research and patience can help strengthen your financial position.",
+
+        healthText:"Balance intensity with adequate rest and emotional recovery.",
+
+        bestPeriod:"June – September",
+        bestText:"Strongest period for focused career progress and major decisions.",
+
+        challengePeriod:"January",
+        challengeText:"Avoid reacting too quickly to uncertainty.",
+
+        number:"8",
+        color:"Maroon",
+        luckyMonth:"July",
+        luckyDay:"Tuesday"
+    },
+
+    sagittarius:{
+        name:"Sagittarius",
+        symbol:"♐",
+        date:"November 22 – December 21",
+        overall:"8.7/10",
+        love:"8.9/10",
+        career:"9.0/10",
+        finance:"7.9/10",
+
+        overview:"2026 brings exploration, learning and expansion. New experiences may change your perspective and create valuable opportunities.",
+
+        q1:"Explore new directions without rushing.",
+        q2:"Learning and networking become highly active.",
+        q3:"A major opportunity may appear.",
+        q4:"Choose which direction deserves long-term commitment.",
+
+        loveText:"Travel, learning and social experiences may create meaningful romantic connections.",
+
+        careerText:"Excellent year for learning, networking, travel-related work and new ideas.",
+
+        financeText:"Financial opportunities can grow, but avoid taking unnecessary risks.",
+
+        healthText:"Outdoor activity and changes of environment can refresh your energy.",
+
+        bestPeriod:"May – August",
+        bestText:"Excellent period for learning, travel and professional opportunities.",
+
+        challengePeriod:"September",
+        challengeText:"Avoid overconfidence and unrealistic commitments.",
+
+        number:"3",
+        color:"Purple",
+        luckyMonth:"August",
+        luckyDay:"Thursday"
+    },
+
+    capricorn:{
+        name:"Capricorn",
+        symbol:"♑",
+        date:"December 22 – January 19",
+        overall:"9.2/10",
+        love:"8.3/10",
+        career:"9.7/10",
+        finance:"9.4/10",
+
+        overview:"2026 strongly supports career development, financial organization and long-term achievement. Discipline can produce substantial results.",
+
+        q1:"Set measurable goals and build structure.",
+        q2:"Professional responsibility increases.",
+        q3:"Major progress becomes visible.",
+        q4:"Consolidate achievements and strengthen finances.",
+
+        loveText:"Consistency and reliability become more important than dramatic gestures.",
+
+        careerText:"One of the strongest career years. Leadership and responsibility can produce significant advancement.",
+
+        financeText:"Excellent year for savings, budgeting and long-term financial planning.",
+
+        healthText:"Avoid allowing work to consume every part of your life. Schedule recovery.",
+
+        bestPeriod:"April – September",
+        bestText:"Peak period for career advancement and financial growth.",
+
+        challengePeriod:"February",
+        challengeText:"Avoid excessive workload and neglecting personal relationships.",
+
+        number:"10",
+        color:"Brown",
+        luckyMonth:"September",
+        luckyDay:"Saturday"
+    },
+
+    aquarius:{
+        name:"Aquarius",
+        symbol:"♒",
+        date:"January 20 – February 18",
+        overall:"8.5/10",
+        love:"8.1/10",
+        career:"9.2/10",
+        finance:"8.3/10",
+
+        overview:"2026 emphasizes innovation, independence and new professional ideas. A different approach may create your biggest breakthrough.",
+
+        q1:"Question outdated assumptions.",
+        q2:"Innovative ideas gain attention.",
+        q3:"Professional experimentation increases.",
+        q4:"Choose which new direction deserves commitment.",
+
+        loveText:"Relationships benefit from freedom combined with honest communication.",
+
+        careerText:"Excellent year for technology, innovation, creative work and process improvement.",
+
+        financeText:"Keep financial choices based on evidence rather than excitement.",
+
+        healthText:"Balance mental activity with physical movement and sufficient sleep.",
+
+        bestPeriod:"June – August",
+        bestText:"Strong period for innovation, career breakthroughs and new ideas.",
+
+        challengePeriod:"November",
+        challengeText:"Avoid becoming emotionally detached from important people.",
+
+        number:"11",
+        color:"Blue",
+        luckyMonth:"July",
+        luckyDay:"Wednesday"
+    },
+
+    pisces:{
+        name:"Pisces",
+        symbol:"♓",
+        date:"February 19 – March 20",
+        overall:"8.9/10",
+        love:"9.4/10",
+        career:"8.4/10",
+        finance:"8.2/10",
+
+        overview:"2026 emphasizes intuition, creativity and emotional growth. Combining inspiration with practical planning can create meaningful progress.",
+
+        q1:"Listen to your instincts while checking facts.",
+        q2:"Creative energy increases.",
+        q3:"Relationships and personal growth strengthen.",
+        q4:"Prepare clearly for the next chapter.",
+
+        loveText:"A strong year for emotional closeness and relationship growth. Honest expression will be especially valuable.",
+
+        careerText:"Creative projects can flourish when you protect your focus and establish practical deadlines.",
+
+        financeText:"A calm, organized approach can create greater financial confidence.",
+
+        healthText:"Peaceful surroundings, adequate sleep and emotional balance are important.",
+
+        bestPeriod:"July – September",
+        bestText:"Excellent period for relationships, creativity and personal growth.",
+
+        challengePeriod:"March",
+        challengeText:"Avoid escaping difficult decisions instead of addressing them.",
+
+        number:"7",
+        color:"Sea Green",
+        luckyMonth:"August",
+        luckyDay:"Friday"
+    }
+
+};
+
+
+/* ================= CHANGE SIGN ================= */
+
+function changeSign(sign){
+
+    const data =
+        yearlyData[sign];
+
+    if(!data) return;
+
+
+    document.getElementById("symbol").innerText = data.symbol;
+    document.getElementById("name").innerText = data.name;
+    document.getElementById("date").innerText = data.date;
+
+    document.getElementById("overall").innerText = data.overall;
+    document.getElementById("loveScore").innerText = data.love;
+    document.getElementById("careerScore").innerText = data.career;
+    document.getElementById("financeScore").innerText = data.finance;
+
+    document.getElementById("overview").innerText = data.overview;
+
+    document.getElementById("q1").innerText = data.q1;
+    document.getElementById("q2").innerText = data.q2;
+    document.getElementById("q3").innerText = data.q3;
+    document.getElementById("q4").innerText = data.q4;
+
+    document.getElementById("loveText").innerText = data.loveText;
+    document.getElementById("careerText").innerText = data.careerText;
+    document.getElementById("financeText").innerText = data.financeText;
+    document.getElementById("healthText").innerText = data.healthText;
+
+    document.getElementById("bestPeriod").innerText = data.bestPeriod;
+    document.getElementById("bestText").innerText = data.bestText;
+
+    document.getElementById("challengePeriod").innerText = data.challengePeriod;
+    document.getElementById("challengeText").innerText = data.challengeText;
+
+    document.getElementById("luckyNumber").innerText = data.number;
+    document.getElementById("luckyColor").innerText = data.color;
+    document.getElementById("luckyMonth").innerText = data.luckyMonth;
+    document.getElementById("luckyDay").innerText = data.luckyDay;
+
+}
+
+
+/* ================= URL SUPPORT ================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const selectedSign =
+    params.get("sign");
+
+if(
+    selectedSign &&
+    yearlyData[selectedSign]
+){
+
+    document.getElementById("signSelect")
+        .value =
+        selectedSign;
+
+    changeSign(selectedSign);
+
+}
+
+</script>
+
+</body>
+</html>
