@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kundli Result - Astro With Talk</title>
+
+<meta name="description"
+content="View your Vedic Kundli result, Lagna, Rashi, Nakshatra, planetary positions and house details on Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#23794a;
+    --green-bg:#effaf4;
+    --blue:#2867a8;
+    --blue-bg:#f1f7ff;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* PROFILE HERO */
+
+.profile-hero{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.user-block{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.avatar{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    display:grid;
+    place-items:center;
+    color:var(--red);
+    font-size:27px;
+}
+
+.user-info h1{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.user-info p{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.hero-actions{
+    display:flex;
+    gap:7px;
+}
+
+.hero-actions button{
+    height:38px;
+    padding:0 12px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    background:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+.hero-actions .primary{
+    background:var(--red);
+    color:#fff;
+    border-color:var(--red);
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    margin-top:4px;
+}
+
+
+/* SUMMARY */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.summary-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+    background:#fff;
+}
+
+.summary-card small{
+    display:block;
+    color:#aaa;
+    font-size:6px;
+    text-transform:uppercase;
+}
+
+.summary-card strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.summary-card span{
+    display:block;
+    color:#888;
+    font-size:7px;
+    margin-top:2px;
+}
+
+
+/* CHART */
+
+.chart-area{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:17px;
+}
+
+.chart-box{
+    border:1px solid #eee;
+    border-radius:12px;
+    padding:14px;
+}
+
+.chart-box h3{
+    font-family:"Playfair Display",serif;
+    font-size:15px;
+    margin-bottom:10px;
+}
+
+
+/* NORTH INDIAN CHART */
+
+.chart{
+    width:100%;
+    max-width:350px;
+    aspect-ratio:1;
+    margin:auto;
+    position:relative;
+    border:2px solid #cfcfcf;
+    background:#fffaf5;
+    overflow:hidden;
+}
+
+.chart::before{
+    content:"";
+    position:absolute;
+    width:70.7%;
+    height:70.7%;
+    left:14.65%;
+    top:14.65%;
+    border:2px solid #cfcfcf;
+    transform:rotate(45deg);
+}
+
+.chart::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    width:2px;
+    height:100%;
+    background:#cfcfcf;
+    transform:translateX(-50%);
+}
+
+.chart-lines{
+    position:absolute;
+    inset:0;
+}
+
+.chart-lines::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:50%;
+    width:100%;
+    height:2px;
+    background:#cfcfcf;
+    transform:translateY(-50%);
+}
+
+.chart-lines::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:2px;
+    background:#cfcfcf;
+    top:50%;
+    left:0;
+    transform:rotate(45deg);
+    transform-origin:center;
+}
+
+.chart-label{
+    position:absolute;
+    font-size:7px;
+    font-weight:700;
+    text-align:center;
+    width:65px;
+}
+
+.l1{top:8px;left:50%;transform:translateX(-50%);}
+.l2{top:17%;right:5%;}
+.l3{top:50%;right:2%;transform:translateY(-50%);}
+.l4{bottom:17%;right:5%;}
+.l5{bottom:8px;left:50%;transform:translateX(-50%);}
+.l6{bottom:17%;left:5%;}
+.l7{top:50%;left:2%;transform:translateY(-50%);}
+.l8{top:17%;left:5%;}
+
+.center-text{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:3;
+}
+
+.center-text strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+    color:var(--red);
+}
+
+.center-text span{
+    display:block;
+    color:#777;
+    font-size:6px;
+    margin-top:2px;
+}
+
+
+/* PLANETS */
+
+.planet-list{
+    border:1px solid #eee;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.planet-row{
+    display:grid;
+    grid-template-columns:70px 1fr 70px 65px;
+    align-items:center;
+    padding:9px 10px;
+    border-bottom:1px solid #eee;
+    gap:8px;
+}
+
+.planet-row:last-child{
+    border-bottom:0;
+}
+
+.planet-row.header{
+    background:#fafafa;
+    color:#777;
+    font-size:6px;
+    font-weight:700;
+}
+
+.planet-row div{
+    font-size:7px;
+}
+
+.planet-name{
+    font-weight:700;
+}
+
+.planet-symbol{
+    display:inline-grid;
+    place-items:center;
+    width:25px;
+    height:25px;
+    border-radius:7px;
+    background:var(--light-red);
+    margin-right:5px;
+}
+
+
+/* HOUSES */
+
+.house-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:15px;
+}
+
+.house{
+    border:1px solid #eee;
+    border-radius:9px;
+    padding:11px;
+}
+
+.house-number{
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--light-red);
+    color:var(--red);
+    display:grid;
+    place-items:center;
+    font-size:7px;
+    font-weight:700;
+}
+
+.house strong{
+    display:block;
+    font-size:8px;
+    margin-top:7px;
+}
+
+.house span{
+    display:block;
+    color:#888;
+    font-size:6px;
+    line-height:1.5;
+    margin-top:3px;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--blue-bg);
+    border:1px solid #d7e5f3;
+    border-radius:10px;
+    padding:13px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .chart-area{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .profile-hero{
+        display:block;
+    }
+
+    .hero-actions{
+        margin-top:13px;
+    }
+
+    .hero-actions button{
+        flex:1;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .house-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .planet-row{
+        grid-template-columns:60px 1fr 60px;
+    }
+
+    .planet-row div:last-child{
+        display:none;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="kundli.html" class="active">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Kundli / <span>Kundli Result</span>
+    </div>
+
+
+    <!-- USER HEADER -->
+
+    <section class="profile-hero">
+
+        <div class="user-block">
+
+            <div class="avatar">
+                🔮
+            </div>
+
+            <div class="user-info">
+
+                <h1 id="userName">
+                    Your Kundli
+                </h1>
+
+                <p id="birthDetails">
+                    Birth details will appear here
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-actions">
+
+            <button onclick="location.href='free-kundli.html'">
+                ✏️ Edit Details
+            </button>
+
+            <button
+                class="primary"
+                onclick="window.print()">
+                🖨️ Print Kundli
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- SUMMARY -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Kundli Overview
+                </h2>
+
+                <p class="section-sub">
+                    Key birth-chart indicators.
+                </p>
+
+
+                <div class="summary-grid">
+
+
+                    <div class="summary-card">
+
+                        <small>
+                            Ascendant
+                        </small>
+
+                        <strong>
+                            Aries
+                        </strong>
+
+                        <span>
+                            Mesha Lagna
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <small>
+                            Moon Sign
+                        </small>
+
+                        <strong>
+                            Taurus
+                        </strong>
+
+                        <span>
+                            Vrishabha Rashi
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <small>
+                            Nakshatra
+                        </small>
+
+                        <strong>
+                            Rohini
+                        </strong>
+
+                        <span>
+                            Birth Star
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <small>
+                            Pada
+                        </small>
+
+                        <strong>
+                            2
+                        </strong>
+
+                        <span>
+                            Nakshatra Pada
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- CHART -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Birth Chart
+                </h2>
+
+                <p class="section-sub">
+                    North Indian style chart preview.
+                </p>
+
+
+                <div class="chart-area">
+
+
+                    <div class="chart-box">
+
+                        <h3>
+                            🪐 Rashi / D1 Chart
+                        </h3>
+
+
+                        <div class="chart">
+
+                            <div class="chart-lines"></div>
+
+
+                            <div class="chart-label l1">
+                                Aries
+                            </div>
+
+                            <div class="chart-label l2">
+                                Taurus
+                            </div>
+
+                            <div class="chart-label l3">
+                                Gemini
+                            </div>
+
+                            <div class="chart-label l4">
+                                Cancer
+                            </div>
+
+                            <div class="chart-label l5">
+                                Leo
+                            </div>
+
+                            <div class="chart-label l6">
+                                Virgo
+                            </div>
+
+                            <div class="chart-label l7">
+                                Libra
+                            </div>
+
+                            <div class="chart-label l8">
+                                Scorpio
+                            </div>
+
+
+                            <div class="center-text">
+
+                                <strong>
+                                    D1
+                                </strong>
+
+                                <span>
+                                    Rashi Chart
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-box">
+
+                        <h3>
+                            🔱 Navamsa Preview
+                        </h3>
+
+
+                        <div class="chart">
+
+                            <div class="chart-lines"></div>
+
+
+                            <div class="chart-label l1">
+                                1
+                            </div>
+
+                            <div class="chart-label l2">
+                                2
+                            </div>
+
+                            <div class="chart-label l3">
+                                3
+                            </div>
+
+                            <div class="chart-label l4">
+                                4
+                            </div>
+
+                            <div class="chart-label l5">
+                                5
+                            </div>
+
+                            <div class="chart-label l6">
+                                6
+                            </div>
+
+                            <div class="chart-label l7">
+                                7
+                            </div>
+
+                            <div class="chart-label l8">
+                                8
+                            </div>
+
+
+                            <div class="center-text">
+
+                                <strong>
+                                    D9
+                                </strong>
+
+                                <span>
+                                    Navamsa
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- PLANETS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Planetary Positions
+                </h2>
+
+                <p class="section-sub">
+                    Demonstration planetary placement table.
+                </p>
+
+
+                <div class="planet-list">
+
+
+                    <div class="planet-row header">
+
+                        <div>
+                            PLANET
+                        </div>
+
+                        <div>
+                            SIGN
+                        </div>
+
+                        <div>
+                            HOUSE
+                        </div>
+
+                        <div>
+                            STATUS
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">☀️</span>
+                            Sun
+                        </div>
+
+                        <div>
+                            Leo
+                        </div>
+
+                        <div>
+                            5th
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">🌙</span>
+                            Moon
+                        </div>
+
+                        <div>
+                            Taurus
+                        </div>
+
+                        <div>
+                            2nd
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">☿️</span>
+                            Mercury
+                        </div>
+
+                        <div>
+                            Leo
+                        </div>
+
+                        <div>
+                            5th
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">♀️</span>
+                            Venus
+                        </div>
+
+                        <div>
+                            Cancer
+                        </div>
+
+                        <div>
+                            4th
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">♂️</span>
+                            Mars
+                        </div>
+
+                        <div>
+                            Gemini
+                        </div>
+
+                        <div>
+                            3rd
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">♃</span>
+                            Jupiter
+                        </div>
+
+                        <div>
+                            Cancer
+                        </div>
+
+                        <div>
+                            4th
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">♄</span>
+                            Saturn
+                        </div>
+
+                        <div>
+                            Pisces
+                        </div>
+
+                        <div>
+                            12th
+                        </div>
+
+                        <div>
+                            Direct
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">☊</span>
+                            Rahu
+                        </div>
+
+                        <div>
+                            Aquarius
+                        </div>
+
+                        <div>
+                            11th
+                        </div>
+
+                        <div>
+                            Retro
+                        </div>
+
+                    </div>
+
+
+                    <div class="planet-row">
+
+                        <div class="planet-name">
+                            <span class="planet-symbol">☋</span>
+                            Ketu
+                        </div>
+
+                        <div>
+                            Leo
+                        </div>
+
+                        <div>
+                            5th
+                        </div>
+
+                        <div>
+                            Retro
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- HOUSES -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    12 Houses
+                </h2>
+
+                <p class="section-sub">
+                    Traditional areas represented by each house.
+                </p>
+
+
+                <div class="house-grid">
+
+
+                    <div class="house">
+                        <div class="house-number">1</div>
+                        <strong>Self</strong>
+                        <span>Personality, body and identity.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">2</div>
+                        <strong>Wealth</strong>
+                        <span>Family, speech and finances.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">3</div>
+                        <strong>Courage</strong>
+                        <span>Communication and siblings.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">4</div>
+                        <strong>Home</strong>
+                        <span>Mother, home and comfort.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">5</div>
+                        <strong>Creativity</strong>
+                        <span>Education, creativity and children.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">6</div>
+                        <strong>Service</strong>
+                        <span>Work, health and challenges.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">7</div>
+                        <strong>Partnership</strong>
+                        <span>Marriage and partnerships.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">8</div>
+                        <strong>Transformation</strong>
+                        <span>Change, inheritance and depth.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">9</div>
+                        <strong>Dharma</strong>
+                        <span>Fortune, learning and spirituality.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">10</div>
+                        <strong>Career</strong>
+                        <span>Profession and public life.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">11</div>
+                        <strong>Gains</strong>
+                        <span>Income, networks and aspirations.</span>
+                    </div>
+
+                    <div class="house">
+                        <div class="house-number">12</div>
+                        <strong>Release</strong>
+                        <span>Expenses, travel and isolation.</span>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Kundli Result Note
+                    </strong>
+
+                    <p>
+                        The chart and planetary positions shown on this
+                        prototype are demonstration data. Production
+                        Astro With Talk should calculate the chart dynamically
+                        from the user's exact birth date, time, location,
+                        timezone and selected astronomical calculation system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Kundli Tools
+                </h3>
+
+
+                <a href="kundli.html" class="side-link">
+
+                    <div class="side-icon">
+                        🔮
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Kundli
+                        </strong>
+                        <span>
+                            Main page
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="free-kundli.html" class="side-link">
+
+                    <div class="side-icon">
+                        ✨
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Free Kundli
+                        </strong>
+                        <span>
+                            Create chart
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="birth-chart.html" class="side-link">
+
+                    <div class="side-icon">
+                        🪐
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Birth Chart
+                        </strong>
+                        <span>
+                            D1 chart
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="navamsa-chart.html" class="side-link">
+
+                    <div class="side-icon">
+                        🔱
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Navamsa Chart
+                        </strong>
+                        <span>
+                            D9 chart
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="kundli-matching.html" class="side-link">
+
+                    <div class="side-icon">
+                        💍
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Kundli Matching
+                        </strong>
+                        <span>
+                            Compatibility
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="dosha-analysis.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Dosha Analysis
+                        </strong>
+                        <span>
+                            Dosha indicators
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Get Expert Kundli Reading
+                    </strong>
+
+                    <p>
+                        Talk to an astrologer for a personalized
+                        interpretation of your birth chart.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Consult Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Kundli</h4>
+
+        <a href="kundli.html">
+            Kundli
+        </a>
+
+        <a href="free-kundli.html">
+            Free Kundli
+        </a>
+
+        <a href="birth-chart.html">
+            Birth Chart
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../PANCHANG/panchang.html">
+            Panchang
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">
+            Chat
+        </a>
+
+        <a href="../call.html">
+            Call
+        </a>
+
+        <a href="../live-astrology.html">
+            Live Astrology
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* LOAD KUNDLI DATA */
+
+const saved =
+    localStorage.getItem(
+        "awt_kundli_data"
+    );
+
+
+if(saved){
+
+    try{
+
+        const data =
+            JSON.parse(saved);
+
+
+        if(data.name){
+
+            document.getElementById(
+                "userName"
+            ).innerText =
+                data.name + "'s Kundli";
+
+        }
+
+
+        const details = [];
+
+
+        if(data.dob){
+
+            details.push(
+                "DOB: " + data.dob
+            );
+
+        }
+
+
+        if(data.tob){
+
+            details.push(
+                "Time: " + data.tob
+            );
+
+        }
+
+
+        if(data.place){
+
+            details.push(
+                "Place: " + data.place
+            );
+
+        }
+
+
+        document.getElementById(
+            "birthDetails"
+        ).innerText =
+            details.join(" • ");
+
+
+    }catch(error){
+
+        console.log(
+            "Kundli data error",
+            error
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
