@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rahu Kaal - Astro With Talk</title>
+
+<meta name="description"
+content="Check today's Rahu Kaal, Yamaganda, Gulika Kaal and other daily Panchang timings with Astro With Talk.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#23794a;
+    --green-bg:#effaf4;
+    --orange:#a95224;
+    --orange-bg:#fff4ec;
+    --blue:#2867a8;
+    --blue-bg:#f1f7ff;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 84% 18%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(125deg,#761016,#d71920);
+    color:#fff;
+    border-radius:18px;
+    padding:31px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"☊";
+    position:absolute;
+    right:45px;
+    top:-30px;
+    font-size:180px;
+    opacity:.08;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:36px;
+}
+
+.hero p{
+    max-width:680px;
+    color:rgba(255,255,255,.82);
+    font-size:9px;
+    line-height:1.7;
+    margin-top:6px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:14px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* DATE BAR */
+
+.date-bar{
+    margin-top:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:13px 15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.date-main{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.date-icon{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:17px;
+}
+
+.date-main strong{
+    display:block;
+    font-size:10px;
+}
+
+.date-main span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.date-actions{
+    display:flex;
+    gap:6px;
+}
+
+.date-actions button{
+    height:32px;
+    padding:0 10px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:7px;
+    font-size:7px;
+}
+
+.date-actions button:hover{
+    color:var(--red);
+    border-color:#e0aaaa;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* MAIN RAHU CARD */
+
+.rahu-card{
+    margin-top:15px;
+    background:
+        radial-gradient(circle at 90% 10%,rgba(255,255,255,.16),transparent 25%),
+        linear-gradient(125deg,#7c1015,#d71920);
+    color:#fff;
+    border-radius:14px;
+    padding:23px;
+    position:relative;
+    overflow:hidden;
+}
+
+.rahu-card::after{
+    content:"☊";
+    position:absolute;
+    right:25px;
+    top:-15px;
+    font-size:105px;
+    opacity:.09;
+}
+
+.rahu-label{
+    font-size:7px;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.72);
+}
+
+.rahu-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+    margin-top:5px;
+}
+
+.rahu-time{
+    font-size:25px;
+    font-weight:700;
+    margin-top:7px;
+}
+
+.rahu-card p{
+    color:rgba(255,255,255,.76);
+    font-size:8px;
+    line-height:1.7;
+    max-width:530px;
+    margin-top:6px;
+}
+
+.rahu-status{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 9px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:20px;
+    font-size:7px;
+}
+
+
+/* PERIOD GRID */
+
+.period-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.period-card{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+}
+
+.period-icon{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    background:var(--orange-bg);
+    display:grid;
+    place-items:center;
+    font-size:16px;
+}
+
+.period-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+    margin-top:8px;
+}
+
+.period-card strong{
+    display:block;
+    font-size:9px;
+    margin-top:5px;
+}
+
+.period-card p{
+    color:#888;
+    font-size:7px;
+    line-height:1.6;
+    margin-top:4px;
+}
+
+.period-card .tag{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 7px;
+    border-radius:20px;
+    background:var(--orange-bg);
+    color:var(--orange);
+    font-size:6px;
+    font-weight:700;
+}
+
+
+/* TIMELINE */
+
+.timeline{
+    margin-top:15px;
+    border:1px solid #eee;
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.timeline-row{
+    display:grid;
+    grid-template-columns:85px 1fr 95px;
+    align-items:center;
+    gap:10px;
+    padding:11px 13px;
+    border-bottom:1px solid #eee;
+}
+
+.timeline-row:last-child{
+    border-bottom:0;
+}
+
+.timeline-time{
+    font-size:8px;
+    font-weight:700;
+}
+
+.timeline-bar{
+    height:8px;
+    background:#eee;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.timeline-bar span{
+    display:block;
+    height:100%;
+    width:100%;
+    background:#e7b0b0;
+}
+
+.timeline-status{
+    text-align:right;
+    font-size:6px;
+    color:var(--orange);
+    font-weight:700;
+}
+
+
+/* INFO */
+
+.info-box{
+    background:var(--blue-bg);
+    border:1px solid #d7e5f3;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .period-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:22px 18px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .date-bar{
+        display:block;
+    }
+
+    .date-actions{
+        margin-top:10px;
+    }
+
+    .date-actions button{
+        flex:1;
+    }
+
+    .period-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .timeline-row{
+        grid-template-columns:75px 1fr;
+    }
+
+    .timeline-status{
+        display:none;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="panchang.html" class="active">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Panchang / <span>Rahu Kaal</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Rahu Kaal
+            </h1>
+
+            <p>
+                Check today's Rahu Kaal along with Yamaganda and
+                Gulika Kaal. Select your date and location to view
+                the relevant daily Panchang periods.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    ⚠️ Rahu Kaal
+                </div>
+
+                <div class="hero-pill">
+                    📅 Daily Timing
+                </div>
+
+                <div class="hero-pill">
+                    📍 Location Based
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DATE BAR -->
+
+    <div class="date-bar">
+
+        <div class="date-main">
+
+            <div class="date-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong id="currentDate">
+                    Thursday, 27 August 2026
+                </strong>
+
+                <span>
+                    Local Panchang • Lucknow
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="date-actions">
+
+            <button onclick="changeDate(-1)">
+                ← Previous
+            </button>
+
+            <button onclick="resetDate()">
+                Today
+            </button>
+
+            <button onclick="changeDate(1)">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- RAHU KAAL -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Today's Rahu Kaal
+                </h2>
+
+                <p class="section-sub">
+                    Traditional Panchang timing associated with Rahu.
+                </p>
+
+
+                <div class="rahu-card">
+
+                    <div class="rahu-label">
+                        Today's Rahu Kaal
+                    </div>
+
+                    <h3>
+                        Rahu Kaal
+                    </h3>
+
+                    <div class="rahu-time">
+                        01:54 PM – 03:29 PM
+                    </div>
+
+                    <p>
+                        This period is traditionally considered unsuitable
+                        for initiating important auspicious activities.
+                        Exact timing depends on local sunrise and sunset.
+                    </p>
+
+                    <div class="rahu-status">
+                        ⚠️ Traditionally Avoided
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OTHER PERIODS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Other Daily Periods
+                </h2>
+
+                <p class="section-sub">
+                    Other commonly referenced inauspicious periods.
+                </p>
+
+
+                <div class="period-grid">
+
+
+                    <div class="period-card">
+
+                        <div class="period-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Yamaganda
+                        </h3>
+
+                        <strong>
+                            05:43 AM – 07:18 AM
+                        </strong>
+
+                        <p>
+                            Traditional period used in daily Panchang
+                            timing calculations.
+                        </p>
+
+                        <span class="tag">
+                            Avoid
+                        </span>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-icon">
+                            🔱
+                        </div>
+
+                        <h3>
+                            Gulika Kaal
+                        </h3>
+
+                        <strong>
+                            09:53 AM – 11:28 AM
+                        </strong>
+
+                        <p>
+                            Another traditional daily period associated
+                            with planetary timing.
+                        </p>
+
+                        <span class="tag">
+                            Check
+                        </span>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-icon">
+                            ☀️
+                        </div>
+
+                        <h3>
+                            Dur Muhurat
+                        </h3>
+
+                        <strong>
+                            10:18 AM – 11:06 AM
+                        </strong>
+
+                        <p>
+                            A period traditionally considered unfavorable
+                            for selected activities.
+                        </p>
+
+                        <span class="tag">
+                            Avoid
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- DAY TIMELINE -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Today's Timing Timeline
+                </h2>
+
+                <p class="section-sub">
+                    Approximate visual representation of the day's
+                    important timing periods.
+                </p>
+
+
+                <div class="timeline">
+
+
+                    <div class="timeline-row">
+
+                        <div class="timeline-time">
+                            05:43 – 07:18
+                        </div>
+
+                        <div class="timeline-bar">
+                            <span></span>
+                        </div>
+
+                        <div class="timeline-status">
+                            Yamaganda
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-row">
+
+                        <div class="timeline-time">
+                            07:18 – 09:53
+                        </div>
+
+                        <div class="timeline-bar">
+                            <span style="opacity:.35;"></span>
+                        </div>
+
+                        <div class="timeline-status">
+                            General
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-row">
+
+                        <div class="timeline-time">
+                            09:53 – 11:28
+                        </div>
+
+                        <div class="timeline-bar">
+                            <span></span>
+                        </div>
+
+                        <div class="timeline-status">
+                            Gulika
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-row">
+
+                        <div class="timeline-time">
+                            11:28 – 01:54
+                        </div>
+
+                        <div class="timeline-bar">
+                            <span style="opacity:.35;"></span>
+                        </div>
+
+                        <div class="timeline-status">
+                            General
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-row">
+
+                        <div class="timeline-time">
+                            01:54 – 03:29
+                        </div>
+
+                        <div class="timeline-bar">
+                            <span></span>
+                        </div>
+
+                        <div class="timeline-status">
+                            Rahu Kaal
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-row">
+
+                        <div class="timeline-time">
+                            03:29 – 06:38
+                        </div>
+
+                        <div class="timeline-bar">
+                            <span style="opacity:.35;"></span>
+                        </div>
+
+                        <div class="timeline-status">
+                            General
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- GUIDANCE -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important Panchang Guidance
+                    </strong>
+
+                    <p>
+                        Rahu Kaal is a traditional Hindu astrological
+                        time period. The displayed times are demo values
+                        for the selected location. A production Astro With
+                        Talk system should calculate these periods dynamically
+                        from the exact local sunrise and sunset.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Panchang
+                </h3>
+
+
+                <a href="panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Panchang
+                        </strong>
+                        <span>
+                            Main Panchang
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="today-panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Today's Panchang
+                        </strong>
+                        <span>
+                            Complete details
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="festival-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Festival Calendar
+                        </strong>
+                        <span>
+                            Hindu festivals
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="muhurat.html" class="side-link">
+
+                    <div class="side-icon">
+                        ✨
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Muhurat
+                        </strong>
+                        <span>
+                            Auspicious timings
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="rahu-kaal.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Rahu Kaal
+                        </strong>
+                        <span>
+                            Daily timing
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="choghadiya.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⏱️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Choghadiya
+                        </strong>
+                        <span>
+                            Day & night
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="hindu-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🗓️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Hindu Calendar
+                        </strong>
+                        <span>
+                            Monthly calendar
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Personal Guidance?
+                    </strong>
+
+                    <p>
+                        Consult an astrologer for personalized
+                        Muhurat and timing guidance.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to an Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Panchang</h4>
+
+        <a href="panchang.html">Panchang</a>
+        <a href="today-panchang.html">Today</a>
+        <a href="muhurat.html">Muhurat</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../HOROSCOPE/horoscope.html">Horoscope</a>
+        <a href="../KUNDLI/kundli.html">Kundli</a>
+        <a href="../astrologers.html">Astrologers</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">Chat</a>
+        <a href="../call.html">Call</a>
+        <a href="../live-astrology.html">Live Astrology</a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">Help</a>
+        <a href="../SUPPORT/faq.html">FAQ</a>
+        <a href="../SUPPORT/contact.html">Contact</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* DATE */
+
+let selectedDate =
+    new Date(2026,7,27);
+
+function updateDate(){
+
+    const formatted =
+        selectedDate.toLocaleDateString(
+            "en-IN",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+    document.getElementById(
+        "currentDate"
+    ).innerText = formatted;
+
+}
+
+function changeDate(days){
+
+    selectedDate.setDate(
+        selectedDate.getDate() + days
+    );
+
+    updateDate();
+
+}
+
+function resetDate(){
+
+    selectedDate =
+        new Date(2026,7,27);
+
+    updateDate();
+
+}
+
+updateDate();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Today's Panchang - Astro With Talk</title>
+
+<meta name="description"
+content="Today's detailed Hindu Panchang including Tithi, Nakshatra, Yoga, Karana, Vara, sunrise, sunset, Rahu Kaal and auspicious timings.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#b51218;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green:#23804b;
+    --green-bg:#effaf4;
+    --orange:#b65a27;
+    --orange-bg:#fff5ed;
+    --blue:#2767a8;
+    --blue-bg:#f1f7ff;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 85% 15%,rgba(255,255,255,.18),transparent 27%),
+        linear-gradient(125deg,#8e1117,#d71920);
+    color:#fff;
+    border-radius:18px;
+    padding:28px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"ॐ";
+    position:absolute;
+    right:38px;
+    top:-14px;
+    font-size:150px;
+    opacity:.07;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:36px;
+}
+
+.hero p{
+    color:rgba(255,255,255,.82);
+    font-size:9px;
+    line-height:1.7;
+    margin-top:6px;
+    max-width:650px;
+}
+
+.hero-info{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:14px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* DATE BAR */
+
+.date-bar{
+    margin-top:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:12px 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.date-main{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.date-icon{
+    width:36px;
+    height:36px;
+    background:var(--light-red);
+    border-radius:8px;
+    display:grid;
+    place-items:center;
+    font-size:17px;
+}
+
+.date-main strong{
+    display:block;
+    font-size:10px;
+}
+
+.date-main span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.date-actions{
+    display:flex;
+    gap:6px;
+}
+
+.date-actions button{
+    height:32px;
+    padding:0 10px;
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:7px;
+    font-size:7px;
+}
+
+.date-actions button:hover{
+    color:var(--red);
+    border-color:#e2aaaa;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* PANCHANG FIVE LIMBS */
+
+.five-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.five-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px 8px;
+    text-align:center;
+}
+
+.five-icon{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    margin:0 auto 7px;
+    font-size:15px;
+}
+
+.five-card small{
+    display:block;
+    color:#aaa;
+    font-size:6px;
+    text-transform:uppercase;
+}
+
+.five-card strong{
+    display:block;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.five-card span{
+    display:block;
+    color:#999;
+    font-size:6px;
+    line-height:1.5;
+    margin-top:3px;
+}
+
+
+/* DETAIL GRID */
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:15px;
+}
+
+.detail-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+}
+
+.detail-head strong{
+    font-size:9px;
+}
+
+.detail-card p{
+    color:#777;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:8px;
+}
+
+.detail-card small{
+    display:block;
+    color:#aaa;
+    font-size:6px;
+    margin-top:6px;
+}
+
+
+/* TIMINGS */
+
+.timing-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.timing-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:13px;
+}
+
+.timing-card .icon{
+    width:30px;
+    height:30px;
+    border-radius:8px;
+    background:var(--gold-bg);
+    display:grid;
+    place-items:center;
+}
+
+.timing-card small{
+    display:block;
+    color:#aaa;
+    font-size:6px;
+    margin-top:7px;
+}
+
+.timing-card strong{
+    display:block;
+    font-size:10px;
+    margin-top:3px;
+}
+
+
+/* MUHURAT */
+
+.muhurat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:15px;
+}
+
+.muhurat{
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #eee;
+}
+
+.muhurat.good{
+    background:var(--green-bg);
+    border-color:#cce6d6;
+}
+
+.muhurat.bad{
+    background:var(--orange-bg);
+    border-color:#efd7c6;
+}
+
+.muhurat .head{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.muhurat .head strong{
+    font-size:9px;
+}
+
+.muhurat p{
+    font-size:8px;
+    color:#777;
+    margin-top:7px;
+}
+
+.muhurat time{
+    display:block;
+    font-size:10px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+
+/* TABLE */
+
+.table-wrap{
+    overflow-x:auto;
+    margin-top:14px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:550px;
+}
+
+th{
+    background:#fafafa;
+    color:#777;
+    text-align:left;
+    padding:10px;
+    font-size:7px;
+    border-bottom:1px solid #eee;
+}
+
+td{
+    padding:10px;
+    font-size:8px;
+    border-bottom:1px solid #eee;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 7px;
+    border-radius:20px;
+    font-size:6px;
+    font-weight:700;
+}
+
+.badge.good{
+    color:#23784a;
+    background:#eaf7ef;
+}
+
+.badge.bad{
+    color:#a45120;
+    background:#fff0e8;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.info-box{
+    background:var(--blue-bg);
+    border:1px solid #d7e5f5;
+    border-radius:10px;
+    padding:13px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #f0cccc;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .five-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .timing-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:22px 18px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .date-bar{
+        display:block;
+    }
+
+    .date-actions{
+        margin-top:10px;
+    }
+
+    .date-actions button{
+        flex:1;
+    }
+
+    .five-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .detail-grid,
+    .muhurat-grid{
+        grid-template-columns:1fr;
+    }
+
+    .timing-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="panchang.html" class="active">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Panchang / <span>Today's Panchang</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Today's Panchang
+            </h1>
+
+            <p>
+                Complete Hindu Panchang for the selected date and location,
+                including the five Panchang elements, planetary timings,
+                auspicious Muhurat and Choghadiya.
+            </p>
+
+            <div class="hero-info">
+
+                <div class="hero-pill">
+                    📅 <span id="heroDate">Today</span>
+                </div>
+
+                <div class="hero-pill">
+                    📍 Lucknow, Uttar Pradesh
+                </div>
+
+                <div class="hero-pill">
+                    🇮🇳 India
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DATE -->
+
+    <div class="date-bar">
+
+        <div class="date-main">
+
+            <div class="date-icon">
+                📅
+            </div>
+
+            <div>
+
+                <strong id="currentDate">
+                    Thursday, 27 August 2026
+                </strong>
+
+                <span>
+                    Local Panchang • Lucknow
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="date-actions">
+
+            <button onclick="changeDate(-1)">
+                ← Previous
+            </button>
+
+            <button onclick="resetDate()">
+                Today
+            </button>
+
+            <button onclick="changeDate(1)">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN CONTENT -->
+
+        <section class="main-card">
+
+
+            <!-- FIVE LIMBS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Panchang — Five Limbs
+                </h2>
+
+                <p class="section-sub">
+                    The five fundamental components of today's Hindu Panchang.
+                </p>
+
+
+                <div class="five-grid">
+
+
+                    <div class="five-card">
+
+                        <div class="five-icon">
+                            🌙
+                        </div>
+
+                        <small>Tithi</small>
+
+                        <strong>
+                            Shukla Dashami
+                        </strong>
+
+                        <span>
+                            Until 07:42 PM
+                        </span>
+
+                    </div>
+
+
+                    <div class="five-card">
+
+                        <div class="five-icon">
+                            ⭐
+                        </div>
+
+                        <small>Nakshatra</small>
+
+                        <strong>
+                            Anuradha
+                        </strong>
+
+                        <span>
+                            Until 09:18 PM
+                        </span>
+
+                    </div>
+
+
+                    <div class="five-card">
+
+                        <div class="five-icon">
+                            ☀️
+                        </div>
+
+                        <small>Yoga</small>
+
+                        <strong>
+                            Siddhi
+                        </strong>
+
+                        <span>
+                            Until 04:26 PM
+                        </span>
+
+                    </div>
+
+
+                    <div class="five-card">
+
+                        <div class="five-icon">
+                            🔱
+                        </div>
+
+                        <small>Karana</small>
+
+                        <strong>
+                            Vishti
+                        </strong>
+
+                        <span>
+                            Until 08:31 AM
+                        </span>
+
+                    </div>
+
+
+                    <div class="five-card">
+
+                        <div class="five-icon">
+                            🕉️
+                        </div>
+
+                        <small>Vara</small>
+
+                        <strong>
+                            Thursday
+                        </strong>
+
+                        <span>
+                            Brihaspativara
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Today's Panchang Details
+                </h2>
+
+                <p class="section-sub">
+                    Detailed astronomical and calendar information.
+                </p>
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-head">
+
+                            <strong>
+                                🌙 Tithi
+                            </strong>
+
+                            <span style="color:#d79b22;font-size:8px;">
+                                10
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Shukla Dashami
+                        </p>
+
+                        <small>
+                            Ends at 07:42 PM
+                        </small>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-head">
+
+                            <strong>
+                                ⭐ Nakshatra
+                            </strong>
+
+                            <span style="color:#d79b22;font-size:8px;">
+                                17
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Anuradha
+                        </p>
+
+                        <small>
+                            Ends at 09:18 PM
+                        </small>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-head">
+
+                            <strong>
+                                ☀️ Yoga
+                            </strong>
+
+                            <span style="color:#d79b22;font-size:8px;">
+                                21
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Siddhi
+                        </p>
+
+                        <small>
+                            Ends at 04:26 PM
+                        </small>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-head">
+
+                            <strong>
+                                🔱 Karana
+                            </strong>
+
+                            <span style="color:#d79b22;font-size:8px;">
+                                2
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Vishti
+                        </p>
+
+                        <small>
+                            Changes at 08:31 AM
+                        </small>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-head">
+
+                            <strong>
+                                🕉️ Paksha
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Shukla Paksha
+                        </p>
+
+                        <small>
+                            Bright lunar fortnight
+                        </small>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-head">
+
+                            <strong>
+                                🌕 Moon Sign
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Scorpio
+                        </p>
+
+                        <small>
+                            Moon remains in Vrishchika
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- SUN MOON -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Sunrise, Sunset & Moon Timings
+                </h2>
+
+                <p class="section-sub">
+                    Local solar and lunar timings for Lucknow.
+                </p>
+
+
+                <div class="timing-grid">
+
+
+                    <div class="timing-card">
+
+                        <div class="icon">
+                            🌅
+                        </div>
+
+                        <small>
+                            SUNRISE
+                        </small>
+
+                        <strong>
+                            05:43 AM
+                        </strong>
+
+                    </div>
+
+
+                    <div class="timing-card">
+
+                        <div class="icon">
+                            🌇
+                        </div>
+
+                        <small>
+                            SUNSET
+                        </small>
+
+                        <strong>
+                            06:38 PM
+                        </strong>
+
+                    </div>
+
+
+                    <div class="timing-card">
+
+                        <div class="icon">
+                            🌙
+                        </div>
+
+                        <small>
+                            MOONRISE
+                        </small>
+
+                        <strong>
+                            04:21 PM
+                        </strong>
+
+                    </div>
+
+
+                    <div class="timing-card">
+
+                        <div class="icon">
+                            🌑
+                        </div>
+
+                        <small>
+                            MOONSET
+                        </small>
+
+                        <strong>
+                            02:57 AM
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- MUHURAT -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Muhurat & Important Timings
+                </h2>
+
+                <p class="section-sub">
+                    Auspicious and inauspicious periods during the day.
+                </p>
+
+
+                <div class="muhurat-grid">
+
+
+                    <div class="muhurat good">
+
+                        <div class="head">
+
+                            <span>
+                                ✨
+                            </span>
+
+                            <strong>
+                                Abhijit Muhurat
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Auspicious period for important activities.
+                        </p>
+
+                        <time>
+                            11:57 AM – 12:49 PM
+                        </time>
+
+                    </div>
+
+
+                    <div class="muhurat good">
+
+                        <div class="head">
+
+                            <span>
+                                🙏
+                            </span>
+
+                            <strong>
+                                Brahma Muhurat
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditional early-morning spiritual period.
+                        </p>
+
+                        <time>
+                            04:08 AM – 04:56 AM
+                        </time>
+
+                    </div>
+
+
+                    <div class="muhurat bad">
+
+                        <div class="head">
+
+                            <span>
+                                ⚠️
+                            </span>
+
+                            <strong>
+                                Rahu Kaal
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally avoided for starting auspicious work.
+                        </p>
+
+                        <time>
+                            01:54 PM – 03:29 PM
+                        </time>
+
+                    </div>
+
+
+                    <div class="muhurat bad">
+
+                        <div class="head">
+
+                            <span>
+                                ⚠️
+                            </span>
+
+                            <strong>
+                                Yamaganda
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditionally considered an inauspicious period.
+                        </p>
+
+                        <time>
+                            05:43 AM – 07:18 AM
+                        </time>
+
+                    </div>
+
+
+                    <div class="muhurat bad">
+
+                        <div class="head">
+
+                            <span>
+                                ⚠️
+                            </span>
+
+                            <strong>
+                                Gulika Kaal
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Traditional Panchang period used for timing analysis.
+                        </p>
+
+                        <time>
+                            09:53 AM – 11:28 AM
+                        </time>
+
+                    </div>
+
+
+                    <div class="muhurat good">
+
+                        <div class="head">
+
+                            <span>
+                                🌟
+                            </span>
+
+                            <strong>
+                                Amrit Kaal
+                            </strong>
+
+                        </div>
+
+                        <p>
+                            Favorable period according to the selected Panchang.
+                        </p>
+
+                        <time>
+                            06:12 PM – 07:46 PM
+                        </time>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- CHOGHADIYA -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Day Choghadiya
+                </h2>
+
+                <p class="section-sub">
+                    Daytime Choghadiya periods and their traditional nature.
+                </p>
+
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Period</th>
+                                <th>Time</th>
+                                <th>Name</th>
+                                <th>Nature</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>1</td>
+
+                                <td>
+                                    05:43 – 07:18
+                                </td>
+
+                                <td>
+                                    Labh
+                                </td>
+
+                                <td>
+                                    <span class="badge good">
+                                        Auspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>2</td>
+
+                                <td>
+                                    07:18 – 08:53
+                                </td>
+
+                                <td>
+                                    Amrit
+                                </td>
+
+                                <td>
+                                    <span class="badge good">
+                                        Auspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>3</td>
+
+                                <td>
+                                    08:53 – 10:28
+                                </td>
+
+                                <td>
+                                    Kaal
+                                </td>
+
+                                <td>
+                                    <span class="badge bad">
+                                        Inauspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>4</td>
+
+                                <td>
+                                    10:28 – 12:03
+                                </td>
+
+                                <td>
+                                    Shubh
+                                </td>
+
+                                <td>
+                                    <span class="badge good">
+                                        Auspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>5</td>
+
+                                <td>
+                                    12:03 – 01:38
+                                </td>
+
+                                <td>
+                                    Rog
+                                </td>
+
+                                <td>
+                                    <span class="badge bad">
+                                        Inauspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>6</td>
+
+                                <td>
+                                    01:38 – 03:13
+                                </td>
+
+                                <td>
+                                    Udveg
+                                </td>
+
+                                <td>
+                                    <span class="badge bad">
+                                        Inauspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>7</td>
+
+                                <td>
+                                    03:13 – 04:48
+                                </td>
+
+                                <td>
+                                    Char
+                                </td>
+
+                                <td>
+                                    <span class="badge good">
+                                        Good
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>8</td>
+
+                                <td>
+                                    04:48 – 06:38
+                                </td>
+
+                                <td>
+                                    Labh
+                                </td>
+
+                                <td>
+                                    <span class="badge good">
+                                        Auspicious
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Important
+                    </strong>
+
+                    <p>
+                        Panchang calculations are location-dependent.
+                        Timings displayed on this demo page should be
+                        connected to the production Panchang calculation
+                        service before launch so that Tithi, Nakshatra,
+                        Muhurat and planetary timings are generated
+                        dynamically for the selected city and date.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Panchang Menu
+                </h3>
+
+
+                <a href="panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Panchang
+                        </strong>
+
+                        <span>
+                            Main Panchang
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="today-panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Today's Panchang
+                        </strong>
+
+                        <span>
+                            Detailed today view
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="festival-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Festival Calendar
+                        </strong>
+
+                        <span>
+                            Hindu festivals
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="muhurat.html" class="side-link">
+
+                    <div class="side-icon">
+                        ✨
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Muhurat
+                        </strong>
+
+                        <span>
+                            Auspicious timings
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="rahu-kaal.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Rahu Kaal
+                        </strong>
+
+                        <span>
+                            Rahu Kaal timings
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="choghadiya.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⏱️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Choghadiya
+                        </strong>
+
+                        <span>
+                            Day & night periods
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="hindu-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🗓️
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Hindu Calendar
+                        </strong>
+
+                        <span>
+                            Monthly calendar
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Personalized Astrology?
+                    </strong>
+
+                    <p>
+                        Panchang gives general timing guidance.
+                        For a personal reading, consult an astrologer.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to an Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+
+                <a href="../KUNDLI/kundli.html"
+                   class="side-link">
+
+                    <div class="side-icon">
+                        🔮
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Free Kundli
+                        </strong>
+
+                        <span>
+                            Generate birth chart
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="../HOROSCOPE/horoscope.html"
+                   class="side-link">
+
+                    <div class="side-icon">
+                        ♈
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Horoscope
+                        </strong>
+
+                        <span>
+                            Daily zodiac guidance
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="../CALCULATORS/calculators.html"
+                   class="side-link">
+
+                    <div class="side-icon">
+                        🧮
+                    </div>
+
+                    <div class="side-content">
+
+                        <strong>
+                            Astrology Calculators
+                        </strong>
+
+                        <span>
+                            Free calculators
+                        </span>
+
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Panchang</h4>
+
+        <a href="panchang.html">
+            Panchang
+        </a>
+
+        <a href="today-panchang.html">
+            Today
+        </a>
+
+        <a href="muhurat.html">
+            Muhurat
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">
+            Chat
+        </a>
+
+        <a href="../call.html">
+            Call
+        </a>
+
+        <a href="../live-astrology.html">
+            Live Astrology
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* DATE */
+
+let selectedDate =
+    new Date(2026,7,27);
+
+function displayDate(){
+
+    const formatted =
+        selectedDate.toLocaleDateString(
+            "en-IN",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+    document.getElementById(
+        "currentDate"
+    ).innerText = formatted;
+
+    document.getElementById(
+        "heroDate"
+    ).innerText = formatted;
+
+}
+
+function changeDate(days){
+
+    selectedDate.setDate(
+        selectedDate.getDate() + days
+    );
+
+    displayDate();
+
+}
+
+function resetDate(){
+
+    selectedDate =
+        new Date(2026,7,27);
+
+    displayDate();
+
+}
+
+displayDate();
+
+</script>
+
+</body>
+</html>

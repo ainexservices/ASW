@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hindu Festival Calendar - Astro With Talk</title>
+
+<meta name="description"
+content="Hindu Festival Calendar with important Indian festivals, fasting days, Ekadashi, Purnima, Amavasya and religious occasions.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --red:#d71920;
+    --dark-red:#a91016;
+    --light-red:#fff3f3;
+    --dark:#171717;
+    --gray:#777;
+    --border:#e5e5e5;
+    --gold:#d79b22;
+    --gold-bg:#fff8e8;
+    --green-bg:#effaf4;
+    --blue-bg:#f2f7ff;
+    --bg:#f7f7f7;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1120px,calc(100% - 30px));
+    margin:auto;
+}
+
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:19px;
+    font-weight:700;
+}
+
+.logo-text span{
+    color:var(--red);
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#555;
+    font-size:9px;
+    font-weight:600;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.wallet{
+    background:#fff7e5;
+    border:1px solid #ead9b3;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.wallet span{
+    color:var(--red);
+}
+
+.profile-btn{
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    border-radius:50%;
+    background:#fff;
+}
+
+
+/* PAGE */
+
+.page{
+    padding:30px 0 65px;
+}
+
+.breadcrumb{
+    color:#999;
+    font-size:8px;
+    margin-bottom:12px;
+}
+
+.breadcrumb span{
+    color:var(--red);
+}
+
+
+/* HERO */
+
+.hero{
+    background:
+        radial-gradient(circle at 84% 20%,rgba(255,255,255,.2),transparent 27%),
+        linear-gradient(125deg,#8e1117,#d71920);
+    color:#fff;
+    border-radius:18px;
+    padding:29px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"🪔";
+    position:absolute;
+    right:38px;
+    top:0;
+    font-size:125px;
+    opacity:.1;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:36px;
+}
+
+.hero p{
+    max-width:650px;
+    color:rgba(255,255,255,.82);
+    font-size:9px;
+    line-height:1.7;
+    margin-top:6px;
+}
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:14px;
+}
+
+.hero-pill{
+    padding:7px 10px;
+    border-radius:7px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:7px;
+}
+
+
+/* CONTROLS */
+
+.controls{
+    margin-top:16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:13px 15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.control-left{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.control-left button{
+    width:32px;
+    height:32px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:7px;
+}
+
+.control-left button:hover{
+    color:var(--red);
+    border-color:#e1aaaa;
+}
+
+.year-title{
+    text-align:center;
+    min-width:120px;
+}
+
+.year-title strong{
+    display:block;
+    font-size:11px;
+}
+
+.year-title span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.control-right{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.control-right label{
+    color:#888;
+    font-size:7px;
+}
+
+.control-right select{
+    height:33px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    padding:0 9px;
+    font-size:8px;
+}
+
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:18px;
+    margin-top:18px;
+}
+
+.main-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.section{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.section:last-child{
+    border-bottom:0;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+}
+
+.section-sub{
+    color:#888;
+    font-size:8px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* MONTH CARDS */
+
+.month-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.month-card{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:14px;
+    transition:.2s;
+}
+
+.month-card:hover{
+    border-color:#e5b0b0;
+    transform:translateY(-1px);
+}
+
+.month-card.active{
+    border-color:#e4a4a4;
+    background:var(--light-red);
+}
+
+.month-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.month-head strong{
+    font-size:10px;
+}
+
+.month-head span{
+    color:#999;
+    font-size:7px;
+}
+
+.month-card p{
+    color:#888;
+    font-size:7px;
+    line-height:1.6;
+    margin-top:8px;
+}
+
+.month-count{
+    margin-top:9px;
+    color:var(--red);
+    font-size:7px;
+    font-weight:700;
+}
+
+
+/* FESTIVALS */
+
+.festival-list{
+    display:grid;
+    gap:9px;
+    margin-top:15px;
+}
+
+.festival{
+    border:1px solid #eee;
+    border-radius:11px;
+    padding:13px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.festival-date{
+    width:58px;
+    min-width:58px;
+    text-align:center;
+    background:var(--light-red);
+    border-radius:9px;
+    padding:8px 5px;
+}
+
+.festival-date strong{
+    display:block;
+    color:var(--red);
+    font-size:15px;
+}
+
+.festival-date span{
+    display:block;
+    color:#888;
+    font-size:6px;
+    margin-top:2px;
+    text-transform:uppercase;
+}
+
+.festival-info{
+    flex:1;
+}
+
+.festival-info h3{
+    font-family:"Playfair Display",serif;
+    font-size:14px;
+}
+
+.festival-info p{
+    color:#888;
+    font-size:7px;
+    line-height:1.6;
+    margin-top:3px;
+}
+
+.festival-type{
+    padding:5px 7px;
+    border-radius:20px;
+    background:var(--gold-bg);
+    color:#987019;
+    font-size:6px;
+    font-weight:700;
+}
+
+.festival-type.fast{
+    background:var(--blue-bg);
+    color:#356898;
+}
+
+
+/* FEATURED */
+
+.featured{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.feature-card{
+    border-radius:11px;
+    padding:15px;
+    border:1px solid #eee;
+}
+
+.feature-card:first-child{
+    background:var(--gold-bg);
+    border-color:#ebdfbb;
+}
+
+.feature-card:last-child{
+    background:var(--light-red);
+    border-color:#efd0d0;
+}
+
+.feature-card .icon{
+    font-size:21px;
+}
+
+.feature-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:15px;
+    margin-top:6px;
+}
+
+.feature-card p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:4px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.side-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:16px;
+}
+
+.side-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.side-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.side-link:last-child{
+    border-bottom:0;
+}
+
+.side-icon{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    background:var(--light-red);
+    display:grid;
+    place-items:center;
+    font-size:13px;
+}
+
+.side-content{
+    flex:1;
+}
+
+.side-content strong{
+    display:block;
+    font-size:9px;
+}
+
+.side-content span{
+    display:block;
+    color:#999;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.side-arrow{
+    color:#bbb;
+}
+
+.info-box{
+    background:var(--blue-bg);
+    border:1px solid #d8e5f3;
+    border-radius:10px;
+    padding:13px;
+}
+
+.info-box strong{
+    font-size:9px;
+}
+
+.info-box p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta{
+    background:var(--light-red);
+    border:1px solid #efd0d0;
+    border-radius:10px;
+    padding:13px;
+}
+
+.cta strong{
+    font-size:9px;
+}
+
+.cta p{
+    color:#777;
+    font-size:7px;
+    line-height:1.7;
+    margin-top:5px;
+}
+
+.cta button{
+    width:100%;
+    height:35px;
+    margin-top:9px;
+    border:0;
+    border-radius:7px;
+    background:var(--red);
+    color:#fff;
+    font-size:8px;
+    font-weight:700;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#171717;
+    color:#fff;
+    padding:42px 0 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-brand p{
+    color:#aaa;
+    font-size:9px;
+    line-height:1.7;
+    margin-top:9px;
+}
+
+.footer-col h4{
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aaa;
+    font-size:8px;
+    margin:6px 0;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    margin-top:26px;
+    padding-top:13px;
+    color:#777;
+    font-size:8px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .month-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sidebar{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    header,
+    .nav{
+        height:64px;
+    }
+
+    .wallet{
+        display:none;
+    }
+
+    .hero{
+        padding:22px 18px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .controls{
+        display:block;
+    }
+
+    .control-right{
+        margin-top:10px;
+    }
+
+    .month-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .featured{
+        grid-template-columns:1fr;
+    }
+
+    .festival{
+        align-items:flex-start;
+    }
+
+    .festival-type{
+        display:none;
+    }
+
+    .sidebar{
+        display:block;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="../index.html" class="logo">
+
+        <div class="logo-icon">
+            ॐ
+        </div>
+
+        <div class="logo-text">
+            Astro <span>With Talk</span>
+        </div>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="panchang.html" class="active">
+            Panchang
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../CALCULATORS/calculators.html">
+            Calculators
+        </a>
+
+    </nav>
+
+
+    <div class="nav-right">
+
+        <div class="wallet">
+            💰 ₹<span id="wallet">500</span>
+        </div>
+
+        <button
+            class="profile-btn"
+            onclick="location.href='../profile.html'">
+            👤
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+
+    <div class="breadcrumb">
+        Home / Panchang / <span>Festival Calendar</span>
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Hindu Festival Calendar
+            </h1>
+
+            <p>
+                Discover important Hindu festivals, fasting days,
+                Ekadashi, Purnima, Amavasya and major religious occasions
+                throughout the year.
+            </p>
+
+
+            <div class="hero-pills">
+
+                <div class="hero-pill">
+                    🪔 Hindu Festivals
+                </div>
+
+                <div class="hero-pill">
+                    📅 2026 Calendar
+                </div>
+
+                <div class="hero-pill">
+                    📍 India
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <div class="control-left">
+
+            <button onclick="changeYear(-1)">
+                ←
+            </button>
+
+            <div class="year-title">
+
+                <strong id="year">
+                    2026
+                </strong>
+
+                <span>
+                    Hindu Festival Calendar
+                </span>
+
+            </div>
+
+            <button onclick="changeYear(1)">
+                →
+            </button>
+
+        </div>
+
+
+        <div class="control-right">
+
+            <label>
+                Location
+            </label>
+
+            <select id="city">
+
+                <option>Lucknow</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Varanasi</option>
+                <option>Jaipur</option>
+                <option>Kolkata</option>
+                <option>Bengaluru</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- MAIN -->
+
+        <section class="main-card">
+
+
+            <!-- MONTHS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    2026 Festival Months
+                </h2>
+
+                <p class="section-sub">
+                    Select a month to explore its major Hindu festivals.
+                </p>
+
+
+                <div class="month-grid">
+
+
+                    <a href="#january" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                January
+                            </strong>
+
+                            <span>
+                                Jan
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Lohri, Makar Sankranti,
+                            Pongal and Vasant Panchami.
+                        </p>
+
+                        <div class="month-count">
+                            6+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#february" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                February
+                            </strong>
+
+                            <span>
+                                Feb
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Maha Shivratri and
+                            important fasting days.
+                        </p>
+
+                        <div class="month-count">
+                            5+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#march" class="month-card active">
+
+                        <div class="month-head">
+
+                            <strong>
+                                March
+                            </strong>
+
+                            <span>
+                                Mar
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Holi, Chaitra Navratri,
+                            Ram Navami and more.
+                        </p>
+
+                        <div class="month-count">
+                            8+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#april" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                April
+                            </strong>
+
+                            <span>
+                                Apr
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Hanuman Jayanti,
+                            Akshaya Tritiya and more.
+                        </p>
+
+                        <div class="month-count">
+                            7+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#may" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                May
+                            </strong>
+
+                            <span>
+                                May
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Narasimha Jayanti,
+                            Buddha Purnima and more.
+                        </p>
+
+                        <div class="month-count">
+                            6+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#june" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                June
+                            </strong>
+
+                            <span>
+                                Jun
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Ganga Dussehra,
+                            Vat Savitri and more.
+                        </p>
+
+                        <div class="month-count">
+                            6+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#july" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                July
+                            </strong>
+
+                            <span>
+                                Jul
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Guru Purnima,
+                            Devshayani Ekadashi and more.
+                        </p>
+
+                        <div class="month-count">
+                            6+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#august" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                August
+                            </strong>
+
+                            <span>
+                                Aug
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Raksha Bandhan,
+                            Janmashtami and Ganesh Chaturthi.
+                        </p>
+
+                        <div class="month-count">
+                            8+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#september" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                September
+                            </strong>
+
+                            <span>
+                                Sep
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Ganesh Visarjan,
+                            Navratri preparations and more.
+                        </p>
+
+                        <div class="month-count">
+                            5+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#october" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                October
+                            </strong>
+
+                            <span>
+                                Oct
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Navratri, Dussehra,
+                            Karwa Chauth and Diwali season.
+                        </p>
+
+                        <div class="month-count">
+                            10+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#november" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                November
+                            </strong>
+
+                            <span>
+                                Nov
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Diwali, Govardhan Puja,
+                            Bhai Dooj and Chhath Puja.
+                        </p>
+
+                        <div class="month-count">
+                            9+ occasions
+                        </div>
+
+                    </a>
+
+
+                    <a href="#december" class="month-card">
+
+                        <div class="month-head">
+
+                            <strong>
+                                December
+                            </strong>
+
+                            <span>
+                                Dec
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Gita Jayanti,
+                            Vivah Panchami and more.
+                        </p>
+
+                        <div class="month-count">
+                            5+ occasions
+                        </div>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURED -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Featured Occasions
+                </h2>
+
+                <p class="section-sub">
+                    Important upcoming religious occasions.
+                </p>
+
+
+                <div class="featured">
+
+
+                    <div class="feature-card">
+
+                        <div class="icon">
+                            🪔
+                        </div>
+
+                        <h3>
+                            Diwali
+                        </h3>
+
+                        <p>
+                            The festival of lights, traditionally celebrated
+                            with Lakshmi Puja, lamps and family gatherings.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="icon">
+                            🌈
+                        </div>
+
+                        <h3>
+                            Holi
+                        </h3>
+
+                        <p>
+                            The festival of colors associated with joy,
+                            renewal and the arrival of spring.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- FESTIVAL LIST -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Major Festivals & Observances
+                </h2>
+
+                <p class="section-sub">
+                    Sample calendar view for important Hindu occasions.
+                </p>
+
+
+                <div class="festival-list">
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                15
+                            </strong>
+
+                            <span>
+                                January
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Makar Sankranti
+                            </h3>
+
+                            <p>
+                                Solar transition festival celebrated across India.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                04
+                            </strong>
+
+                            <span>
+                                March
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Holika Dahan
+                            </h3>
+
+                            <p>
+                                Traditional bonfire observance on the eve of Holi.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                05
+                            </strong>
+
+                            <span>
+                                March
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Holi
+                            </h3>
+
+                            <p>
+                                Festival of colors celebrated with family and community.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                19
+                            </strong>
+
+                            <span>
+                                March
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Chaitra Navratri Begins
+                            </h3>
+
+                            <p>
+                                Nine-day devotional period dedicated to Devi.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type fast">
+                            PUJA
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                27
+                            </strong>
+
+                            <span>
+                                August
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Janmashtami
+                            </h3>
+
+                            <p>
+                                Traditional observance celebrating the birth of Lord Krishna.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                31
+                            </strong>
+
+                            <span>
+                                August
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Ganesh Chaturthi
+                            </h3>
+
+                            <p>
+                                Festival honoring Lord Ganesha.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                20
+                            </strong>
+
+                            <span>
+                                October
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Dussehra
+                            </h3>
+
+                            <p>
+                                Vijayadashami, marking the triumph of good over evil.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="festival">
+
+                        <div class="festival-date">
+
+                            <strong>
+                                08
+                            </strong>
+
+                            <span>
+                                November
+                            </span>
+
+                        </div>
+
+                        <div class="festival-info">
+
+                            <h3>
+                                Diwali
+                            </h3>
+
+                            <p>
+                                Festival of lights and an important Lakshmi Puja occasion.
+                            </p>
+
+                        </div>
+
+                        <div class="festival-type">
+                            FESTIVAL
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="section">
+
+                <div class="info-box">
+
+                    <strong>
+                        ℹ️ Panchang Calendar Note
+                    </strong>
+
+                    <p>
+                        Festival dates and observances can vary by location,
+                        regional tradition and Panchang calculation method.
+                        The production version should calculate dates
+                        dynamically according to the selected location.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+
+            <div class="side-card">
+
+                <h3>
+                    Panchang
+                </h3>
+
+
+                <a href="panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        🕉️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Panchang
+                        </strong>
+                        <span>
+                            Main Panchang
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="today-panchang.html" class="side-link">
+
+                    <div class="side-icon">
+                        📅
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Today's Panchang
+                        </strong>
+                        <span>
+                            Daily details
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="festival-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🪔
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Festival Calendar
+                        </strong>
+                        <span>
+                            Hindu festivals
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="muhurat.html" class="side-link">
+
+                    <div class="side-icon">
+                        ✨
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Muhurat
+                        </strong>
+                        <span>
+                            Auspicious timings
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="rahu-kaal.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Rahu Kaal
+                        </strong>
+                        <span>
+                            Daily Rahu Kaal
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="choghadiya.html" class="side-link">
+
+                    <div class="side-icon">
+                        ⏱️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Choghadiya
+                        </strong>
+                        <span>
+                            Day & night periods
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="hindu-calendar.html" class="side-link">
+
+                    <div class="side-icon">
+                        🗓️
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Hindu Calendar
+                        </strong>
+                        <span>
+                            Monthly calendar
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <div class="cta">
+
+                    <strong>
+                        🔮 Need Muhurat Guidance?
+                    </strong>
+
+                    <p>
+                        Speak with an astrologer for personalized
+                        Muhurat and festival-related guidance.
+                    </p>
+
+                    <button
+                        onclick="location.href='../astrologers.html'">
+
+                        Talk to an Astrologer →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="side-card">
+
+                <h3>
+                    Quick Astrology
+                </h3>
+
+
+                <a href="../HOROSCOPE/horoscope.html"
+                   class="side-link">
+
+                    <div class="side-icon">
+                        ♈
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Horoscope
+                        </strong>
+                        <span>
+                            Zodiac predictions
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="../KUNDLI/kundli.html"
+                   class="side-link">
+
+                    <div class="side-icon">
+                        🔮
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Free Kundli
+                        </strong>
+                        <span>
+                            Birth chart
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <a href="../CALCULATORS/calculators.html"
+                   class="side-link">
+
+                    <div class="side-icon">
+                        🧮
+                    </div>
+
+                    <div class="side-content">
+                        <strong>
+                            Calculators
+                        </strong>
+                        <span>
+                            Free astrology tools
+                        </span>
+                    </div>
+
+                    <div class="side-arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+    <div class="footer-brand">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ॐ
+            </div>
+
+            <div
+                class="logo-text"
+                style="color:#fff;">
+
+                Astro <span>With Talk</span>
+
+            </div>
+
+        </div>
+
+        <p>
+            Personalized astrology guidance from trusted astrologers.
+        </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Panchang</h4>
+
+        <a href="panchang.html">
+            Panchang
+        </a>
+
+        <a href="today-panchang.html">
+            Today
+        </a>
+
+        <a href="muhurat.html">
+            Muhurat
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Astrology</h4>
+
+        <a href="../HOROSCOPE/horoscope.html">
+            Horoscope
+        </a>
+
+        <a href="../KUNDLI/kundli.html">
+            Kundli
+        </a>
+
+        <a href="../astrologers.html">
+            Astrologers
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="../chat.html">
+            Chat
+        </a>
+
+        <a href="../call.html">
+            Call
+        </a>
+
+        <a href="../live-astrology.html">
+            Live Astrology
+        </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+        <h4>Support</h4>
+
+        <a href="../SUPPORT/help.html">
+            Help
+        </a>
+
+        <a href="../SUPPORT/faq.html">
+            FAQ
+        </a>
+
+        <a href="../SUPPORT/contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="copyright">
+    © 2026 Astro With Talk. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* WALLET */
+
+let wallet =
+    Number(
+        localStorage.getItem(
+            "awt_wallet_balance"
+        )
+    );
+
+if(!wallet && wallet !== 0){
+    wallet = 500;
+}
+
+document.getElementById("wallet")
+    .innerText =
+    wallet.toLocaleString("en-IN");
+
+
+/* YEAR */
+
+let selectedYear = 2026;
+
+function changeYear(direction){
+
+    selectedYear += direction;
+
+    document.getElementById(
+        "year"
+    ).innerText = selectedYear;
+
+}
+
+</script>
+
+</body>
+</html>
